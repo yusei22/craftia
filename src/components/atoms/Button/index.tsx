@@ -11,7 +11,7 @@ import {
 } from 'utils/styles'
 
 // ボタンのバリアント
-export type ButtonVariant = 'primary' | 'secondary' | 'danger'
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'warn' | 'dark'
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   $variant?: ButtonVariant;
@@ -28,6 +28,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   $minHeight?: Responsive<string>;
   $display?: Responsive<string>;
   $border?: Responsive<string>;
+  $borderRadius?: Responsive<string>
   $overflow?: Responsive<string>;
   $margin?: Responsive<Space>;
   $marginTop?: Responsive<Space>;
@@ -50,14 +51,13 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variants = {
-  // プライマリ
   primary: {
-    color: 'white',
-    backgroundColor: 'primary',
+    color: 'primaryDark',
+    backgroundColor: 'primaryLite',
     border: 'none',
     pseudoClass: {
       hover: {
-        backgroundColor: 'primaryDark',
+        backgroundColor: 'primary',
       },
       disabled: {
         backgroundColor: 'primary',
@@ -66,32 +66,58 @@ const variants = {
   },
   // セカンダリ
   secondary: {
-    color: 'white',
-    backgroundColor: 'secondary',
+    color: 'secondaryDark',
+    backgroundColor: 'secondaryLite',
     border: 'none',
     pseudoClass: {
       hover: {
-        backgroundColor: 'secondaryDark',
+        backgroundColor: 'secondary',
       },
       disabled: {
         backgroundColor: 'secondary',
       },
     },
   },
-  // デンジャー
-  danger: {
-    color: 'white',
-    backgroundColor: 'danger',
+  warn: {
+    color: 'warnDark',
+    backgroundColor: 'warnLight',
     border: 'none',
     pseudoClass: {
       hover: {
-        backgroundColor: 'dangerDark',
+        backgroundColor: 'warn',
+      },
+      disabled: {
+        backgroundColor: 'warn',
+      },
+    },
+  },
+  // デンジャー
+  danger: {
+    color: 'dangerDark',
+    backgroundColor: 'dangerLight',
+    border: 'none',
+    pseudoClass: {
+      hover: {
+        backgroundColor: 'danger',
       },
       disabled: {
         backgroundColor: 'danger',
       },
     },
   },
+  dark: {
+    color: 'white',
+    backgroundColor: 'primaryDark',
+    border: 'none',
+    pseudoClass: {
+      hover: {
+        backgroundColor: 'primaryDark',
+      },
+      disabled: {
+        backgroundColor: 'primaryDark',
+      },
+    },
+  }
 }
 
 /**
@@ -99,39 +125,27 @@ const variants = {
  * バリアント、色、タイポグラフィ、レイアウト、スペース関連のPropsを追加
  */
 const Button = styled.button<ButtonProps>`
-  ${({ $variant, color, $backgroundColor, $pseudoClass, theme }) => {
+  ${({ $variant, $color, $backgroundColor, $pseudoClass, theme }) => {
     // バリアントのスタイルの適用
     if ($variant && variants[$variant]) {
       const styles = []
-      !color &&
-        styles.push(toPropValue('color', variants[$variant].color, theme))
+      !$color &&
+        styles.push(
+          toPropValue('color', variants[$variant].color, theme),
+        )
       !$backgroundColor &&
         styles.push(
-          toPropValue(
-            'background-color',
-            variants[$variant].backgroundColor,
-            theme,
-          ),
+          toPropValue('background-color', variants[$variant].backgroundColor, theme),
         )
       !$pseudoClass &&
         styles.push(
-          `&:hover {
-            ${toPropValue(
-              'background-color',
-              variants[$variant].pseudoClass.hover.backgroundColor,
-              theme,
-            )}
-          }`.replaceAll('\n', ''),
+          `&:hover {${toPropValue('background-color', variants[$variant].pseudoClass.hover.backgroundColor, theme,)
+            }}`.replaceAll('\n', ''),
         )
       !$pseudoClass &&
         styles.push(
-          `&:disabled {
-            ${toPropValue(
-              'background-color',
-              variants[$variant].pseudoClass.disabled.backgroundColor,
-              theme,
-            )}
-          }`.replaceAll('\n', ''),
+          `&:disabled {${toPropValue('background-color', variants[$variant].pseudoClass.disabled.backgroundColor, theme,)
+            }}`.replaceAll('\n', ''),
         )
       return styles.join('\n')
     }
@@ -147,6 +161,7 @@ const Button = styled.button<ButtonProps>`
   ${(props) => toPropValue('min-height', props.$minHeight, props.theme)}
   ${(props) => toPropValue('display', props.$display, props.theme)}
   ${(props) => toPropValue('border', props.$border, props.theme)}
+  ${(props) => toPropValue('border-radius', props.$borderRadius, props.theme)}
   ${(props) => toPropValue('overflow', props.$overflow, props.theme)}
   ${(props) => toPropValue('margin', props.$margin, props.theme)}
   ${(props) => toPropValue('margin-top', props.$marginTop, props.theme)}
@@ -160,17 +175,17 @@ const Button = styled.button<ButtonProps>`
   ${(props) => toPropValue('padding-right', props.$paddingRight, props.theme)}
   &:hover {
     ${(props) =>
-      toPropValue(
-        'background-color',
-        props?.$pseudoClass?.hover?.$backgroundColor,
-      )}
+    toPropValue(
+      'background-color',
+      props?.$pseudoClass?.hover?.$backgroundColor,
+    )}
   }
   &:disabled {
     ${(props) =>
-      toPropValue(
-        'background-color',
-        props?.$pseudoClass?.disabled?.$backgroundColor,
-      )}
+    toPropValue(
+      'background-color',
+      props?.$pseudoClass?.disabled?.$backgroundColor,
+    )}
   }
   cursor: pointer;
   outline: 0;
@@ -185,7 +200,6 @@ Button.defaultProps = {
   $paddingRight: 2,
   $paddingTop: 1,
   $paddingBottom: 1,
-  $color: 'white',
   $display: 'inline-block',
   $textAlign: 'center',
   $lineHeight: 'inherit',
