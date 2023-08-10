@@ -12,7 +12,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeProvider theme={theme}>
-        <Button>ボタン</Button>
+        <Button $variant='dark' $borderRadius={'20px'}>ファイル</Button>
+        <Button $variant='dark' $borderRadius={'20px'}>選択</Button>
+        <Button $variant='dark' $borderRadius={'20px'}>レイヤー</Button>
       </ThemeProvider>
     </>
   )
