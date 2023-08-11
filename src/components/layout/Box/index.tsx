@@ -13,6 +13,7 @@ export type BoxProps = {
   $display?: Responsive<string>
   $border?: Responsive<string>
   $borderRadius?: Responsive<string>
+  $boxShadow?: Responsive<string>
   $overflow?: Responsive<string>
   $margin?: Responsive<Space>
   $marginTop?: Responsive<Space>
@@ -24,6 +25,8 @@ export type BoxProps = {
   $paddingRight?: Responsive<Space>
   $paddingBottom?: Responsive<Space>
   $paddingLeft?: Responsive<Space>
+  $position?: Responsive<string>
+  $touchAction?: Responsive<string>
 }
 
 /**
@@ -39,6 +42,7 @@ const Box = styled.div<BoxProps>`
   ${(props) => toPropValue('min-height', props.$minHeight, props.theme)}
   ${(props) => toPropValue('display', props.$display, props.theme)}
   ${(props) => toPropValue('border', props.$border, props.theme)}
+  ${(props) => toPropValue('box-shadow', props.$boxShadow, props.theme)}
   ${(props) => toPropValue('border-radius', props.$borderRadius, props.theme)}
   ${(props) => toPropValue('overflow', props.$overflow, props.theme)}
   ${(props) => toPropValue('margin', props.$margin, props.theme)}
@@ -51,5 +55,7 @@ const Box = styled.div<BoxProps>`
   ${(props) => toPropValue('padding-left', props.$paddingLeft, props.theme)}
   ${(props) => toPropValue('padding-bottom', props.$paddingBottom, props.theme)}
   ${(props) => toPropValue('padding-right', props.$paddingRight, props.theme)}
+  ${(props) => toPropValue('position', props.$position, props.theme)}
+  ${(props) => toPropValue('touch-action', props.$touchAction, props.theme)}
 `
 export default Box
