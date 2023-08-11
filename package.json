@@ -20,10 +20,12 @@
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "@use-gesture/react": "^10.2.27",
     "eslint-config-next": "13.4.13",
     "next": "13.4.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.4",
     "styled-components": "^6.0.7",
     "typescript": "5.1.6"
   },
