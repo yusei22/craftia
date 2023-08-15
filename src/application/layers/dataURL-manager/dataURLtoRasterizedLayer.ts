@@ -1,7 +1,6 @@
 import { dataurlToImageBitmap, dataurlToImageElement } from "./decodeDataurl";
 import { LayerSettings } from "../layer-settings/LayerSettings";
-import { RasterizedImgBitmapLayer } from "../layers-body/rasterized/RasterizedImgBitmapLayer";
-import { RasterizedImgElementLayer } from "../layers-body/rasterized/RasterizedImgElementLayer";
+import { RasterizedImgBitmapLayer, RasterizedImgElementLayer } from "../layers-body";
 type DataURLtoRasterizedLayerParam = {
     dataurl: string,
     settings: LayerSettings,
@@ -28,4 +27,4 @@ const dataURLtoRasterizedLayer = async ({ dataurl, settings: layerSettings, useI
         return new RasterizedImgElementLayer(imageElement, layerSettings)
     }
 }
-export { dataURLtoRasterizedLayer}
+export { dataURLtoRasterizedLayer }
