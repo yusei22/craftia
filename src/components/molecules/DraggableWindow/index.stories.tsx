@@ -8,11 +8,26 @@ const meta = {
     title: 'Molecules/DraggableWindow',
     component: DraggableWindow,
     tags: ['autodocs'],
+    argTypes: {
+        show: { type: 'boolean' },
+        title: { type: 'string' },
+        contentWidth: { type: 'string' },
+        contentHeight: { type: 'string' },
+    }
 } satisfies Meta<typeof DraggableWindow>;
 
 export default meta;
 type Story = StoryObj<typeof DraggableWindow>;
-export const Green: Story = {
+
+export const Primary: Story = {
+    args: {
+        show: true,
+        contentWidth: '500px',
+        contentHeight: '300px',
+        title: 'ウィンドウ',
+    }
+}
+export const CloseOpen: Story = {
     render: () => {
         const [show, setShow] = useState(true)
         return (
@@ -20,15 +35,12 @@ export const Green: Story = {
                 <Button onClick={() => { setShow(true) }}>open</Button>
                 <DraggableWindow
                     show={show}
-                    width={'500px'}
-                    headerHeight={'30px'}
-                    headerColor={'secondary'}
+                    contentWidth={'500px'}
+                    contentHeight={'300px'}
                     title={'ウィンドウ'}
-                    titleColor={'white'}
-                    closeIconColor={'white'}
                     onClose={() => { setShow(false) }}
                 >
-                    <Box $display={'block'} $height={'300px'} $backgroundColor={'foundation'}></Box>
+                    <Box $display={'block'} $height={'100%'} $backgroundColor={'foundation'}></Box>
                 </DraggableWindow>
             </>
 
