@@ -21,17 +21,11 @@ class SmartCtx2DLayer extends Ctx2DLayer {
         this._systemSettings = new SystemLayerSettings({ resize: resize })
         if (source) {
             this.clear();
-            this.viewport(new Vec2(source.width, source.height));
+            this.viewportCanvas(new Vec2(source.width, source.height));
             this.drawImage(source, new Vec2(0, 0));
         }
     }
-    public clear(): void {
-        super.clear();
-    }
-    public destroy(): void {
-        super.destroy();
-    }
-    public viewport(size: Vec2): void {
+    public viewportCanvas(size: Vec2): void {
         super.viewport(size);
     }
     public changeResizeSettings(newSize: Vec2) {
@@ -39,25 +33,42 @@ class SmartCtx2DLayer extends Ctx2DLayer {
     }
     public createRasterizedImgBitmapLayer() {
         const rasterizedSource = this.createRasterizedSource()
-        return createRasterizedImgBitmapLayer(rasterizedSource, this.settings)
+        return createRasterizedImgBitmapLayer(
+            rasterizedSource,
+            this.settings
+        )
     }
     public createRasterizedImgElementLayer() {
         const rasterizedSource = this.createRasterizedSource();
         const dataURL = rasterizedSource.toDataURL();
-        return createRasterizedImgElementLayer(dataURL, this.settings);
+        return createRasterizedImgElementLayer(
+            dataURL,
+            this.settings
+        );
     }
     public createSmartImgBitmapLayer() {
-        return createSmartImgBitmapLayer(this.canvas, this.settings, this.systemSettings.resize)
+        return createSmartImgBitmapLayer(
+            this.canvas,
+            this.settings,
+            this.systemSettings.resize
+        )
     }
     public createSmartImgElementLayer() {
         const dataURL = this.canvas.toDataURL();
-        return createSmartImgElementLayer(dataURL, this.settings, this.systemSettings.resize)
+        return createSmartImgElementLayer(
+            dataURL,
+            this.settings,
+            this.systemSettings.resize
+        )
     }
     private createRasterizedSource() {
         const renderer = new ImageRenderer();
         renderer.viewport(this._systemSettings.resize);
-        renderer.drawImage(this.canvas, new Vec2(0, 0), this._systemSettings.resize);
-        renderer.destroy();
+        renderer.drawImage(
+            this.canvas,
+            new Vec2(0, 0),
+            this._systemSettings.resize
+        );
         return renderer.canvas;
     }
 }
