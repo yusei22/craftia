@@ -178,6 +178,7 @@ const Button = styled.button<ButtonProps>`
     toPropValue(
       'background-color',
       props?.$pseudoClass?.hover?.$backgroundColor,
+      props.theme
     )}
   }
   &:disabled {
@@ -185,6 +186,7 @@ const Button = styled.button<ButtonProps>`
     toPropValue(
       'background-color',
       props?.$pseudoClass?.disabled?.$backgroundColor,
+      props.theme
     )}
   }
   cursor: pointer;
