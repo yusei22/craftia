@@ -16,6 +16,12 @@ abstract class Ctx2DLayer extends Ctx2DConsumer implements ILayer {
     public get source() {
         return this.canvas;
     }
+    public clear(): void {
+        super.clear();
+    }
+    public destroy(): void {
+        super.destroy();
+    }
     public useContext2DToChangeParam(func: (context: CanvasRenderingContext2D) => any): void {
         super.useContext2DToChangeParam(func);
     }
