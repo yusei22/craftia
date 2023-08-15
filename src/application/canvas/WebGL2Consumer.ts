@@ -2,10 +2,10 @@ import { Vec2 } from "../units";
 import { Vec4 } from "../units";
 
 abstract class WebGL2Consumer {
-    private gl2: WebGL2RenderingContext;
     constructor(gl2: WebGL2RenderingContext) {
         this.gl2 = gl2;
     }
+    private gl2: WebGL2RenderingContext;
     private get drawable() {
         if (this.gl2.canvas.width <= 0 || this.gl2.canvas.height <= 0) return false;
         return true;

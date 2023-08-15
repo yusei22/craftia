@@ -1,9 +1,9 @@
 import { Vec2 } from "../units";
 abstract class Ctx2DConsumer {
-    private context: CanvasRenderingContext2D;
     constructor(context: CanvasRenderingContext2D) {
         this.context = context;
     }
+    private context: CanvasRenderingContext2D;
     private get drawable() {
         if (this.context.canvas.width <= 0 || this.context.canvas.height <= 0) return false;
         return true;
