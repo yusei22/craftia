@@ -1,6 +1,5 @@
-import { ILayerImageSource } from "../../layers-body/Ilayer";
+import { ILayerImageSource, MaskingLayer } from "../../layers-body";
 import { Layer } from "../../../types";
-import { MaskingLayer } from "../../layers-body/masking/MaskingLayer";
 import { Vec2 } from "../../../units";
 import { ImageRenderer } from "../../../image-management/ImageRenderer";
 class LayerBase64Encoder {
