@@ -4,8 +4,7 @@ import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
 import { Vec2 } from "../../../units";
 import { ILayer } from "../Ilayer";
 import { modifyAndRenderLayerCtx2D } from "../../layers-rendering-system/renderer/core/modifyAndRenderLayerCtx2D";
-import { RasterizedLayer } from "../../../types";
-import { SmartObjectLayer } from "../../../types";
+import { RasterizedLayer ,SmartObjectLayer } from "../../../types";
 
 type MaskableLayer = RasterizedLayer | SmartObjectLayer
 
