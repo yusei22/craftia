@@ -3,7 +3,7 @@ const colors = {
   text: '#5C5C5C',
   primaryDark: '#5C5C5C',
   primary: '#DCDCDC',
-  primaryLite:'#F0F0F0',
+  primaryLight:'#F0F0F0',
   secondaryDark: '#417B85',
   secondary: '#5AA2AE',
   secondaryLight: '#DEECEF',
