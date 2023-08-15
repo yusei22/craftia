@@ -1,5 +1,5 @@
 import { LayerSettings } from "../../layer-settings/LayerSettings"
-import { EncodedLayerSettings } from "../../../types"
+import { EncodedLayerSettings } from "application/types"
 const encodeLayerSettings = (layerSettings: LayerSettings): EncodedLayerSettings => {
     return {
         name: layerSettings.name,

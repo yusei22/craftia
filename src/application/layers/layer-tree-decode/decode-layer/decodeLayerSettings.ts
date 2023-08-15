@@ -1,6 +1,6 @@
 import { LayerSettings } from "../../layer-settings/LayerSettings";
-import { EncodedLayer } from "../../../types";
-import { Vec2, Vec4 } from "../../../units";
+import { EncodedLayer } from "application/types";
+import { Vec2, Vec4 } from "application/units";
 
 const decodeLayerSettings = (encodedLayer: EncodedLayer): LayerSettings => {
     return new LayerSettings({

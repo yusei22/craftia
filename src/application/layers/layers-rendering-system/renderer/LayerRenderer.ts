@@ -1,9 +1,9 @@
-import { createCanvasAnd2DContext } from "../../../canvas/createCanvas";
-import { Vec2 } from "../../../units";
-import { Ctx2DConsumer } from "../../../canvas/Ctx2DConsumer";
+import { createCanvasAnd2DContext } from "application/canvas/createCanvas";
+import { Vec2 } from "application/units";
+import { Ctx2DConsumer } from "application/canvas/Ctx2DConsumer";
 import { renderLayerCtx2D } from "./core/renderLayerCtx2D";
-import { CroppingSettings } from "../../../types";
-import { Layer } from "../../../types";
+import { CroppingSettings } from "application/types";
+import { Layer } from "application/types";
 type DrawSettings = {
     cropping?: CroppingSettings;
     opacity?: number;

@@ -1,5 +1,5 @@
-import { Vec2 } from "../../units";
-import { Layer } from "../../types";
+import { Vec2 } from "application/units";
+import { Layer } from "application/types";
 
 function getMergerLocation(layers: Layer[]): Vec2 {
     if (layers.length <= 0) return new Vec2(0, 0)

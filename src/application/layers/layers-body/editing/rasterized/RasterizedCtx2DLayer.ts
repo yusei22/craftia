@@ -1,6 +1,6 @@
 import { LayerSettings } from "../../../layer-settings/LayerSettings";
 import { SystemLayerSettings } from "../../../layer-settings/SystemLayerSettings";
-import { Vec2 } from "../../../../units";
+import { Vec2 } from "application/units";
 import { Ctx2DLayer } from "../Ctx2DLayer";
 import { createRasterizedImgBitmapLayer } from "../../rasterized/RasterizedImgBitmapLayer";
 import { createRasterizedImgElementLayer } from "../../rasterized/RasterizedImgElementLayer";

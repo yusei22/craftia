@@ -1,6 +1,6 @@
 import { Vec4 } from "application/units";
-import { WebGL2Consumer } from "../../../canvas/WebGL2Consumer";
-import { createCanvasAndWebGL2Context } from "../../../canvas/createCanvas";
+import { WebGL2Consumer } from "application/canvas/WebGL2Consumer";
+import { createCanvasAndWebGL2Context } from "application/canvas/createCanvas";
 import { LayerSettings } from "../../layer-settings/LayerSettings";
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
 import { ILayer } from "../Ilayer";

@@ -1,7 +1,7 @@
 import { dataurlToImageBitmap, dataurlToImageElement } from "./decodeDataurl";
 import { LayerSettings } from "../layer-settings/LayerSettings";
 import { SmartImgBitmapLayer, SmartImgElementLayer } from "../layers-body";
-import { Vec2 } from "../../units";
+import { Vec2 } from "application/units";
 type dataURLtoSmartLayerParam = {
     dataurl: string,
     settings: LayerSettings,

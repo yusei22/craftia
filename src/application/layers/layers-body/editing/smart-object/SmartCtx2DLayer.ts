@@ -1,12 +1,12 @@
 import { LayerSettings } from "../../../layer-settings/LayerSettings";
 import { SystemLayerSettings } from "../../../layer-settings/SystemLayerSettings";
-import { Vec2 } from "../../../../units";
+import { Vec2 } from "application/units";
 import { Ctx2DLayer } from "../Ctx2DLayer";
 import { createRasterizedImgBitmapLayer } from "../../rasterized/RasterizedImgBitmapLayer";
 import { createRasterizedImgElementLayer } from "../../rasterized/RasterizedImgElementLayer";
 import { createSmartImgBitmapLayer } from "../../smart-object/SmartImgBitmapLayer";
 import { createSmartImgElementLayer } from "../../smart-object/SmartImgElementLayer";
-import { ImageRenderer } from "../../../../image-management/ImageRenderer";
+import { ImageRenderer } from "application/image-utils/ImageRenderer";
 import { ILayerImageSource } from "../../Ilayer";
 
 class SmartCtx2DLayer extends Ctx2DLayer {

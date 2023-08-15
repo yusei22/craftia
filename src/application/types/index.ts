@@ -1,5 +1,6 @@
 export * from './common/AtLeastArray'
 export * from './common/TypedArray'
+export * from './layers/LayerTree'
 export * from './layers/Layer'
 export * from './layers/MaskedLayer'
 export * from './layers/RasterizedLayer'

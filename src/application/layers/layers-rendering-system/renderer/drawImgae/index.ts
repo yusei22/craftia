@@ -1,5 +1,5 @@
-import { CroppingSettings } from "../../../../types";
-import { Vec2 } from "../../../../units";
+import { CroppingSettings } from "application/types";
+import { Vec2 } from "application/units";
 import { ILayerImageSource } from "../../../layers-body/Ilayer";
 export function drawImgae(context: CanvasRenderingContext2D, source: ILayerImageSource, location: Vec2, resize: Vec2, cropping?: CroppingSettings) {
     if (!isDrawableSource(source)) return;

@@ -1,7 +1,7 @@
-import { createImageElement } from "../../../image-management/createImageElement";
+import { createImageElement } from "application/image-utils/createImageElement";
 import { LayerSettings } from "../../layer-settings/LayerSettings";
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
-import { Vec2 } from "../../../units";
+import { Vec2 } from "application/units";
 import { ILayer } from "../Ilayer";
 class RasterizedImgElementLayer implements ILayer {
     readonly source: HTMLImageElement;

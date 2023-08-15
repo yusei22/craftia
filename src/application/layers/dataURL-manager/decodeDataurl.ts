@@ -1,4 +1,4 @@
-import { createImageElement } from "../../image-management/createImageElement";
+import { createImageElement } from "application/image-utils/createImageElement";
 async function dataurlToImageBitmap(dataurl: string) {
     const blob = await fetch(dataurl).then(res => res.blob())
     return createImageBitmap(blob);

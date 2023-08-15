@@ -1,6 +1,6 @@
 import { LayerSettings } from "../../layer-settings/LayerSettings";
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
-import { Vec2 } from "../../../units";
+import { Vec2 } from "application/units";
 import { ILayer } from "../Ilayer";
 class SmartImgBitmapLayer implements ILayer {
     readonly source: ImageBitmap;

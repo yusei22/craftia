@@ -1,10 +1,10 @@
 import { LayerSettings } from "../../layer-settings/LayerSettings";
-import { EncodedLayer, Layer } from "../../../types";
+import { EncodedLayer, Layer } from "application/types";
 import { decodeLayerSettings } from "./decodeLayerSettings";
 import { dataURLtoRasterizedLayer } from "../../dataURL-manager/dataURLtoRasterizedLayer";
 import { dataURLtoSmartLayer } from "../../dataURL-manager/dataURLtoSmartLayer";
 import { EmptyLayer, MaskingLayer } from "../../layers-body";
-import { Vec2 } from "../../../units/Vec2";
+import { Vec2 } from "application/units";
 
 async function decodeLayer(encodedLayer: EncodedLayer, projectSize: Vec2, useImageBitmap: boolean): Promise<Layer> {
     if (encodedLayer.masking) {

@@ -1,11 +1,11 @@
-import { Vec2 } from "../../../../units";
+import { Vec2 } from "application/units";
 import { applyBlendMode } from "../brendMode/index";
 import { applyOpacity } from "../opacity/index";
 import { applyShadow } from "../shadow/index";
 import { drawImgae } from "../drawImgae/index";
 import { renderingOption } from "./renderLayerCtx2D";
 import { LayerSettings } from "../../../layer-settings/LayerSettings";
-import { Layer } from "../../../../types"
+import { Layer } from "application/types"
 function modifyAndRenderLayerCtx2D(
     context: CanvasRenderingContext2D,
     layer: Layer, {

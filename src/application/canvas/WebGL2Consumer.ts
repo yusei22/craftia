@@ -1,5 +1,5 @@
-import { Vec2 } from "../units";
-import { Vec4 } from "../units";
+import { Vec2 } from "application/units";
+import { Vec4 } from "application/units";
 
 abstract class WebGL2Consumer {
     constructor(gl2: WebGL2RenderingContext) {

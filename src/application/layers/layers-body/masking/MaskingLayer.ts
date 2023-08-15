@@ -1,10 +1,10 @@
-import { Ctx2DConsumer } from "../../../canvas/Ctx2DConsumer";
-import { createCanvasAnd2DContext } from "../../../canvas/createCanvas";
+import { Ctx2DConsumer } from "application/canvas/Ctx2DConsumer";
+import { createCanvasAnd2DContext } from "application/canvas/createCanvas";
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
-import { Vec2 } from "../../../units";
+import { Vec2 } from "application/units";
 import { ILayer } from "../Ilayer";
 import { modifyAndRenderLayerCtx2D } from "../../layers-rendering-system/renderer/core/modifyAndRenderLayerCtx2D";
-import { RasterizedLayer ,SmartObjectLayer } from "../../../types";
+import { RasterizedLayer ,SmartObjectLayer } from "application/types";
 
 type MaskableLayer = RasterizedLayer | SmartObjectLayer
 

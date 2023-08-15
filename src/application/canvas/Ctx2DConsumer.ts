@@ -1,4 +1,4 @@
-import { Vec2 } from "../units";
+import { Vec2 } from "application/units";
 abstract class Ctx2DConsumer {
     constructor(context: CanvasRenderingContext2D) {
         this.context = context;

@@ -1,6 +1,6 @@
-import { Layer } from "../../../types"
+import { Layer } from "application/types"
 import { CompositeLayer } from "../../layers-body/composite/CompositeLayer";
-import { Vec2 } from "../../../units";
+import { Vec2 } from "application/units";
 import { LayerSettings } from "../../layer-settings/LayerSettings";
 type LayersRange = {
     start: number,

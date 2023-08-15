@@ -1,4 +1,4 @@
-import { LayerTree } from "../layers-rendering-system/tree-renderer/LayerTreeRenderer";
+import { LayerTree } from "application/types";
 import { LayerBase64Encoder } from "./encode-helper/LayerBase64Encoder";
 import { encodeLayer } from "./encode-layer/encodeLayer";
 

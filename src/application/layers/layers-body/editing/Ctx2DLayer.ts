@@ -1,8 +1,8 @@
-import { createCanvasAnd2DContext } from "../../../canvas/createCanvas";
+import { createCanvasAnd2DContext } from "application/canvas/createCanvas";
 import { LayerSettings } from "../../layer-settings/LayerSettings";
-import { Ctx2DConsumer } from "../../../canvas/Ctx2DConsumer";
+import { Ctx2DConsumer } from "application/canvas/Ctx2DConsumer";
 import { ILayer } from "../Ilayer";
-import { Vec2 } from "../../../units";
+import { Vec2 } from "application/units";
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
 abstract class Ctx2DLayer extends Ctx2DConsumer implements ILayer {
     public abstract settings: LayerSettings;

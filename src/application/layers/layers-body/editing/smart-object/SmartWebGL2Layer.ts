@@ -1,12 +1,12 @@
 import { LayerSettings } from "../../../layer-settings/LayerSettings";
 import { SystemLayerSettings } from "../../../layer-settings/SystemLayerSettings";
 import { WebGL2Layer } from "../WebGL2Layer";
-import { Vec2 } from "../../../../units";
+import { Vec2 } from "application/units";
 import { createRasterizedImgBitmapLayer } from "../../rasterized/RasterizedImgBitmapLayer";
 import { createRasterizedImgElementLayer } from "../../rasterized/RasterizedImgElementLayer";
 import { createSmartImgBitmapLayer } from "../../smart-object/SmartImgBitmapLayer";
 import { createSmartImgElementLayer } from "../../smart-object/SmartImgElementLayer";
-import { ImageRenderer } from "../../../../image-management/ImageRenderer";
+import { ImageRenderer } from "application/image-utils/ImageRenderer";
 
 class SmartWebGL2Layer extends WebGL2Layer {
     public settings: LayerSettings;

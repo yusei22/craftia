@@ -1,7 +1,7 @@
 import { LayerSettings } from "../../layer-settings/LayerSettings";
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
-import { Vec2 } from "../../../units";
-import { createImageElement } from "../../../image-management/createImageElement";
+import { Vec2 } from "application/units";
+import { createImageElement } from "application/image-utils/createImageElement";
 import { ILayer } from "../Ilayer";
 class SmartImgElementLayer implements ILayer {
     readonly source: HTMLImageElement;

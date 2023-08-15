@@ -1,8 +1,8 @@
 import { LayerSettings } from "../../layer-settings/LayerSettings";
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
 import { LayerRenderer } from "../../layers-rendering-system/renderer/LayerRenderer";
-import { Layer } from "../../../types";
-import { Vec2 } from "../../../units";
+import { Layer } from "application/types";
+import { Vec2 } from "application/units";
 import { ILayer } from "../Ilayer";
 
 class CompositeLayer implements ILayer {

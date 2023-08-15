@@ -1,6 +1,6 @@
-import { Layer } from "../../../types";
-import { Vec2 } from "../../../units";
-import { Ctx2DConsumer } from "../../../canvas/Ctx2DConsumer";
+import { Layer } from "application/types";
+import { Vec2 } from "application/units";
+import { Ctx2DConsumer } from "application/canvas/Ctx2DConsumer";
 import { LayerSettings, LayerSettingsParam } from "../../layer-settings/LayerSettings";
 import { createCanvasAnd2DContext } from "application/canvas/createCanvas";
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";

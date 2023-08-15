@@ -1,7 +1,7 @@
-import { createCanvasAnd2DContext } from "../../../canvas/createCanvas";
+import { createCanvasAnd2DContext } from "application/canvas/createCanvas";
 import { LayerSettings } from "../../layer-settings/LayerSettings"
 import { SystemLayerSettings } from "../../layer-settings/SystemLayerSettings";
-import { Vec2 } from "../../../units";
+import { Vec2 } from "application/units";
 
 class EmptyLayer {
     public settings: LayerSettings;

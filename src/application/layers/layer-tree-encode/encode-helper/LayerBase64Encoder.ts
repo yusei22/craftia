@@ -1,7 +1,7 @@
 import { ILayerImageSource, MaskingLayer } from "../../layers-body";
-import { Layer } from "../../../types";
-import { Vec2 } from "../../../units";
-import { ImageRenderer } from "../../../image-management/ImageRenderer";
+import { Layer } from "application/types";
+import { Vec2 } from "application/units";
+import { ImageRenderer } from "application/image-utils/ImageRenderer";
 class LayerBase64Encoder {
     private renderer: ImageRenderer
     constructor() {

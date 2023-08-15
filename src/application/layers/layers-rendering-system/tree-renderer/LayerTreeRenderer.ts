@@ -1,11 +1,7 @@
-import { Layer } from "../../../types"
-import { Vec2 } from "../../../units";
+import { Vec2 } from "application/units";
 import { LayerRenderer } from "../renderer/LayerRenderer";
 import { LayersCache, LayersRange } from "./LayersCache";
-type LayerTree = {
-    id: number,
-    layer: Layer
-}[]
+import { LayerTree } from "application/types/layers/LayerTree";
 class LayerTreeRenderer {
     private cache: LayersCache;
     private layerRenderer: LayerRenderer;
@@ -24,5 +20,4 @@ class LayerTreeRenderer {
         this.layerRenderer.redraw(this.cache.layersAfterOptimization);
     }
 }
-export type { LayerTree }
 export { LayerTreeRenderer }
