@@ -2,10 +2,10 @@ import { LayerBase64Encoder } from "../encode-helper/LayerBase64Encoder";
 import {
     EncodedLayerBody,
     MaskedLayer,
-    isMaskedLayer,
     RasterizedLayer,
-    isRasterizedLayer,
     SmartObjectLayer,
+    isMaskedLayer,
+    isRasterizedLayer,
     isSmartObjectLayer,
     Layer
 } from "../../../types";
