@@ -1,3 +1,4 @@
+import { Vec4 } from "application/units";
 import { WebGL2Consumer } from "../../../canvas/WebGL2Consumer";
 import { createCanvasAndWebGL2Context } from "../../../canvas/createCanvas";
 import { LayerSettings } from "../../layer-settings/LayerSettings";
@@ -14,6 +15,12 @@ abstract class WebGL2Layer extends WebGL2Consumer implements ILayer {
     }
     public get source() {
         return this.canvas
+    }
+    public clear(color?: Vec4): void {
+        super.clear(color);
+    }
+    public destroy(): void {
+        super.destroy();
     }
     public useWebGl2ContextToChangeParam(func: (gl: WebGL2RenderingContext) => any): void {
         super.useWebGl2ContextToChangeParam(func)
