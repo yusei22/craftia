@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDrag } from '@use-gesture/react'
-import { Color, FontSize } from 'utils/styles'
 import { theme } from 'themes'
 import type { Responsive } from 'types'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -11,19 +10,14 @@ import Text from 'components/atoms/Text';
 
 type DraggableWindowProps = {
     show: boolean
-    width: Responsive<string>
-    headerHeight: Responsive<string>
-    headerColor?: Responsive<Color>
+    contentWidth?: Responsive<string>
+    contentHeight?: Responsive<string>
     children?: React.ReactNode
     title?: string
-    titleSize?: Responsive<FontSize>
-    titleColor?: Responsive<Color>
-    closeIconColor?: keyof typeof theme.colors
     onClose?: () => any
 }
 
 const DraggableWindow = (props: DraggableWindowProps) => {
-
     const [[x, y], setMovementCoord] = useState([0, 0]);
 
     const bind = useDrag(({ delta: [deltaX, deltaY] }) => {
@@ -34,12 +28,16 @@ const DraggableWindow = (props: DraggableWindowProps) => {
     if (!props.show) return null;
     return (
         <>
-            <Box $width={props.width} style={{ transform: `translate(${x}px, ${y}px)` }} $boxShadow={'0 0 35px 0 rgba(0, 0, 0, .2)'}>
+            <Box
+                $width={props.contentWidth}
+                $boxShadow={'0 0 35px 0 rgba(0, 0, 0, .2)'}
+                style={{ transform: `translate(${x}px, ${y}px)` }}
+            >
                 <Box
                     $display={'block'}
                     $touchAction={'none'}
-                    $backgroundColor={props.headerColor}
-                    $height={props.headerHeight}
+                    $backgroundColor={'secondary'}
+                    $height={'30px'}
                     {...bind()}
                 >
                     <Flex
@@ -49,15 +47,15 @@ const DraggableWindow = (props: DraggableWindowProps) => {
                         $paddingLeft={2}
                         $paddingRight={2}
                     >
-                        <Text $fontSize={props.titleSize} $color={props.titleColor}>
+                        <Text $fontSize={'medium'} $color={'white'}>
                             {props.title}
                         </Text>
                         <Flex onClick={props.onClose} $alignItems={'center'}>
-                            <HighlightOffIcon sx={{ color: theme.colors[props.closeIconColor ?? 'text'] }} />
+                            <HighlightOffIcon sx={{ color: theme.colors['white'] }} />
                         </Flex>
                     </Flex>
                 </Box>
-                <Box $display={'block'}>
+                <Box $display={'block'} $height={props.contentHeight}>
                     {props.children}
                 </Box>
             </Box>
