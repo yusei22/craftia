@@ -6,7 +6,6 @@ type DataURLtoRasterizedLayerParam = {
   settings: LayerSettings;
   useImageBitmap: boolean;
 };
-
 const dataURLtoRasterizedLayer = async ({
   dataurl,
   settings: layerSettings,

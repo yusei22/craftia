@@ -36,7 +36,6 @@ const encodeMaskedLayerBody = (layer: MaskedLayer, base64Exporter: LayerBase64En
     if (isRasterizedLayer(layer)) {
       return encodeRasterizedLayerBody(layer, base64Exporter);
     }
-
     if (isSmartObjectLayer(layer)) {
       return encodeSmartObjectLayerBody(layer, base64Exporter);
     }
@@ -48,13 +47,11 @@ const encodeMaskedLayerBody = (layer: MaskedLayer, base64Exporter: LayerBase64En
       resize: [0, 0],
     };
   };
-
   const {
     imageData: originalData,
     type: originalType,
     resize: originalResize,
   } = exportUnmaskedLayerBody(layer.originalLayer);
-
   const { imageData: maskingData } = encodeRasterizedLayerBody(layer.maskingSource, base64Exporter);
 
   return {
@@ -71,15 +68,12 @@ const encodeLayerBody = (layer: Layer, base64Exporter: LayerBase64Encoder): Enco
   if (isRasterizedLayer(layer)) {
     return encodeRasterizedLayerBody(layer, base64Exporter);
   }
-
   if (isSmartObjectLayer(layer)) {
     return encodeSmartObjectLayerBody(layer, base64Exporter);
   }
-
   if (isMaskedLayer(layer)) {
     return encodeMaskedLayerBody(layer, base64Exporter);
   }
-
   return {
     imageData: '',
     type: 'rasterized',

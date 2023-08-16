@@ -9,7 +9,6 @@ abstract class WebGL2Consumer {
     if (this.gl2.canvas.width <= 0 || this.gl2.canvas.height <= 0) return false;
     return true;
   }
-
   /**
    * キャンバスを得る
    * @returns 内包するキャンバス
@@ -17,7 +16,6 @@ abstract class WebGL2Consumer {
   protected getCanvas() {
     return this.gl2.canvas as HTMLCanvasElement;
   }
-
   /**
    * コンテキストのパラメーターを変更する関数  ⚠ 描画時に使ってはいけない ⚠
    * @param func コンテキストに描画できる・できないにかかわらず呼ばれる関数 第一引数にはコンテキストが渡される
@@ -25,7 +23,6 @@ abstract class WebGL2Consumer {
   protected useWebGl2ContextToChangeParam(func: (gl: WebGL2RenderingContext) => any) {
     func(this.gl2);
   }
-
   /**
    * コンテキストで描画を行うための関数
    * @param funcWhenDrawable コンテキストに描画できる時に呼ばれる関数   第一引数にはコンテキストが渡される
@@ -43,7 +40,6 @@ abstract class WebGL2Consumer {
       funcWhenNotDrawable(this.gl2);
     }
   }
-
   /**
    * リサイズ
    * @param size 大きさ
@@ -53,7 +49,6 @@ abstract class WebGL2Consumer {
     this.gl2.canvas.height = size.y;
     this.gl2.viewport(0, 0, this.gl2.canvas.width, this.gl2.canvas.height);
   }
-
   /**
    * canvasをクリア
    */
@@ -63,7 +58,6 @@ abstract class WebGL2Consumer {
       gl2.clear(this.gl2.COLOR_BUFFER_BIT);
     });
   }
-
   /**
    * canvasサイズ0に
    */
