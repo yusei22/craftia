@@ -1,6 +1,5 @@
 import { decodeLayer } from './decode-layer/decodeLayer';
 import { LayerTree, EncodedLayer } from 'application/types';
-
 import { Vec2 } from 'application/units';
 
 function decodeLayerTree(

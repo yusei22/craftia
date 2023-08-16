@@ -13,13 +13,16 @@ type CroppingSettings = {
   upperLeft: Vec2;
   size: Vec2;
 };
+
 class RasterizedCtx2DLayer extends Ctx2DLayer {
   public settings: LayerSettings;
+
   get systemSettings() {
     return new SystemLayerSettings({
       resize: new Vec2(this.canvas.width, this.canvas.height),
     });
   }
+
   constructor(settings: LayerSettings, source?: ILayerImageSource) {
     super();
     this.settings = settings.clone();
@@ -29,9 +32,11 @@ class RasterizedCtx2DLayer extends Ctx2DLayer {
       this.drawImage(source, new Vec2(0, 0));
     }
   }
+
   public viewportCanvas(size: Vec2): void {
     super.viewport(size);
   }
+
   public crop({ upperLeft, size }: CroppingSettings) {
     const buffer = new RasterizedBufferLayer(this);
     const imageData = buffer.getImageData(new Vec2(0, 0), new Vec2(buffer.source.width, buffer.source.height));
@@ -41,16 +46,20 @@ class RasterizedCtx2DLayer extends Ctx2DLayer {
       globalLocation: upperLeft,
     });
   }
+
   public createRasterizedImgBitmapLayer() {
     return createRasterizedImgBitmapLayer(this.canvas, this.settings);
   }
+
   public createRasterizedImgElementLayer() {
     const dataURL = this.canvas.toDataURL();
     return createRasterizedImgElementLayer(dataURL, this.settings);
   }
+
   public createSmartImgBitmapLayer() {
     return createSmartImgBitmapLayer(this.canvas, this.settings, this.systemSettings.resize);
   }
+
   public createSmartImgElementLayer() {
     const dataURL = this.canvas.toDataURL();
     return createSmartImgElementLayer(dataURL, this.settings, this.systemSettings.resize);

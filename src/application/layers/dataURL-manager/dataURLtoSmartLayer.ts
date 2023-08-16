@@ -25,14 +25,17 @@ const dataURLtoSmartLayer = async ({
     } catch (e) {
       throw Error('Failed to create SmartImgElementLaye ');
     }
+
     return new SmartImgBitmapLayer(imageBitmap, layerSettings, _resize);
   } else {
     let imageElement: HTMLImageElement;
+
     try {
       imageElement = await dataurlToImageElement(dataurl);
     } catch (e) {
       throw Error('Failed to create SmartImgElementLaye');
     }
+
     return new SmartImgElementLayer(imageElement, layerSettings, _resize);
   }
 };

@@ -15,14 +15,18 @@ async function decodeLayer(encodedLayer: EncodedLayer, projectSize: Vec2, useIma
       }),
       useImageBitmap: useImageBitmap,
     });
+
     const originalLayer = await decodeNotMaskedLayer(encodedLayer, useImageBitmap);
+
     return new MaskingLayer(originalLayer, maskingSourceLayer, projectSize);
   } else {
     return decodeNotMaskedLayer(encodedLayer, useImageBitmap);
   }
 }
+
 const decodeNotMaskedLayer = (encodedLayer: EncodedLayer, useImageBitmap: boolean) => {
   const layerSettings = decodeLayerSettings(encodedLayer);
+
   if (encodedLayer.type === 'rasterized') {
     return dataURLtoRasterizedLayer({
       dataurl: encodedLayer.imageData,

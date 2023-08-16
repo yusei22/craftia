@@ -1,4 +1,5 @@
 import { Vec2, Vec4 } from 'application/units';
+
 interface LayerSettingsParam {
   name: string;
   globalLocation: Vec2;
@@ -7,14 +8,17 @@ interface LayerSettingsParam {
   opacity: number;
   shadow: ShadowSettings | null;
 }
+
 type ShadowSettings = {
   color: Vec4;
   shadowOffset: Vec2;
   shadowBlur: number;
 };
+
 const cloneShadowSettings = (shadowSettings: ShadowSettings | null) => {
   return shadowSettings ? { ...shadowSettings } : null;
 };
+
 class LayerSettings implements LayerSettingsParam {
   readonly name: string;
   readonly globalLocation: Vec2;
@@ -22,6 +26,7 @@ class LayerSettings implements LayerSettingsParam {
   readonly blendMode: GlobalCompositeOperation;
   readonly opacity: number;
   readonly shadow: ShadowSettings | null;
+
   constructor({ name, globalLocation, visible, blendMode, opacity, shadow }: Partial<LayerSettingsParam> = {}) {
     this.name = name ?? '';
     this.globalLocation = globalLocation ? globalLocation.clone() : new Vec2(0, 0);
@@ -30,6 +35,7 @@ class LayerSettings implements LayerSettingsParam {
     this.opacity = opacity ?? 1.0;
     this.shadow = shadow ?? null;
   }
+
   clone() {
     return new LayerSettings({
       name: this.name,
@@ -40,6 +46,7 @@ class LayerSettings implements LayerSettingsParam {
       shadow: cloneShadowSettings(this.shadow),
     });
   }
+
   cloneEdit(editedSettings: Partial<LayerSettingsParam>) {
     return new LayerSettings({
       name: editedSettings.name ?? this.name,

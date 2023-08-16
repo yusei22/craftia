@@ -14,19 +14,23 @@ const dataURLtoRasterizedLayer = async ({
 }: DataURLtoRasterizedLayerParam) => {
   if (useImageBitmap) {
     let imageBitmap: ImageBitmap;
+
     try {
       imageBitmap = await dataurlToImageBitmap(dataurl);
     } catch (e) {
       throw Error('Failed to create RasterizedImgBitmapLayer ');
     }
+
     return new RasterizedImgBitmapLayer(imageBitmap, layerSettings);
   } else {
     let imageElement: HTMLImageElement;
+
     try {
       imageElement = await dataurlToImageElement(dataurl);
     } catch (e) {
       throw Error('Failed to create RasterizedImgElementLayer');
     }
+
     return new RasterizedImgElementLayer(imageElement, layerSettings);
   }
 };

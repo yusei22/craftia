@@ -5,14 +5,17 @@ interface SystemLayerSettingsParam {
 }
 class SystemLayerSettings implements SystemLayerSettingsParam {
   readonly resize: Vec2;
+
   constructor({ resize }: SystemLayerSettingsParam) {
     this.resize = resize.clone();
   }
+
   public cloneEdit(editedSettings: Partial<SystemLayerSettingsParam>) {
     return new SystemLayerSettings({
       resize: editedSettings.resize ? editedSettings.resize.clone() : this.resize.clone(),
     });
   }
+
   public clone() {
     return new SystemLayerSettings({
       resize: this.resize.clone(),
