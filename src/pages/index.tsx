@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import Button from 'components/atoms/Button'
-import { ThemeProvider } from 'styled-components'
-import { theme } from 'themes'
+import Head from 'next/head';
+import { ThemeProvider } from 'styled-components';
+import Button from 'components/atoms/Button';
+import { theme } from 'themes';
 export default function Home() {
   return (
     <>
@@ -12,10 +12,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeProvider theme={theme}>
-        <Button $variant='dark' $borderRadius={'20px'}>ファイル</Button>
-        <Button $variant='dark' $borderRadius={'20px'}>選択</Button>
-        <Button $variant='dark' $borderRadius={'20px'}>レイヤー</Button>
+        <Button $variant="dark" $borderRadius={'20px'}>
+          ファイル
+        </Button>
+        <Button $variant="dark" $borderRadius={'20px'}>
+          選択
+        </Button>
+        <Button $variant="dark" $borderRadius={'20px'}>
+          レイヤー
+        </Button>
       </ThemeProvider>
     </>
-  )
+  );
 }

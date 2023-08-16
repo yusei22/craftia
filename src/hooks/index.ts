@@ -1,4 +1,4 @@
-import useWindowEvent from "./useWindowEvent";
-import usePointerPosition from "./usePointerPosition";
+import usePointerPosition from './usePointerPosition';
+import useWindowEvent from './useWindowEvent';
 
-export { useWindowEvent,usePointerPosition  }
+export { useWindowEvent, usePointerPosition };

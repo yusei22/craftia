@@ -1,5 +1,5 @@
-import { Vec2 } from "../../units"
+import { Vec2 } from '../../units';
 export type CroppingSettings = {
-    upperLeft: Vec2;
-    size: Vec2;
-}
+  upperLeft: Vec2;
+  size: Vec2;
+};

@@ -1,8 +1,8 @@
-import { Layer } from "./Layer"
+import { Layer } from './Layer';
 
 type LayerTree = {
-    id: number,
-    layer: Layer
-}[]
+  id: number;
+  layer: Layer;
+}[];
 
-export type { LayerTree }
+export type { LayerTree };

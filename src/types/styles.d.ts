@@ -1,48 +1,32 @@
-import 'styled-components'
-import { AppTheme } from 'utils/styles'
+import 'styled-components';
+import { AppTheme } from 'utils/styles';
 
 declare module 'styled-components' {
-  export interface DefaultTheme extends AppTheme{}
+  export interface DefaultTheme extends AppTheme {}
 }
 /* eslint-disable @typescript-eslint/ban-types */
 /**
  * Responsiveプロパティ
  */
 export type ResponsiveProp<T> = {
-  base?: T
-  sm?: T
-  md?: T
-  lg?: T
-  xl?: T
-}
-export type Responsive<T> = T | ResponsiveProp<T>
+  base?: T;
+  sm?: T;
+  md?: T;
+  lg?: T;
+  xl?: T;
+};
+export type Responsive<T> = T | ResponsiveProp<T>;
 
 /**
  * Flex
  */
-type SelfPosition =
-  | 'center'
-  | 'end'
-  | 'flex-end'
-  | 'flex-start'
-  | 'self-end'
-  | 'self-start'
-  | 'start'
+type SelfPosition = 'center' | 'end' | 'flex-end' | 'flex-start' | 'self-end' | 'self-start' | 'start';
 
-type ContentPosition = 'center' | 'end' | 'flex-end' | 'flex-start' | 'start'
+type ContentPosition = 'center' | 'end' | 'flex-end' | 'flex-start' | 'start';
 
-type ContentDistribution =
-  | 'space-around'
-  | 'space-between'
-  | 'space-evenly'
-  | 'stretch'
+type ContentDistribution = 'space-around' | 'space-between' | 'space-evenly' | 'stretch';
 
-type CSSPropertyGlobals =
-  | '-moz-initial'
-  | 'inherit'
-  | 'initial'
-  | 'revert'
-  | 'unset'
+type CSSPropertyGlobals = '-moz-initial' | 'inherit' | 'initial' | 'revert' | 'unset';
 
 export type CSSPropertyAlignItems =
   | CSSPropertyGlobals
@@ -51,7 +35,7 @@ export type CSSPropertyAlignItems =
   | 'normal'
   | 'stretch'
   // コードの自動補完
-  | (string & {})
+  | (string & {});
 
 export type CSSPropertyAlignContent =
   | CSSPropertyGlobals
@@ -63,7 +47,7 @@ export type CSSPropertyAlignContent =
   | 'start'
   | 'baseline'
   | 'normal'
-  | (string & {})
+  | (string & {});
 
 export type CSSPropertyJustifyItems =
   | CSSPropertyGlobals
@@ -74,7 +58,7 @@ export type CSSPropertyJustifyItems =
   | 'normal'
   | 'right'
   | 'stretch'
-  | (string & {})
+  | (string & {});
 
 export type CSSPropertyJustifyContent =
   | CSSPropertyGlobals
@@ -83,20 +67,11 @@ export type CSSPropertyJustifyContent =
   | 'left'
   | 'normal'
   | 'right'
-  | (string & {})
+  | (string & {});
 
-export type CSSPropertyFlexWrap =
-  | CSSPropertyGlobals
-  | 'nowrap'
-  | 'wrap'
-  | 'wrap-reverse'
+export type CSSPropertyFlexWrap = CSSPropertyGlobals | 'nowrap' | 'wrap' | 'wrap-reverse';
 
-export type CSSPropertyFlexDirection =
-  | CSSPropertyGlobals
-  | 'column'
-  | 'column-reverse'
-  | 'row'
-  | 'row-reverse'
+export type CSSPropertyFlexDirection = CSSPropertyGlobals | 'column' | 'column-reverse' | 'row' | 'row-reverse';
 
 export type CSSPropertyJustifySelf =
   | CSSPropertyGlobals
@@ -107,7 +82,7 @@ export type CSSPropertyJustifySelf =
   | 'normal'
   | 'right'
   | 'stretch'
-  | (string & {})
+  | (string & {});
 
 export type CSSPropertyAlignSelf =
   | CSSPropertyGlobals
@@ -116,26 +91,17 @@ export type CSSPropertyAlignSelf =
   | 'baseline'
   | 'normal'
   | 'stretch'
-  | (string & {})
+  | (string & {});
 
 /**
  * Grid
  */
-type GridLine = 'auto' | (string & {})
+type GridLine = 'auto' | (string & {});
 
-export type CSSPropertyGridColumn =
-  | CSSPropertyGlobals
-  | GridLine
-  | (string & {})
+export type CSSPropertyGridColumn = CSSPropertyGlobals | GridLine | (string & {});
 
-export type CSSPropertyGridRow = CSSPropertyGlobals | GridLine | (string & {})
+export type CSSPropertyGridRow = CSSPropertyGlobals | GridLine | (string & {});
 
-export type CSSPropertyGridAutoFlow =
-  | CSSPropertyGlobals
-  | 'column'
-  | 'dense'
-  | 'row'
-  | (string & {})
+export type CSSPropertyGridAutoFlow = CSSPropertyGlobals | 'column' | 'dense' | 'row' | (string & {});
 
-export type CSSPropertyGridArea = CSSPropertyGlobals | GridLine | (string & {})
-
+export type CSSPropertyGridArea = CSSPropertyGlobals | GridLine | (string & {});
