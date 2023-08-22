@@ -1,9 +1,8 @@
 import { Ctx2DConsumer } from 'application/canvas/Ctx2DConsumer';
-import { createCanvasAnd2DContext } from 'application/canvas/createCanvas';
 import { Vec2 } from 'application/units';
 class ImageRenderer extends Ctx2DConsumer {
-  constructor() {
-    super(createCanvasAnd2DContext().context);
+  constructor(context: CanvasRenderingContext2D) {
+    super(context);
   }
   public get canvas() {
     return super.getCanvas();
