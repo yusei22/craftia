@@ -31,6 +31,7 @@ export const preview: Preview = {
     },
   },
 };
+
 export const decorators = [
   withThemeFromJSXProvider({
     GlobalStyles, // Adds your GlobalStyle component to all stories
@@ -39,5 +40,5 @@ export const decorators = [
     },
     defaultTheme: 'light',
     Provider: ThemeProvider,
-  }),
+  })
 ];
