@@ -1,14 +1,14 @@
-import { LayerSettings } from '../../layer-settings/LayerSettings';
+import { LayerSettings, LayerSettingsParam } from '../../layer-settings/LayerSettings';
 import { SystemLayerSettings } from '../../layer-settings/SystemLayerSettings';
 import { ILayer } from '../Ilayer';
 import { Ctx2DConsumer } from 'application/canvas/Ctx2DConsumer';
-import { createCanvasAnd2DContext } from 'application/canvas/createCanvas';
 import { Vec2 } from 'application/units';
+
 abstract class Ctx2DLayer extends Ctx2DConsumer implements ILayer {
   public abstract settings: LayerSettings;
   public abstract systemSettings: SystemLayerSettings;
-  constructor() {
-    super(createCanvasAnd2DContext().context);
+  constructor(fleshContext: CanvasRenderingContext2D) {
+    super(fleshContext);
   }
   public get canvas() {
     return this.getCanvas();
@@ -31,6 +31,7 @@ abstract class Ctx2DLayer extends Ctx2DConsumer implements ILayer {
   ): void {
     super.useContext2D(funcWhenDrawable, funcWhenNotDrawable);
   }
+
   public drawImage(souce: CanvasImageSource, location: Vec2): void;
   public drawImage(souce: CanvasImageSource, location: Vec2, resize: Vec2): void;
   public drawImage(
@@ -40,6 +41,7 @@ abstract class Ctx2DLayer extends Ctx2DConsumer implements ILayer {
     location: Vec2,
     resize: Vec2
   ): void;
+
   public drawImage(souce: CanvasImageSource, a: Vec2, b?: Vec2, c?: Vec2, d?: Vec2): void {
     if (b && c && d) {
       super.drawImage(souce, a, b, c, d);
@@ -53,6 +55,7 @@ abstract class Ctx2DLayer extends Ctx2DConsumer implements ILayer {
   public getImageData(location: Vec2, size: Vec2): ImageData {
     return super.getImageData(location, size);
   }
+
   public putImageData(imageData: ImageData, location: Vec2): void;
   public putImageData(imageData: ImageData, location: Vec2, croppingLocation: Vec2, croppingSize: Vec2): void;
   public putImageData(imageData: ImageData, location: Vec2, croppingLocation?: Vec2, croppingSize?: Vec2): void {
@@ -61,6 +64,10 @@ abstract class Ctx2DLayer extends Ctx2DConsumer implements ILayer {
     } else {
       super.putImageData(imageData, location);
     }
+  }
+  public editSettings(editItem: Partial<LayerSettingsParam>) {
+    this.settings = this.settings.cloneEdit(editItem);
+    return this;
   }
 }
 export { Ctx2DLayer };
