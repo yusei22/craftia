@@ -1,7 +1,6 @@
 import { LayerSettings, LayerSettingsParam } from '../../layer-settings/LayerSettings';
 import { SystemLayerSettings } from '../../layer-settings/SystemLayerSettings';
 import { Ctx2DConsumer } from 'application/canvas/Ctx2DConsumer';
-import { createCanvasAnd2DContext } from 'application/canvas/createCanvas';
 import { Layer } from 'application/types';
 import { Vec2 } from 'application/units';
 
@@ -19,8 +18,8 @@ class RasterizedBufferLayer extends Ctx2DConsumer {
   public get source() {
     return this.canvas;
   }
-  constructor(layer: Layer) {
-    super(createCanvasAnd2DContext().context);
+  constructor(fleshContext: CanvasRenderingContext2D, layer: Layer) {
+    super(fleshContext);
     this.setLayer(layer);
     this.settings = layer.settings.clone();
     this.originalSettings = layer.settings.clone();
@@ -45,6 +44,10 @@ class RasterizedBufferLayer extends Ctx2DConsumer {
   }
   public getImageData(location: Vec2, size: Vec2): ImageData {
     return super.getImageData(location, size);
+  }
+  public editSettings(editItem: Partial<LayerSettingsParam>) {
+    this.settings = this.settings.cloneEdit(editItem);
+    return this;
   }
 }
 export { RasterizedBufferLayer };
