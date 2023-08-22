@@ -1,11 +1,11 @@
-import { ILayerImageSource, MaskingLayer } from '../../layers-body';
+import { ILayerImageSource, MaskingLayer } from '../../../layers-body';
 import { ImageRenderer } from 'application/image-utils/ImageRenderer';
-import { Layer } from 'application/types';
+import { Layer, RasterizedLayer, SmartObjectLayer } from 'application/types';
 import { Vec2 } from 'application/units';
-class LayerBase64Encoder {
+class LayerDataURLEncoder {
   private renderer: ImageRenderer;
-  constructor() {
-    this.renderer = new ImageRenderer();
+  constructor(fleshContext: CanvasRenderingContext2D) {
+    this.renderer = new ImageRenderer(fleshContext);
   }
   private createDataURL(image: ILayerImageSource): string {
     this.renderer.clear();
@@ -26,10 +26,10 @@ class LayerBase64Encoder {
    * @param maskingLayer マスキングレイヤー
    * @returns マスキングソースのDataurl,オリジナルレイヤーのDataURL
    */
-  public exportMasking(maskingLayer: MaskingLayer) {
+  public exportMasking(maskingLayer: MaskingLayer<RasterizedLayer | SmartObjectLayer, RasterizedLayer>) {
     const maskData = this.createDataURL(maskingLayer.maskingSource.source);
     const layerData = this.createDataURL(maskingLayer.originalLayer.source);
     return { maskData, layerData };
   }
 }
-export { LayerBase64Encoder };
+export { LayerDataURLEncoder };
