@@ -3,8 +3,6 @@ import { LayerSettings } from '../../../layer-settings/LayerSettings';
 import { SystemLayerSettings } from '../../../layer-settings/SystemLayerSettings';
 import { createRasterizedImgBitmapLayer } from '../../rasterized/RasterizedImgBitmapLayer';
 import { createRasterizedImgElementLayer } from '../../rasterized/RasterizedImgElementLayer';
-import { createSmartImgBitmapLayer } from '../../smart-object/SmartImgBitmapLayer';
-import { createSmartImgElementLayer } from '../../smart-object/SmartImgElementLayer';
 import { WebGL2Layer } from '../WebGL2Layer';
 
 class RasterizedWebGL2Layer extends WebGL2Layer {
@@ -14,8 +12,8 @@ class RasterizedWebGL2Layer extends WebGL2Layer {
       resize: new Vec2(this.canvas.width, this.canvas.height),
     });
   }
-  constructor(settings: LayerSettings) {
-    super();
+  constructor(fleshGl2: WebGL2RenderingContext, settings: LayerSettings) {
+    super(fleshGl2);
     this.settings = settings.clone();
   }
   public viewportCanvas(size: Vec2): void {
@@ -27,13 +25,6 @@ class RasterizedWebGL2Layer extends WebGL2Layer {
   public createRasterizedImgElementLayer() {
     const dataURL = this.canvas.toDataURL();
     return createRasterizedImgElementLayer(dataURL, this.settings);
-  }
-  public createSmartImgBitmapLayer() {
-    return createSmartImgBitmapLayer(this.canvas, this.settings, this.systemSettings.resize);
-  }
-  public createSmartImgElementLayer() {
-    const dataURL = this.canvas.toDataURL();
-    return createSmartImgElementLayer(dataURL, this.settings, this.systemSettings.resize);
   }
 }
 export { RasterizedWebGL2Layer };
