@@ -1,4 +1,4 @@
-import { LayerSettings } from '../../layer-settings/LayerSettings';
+import { LayerSettings } from '../../../layer-settings/LayerSettings';
 import { EncodedLayer } from 'application/types';
 import { Vec2, Vec4 } from 'application/units';
 

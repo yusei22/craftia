@@ -1,5 +1,5 @@
-import { LayerSettings } from '../layer-settings/LayerSettings';
-import { RasterizedImgBitmapLayer, RasterizedImgElementLayer } from '../layers-body';
+import { LayerSettings } from '../layers/layer-settings/LayerSettings';
+import { RasterizedImgBitmapLayer, RasterizedImgElementLayer } from '../layers/layers-body';
 import { dataurlToImageBitmap, dataurlToImageElement } from './decodeDataurl';
 type DataURLtoRasterizedLayerParam = {
   dataurl: string;

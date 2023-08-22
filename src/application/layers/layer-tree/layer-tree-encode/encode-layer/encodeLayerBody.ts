@@ -1,3 +1,4 @@
+import { LayerDataURLEncoder } from '../encode-helper/LayerDataURLEncoder';
 import {
   EncodedLayerBody,
   MaskedLayer,
@@ -7,10 +8,9 @@ import {
   isRasterizedLayer,
   isSmartObjectLayer,
   Layer,
-} from '../../../types';
-import { LayerBase64Encoder } from '../encode-helper/LayerBase64Encoder';
+} from 'application/types';
 
-const encodeSmartObjectLayerBody = (layer: SmartObjectLayer, base64Exporter: LayerBase64Encoder): EncodedLayerBody => {
+const encodeSmartObjectLayerBody = (layer: SmartObjectLayer, base64Exporter: LayerDataURLEncoder): EncodedLayerBody => {
   const data = base64Exporter.export(layer);
 
   return {
@@ -20,7 +20,7 @@ const encodeSmartObjectLayerBody = (layer: SmartObjectLayer, base64Exporter: Lay
     resize: [layer.systemSettings.resize.x, layer.systemSettings.resize.y],
   };
 };
-const encodeRasterizedLayerBody = (layer: RasterizedLayer, base64Exporter: LayerBase64Encoder): EncodedLayerBody => {
+const encodeRasterizedLayerBody = (layer: RasterizedLayer, base64Exporter: LayerDataURLEncoder): EncodedLayerBody => {
   const data = base64Exporter.export(layer);
 
   return {
@@ -31,7 +31,7 @@ const encodeRasterizedLayerBody = (layer: RasterizedLayer, base64Exporter: Layer
   };
 };
 
-const encodeMaskedLayerBody = (layer: MaskedLayer, base64Exporter: LayerBase64Encoder): EncodedLayerBody => {
+const encodeMaskedLayerBody = (layer: MaskedLayer, base64Exporter: LayerDataURLEncoder): EncodedLayerBody => {
   const exportUnmaskedLayerBody = (layer: RasterizedLayer | SmartObjectLayer): EncodedLayerBody => {
     if (isRasterizedLayer(layer)) {
       return encodeRasterizedLayerBody(layer, base64Exporter);
@@ -64,7 +64,7 @@ const encodeMaskedLayerBody = (layer: MaskedLayer, base64Exporter: LayerBase64En
     },
   };
 };
-const encodeLayerBody = (layer: Layer, base64Exporter: LayerBase64Encoder): EncodedLayerBody => {
+const encodeLayerBody = (layer: Layer, base64Exporter: LayerDataURLEncoder): EncodedLayerBody => {
   if (isRasterizedLayer(layer)) {
     return encodeRasterizedLayerBody(layer, base64Exporter);
   }

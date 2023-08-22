@@ -3,6 +3,7 @@ import { LayerTree, EncodedLayer } from 'application/types';
 import { Vec2 } from 'application/units';
 
 function decodeLayerTree(
+  createCtx2DFunc: CreateCtx2DFunc,
   encodedLayerTree: EncodedLayer[],
   projectSize: Vec2,
   useImageBitmap: boolean
@@ -10,8 +11,8 @@ function decodeLayerTree(
   return Promise.all(
     encodedLayerTree.map(async (encodedLayer) => {
       return {
-        id: 0,
-        layer: await decodeLayer(encodedLayer, projectSize, useImageBitmap),
+        id: crypto.randomUUID(),
+        layer: await decodeLayer(createCtx2DFunc, encodedLayer, projectSize, useImageBitmap),
       };
     })
   );

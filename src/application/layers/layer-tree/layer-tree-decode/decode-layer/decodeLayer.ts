@@ -1,12 +1,17 @@
-import { dataURLtoRasterizedLayer } from '../../dataURL-manager/dataURLtoRasterizedLayer';
-import { dataURLtoSmartLayer } from '../../dataURL-manager/dataURLtoSmartLayer';
-import { LayerSettings } from '../../layer-settings/LayerSettings';
-import { EmptyLayer, MaskingLayer } from '../../layers-body';
+import { dataURLtoRasterizedLayer } from '../../../../dataURL/dataURLtoRasterizedLayer';
+import { LayerSettings } from '../../../layer-settings/LayerSettings';
+import { MaskingLayer } from '../../../layers-body';
 import { decodeLayerSettings } from './decodeLayerSettings';
+import { dataURLtoSmartLayer } from 'application/dataURL/dataURLtoSmartLayer';
 import { EncodedLayer, Layer } from 'application/types';
 import { Vec2 } from 'application/units';
 
-async function decodeLayer(encodedLayer: EncodedLayer, projectSize: Vec2, useImageBitmap: boolean): Promise<Layer> {
+async function decodeLayer(
+  createCtx2DFunc: CreateCtx2DFunc,
+  encodedLayer: EncodedLayer,
+  projectSize: Vec2,
+  useImageBitmap: boolean
+): Promise<Layer> {
   if (encodedLayer.masking) {
     const maskingSourceLayer = await dataURLtoRasterizedLayer({
       dataurl: encodedLayer.masking.imageData,
@@ -18,7 +23,7 @@ async function decodeLayer(encodedLayer: EncodedLayer, projectSize: Vec2, useIma
 
     const originalLayer = await decodeNotMaskedLayer(encodedLayer, useImageBitmap);
 
-    return new MaskingLayer(originalLayer, maskingSourceLayer, projectSize);
+    return new MaskingLayer(createCtx2DFunc(), originalLayer, maskingSourceLayer, projectSize);
   } else {
     return decodeNotMaskedLayer(encodedLayer, useImageBitmap);
   }
@@ -33,17 +38,12 @@ const decodeNotMaskedLayer = (encodedLayer: EncodedLayer, useImageBitmap: boolea
       settings: layerSettings,
       useImageBitmap: useImageBitmap,
     });
-  }
-  if (encodedLayer.type === 'smart-object') {
+  } else {
     return dataURLtoSmartLayer({
       dataurl: encodedLayer.imageData,
       settings: layerSettings,
       resize: new Vec2(encodedLayer.resize),
       useImageBitmap: useImageBitmap,
-    });
-  } else {
-    return new Promise<EmptyLayer>((resolve) => {
-      resolve(new EmptyLayer());
     });
   }
 };
