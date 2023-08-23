@@ -21,8 +21,8 @@ class RasterizedCtx2DLayer extends Ctx2DLayer {
     });
   }
 
-  constructor(fleshContext: CanvasRenderingContext2D, settings: LayerSettings, source?: ILayerImageSource) {
-    super(fleshContext);
+  constructor(context: CanvasRenderingContext2D, settings: LayerSettings, source?: ILayerImageSource) {
+    super(context);
     this.settings = settings.clone();
     if (source) {
       this.clear();

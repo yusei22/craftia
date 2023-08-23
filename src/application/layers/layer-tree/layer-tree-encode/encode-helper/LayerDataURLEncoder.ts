@@ -4,8 +4,8 @@ import { Layer, RasterizedLayer, SmartObjectLayer } from 'application/types';
 import { Vec2 } from 'application/units';
 class LayerDataURLEncoder {
   private renderer: ImageRenderer;
-  constructor(fleshContext: CanvasRenderingContext2D) {
-    this.renderer = new ImageRenderer(fleshContext);
+  constructor(context: CanvasRenderingContext2D) {
+    this.renderer = new ImageRenderer(context);
   }
   private createDataURL(image: ILayerImageSource): string {
     this.renderer.clear();

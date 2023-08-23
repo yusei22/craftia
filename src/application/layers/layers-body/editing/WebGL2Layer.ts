@@ -7,8 +7,8 @@ import { Vec4 } from 'application/units';
 abstract class WebGL2Layer extends WebGL2Consumer implements ILayer {
   public abstract settings: LayerSettings;
   public abstract systemSettings: SystemLayerSettings;
-  constructor(fleshGl2: WebGL2RenderingContext) {
-    super(fleshGl2);
+  constructor(gl2: WebGL2RenderingContext) {
+    super(gl2);
   }
   public get canvas() {
     return this.getCanvas();

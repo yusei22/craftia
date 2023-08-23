@@ -18,8 +18,8 @@ class RasterizedBufferLayer extends Ctx2DConsumer {
   public get source() {
     return this.canvas;
   }
-  constructor(fleshContext: CanvasRenderingContext2D, layer: Layer) {
-    super(fleshContext);
+  constructor(context: CanvasRenderingContext2D, layer: Layer) {
+    super(context);
     this.setLayer(layer);
     this.settings = layer.settings.clone();
     this.originalSettings = layer.settings.clone();

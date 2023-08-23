@@ -13,12 +13,12 @@ class SmartCtx2DLayer extends Ctx2DLayer {
     return this._systemSettings;
   }
   constructor(
-    fleshContext: CanvasRenderingContext2D,
+    context: CanvasRenderingContext2D,
     settings: LayerSettings,
     resize: Vec2,
     source?: ILayerImageSource
   ) {
-    super(fleshContext);
+    super(context);
     this.settings = settings.clone();
     this._systemSettings = new SystemLayerSettings({ resize: resize });
     if (source) {

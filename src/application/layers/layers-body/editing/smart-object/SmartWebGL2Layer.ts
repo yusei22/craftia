@@ -11,8 +11,8 @@ class SmartWebGL2Layer extends WebGL2Layer {
   get systemSettings() {
     return this._systemSettings;
   }
-  constructor(fleshGl2: WebGL2RenderingContext, settings: LayerSettings, resize: Vec2) {
-    super(fleshGl2);
+  constructor(gl2: WebGL2RenderingContext, settings: LayerSettings, resize: Vec2) {
+    super(gl2);
     this.settings = settings.clone();
     this._systemSettings = new SystemLayerSettings({ resize: resize });
   }

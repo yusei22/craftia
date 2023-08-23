@@ -7,8 +7,8 @@ import { Vec2 } from 'application/units';
 abstract class Ctx2DLayer extends Ctx2DConsumer implements ILayer {
   public abstract settings: LayerSettings;
   public abstract systemSettings: SystemLayerSettings;
-  constructor(fleshContext: CanvasRenderingContext2D) {
-    super(fleshContext);
+  constructor(context: CanvasRenderingContext2D) {
+    super(context);
   }
   public get canvas() {
     return this.getCanvas();

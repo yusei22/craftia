@@ -6,8 +6,8 @@ class EmptyLayer {
   public settings: LayerSettings;
   readonly source: HTMLCanvasElement;
   readonly systemSettings: SystemLayerSettings;
-  constructor(fleshContext: CanvasRenderingContext2D, layerSettings?: LayerSettings) {
-    this.source = fleshContext.canvas;
+  constructor(context: CanvasRenderingContext2D, layerSettings?: LayerSettings) {
+    this.source = context.canvas;
     this.source.width = 1;
     this.source.height = 1;
     this.settings = layerSettings ? layerSettings.clone() : new LayerSettings();

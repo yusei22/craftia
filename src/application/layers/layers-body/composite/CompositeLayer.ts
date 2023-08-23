@@ -16,8 +16,8 @@ class CompositeLayer implements ILayer {
   public get source() {
     return this.renderer.canvas;
   }
-  constructor(fleshContext: CanvasRenderingContext2D, settings: LayerSettings, size: Vec2) {
-    this.renderer = new LayerRenderer(fleshContext);
+  constructor(context: CanvasRenderingContext2D, settings: LayerSettings, size: Vec2) {
+    this.renderer = new LayerRenderer(context);
     this.renderer.viewport(size);
     this.settings = settings.clone();
   }

@@ -12,8 +12,8 @@ class RasterizedWebGL2Layer extends WebGL2Layer {
       resize: new Vec2(this.canvas.width, this.canvas.height),
     });
   }
-  constructor(fleshGl2: WebGL2RenderingContext, settings: LayerSettings) {
-    super(fleshGl2);
+  constructor(gl2: WebGL2RenderingContext, settings: LayerSettings) {
+    super(gl2);
     this.settings = settings.clone();
   }
   public viewportCanvas(size: Vec2): void {
