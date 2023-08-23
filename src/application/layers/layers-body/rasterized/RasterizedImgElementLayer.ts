@@ -1,8 +1,9 @@
-import { LayerSettings } from '../../layer-settings/LayerSettings';
+import { LayerSettings, LayerSettingsParam } from '../../layer-settings/LayerSettings';
 import { SystemLayerSettings } from '../../layer-settings/SystemLayerSettings';
 import { ILayer } from '../Ilayer';
 import { createImageElement } from 'application/image-utils/createImageElement';
 import { Vec2 } from 'application/units';
+
 class RasterizedImgElementLayer implements ILayer {
   readonly source: HTMLImageElement;
   public settings: LayerSettings;
@@ -19,6 +20,13 @@ class RasterizedImgElementLayer implements ILayer {
   }
   public cloneAsync(): Promise<RasterizedImgElementLayer> {
     return createRasterizedImgElementLayer(this.source.src, this.settings);
+  }
+  public shallowCopy() {
+    return new RasterizedImgElementLayer(this.source, this.settings);
+  }
+  public editSettings(editItem: Partial<LayerSettingsParam>) {
+    this.settings = this.settings.cloneEdit(editItem);
+    return this;
   }
 }
 async function createRasterizedImgElementLayer(
