@@ -6,6 +6,8 @@ import { EmptyLayer } from 'application/layers/layers-body/empty/EmptyLayer';
 import { RasterizedImgBitmapLayer } from 'application/layers/layers-body/rasterized/RasterizedImgBitmapLayer';
 import { RasterizedImgElementLayer } from 'application/layers/layers-body/rasterized/RasterizedImgElementLayer';
 
+type StaticRasterizedLayer = RasterizedImgBitmapLayer | RasterizedImgElementLayer;
+
 type RasterizedLayer =
   | RasterizedImgBitmapLayer
   | RasterizedImgElementLayer
@@ -28,5 +30,13 @@ function isRasterizedLayer(value: any): value is RasterizedLayer {
   }
   return false;
 }
-export type { RasterizedLayer };
-export { isRasterizedLayer };
+
+function isStaticRasterizedLayer(value: any): value is StaticRasterizedLayer {
+  if (value instanceof RasterizedImgBitmapLayer || value instanceof RasterizedImgElementLayer) {
+    return true;
+  }
+  return false;
+}
+
+export type { RasterizedLayer, StaticRasterizedLayer };
+export { isRasterizedLayer, isStaticRasterizedLayer };
