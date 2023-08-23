@@ -1,7 +1,8 @@
-import { LayerSettings } from '../../layer-settings/LayerSettings';
+import { LayerSettings, LayerSettingsParam } from '../../layer-settings/LayerSettings';
 import { SystemLayerSettings } from '../../layer-settings/SystemLayerSettings';
 import { ILayer } from '../Ilayer';
 import { Vec2 } from 'application/units';
+
 class RasterizedImgBitmapLayer implements ILayer {
   readonly source: ImageBitmap;
   public settings: LayerSettings;
@@ -22,6 +23,13 @@ class RasterizedImgBitmapLayer implements ILayer {
   public destroy(): void {
     this.source.close();
   }
+  public shallowCopy() {
+    return new RasterizedImgBitmapLayer(this.source, this.settings);
+  }
+  public editSettings(editItem: Partial<LayerSettingsParam>) {
+    this.settings = this.settings.cloneEdit(editItem);
+    return this;
+  }
 }
 async function createRasterizedImgBitmapLayer(
   source: ImageBitmapSource,
@@ -30,8 +38,8 @@ async function createRasterizedImgBitmapLayer(
   let imageBitmap: ImageBitmap;
   try {
     imageBitmap = await createImageBitmap(source);
-  } catch (e) {
-    throw Error('Failed to create RasterizedImgBitmapLayer ');
+  } catch (e: any) {
+    throw Error('Failed to create RasterizedImgBitmapLayer ' + e + source);
   }
   return new RasterizedImgBitmapLayer(imageBitmap, layerSettings);
 }
