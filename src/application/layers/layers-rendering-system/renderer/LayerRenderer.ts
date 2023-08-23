@@ -1,6 +1,5 @@
 import { renderLayerCtx2D } from './core/renderLayerCtx2D';
 import { Ctx2DConsumer } from 'application/canvas/Ctx2DConsumer';
-import { createCanvasAnd2DContext } from 'application/canvas/createCanvas';
 import { CroppingSettings, Layer } from 'application/types';
 import { Vec2 } from 'application/units';
 
@@ -9,8 +8,8 @@ type DrawSettings = {
   opacity?: number;
 };
 class LayerRenderer extends Ctx2DConsumer {
-  constructor(size?: Vec2) {
-    super(createCanvasAnd2DContext().context);
+  constructor(context: CanvasRenderingContext2D, size?: Vec2) {
+    super(context);
     if (size) this.viewport(size);
   }
   public get canvas() {
