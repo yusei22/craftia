@@ -1,8 +1,20 @@
 import { Layer } from './Layer';
+import { StaticMaskedLayer } from './MaskedLayer';
+import { StaticRasterizedLayer } from './RasterizedLayer';
+import { StaticSmartObjectLayer } from './SmartObjectLayer';
 
-type LayerTree = {
-  id: number;
+type LayerInfo = {
+  id: string;
   layer: Layer;
-}[];
+};
 
-export type { LayerTree };
+type LayerTree = LayerInfo[];
+
+type StaticLayerInfo = {
+  id: string;
+  layer: StaticRasterizedLayer | StaticSmartObjectLayer | StaticMaskedLayer;
+};
+
+type StaticLayerTree = StaticLayerInfo[];
+
+export type { LayerTree, LayerInfo, StaticLayerTree, StaticLayerInfo };
