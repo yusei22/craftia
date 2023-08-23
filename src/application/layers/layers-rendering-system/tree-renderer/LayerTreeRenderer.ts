@@ -8,9 +8,9 @@ class LayerTreeRenderer {
   public get result() {
     return this.layerRenderer.canvas;
   }
-  constructor(size: Vec2) {
-    this.cache = new LayersCache(size);
-    this.layerRenderer = new LayerRenderer(size);
+  constructor(rendererContext: CanvasRenderingContext2D, chacheContext: CanvasRenderingContext2D, size: Vec2) {
+    this.cache = new LayersCache(chacheContext, size);
+    this.layerRenderer = new LayerRenderer(rendererContext, size);
   }
   render(layerTree: LayerTree, changedRange?: LayersRange) {
     this.cache.changeLayers(
