@@ -1,8 +1,9 @@
-import { LayerSettings } from '../../layer-settings/LayerSettings';
+import { LayerSettings, LayerSettingsParam } from '../../layer-settings/LayerSettings';
 import { SystemLayerSettings } from '../../layer-settings/SystemLayerSettings';
 import { ILayer } from '../Ilayer';
 import { createImageElement } from 'application/image-utils/createImageElement';
 import { Vec2 } from 'application/units';
+
 class SmartImgElementLayer implements ILayer {
   readonly source: HTMLImageElement;
   public settings: LayerSettings;
@@ -20,6 +21,13 @@ class SmartImgElementLayer implements ILayer {
   }
   public changeResizeSettings(newSize: Vec2) {
     this._systemSettings = this._systemSettings.cloneEdit({ resize: newSize });
+  }
+  public shallowCopy() {
+    return new SmartImgElementLayer(this.source, this.settings, this._systemSettings.resize);
+  }
+  public editSettings(editItem: Partial<LayerSettingsParam>) {
+    this.settings = this.settings.cloneEdit(editItem);
+    return this;
   }
 }
 async function createSmartImgElementLayer(
