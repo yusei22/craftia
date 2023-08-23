@@ -10,8 +10,8 @@ class LayersCache {
   private layers: Layer[] = [];
   private composite: CompositeLayer;
   private cashRangeEndPoint: number;
-  constructor(size: Vec2) {
-    this.composite = new CompositeLayer(new LayerSettings(), size);
+  constructor(context: CanvasRenderingContext2D, size: Vec2) {
+    this.composite = new CompositeLayer(context, new LayerSettings(), size);
     this.cashRangeEndPoint = 0;
   }
   public get layersAfterOptimization(): Layer[] {
@@ -20,7 +20,7 @@ class LayersCache {
   }
   public changeLayers(newLayers: Layer[], differnce?: LayersRange) {
     this.layers = newLayers;
-    this.setFocusRange(differnce ?? { start: this.layers.length, end: this.layers.length });
+    this.setFocusRange(differnce ?? { start: newLayers.length, end: newLayers.length });
   }
   private clearCashe() {
     this.cashRangeEndPoint = 0;
