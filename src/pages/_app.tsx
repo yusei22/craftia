@@ -1,6 +1,8 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { createGlobalStyle } from 'styled-components';
+import { RecoilRoot } from 'recoil';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { theme } from 'themes';
 const GlobalStyle = createGlobalStyle`
 html,
 body,
@@ -40,7 +42,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta property="og:type" content="website" />
       </Head>
       <GlobalStyle />
-      <Component {...pageProps} />
+      <RecoilRoot>
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </RecoilRoot>
     </>
   );
 };
