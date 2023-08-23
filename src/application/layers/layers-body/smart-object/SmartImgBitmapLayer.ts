@@ -1,7 +1,8 @@
-import { LayerSettings } from '../../layer-settings/LayerSettings';
+import { LayerSettings, LayerSettingsParam } from '../../layer-settings/LayerSettings';
 import { SystemLayerSettings } from '../../layer-settings/SystemLayerSettings';
 import { ILayer } from '../Ilayer';
 import { Vec2 } from 'application/units';
+
 class SmartImgBitmapLayer implements ILayer {
   readonly source: ImageBitmap;
   public settings: LayerSettings;
@@ -22,6 +23,13 @@ class SmartImgBitmapLayer implements ILayer {
   }
   public destroy(): void {
     this.source.close();
+  }
+  public shallowCopy() {
+    return new SmartImgBitmapLayer(this.source, this.settings, this._systemSettings.resize);
+  }
+  public editSettings(editItem: Partial<LayerSettingsParam>) {
+    this.settings = this.settings.cloneEdit(editItem);
+    return this;
   }
 }
 async function createSmartImgBitmapLayer(
