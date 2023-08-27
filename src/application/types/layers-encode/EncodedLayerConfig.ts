@@ -11,16 +11,19 @@ type EncodedLayerSettings = {
     shadowBlur: number;
   } | null;
 };
+
 type EncodedLayerMaskingSettings = {
   imageData: string;
   opacity: number;
 } | null;
+
 type EncodedLayerBody = {
   imageData: string;
   type: 'smart-object' | 'rasterized';
   masking: EncodedLayerMaskingSettings;
   resize: AtLeastArray<2, number>;
 };
+
 type EncodedLayer = EncodedLayerBody & EncodedLayerSettings;
 
 export type { EncodedLayerSettings, EncodedLayerMaskingSettings, EncodedLayerBody, EncodedLayer };
