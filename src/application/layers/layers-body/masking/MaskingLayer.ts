@@ -35,9 +35,9 @@ class MaskingLayer<T extends MaskableLayer, U extends MaskingSource> extends Ctx
   private _systemSettings: SystemLayerSettings;
 
   private _context: CanvasRenderingContext2D;
-  constructor(fleshContext: CanvasRenderingContext2D, originalLayer: T, maskingSource: U, size: Vec2) {
-    super(fleshContext);
-    this._context = fleshContext;
+  constructor(context: CanvasRenderingContext2D, originalLayer: T, maskingSource: U, size: Vec2) {
+    super(context);
+    this._context = context;
 
     this.originalLayer = originalLayer;
     this.maskingSource = maskingSource;
