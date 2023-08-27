@@ -1,7 +1,7 @@
-import { MaskingLayer } from '../../layers-body';
 import { cloneRawToRasterizedStatic } from 'application/layers/layer-clone/cloneRawToRasterizedStatic';
 import { cloneRawToSmartObjectStatic } from 'application/layers/layer-clone/cloneRawToSmartObjectStatic/inidex';
 import { cloneToStatic } from 'application/layers/layer-clone/cloneToStatic';
+import { MaskingLayer } from '../../layers-body';
 import {
   Layer,
   LayerTree,
@@ -64,7 +64,6 @@ async function createStaticLayerTree(
   useImageBitmap: boolean
 ): Promise<StaticLayerTree> {
   return await Promise.all(
-
     layerTree.map(async (layerInfo) => {
       return {
         id: layerInfo.id,

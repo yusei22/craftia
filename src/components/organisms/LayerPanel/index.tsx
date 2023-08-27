@@ -1,8 +1,8 @@
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { cloneToStatic } from 'application/layers/layer-clone/cloneToStatic';
 import { memo, useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { cloneToStatic } from 'application/layers/layer-clone/cloneToStatic';
 import { getLayerIndexFromID } from 'application/layers/layer-tree/layer-tree-management/getLayerIndex';
 import { shallowCopyLayerTree } from 'application/layers/layer-tree/layer-tree-management/shallowCopyLayerTree';
 import { Layer } from 'application/types';
