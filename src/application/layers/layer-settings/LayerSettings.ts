@@ -56,6 +56,7 @@ class LayerSettings implements LayerSettingsParam {
       visible: editedSettings.visible ?? this.visible,
       blendMode: editedSettings.blendMode ?? this.blendMode,
       opacity: editedSettings.opacity ?? this.opacity,
+
       shadow:
         typeof editedSettings.shadow === 'undefined'
           ? cloneShadowSettings(this.shadow)
