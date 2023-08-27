@@ -9,6 +9,7 @@ class MultiTexturetEditor extends TextureEditor {
   private texture: Texture2D;
   public processTimes: number = 1;
   public listeners: Function[] = [];
+
   constructor(gl: WebGL2RenderingContext, texture: Texture2D, fragmentShader: TexRendererSader, location?: Vec2) {
     super(gl, texture.size, fragmentShader, location);
     this.texture = texture;
@@ -18,6 +19,7 @@ class MultiTexturetEditor extends TextureEditor {
   execute({ flipY = false, readPixcels = false }: { flipY?: boolean; readPixcels?: boolean } = {}) {
     let nextTexture: Texture2D = this.texture;
     let count = 0;
+
     for (let i = 0; i < this.processTimes - 1; i++) {
       this.offScreenRenderers[i % 2].activate();
       this.listeners[i]?.();
@@ -25,6 +27,7 @@ class MultiTexturetEditor extends TextureEditor {
         flipY: false,
         createPixcelsData: false,
       });
+
       nextTexture = this.offScreenRenderers[i % 2].resultTexture;
       count++;
     }

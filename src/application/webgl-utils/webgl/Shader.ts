@@ -17,16 +17,21 @@ class Shader {
       const info = 'Invalid shader type.';
       throw new Error(info);
     }
+
     this.type = type;
     const shader = gl.createShader(this.type) as WebGLShader;
+
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
+
     const ShaderCompileStatus = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+
     if (ShaderCompileStatus) {
       this.webGLShader = shader;
     } else {
       const info = gl.getShaderInfoLog(shader);
       gl.deleteShader(shader);
+
       throw Error(info + `shadertype:${this.type}`);
     }
   }

@@ -33,11 +33,14 @@ class TextureRenderer {
   private u_flipY: UniformFloat<number>;
   private u_texture: UniformInt<number>;
   public listener?: Function;
+
   constructor(gl: WebGL2RenderingContext, rendererSize: Vec2, fragmentShader: TexRendererSader, location?: Vec2) {
     this.gl = gl;
+
     const vertexShader = createVertexShader(this.gl, {
       v_textureCoordName: fragmentShader.varNames.textureCoordVarying,
     });
+
     this.program = new Program(this.gl, vertexShader, fragmentShader);
     this.vertexProvider = createVertexProvider(this.program, rendererSize.clone(), location ?? new Vec2(0, 0));
     this.u_texture = new UniformInt<number>(this.program, fragmentShader.varNames.textureUniform);
@@ -53,11 +56,13 @@ class TextureRenderer {
     texture.bind();
     this.u_texture.set(texture.unitNumber);
     this.u_resolution.set(new Vec2(this.gl.canvas.width, this.gl.canvas.height));
+
     if (flipY) {
       this.u_flipY.set(-1.0);
     } else {
       this.u_flipY.set(1.0);
     }
+
     this.listener?.();
     this.gl.drawElements(this.gl.TRIANGLES, this.vertexProvider.count, this.gl.UNSIGNED_SHORT, 0);
   }
@@ -73,15 +78,18 @@ class TextureRenderer {
 }
 function createVertexShader(gl: WebGL2RenderingContext, { v_textureCoordName }: { v_textureCoordName: string }) {
   const vertexShaderSource = /*glsl */ `#version 300 es
+
     in vec2 a_position;
     in vec2 a_textureCoord;
     uniform vec2 u_resolution;
     uniform float u_flipY;
     out vec2 ${v_textureCoordName};
+
     vec2 coordNormalize(vec2 pixcelCoord) {
         vec2 normalizedCoord=(pixcelCoord / u_resolution * 2.0) - 1.0;
         return normalizedCoord*vec2(1.0, u_flipY);
     }
+
     void main() {
         ${v_textureCoordName} = a_textureCoord;
         vec2 normalizedCoord =coordNormalize(a_position);
@@ -97,6 +105,7 @@ function createVertexArray(texSize: Vec2, location: Vec2) {
   const x2 = location.x + texSize.x;
   const y1 = location.y;
   const y2 = location.y + texSize.y;
+
   return new Float32Array([x1, y1, 0.0, 0.0, x1, y2, 0.0, 1.0, x2, y1, 1.0, 0.0, x2, y2, 1.0, 1.0]);
 }
 function createVertexProvider(program: Program, texSize: Vec2, texLocation: Vec2) {

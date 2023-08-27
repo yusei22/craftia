@@ -15,17 +15,21 @@ class SingleOffscreenTexEditor extends TextureEditor {
   execute({ flipY = false, readPixcels = false }: { flipY?: boolean; readPixcels?: boolean } = {}) {
     this.offScreenRenderer.activate();
     this.listener?.();
+
     const pixcelData: Uint8Array | undefined = this.processTexture(this.texture, {
       flipY: flipY,
       createPixcelsData: readPixcels,
     });
+
     this.offScreenRenderer.deactivate();
+
     return pixcelData;
   }
 }
 class SingleOnscreenTexEditor extends TextureEditor {
   public listener?: Function;
   private texture: Texture2D;
+
   constructor(gl: WebGL2RenderingContext, texture: Texture2D, fragmentShader: TexRendererSader, location?: Vec2) {
     super(gl, texture.size, fragmentShader, location);
     this.texture = texture;
@@ -33,6 +37,7 @@ class SingleOnscreenTexEditor extends TextureEditor {
   execute({ flipY = false, readPixcels = false }: { flipY?: boolean; readPixcels?: boolean } = {}) {
     OffScreenRenderer.toOnscreen(this.gl);
     this.listener?.();
+
     const pixcelData: Uint8Array | undefined = this.processTexture(this.texture, {
       flipY: flipY,
       createPixcelsData: readPixcels,

@@ -8,6 +8,7 @@ class VertexDataProvider {
   private ibo: IBO;
   private vbo: VBO;
   readonly count: number;
+
   constructor(gl: WebGL2RenderingContext, indexData: IndexBufferData, vertexData: VertexBuferData) {
     this.gl = gl;
     this.vao = new VAO(this.gl);
@@ -25,9 +26,11 @@ class VertexDataProvider {
     connectAttributes(this.gl, this.attributes);
     this.vao.unbind();
   }
+
   activate() {
     this.vao.bind();
   }
+
   deactivate() {
     this.vao.unbind();
   }

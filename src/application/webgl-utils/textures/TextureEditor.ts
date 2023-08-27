@@ -12,12 +12,14 @@ class TextureEditor {
   activate() {
     this.textureRenderer.activate();
   }
+
   protected processTexture(
     texture: Texture2D,
     { flipY, createPixcelsData }: { flipY: boolean; createPixcelsData: boolean }
   ) {
     let pixcelbuffer: Uint8Array | undefined;
     this.textureRenderer.draw(texture, { flipY: flipY });
+
     if (createPixcelsData) {
       pixcelbuffer = readPixels(texture);
     }
@@ -36,6 +38,7 @@ class TextureEditor {
 function readPixels(texture: Texture2D) {
   const gl = texture.gl;
   const pixcelbuffer = new Uint8Array(texture.size.x * texture.size.y * 4);
+
   gl.readPixels(0, 0, texture.size.x, texture.size.y, gl.RGBA, gl.UNSIGNED_BYTE, pixcelbuffer);
   return pixcelbuffer;
 }
