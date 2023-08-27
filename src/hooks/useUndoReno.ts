@@ -10,7 +10,7 @@ type Param = {
 };
 
 type UndoReno = {
-  useSaver: () => (createCtx2DFunc: CreateCtx2DFunc, value: LayerTree) => Promise<StaticLayerTree>;
+  useSaver: () => (value: StaticLayerTree) => StaticLayerTree;
   useUndo: () => () => StaticLayerTree | undefined;
   useReno: () => () => StaticLayerTree | undefined;
   useCurrentValue: () => StaticLayerTree;
@@ -40,16 +40,17 @@ function useLayerTreeUndoRedo({ key, defualt, storageLength, useImageBitmap }: P
   }
   function useSaver() {
     const [currentValue, setCurrent] = useRecoilState(current);
-    return async (createCtx2DFunc: CreateCtx2DFunc, value: LayerTree) => {
+    return (value: StaticLayerTree) => {
       history.past = [...history.past, currentValue];
       history.future = [];
-      const current = await createStaticLayerTree(value, createCtx2DFunc, useImageBitmap);
-      setCurrent(current);
+
+      setCurrent(value);
 
       if (isOverCapacity()) {
         history.past.shift();
       }
-      return current;
+
+      return value;
     };
   }
   function useUndo() {
@@ -67,7 +68,7 @@ function useLayerTreeUndoRedo({ key, defualt, storageLength, useImageBitmap }: P
     const [currentValue, setCurrent] = useRecoilState(current);
     return () => {
       if (history.future.length < 0) return;
-      
+
       history.past = [...history.past, currentValue];
       const current = history.future.shift() as StaticLayerTree;
       setCurrent(current);
