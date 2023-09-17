@@ -1,0 +1,3 @@
+class LayersCache {
+    constructor() {}
+}
