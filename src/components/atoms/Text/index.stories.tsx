@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Text from './index';
 
 const meta = {
-  title: 'Atoms/Text',
-  component: Text,
-  tags: ['autodocs'],
+    title: 'Atoms/Text',
+    component: Text,
+    tags: ['autodocs'],
 } satisfies Meta<typeof Text>;
 
 export default meta;
@@ -22,41 +22,41 @@ Various versions have evolved over the years, sometimes by accident,
 sometimes on purpose(injected humour and the like).`;
 
 export const ExtraSmall: Story = {
-  args: {
-    children: longText,
-    $variant: 'extraSmall',
-  },
+    args: {
+        children: longText,
+        $variant: 'extraSmall',
+    },
 };
 export const Small: Story = {
-  args: {
-    children: longText,
-    $variant: 'small',
-  },
+    args: {
+        children: longText,
+        $variant: 'small',
+    },
 };
 
 export const Medium: Story = {
-  args: {
-    children: longText,
-    $variant: 'medium',
-  },
+    args: {
+        children: longText,
+        $variant: 'medium',
+    },
 };
 export const MediumLarge: Story = {
-  args: {
-    children: longText,
-    $variant: 'mediumLarge',
-  },
+    args: {
+        children: longText,
+        $variant: 'mediumLarge',
+    },
 };
 
 export const Large: Story = {
-  args: {
-    children: longText,
-    $variant: 'large',
-  },
+    args: {
+        children: longText,
+        $variant: 'large',
+    },
 };
 
 export const ExtraLarge: Story = {
-  args: {
-    children: longText,
-    $variant: 'extraLarge',
-  },
+    args: {
+        children: longText,
+        $variant: 'extraLarge',
+    },
 };

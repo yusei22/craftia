@@ -5,9 +5,9 @@ import lineHeights from './lineHeights';
 import space from './space';
 
 export const theme = {
-  space,
-  fontSizes,
-  letterSpacings,
-  lineHeights,
-  colors,
+    space,
+    fontSizes,
+    letterSpacings,
+    lineHeights,
+    colors,
 } as const;

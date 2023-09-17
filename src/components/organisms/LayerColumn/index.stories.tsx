@@ -4,16 +4,16 @@ import { LayerTreeRoot } from '../LayerTreeRoot';
 import { LayerColumn } from '.';
 
 const meta = {
-  title: 'organisms/Button',
-  component: LayerColumn,
-  tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <RecoilRoot>
-        <Story />
-      </RecoilRoot>
-    ),
-  ],
+    title: 'organisms/Button',
+    component: LayerColumn,
+    tags: ['autodocs'],
+    decorators: [
+        (Story) => (
+            <RecoilRoot>
+                <Story />
+            </RecoilRoot>
+        ),
+    ],
 } satisfies Meta<typeof LayerColumn>;
 
 export default meta;
@@ -21,13 +21,13 @@ export default meta;
 type Story = StoryObj<typeof LayerColumn>;
 
 export const Primary: Story = {
-  render: () => {
-    return (
-      <>
-        <LayerTreeRoot>
-          <LayerColumn />
-        </LayerTreeRoot>
-      </>
-    );
-  },
+    render: () => {
+        return (
+            <>
+                <LayerTreeRoot>
+                    <LayerColumn />
+                </LayerTreeRoot>
+            </>
+        );
+    },
 };
