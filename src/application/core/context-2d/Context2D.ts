@@ -35,9 +35,13 @@ type ContextShadowConfig = {
 }
 
 type ContextLineConfig = {
+    /**線の端点*/
     readonly lineCap: CanvasLineCap | null,
+    /**破線のオフセット */
     readonly lineDashOffset: number | null,
+    /**線接合の形状 */
     readonly lineJoin: CanvasLineJoin | null,
+    /**線の太さ */
     readonly lineWidth: number | null,
 }
 
