@@ -16,58 +16,57 @@ type Context2DAttr =
     | 'shadowOffsetY'
     | 'strokeStyle'
     | 'textAlign'
-    | 'textBaseline'
-type Repetition =
-    | "repeat"
-    | "repeat-x"
-    | "repeat-y"
-    | "no-repeat"
+    | 'textBaseline';
+type Repetition = 'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat';
 
 type Context2DValue<T extends Context2DAttr> = CanvasRenderingContext2D[T];
 
 type Context2DMap = {
     [K in Context2DAttr]: Context2DValue<K>;
 };
+
 type ContextShadowConfig = {
-    readonly shadowBlur: number | null,
-    readonly shadowColor: string | null,
-    readonly shadowOffset: Vec2 | null,
-}
+    readonly shadowBlur: number | null;
+    readonly shadowColor: string | null;
+    readonly shadowOffset: Vec2 | null;
+};
 
 type ContextLineConfig = {
     /**線の端点*/
-    readonly lineCap: CanvasLineCap | null,
+    readonly lineCap: CanvasLineCap | null;
     /**破線のオフセット */
-    readonly lineDashOffset: number | null,
+    readonly lineDashOffset: number | null;
     /**線接合の形状 */
-    readonly lineJoin: CanvasLineJoin | null,
+    readonly lineJoin: CanvasLineJoin | null;
     /**線の太さ */
-    readonly lineWidth: number | null,
-}
+    readonly lineWidth: number | null;
+};
 
 type ContextTextConfig = {
-    readonly font: string | null,
-    readonly textAlign: CanvasTextAlign | null,
-    readonly textBaseline: CanvasTextBaseline | null,
-}
+    readonly font: string | null;
+    readonly textAlign: CanvasTextAlign | null;
+    readonly textBaseline: CanvasTextBaseline | null;
+};
+
 const CONTEXT_ATTRS_DEFAULT: Context2DMap = {
-    'fillStyle': '#000',
-    'font': '10px serif',
-    'globalAlpha': 1.0,
-    'globalCompositeOperation': 'source-over',
-    'lineCap': "butt",
-    'lineDashOffset': 0.0,
-    'lineJoin': "miter",
-    'lineWidth': 1.0,
-    'miterLimit': 10.0,
-    'shadowBlur': 0,
-    'shadowColor': '#0000',
-    'shadowOffsetX': 0,
-    'shadowOffsetY': 0,
-    'strokeStyle': '#000',
-    'textAlign': "start",
-    'textBaseline': "alphabetic",
-} as const
+    fillStyle: '#000',
+    font: '10px serif',
+    globalAlpha: 1.0,
+    globalCompositeOperation: 'source-over',
+    lineCap: 'butt',
+    lineDashOffset: 0.0,
+    lineJoin: 'miter',
+    lineWidth: 1.0,
+    miterLimit: 10.0,
+    shadowBlur: 0,
+    shadowColor: '#0000',
+    shadowOffsetX: 0,
+    shadowOffsetY: 0,
+    strokeStyle: '#000',
+    textAlign: 'start',
+    textBaseline: 'alphabetic',
+} as const;
+
 class Context2D {
     protected canvas: HTMLCanvasElement;
     protected context: CanvasRenderingContext2D;
@@ -96,7 +95,7 @@ class Context2D {
      * canvasをクリア
      */
     public clear(): this {
-        this.clearRect(new Vec2(0, 0), this.size)
+        this.clearRect(new Vec2(0, 0), this.size);
         return this;
     }
     /**
@@ -107,7 +106,13 @@ class Context2D {
      * @param endAngle 終了角度
      * @param counterclockwise 反時計回りか
      */
-    public arc(centerPoint: Vec2, radius: number, startAngle: number, endAngle: number, counterclockwise?: boolean): this {
+    public arc(
+        centerPoint: Vec2,
+        radius: number,
+        startAngle: number,
+        endAngle: number,
+        counterclockwise?: boolean
+    ): this {
         this.context.arc(centerPoint.x, centerPoint.y, radius, startAngle, endAngle, counterclockwise);
         return this;
     }
@@ -142,7 +147,7 @@ class Context2D {
             middlePoint.y,
             endPoint.x,
             endPoint.y
-        )
+        );
         return this;
     }
     /**
@@ -159,14 +164,14 @@ class Context2D {
      * @param path クリッピング領域として使用するパス
      * @param fillRule クリッピングアルゴリズム
      */
-    public clip(path: Path2D, fillRule?: CanvasFillRule): this
-    public clip(fillRule?: CanvasFillRule): this
+    public clip(path: Path2D, fillRule?: CanvasFillRule): this;
+    public clip(fillRule?: CanvasFillRule): this;
     public clip(a?: Path2D | CanvasFillRule, b?: CanvasFillRule): this {
         if (a instanceof Path2D) {
-            this.context.clip(a, b)
+            this.context.clip(a, b);
             return this;
         } else {
-            this.context.clip(a)
+            this.context.clip(a);
             return this;
         }
     }
@@ -186,8 +191,20 @@ class Context2D {
      * @param endPoint 終点となる円の座標
      * @param endRound 終点となる円のサイズ
      */
-    public createRadialGradient(startPoint: Vec2, startRound: number, endPoint: Vec2, endRound: number): this {
-        this.context.createRadialGradient(startPoint.x, startPoint.y, startRound, endPoint.x, endPoint.y, endRound);
+    public createRadialGradient(
+        startPoint: Vec2,
+        startRound: number,
+        endPoint: Vec2,
+        endRound: number
+    ): this {
+        this.context.createRadialGradient(
+            startPoint.x,
+            startPoint.y,
+            startRound,
+            endPoint.x,
+            endPoint.y,
+            endRound
+        );
         return this;
     }
     /**
@@ -261,7 +278,7 @@ class Context2D {
             startAngle,
             endAngle,
             counterclockwise
-        )
+        );
         return this;
     }
     /**
@@ -269,14 +286,14 @@ class Context2D {
      * @param path パス
      * @param fillRule 塗りつぶしアルゴリズム
      */
-    public fill(path: Path2D, fillRule?: CanvasFillRule): this
-    public fill(fillRule?: CanvasFillRule): this
+    public fill(path: Path2D, fillRule?: CanvasFillRule): this;
+    public fill(fillRule?: CanvasFillRule): this;
     public fill(a?: Path2D | CanvasFillRule, b?: CanvasFillRule): this {
         if (a instanceof Path2D) {
-            this.context.fill(a, b)
+            this.context.fill(a, b);
             return this;
         } else {
-            this.context.fill(a)
+            this.context.fill(a);
             return this;
         }
     }
@@ -310,7 +327,7 @@ class Context2D {
     }
     /**
      * 現在の破線パターンを取得
-     * @returns 
+     * @returns
      */
     public getLineDash(): number[] {
         return this.context.getLineDash();
@@ -328,8 +345,8 @@ class Context2D {
      * @param location 位置
      * @param fillRule 塗りつぶしアルゴリズム
      */
-    public isPointInPath(path: Path2D, location: Vec2, fillRule?: CanvasFillRule): boolean
-    public isPointInPath(location: Vec2, fillRule?: CanvasFillRule): boolean
+    public isPointInPath(path: Path2D, location: Vec2, fillRule?: CanvasFillRule): boolean;
+    public isPointInPath(location: Vec2, fillRule?: CanvasFillRule): boolean;
     public isPointInPath(a: Vec2 | Path2D, b?: CanvasFillRule | Vec2, c?: CanvasFillRule): boolean {
         if (a instanceof Path2D && b instanceof Vec2) {
             return this.context.isPointInPath(a, b.x, b.y, c);
@@ -342,16 +359,16 @@ class Context2D {
     /**
      * 指定された点がパスのストロークに含まれる領域内にあるかどうかを取得
      * @param path パス
-     * @param location 位置 
+     * @param location 位置
      */
-    public isPointInStroke(path: Path2D, location: Vec2): boolean
-    public isPointInStroke(location: Vec2): boolean
+    public isPointInStroke(path: Path2D, location: Vec2): boolean;
+    public isPointInStroke(location: Vec2): boolean;
     public isPointInStroke(a: Path2D | Vec2, b?: Vec2): boolean {
         if (a instanceof Vec2) {
-            return this.context.isPointInStroke(a.x, a.y)
+            return this.context.isPointInStroke(a.x, a.y);
         }
         if (a instanceof Path2D && b) {
-            return this.context.isPointInStroke(a, b.x, b.y)
+            return this.context.isPointInStroke(a, b.x, b.y);
         }
         return false;
     }
@@ -360,7 +377,7 @@ class Context2D {
      * @param point 位置
      */
     public lineTo(point: Vec2): this {
-        this.context.lineTo(point.x, point.y)
+        this.context.lineTo(point.x, point.y);
         return this;
     }
     /**
@@ -369,7 +386,7 @@ class Context2D {
      * @returns オブジェクト`TextMetrics`
      */
     public measureText(text: string): TextMetrics {
-        return this.context.measureText(text)
+        return this.context.measureText(text);
     }
     /**
      * 新しいサブパスを開始
@@ -446,7 +463,7 @@ class Context2D {
     }
     /**
      * 変換行列に回転を追加
-     * @param angle 
+     * @param angle
      */
     public rotate(angle: number): this {
         this.context.rotate(angle);
@@ -480,10 +497,10 @@ class Context2D {
     }
     /**
      * スケーリング変換行列を追加
-     * @param magnification 
+     * @param magnification
      */
     public scale(magnification: Vec2): this {
-        this.context.scale(magnification.x, magnification.y)
+        this.context.scale(magnification.x, magnification.y);
         return this;
     }
     /**
@@ -491,17 +508,17 @@ class Context2D {
      * @param segments 線とギャップを交互に描画する距離
      */
     public setLineDash(segments: Iterable<number>): this {
-        this.context.setLineDash(segments)
+        this.context.setLineDash(segments);
         return this;
     }
     /**
      * 変換行列を設定
-     * @param a 
-     * @param b 
-     * @param c 
-     * @param d 
-     * @param e 
-     * @param f 
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @param e
+     * @param f
      */
     public setTransform(a: number, b: number, c: number, d: number, e: number, f: number): this {
         this.context.setTransform(a, b, c, d, e, f);
@@ -525,7 +542,7 @@ class Context2D {
      * @param size サイズ
      */
     public strokeRect(startPoint: Vec2, size: Vec2): this {
-        this.context.strokeRect(startPoint.x, startPoint.y, size.x, size.y)
+        this.context.strokeRect(startPoint.x, startPoint.y, size.x, size.y);
         return this;
     }
     /**
@@ -535,28 +552,28 @@ class Context2D {
      * @param maxWidth 最大横幅
      */
     public strokeText(text: string, startPoint: Vec2, maxWidth?: number): this {
-        this.context.strokeText(text, startPoint.x, startPoint.y, maxWidth)
+        this.context.strokeText(text, startPoint.x, startPoint.y, maxWidth);
         return this;
     }
     /**
      * 変換行列を乗算
-     * @param a 
-     * @param b 
-     * @param c 
-     * @param d 
-     * @param e 
-     * @param f 
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @param e
+     * @param f
      */
     public transform(a: number, b: number, c: number, d: number, e: number, f: number): this {
-        this.context.transform(a, b, c, d, e, f)
+        this.context.transform(a, b, c, d, e, f);
         return this;
     }
     /**
      * 平行移動変換行列追加
-     * @param translate 移動量 
+     * @param translate 移動量
      */
     public translate(translate: Vec2): this {
-        this.context.translate(translate.x, translate.y)
+        this.context.translate(translate.x, translate.y);
         return this;
     }
     /**
@@ -569,32 +586,26 @@ class Context2D {
     /**
      * 影を設定
      * @param shadowConfig 影の設定情報(`null`をセットするとデフォルト値が使用される)
-     * @returns 
+     * @returns
      */
     public setShadowConfig(shadowConfig: ContextShadowConfig | null): this {
         if (shadowConfig === null) {
-            this.setAttr('shadowColor', CONTEXT_ATTRS_DEFAULT.shadowColor)
+            this.setAttr('shadowColor', CONTEXT_ATTRS_DEFAULT.shadowColor);
             this.setAttr('shadowBlur', CONTEXT_ATTRS_DEFAULT.shadowBlur);
-            this.setAttr('shadowOffsetX', CONTEXT_ATTRS_DEFAULT.shadowOffsetX)
-            this.setAttr('shadowOffsetY', CONTEXT_ATTRS_DEFAULT.shadowOffsetY)
+            this.setAttr('shadowOffsetX', CONTEXT_ATTRS_DEFAULT.shadowOffsetX);
+            this.setAttr('shadowOffsetY', CONTEXT_ATTRS_DEFAULT.shadowOffsetY);
             return this;
         }
-        this.setAttr('shadowColor', shadowConfig.shadowColor ?? CONTEXT_ATTRS_DEFAULT.shadowColor)
+        this.setAttr('shadowColor', shadowConfig.shadowColor ?? CONTEXT_ATTRS_DEFAULT.shadowColor);
         this.setAttr('shadowBlur', shadowConfig.shadowBlur ?? CONTEXT_ATTRS_DEFAULT.shadowBlur);
-        this.setAttr(
-            'shadowOffsetX',
-            shadowConfig.shadowOffset?.x ?? CONTEXT_ATTRS_DEFAULT.shadowOffsetX
-        )
-        this.setAttr(
-            'shadowOffsetY',
-            shadowConfig.shadowOffset?.y ?? CONTEXT_ATTRS_DEFAULT.shadowOffsetY
-        )
+        this.setAttr('shadowOffsetX', shadowConfig.shadowOffset?.x ?? CONTEXT_ATTRS_DEFAULT.shadowOffsetX);
+        this.setAttr('shadowOffsetY', shadowConfig.shadowOffset?.y ?? CONTEXT_ATTRS_DEFAULT.shadowOffsetY);
         return this;
     }
     /**
      * ラインを設定
      * @param lineConfig ラインの設定情報(`null`をセットするとデフォルト値が使用される)
-     * @returns 
+     * @returns
      */
     public setLineConfig(lineConfig: ContextLineConfig | null): this {
         if (lineConfig === null) {
@@ -605,10 +616,7 @@ class Context2D {
             return this;
         }
         this.setAttr('lineCap', lineConfig.lineCap ?? CONTEXT_ATTRS_DEFAULT.lineCap);
-        this.setAttr(
-            'lineDashOffset',
-            lineConfig.lineDashOffset ?? CONTEXT_ATTRS_DEFAULT.lineDashOffset
-        );
+        this.setAttr('lineDashOffset', lineConfig.lineDashOffset ?? CONTEXT_ATTRS_DEFAULT.lineDashOffset);
         this.setAttr('lineJoin', lineConfig.lineJoin ?? CONTEXT_ATTRS_DEFAULT.lineJoin);
         this.setAttr('lineWidth', lineConfig.lineWidth ?? CONTEXT_ATTRS_DEFAULT.lineWidth);
         return this;
@@ -616,7 +624,7 @@ class Context2D {
     /**
      * テキストを設定
      * @param textConfig テキストの設定情報(`null`をセットするとデフォルト値が使用される)
-     * @returns 
+     * @returns
      */
     public setTextConfig(textConfig: ContextTextConfig | null): this {
         if (textConfig === null) {
@@ -633,7 +641,7 @@ class Context2D {
     /**
      * 塗りつぶしのスタイルを設定
      * @param fillStyle 塗りつぶしスタイル(`null`をセットするとデフォルト値が使用される)
-     * @returns 
+     * @returns
      */
     public setFillStyle(fillStyle: string | CanvasGradient | CanvasPattern | null): this {
         if (fillStyle === null) {
@@ -646,7 +654,7 @@ class Context2D {
     /**
      * 透明度を指定
      * @param globalAlpha 透明度(`null`をセットするとデフォルト値が使用される)
-     * @returns 
+     * @returns
      */
     public setGlobalAlpha(globalAlpha: number | null): this {
         if (globalAlpha === null) {
@@ -659,7 +667,7 @@ class Context2D {
     /**
      * ブレンドモードを設定
      * @param value ブレンドモード(`null`をセットするとデフォルト値が使用される)
-     * @returns 
+     * @returns
      */
     public setGlobalCompositeOperation(value: GlobalCompositeOperation | null): this {
         if (value === null) {
@@ -672,7 +680,7 @@ class Context2D {
     /**
      * 枠線のスタイルを設定
      * @param value 枠線のスタイル
-     * @returns 
+     * @returns
      */
     public setStrokeStyle(value: string | CanvasGradient | CanvasPattern | null): this {
         if (value === null) {
@@ -695,13 +703,13 @@ function createCanvasAndContext2D(): [HTMLCanvasElement, CanvasRenderingContext2
 
 function isDrawableSource(source: CanvasImageSource): boolean {
     if (source instanceof VideoFrame) {
-        if (source.codedWidth > 0 && source.codedHeight > 0) return true;
-    } else if (source instanceof SVGImageElement) {
-        if (source.width.animVal.value > 0 && source.height.animVal.value > 0) return true;
-    } else {
-        if (source.width > 0 && source.height > 0) return true;
+        return source.codedWidth > 0 && source.codedHeight > 0;
     }
-    return false;
+    if (source instanceof SVGImageElement) {
+        return source.width.animVal.value > 0 && source.height.animVal.value > 0;
+    }
+    return source.width > 0 && source.height > 0;
 }
-export type { Context2DAttr, Context2DMap, ContextLineConfig, ContextShadowConfig, ContextTextConfig }
+
+export type { Context2DAttr, Context2DMap, ContextLineConfig, ContextShadowConfig, ContextTextConfig };
 export { Context2D, CONTEXT_ATTRS_DEFAULT };
