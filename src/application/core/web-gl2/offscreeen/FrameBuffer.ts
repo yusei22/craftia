@@ -1,9 +1,9 @@
 /**WebGLFramebufferを管理するクラス */
 class FrameBuffer {
     /** WebGL2のコンテキスト*/
-    readonly gl: WebGL2RenderingContext;
+    private gl: WebGL2RenderingContext;
     /**内包するWebGLFramebuffer */
-    readonly webGLFramebuffer: WebGLFramebuffer | null;
+    private webGLFramebuffer: WebGLFramebuffer | null;
 
     /**
      * @param gl  WebGL2のコンテキスト
@@ -14,12 +14,12 @@ class FrameBuffer {
     }
 
     /**バインドする */
-    bind() {
+    public bind() {
         this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.webGLFramebuffer);
     }
 
     /**既定のフレームバッファを使う。（キャンバスにレンダリングされるようになる） */
-    unbind() {
+    public unbind() {
         this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
     }
     static bindDefaultFrameBuffer(gl: WebGL2RenderingContext) {
