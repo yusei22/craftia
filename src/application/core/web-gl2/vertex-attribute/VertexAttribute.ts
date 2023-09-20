@@ -1,12 +1,7 @@
-import { Program } from '../program/Program';
-
 /**
  * WebGLの頂点属性を管理するクラス
  */
-class VertexAttribute<T extends string = string> {
-    readonly gl: WebGL2RenderingContext;
-    /**変数の名前 */
-    readonly name: T;
+class VertexAttribute<Name extends string = string> {
     /**Attribute変数の位置 */
     readonly location: GLenum;
     /**頂点属性あたりの要素数 */
@@ -23,18 +18,16 @@ class VertexAttribute<T extends string = string> {
      * @param stride 連続する頂点属性の始端どうしの間にある、オフセット数
      * @param offset 頂点属性配列の最初の要素のオフセット
      */
-    constructor(program: Program, name: T, size: number, stride: number, offset: number) {
-        this.name = name;
-        this.location = program.getAttribLocation(this.name);
+    constructor(location: GLenum, size: number, stride: number, offset: number) {
+        this.location = location;
         this.size = size;
         this.stride = stride;
         this.offset = offset;
-        this.gl = program.gl;
     }
 
-    public setPointer() {
-        this.gl.enableVertexAttribArray(this.location);
-        this.gl.vertexAttribPointer(this.location, this.size, this.gl.FLOAT, false, this.stride, this.offset);
+    public setPointer(gl2: WebGL2RenderingContext) {
+        gl2.enableVertexAttribArray(this.location);
+        gl2.vertexAttribPointer(this.location, this.size, gl2.FLOAT, false, this.stride, this.offset);
     }
 }
 export { VertexAttribute };
