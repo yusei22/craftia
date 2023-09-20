@@ -6,7 +6,7 @@ export class OffscreenRenderer {
     /**レンダラのサイズ*/
     readonly size: Vec2;
     /**webgl2コンテクスト */
-    readonly gl: WebGL2RenderingContext;
+    private gl: WebGL2RenderingContext;
     /**フレームバッファ */
     private frameBuffer: FrameBuffer;
 
