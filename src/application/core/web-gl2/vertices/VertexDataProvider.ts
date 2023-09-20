@@ -11,18 +11,19 @@ class VertexDataProvider {
     public get bufferElementCount() {
         return this.ibo.length;
     }
-    private gl: WebGL2RenderingContext;
+    private gl2: WebGL2RenderingContext;
     private vao: VertexArray;
     private ibo: IndexBuffer;
     private vbo: VertexBufer;
     private attributes: VertexAttribute[] = [];
     constructor(gl: WebGL2RenderingContext, indexData: IndexBufferData, vertexData: VertexBuferData) {
-        this.gl = gl;
-        this.vao = new VertexArray(this.gl);
-        this.ibo = new IndexBuffer(this.gl).setData(indexData);
-        this.vbo = new VertexBufer(this.gl).setData(vertexData);
+        this.gl2 = gl;
+        this.vao = new VertexArray(this.gl2);
+        this.ibo = new IndexBuffer(this.gl2).setData(indexData);
+        this.vbo = new VertexBufer(this.gl2).setData(vertexData);
         return this;
     }
+
     public activate() {
         this.vao.bind();
         return this;
@@ -37,10 +38,10 @@ class VertexDataProvider {
     }
     public transfer() {
         this.vao.bind();
-        this.vbo.bind();
         this.ibo.bind();
+        this.vbo.bind();
         this.attributes.forEach((attribute) => {
-            attribute.setPointer();
+            attribute.setPointer(this.gl2);
         });
         this.vao.unbind();
         return this;
