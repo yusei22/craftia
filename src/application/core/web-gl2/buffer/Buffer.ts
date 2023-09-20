@@ -28,6 +28,7 @@ class Buffer {
      * @param bufferData セットするデータ
      */
     public setData(bufferData: BufferSource) {
+        this.gl.bindVertexArray(null);
         this.bind();
         this.gl.bufferData(this.type, bufferData, this.usage);
         this.unbind();
