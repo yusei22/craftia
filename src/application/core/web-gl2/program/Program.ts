@@ -4,12 +4,11 @@ import { FragmentShader, VertexShader } from '../shader';
  * ソースをコンパイルしたWebGLProgramを保持。
  */
 class Program {
-    readonly webGLprogram: WebGLProgram;
     readonly gl: WebGL2RenderingContext;
+    private webGLprogram: WebGLProgram;
     private vertexShader: VertexShader;
     private fragmentShader: FragmentShader;
     /**
-     *
      * @param gl WebGL2のコンストラクター
      * @param vertexShader `gzVertexShader`インスタンス
      * @param fragmentShader `gzFragmentShader`インスタンス
