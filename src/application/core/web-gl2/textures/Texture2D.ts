@@ -20,17 +20,21 @@ type TexImageSource = HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | 
 type TexTypedArray = Uint8Array | Uint16Array | Uint32Array | Float32Array | null;
 /**テクスチャに利用できるピクセルソース */
 type TexPixcels = TexImageSource | TexTypedArray;
+type TexPixcelsOptions = {
+    enableNPOT?: boolean;
+    repeat?: boolean;
+    yCoordinateInversion?: boolean;
+};
 /**
  * WegGLの型付き配列テクスチャを管理するクラス。
  */
 class Texture2D {
     /**テクスチャのサイズ */
-    public size: Vec2 = new Vec2(0, 0);
-
+    private _size: Vec2 = new Vec2(0, 0);
     /**WebGL2のコンテキスト */
-    readonly gl: WebGL2RenderingContext;
+    private gl: WebGL2RenderingContext;
     /**内包する`WebGLTexture` */
-    readonly webGLTexture: WebGLTexture;
+    private webGLTexture: WebGLTexture;
     /** 最大のミップ */
     readonly level: number;
     /**テクスチャの形式 */
@@ -44,6 +48,9 @@ class Texture2D {
     /**境界線の幅。0 である必要がある。 */
     readonly border: number = 0;
 
+    public get size() {
+        return this._size;
+    }
     constructor(
         gl: WebGL2RenderingContext,
         {
@@ -71,6 +78,7 @@ class Texture2D {
     bind() {
         this.gl.activeTexture(this.gl.TEXTURE0 + this.unitNumber);
         this.gl.bindTexture(this.gl.TEXTURE_2D, this.webGLTexture);
+        return this;
     }
     /**
      * 保持しているユニット番号のテクスチャに`null`を登録
@@ -78,12 +86,14 @@ class Texture2D {
     unbind() {
         this.gl.activeTexture(this.gl.TEXTURE0 + this.unitNumber);
         this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+        return this;
     }
     /**
      * 保持しているユニット番号のテクスチャをアクティブにする
      */
     refocus() {
         this.gl.activeTexture(this.gl.TEXTURE0 + this.unitNumber);
+        return this;
     }
     /**
      * テクスチャに画像を転送
@@ -97,17 +107,9 @@ class Texture2D {
     attachImage(
         pixcels: TexPixcels,
         size: Vec2,
-        {
-            enableNPOT = true,
-            repeat = false,
-            yCoordinateInversion = false,
-        }: {
-            enableNPOT?: boolean;
-            repeat?: boolean;
-            yCoordinateInversion?: boolean;
-        } = {}
+        { enableNPOT = true, repeat = false, yCoordinateInversion = false }: TexPixcelsOptions = {}
     ) {
-        this.size = size;
+        this._size = size;
         this.bind();
 
         if (ArrayBuffer.isView(pixcels) || pixcels === null) {
@@ -115,8 +117,8 @@ class Texture2D {
                 this.gl.TEXTURE_2D,
                 this.level,
                 this.internalformat,
-                this.size.x,
-                this.size.y,
+                this._size.x,
+                this._size.y,
                 this.border,
                 this.format,
                 this.type,
@@ -127,8 +129,8 @@ class Texture2D {
                 this.gl.TEXTURE_2D,
                 this.level,
                 this.internalformat,
-                this.size.x,
-                this.size.y,
+                this._size.x,
+                this._size.y,
                 this.border,
                 this.format,
                 this.type,
@@ -151,6 +153,7 @@ class Texture2D {
         }
 
         this.unbind();
+        return this;
     }
     /**
      * フレームバッファに紐づけ
@@ -168,7 +171,8 @@ class Texture2D {
             this.webGLTexture,
             this.level
         );
+        return this;
     }
 }
 export { Texture2D };
-export type { TexPixcels };
+export type { TexPixcels, TexOptions, TexPixcelsOptions };
