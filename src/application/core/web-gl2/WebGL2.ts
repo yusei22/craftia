@@ -35,6 +35,16 @@ class WebGL2 {
         this.gl2.clearColor(color.x, color.y, color.z, color.w);
         this.gl2.clear(this.gl2.COLOR_BUFFER_BIT);
     }
+    /**
+     * 配列データのプリミティブを描画
+     * @param mode 描画するプリミティブの型
+     * @param count レンダリングする要素配列バッファーの要素数
+     * @param type 要素の配列バッファーの値の型
+     * @param offset 要素の配列バッファー内における倍とオフセット
+     */
+    public drawElements(mode: GLenum, count: GLsizei, type: GLenum, offset: GLintptr) {
+        this.gl2.drawElements(mode, count, type, offset);
+    }
 }
 function createContextAndWebGL2(): [HTMLCanvasElement, WebGL2RenderingContext] {
     const canvas = document.createElement('canvas');
