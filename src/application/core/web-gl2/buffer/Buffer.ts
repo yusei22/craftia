@@ -1,6 +1,28 @@
 type BufferParam = {
-    usage?: GLenum;
+    usage?: BufferUsage;
 };
+
+type BufferType = WebGL2RenderingContext[
+    | 'ARRAY_BUFFER'
+    | 'ELEMENT_ARRAY_BUFFER'
+    | 'COPY_READ_BUFFER'
+    | 'COPY_WRITE_BUFFER'
+    | 'TRANSFORM_FEEDBACK_BUFFER'
+    | 'UNIFORM_BUFFER'
+    | 'PIXEL_PACK_BUFFER'
+    | 'PIXEL_UNPACK_BUFFER'];
+
+type BufferUsage = WebGL2RenderingContext[
+    | 'STATIC_DRAW'
+    | 'DYNAMIC_DRAW'
+    | 'STREAM_DRAW'
+    | 'STATIC_READ'
+    | 'DYNAMIC_READ'
+    | 'STREAM_READ'
+    | 'STATIC_COPY'
+    | 'DYNAMIC_COPY'
+    | 'STREAM_COPY'];
+
 /**
  * WegGLのバッファを管理するクラス。
  * 情報を格納したWebGLBufferを作成、保持。
@@ -17,7 +39,11 @@ class Buffer {
      * @param param4
      * @param param4.usage データストアの用途を指定する GLenum
      */
-    constructor(gl: WebGL2RenderingContext, type: GLenum, { usage = gl.STATIC_DRAW }: BufferParam = {}) {
+    constructor(
+        gl: WebGL2RenderingContext,
+        type: BufferType,
+        { usage = gl.STATIC_DRAW }: BufferParam = {}
+    ) {
         this.gl = gl;
         this.type = type;
         this.webGLBuffer = gl.createBuffer() as WebGLBuffer;
