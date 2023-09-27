@@ -7,3 +7,5 @@ export * from './textures';
 export * from './vertices';
 export * from './uniforms';
 export * from './textures';
+export * from './renderer';
+export * from './WebGL2';
