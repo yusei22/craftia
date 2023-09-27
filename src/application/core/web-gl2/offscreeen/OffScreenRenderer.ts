@@ -1,10 +1,11 @@
 import { Vec2 } from 'application/core/units';
 import { Texture2D, FrameBuffer } from 'application/core/web-gl2';
 export class OffscreenRenderer {
-    /**描画結果保存用テクスチャ */
-    readonly resultTexture: Texture2D;
     /**レンダラのサイズ*/
-    readonly size: Vec2;
+    private _size: Vec2;
+    /**描画結果保存用テクスチャ */
+    private _resultTexture: Texture2D;
+
     /**webgl2コンテクスト */
     private gl: WebGL2RenderingContext;
     /**フレームバッファ */
@@ -16,19 +17,31 @@ export class OffscreenRenderer {
      */
     constructor(gl: WebGL2RenderingContext, size: Vec2) {
         this.gl = gl;
-        this.size = size;
         this.frameBuffer = new FrameBuffer(this.gl);
-        this.resultTexture = new Texture2D(this.gl);
-        this.resultTexture.attachImage(null, this.size);
+        this._size = size;
+        this._resultTexture = new Texture2D(this.gl).attachImage(null, this._size);
 
-        //描画結果保存用テクスチャを紐づける
         this.activate();
-        this.resultTexture.attachToframebuffer();
+        this._resultTexture.attachToframebuffer();
         this.deactivate();
+    }
+    public get resultTexture() {
+        return this._resultTexture;
+    }
+    public get size() {
+        return this._size;
+    }
+    public setNewResultTex(size: Vec2) {
+        this._size = size;
+        this._resultTexture = new Texture2D(this.gl).attachImage(null, this._size);
+
+        this.activate();
+        this._resultTexture.attachToframebuffer();
+        this.deactivate();
+        return this._resultTexture;
     }
     /**フレームブァッファをアクティブに */
     public activate() {
-        this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.frameBuffer.bind();
     }
     /**フレームブァッファを非アクティブに */
