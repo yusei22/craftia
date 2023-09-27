@@ -1,6 +1,8 @@
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
-import { ILayerImageSource } from 'application/layers/Ilayer';
+
+type ILayerImageSource = HTMLCanvasElement | OffscreenCanvas | ImageBitmap | null;
+
 class DataURLEncoder {
     private context: Context2D;
     constructor(context: Context2D) {
