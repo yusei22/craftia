@@ -1,7 +1,7 @@
 /**
  * WebGLの頂点属性を管理するクラス
  */
-class VertexAttribute<Name extends string = string> {
+class VertexAttribute {
     /**Attribute変数の位置 */
     readonly location: GLenum;
     /**頂点属性あたりの要素数 */
@@ -27,7 +27,14 @@ class VertexAttribute<Name extends string = string> {
 
     public setPointer(gl2: WebGL2RenderingContext) {
         gl2.enableVertexAttribArray(this.location);
-        gl2.vertexAttribPointer(this.location, this.size, gl2.FLOAT, false, this.stride, this.offset);
+        gl2.vertexAttribPointer(
+            this.location,
+            this.size,
+            gl2.FLOAT,
+            false,
+            this.stride,
+            this.offset
+        );
     }
 }
 export { VertexAttribute };
