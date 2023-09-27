@@ -113,7 +113,14 @@ class Context2D {
         endAngle: number,
         counterclockwise?: boolean
     ): this {
-        this.context.arc(centerPoint.x, centerPoint.y, radius, startAngle, endAngle, counterclockwise);
+        this.context.arc(
+            centerPoint.x,
+            centerPoint.y,
+            radius,
+            startAngle,
+            endAngle,
+            counterclockwise
+        );
         return this;
     }
     /**
@@ -598,8 +605,14 @@ class Context2D {
         }
         this.setAttr('shadowColor', shadowConfig.shadowColor ?? CONTEXT_ATTRS_DEFAULT.shadowColor);
         this.setAttr('shadowBlur', shadowConfig.shadowBlur ?? CONTEXT_ATTRS_DEFAULT.shadowBlur);
-        this.setAttr('shadowOffsetX', shadowConfig.shadowOffset?.x ?? CONTEXT_ATTRS_DEFAULT.shadowOffsetX);
-        this.setAttr('shadowOffsetY', shadowConfig.shadowOffset?.y ?? CONTEXT_ATTRS_DEFAULT.shadowOffsetY);
+        this.setAttr(
+            'shadowOffsetX',
+            shadowConfig.shadowOffset?.x ?? CONTEXT_ATTRS_DEFAULT.shadowOffsetX
+        );
+        this.setAttr(
+            'shadowOffsetY',
+            shadowConfig.shadowOffset?.y ?? CONTEXT_ATTRS_DEFAULT.shadowOffsetY
+        );
         return this;
     }
     /**
@@ -616,7 +629,10 @@ class Context2D {
             return this;
         }
         this.setAttr('lineCap', lineConfig.lineCap ?? CONTEXT_ATTRS_DEFAULT.lineCap);
-        this.setAttr('lineDashOffset', lineConfig.lineDashOffset ?? CONTEXT_ATTRS_DEFAULT.lineDashOffset);
+        this.setAttr(
+            'lineDashOffset',
+            lineConfig.lineDashOffset ?? CONTEXT_ATTRS_DEFAULT.lineDashOffset
+        );
         this.setAttr('lineJoin', lineConfig.lineJoin ?? CONTEXT_ATTRS_DEFAULT.lineJoin);
         this.setAttr('lineWidth', lineConfig.lineWidth ?? CONTEXT_ATTRS_DEFAULT.lineWidth);
         return this;
@@ -671,7 +687,10 @@ class Context2D {
      */
     public setGlobalCompositeOperation(value: GlobalCompositeOperation | null): this {
         if (value === null) {
-            this.setAttr('globalCompositeOperation', CONTEXT_ATTRS_DEFAULT.globalCompositeOperation);
+            this.setAttr(
+                'globalCompositeOperation',
+                CONTEXT_ATTRS_DEFAULT.globalCompositeOperation
+            );
             return this;
         }
         this.setAttr('globalCompositeOperation', value);
@@ -711,5 +730,11 @@ function isDrawableSource(source: CanvasImageSource): boolean {
     return source.width > 0 && source.height > 0;
 }
 
-export type { Context2DAttr, Context2DMap, ContextLineConfig, ContextShadowConfig, ContextTextConfig };
+export type {
+    Context2DAttr,
+    Context2DMap,
+    ContextLineConfig,
+    ContextShadowConfig,
+    ContextTextConfig,
+};
 export { Context2D, CONTEXT_ATTRS_DEFAULT };

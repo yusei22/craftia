@@ -24,7 +24,7 @@
     "next-env.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx"
-  ],
+, "src/application/filter/WebGLImageEditor.ts"  ],
   "exclude": [
     "node_modules"
   ]

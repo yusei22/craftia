@@ -1,4 +1,6 @@
-type Append<Elm, T extends unknown[]> = ((arg: Elm, ...rest: T) => void) extends (...args: infer T2) => void
+type Append<Elm, T extends unknown[]> = ((arg: Elm, ...rest: T) => void) extends (
+    ...args: infer T2
+) => void
     ? T2
     : never;
 
