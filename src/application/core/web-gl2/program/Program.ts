@@ -1,4 +1,6 @@
 import { FragmentShader, VertexShader } from '../shader';
+import { IUniformValue, UniformFloat, UniformInt } from '../uniforms';
+import { VertexAttribute } from '../vertex-attribute';
 /**
  * WebGLのプログラムを管理するクラス。
  * ソースをコンパイルしたWebGLProgramを保持。
@@ -13,7 +15,11 @@ class Program {
      * @param vertexShader `gzVertexShader`インスタンス
      * @param fragmentShader `gzFragmentShader`インスタンス
      */
-    constructor(gl: WebGL2RenderingContext, vertexShader: VertexShader, fragmentShader: FragmentShader) {
+    constructor(
+        gl: WebGL2RenderingContext,
+        vertexShader: VertexShader,
+        fragmentShader: FragmentShader
+    ) {
         this.gl = gl;
         const program = this.gl.createProgram() as WebGLProgram;
 
@@ -37,7 +43,7 @@ class Program {
     /**
      * プログラムをアクティブにする
      */
-    use() {
+    public use() {
         this.gl.useProgram(this.webGLprogram);
     }
     /**
@@ -45,7 +51,7 @@ class Program {
      * @param name in変数の名前
      * @returns in変数の位置
      */
-    getAttribLocation(name: string) {
+    public getAttribLocation(name: string) {
         return this.gl.getAttribLocation(this.webGLprogram, name);
     }
     /**
@@ -53,8 +59,35 @@ class Program {
      * @param name uniform変数の名前
      * @returns uniform変数の位置
      */
-    getUniformLocation(name: string) {
+    public getUniformLocation(name: string) {
         return this.gl.getUniformLocation(this.webGLprogram, name);
+    }
+    /**
+     * uniform変数(浮動小数型)を取得
+     * @param name 名前
+     * @returns `UniformFloat`
+     */
+    public getUniformFloat<T extends IUniformValue>(name: string) {
+        return new UniformFloat<T>(this.gl, this.getUniformLocation(name));
+    }
+    /**
+     * uniform変数(整数型)を取得
+     * @param name 名前
+     * @returns `UniformInt`
+     */
+    public getUniformInt<T extends IUniformValue>(name: string) {
+        return new UniformInt<T>(this.gl, this.getUniformLocation(name));
+    }
+    /**
+     * 頂点属性を取得
+     * @param name 名前
+     * @param size 頂点属性あたりの要素数
+     * @param stride 連続する頂点属性の始端どうしの間にある、オフセット数
+     * @param offset 頂点属性配列の最初の要素のオフセット
+     * @returns `VertexAttribute`
+     */
+    public getAttribute(name: string, size: number, stride: number, offset: number) {
+        return new VertexAttribute(this.getAttribLocation(name), size, stride, offset);
     }
 }
 export { Program };
