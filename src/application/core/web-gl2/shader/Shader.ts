@@ -12,12 +12,11 @@ class Shader {
      * - `gl.FRAGMENT_SHADER`
      * @param source GLSLシェーダーソース
      */
-    constructor(gl: WebGL2RenderingContext, type: GLenum, source: string) {
-        if (type !== gl.VERTEX_SHADER && type !== gl.FRAGMENT_SHADER) {
-            const info = 'Invalid shader type.';
-            throw new Error(info);
-        }
-
+    constructor(
+        gl: WebGL2RenderingContext,
+        type: WebGL2RenderingContext['VERTEX_SHADER' | 'FRAGMENT_SHADER'],
+        source: string
+    ) {
         this.type = type;
         const shader = gl.createShader(this.type) as WebGLShader;
 
