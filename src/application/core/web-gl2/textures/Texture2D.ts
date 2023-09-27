@@ -1,4 +1,5 @@
 import { Vec2 } from 'application/core/units';
+
 /** テクスチャ画像の仕様・オプション */
 type TexOptions = {
     /** 最大のミップ */
@@ -14,12 +15,21 @@ type TexOptions = {
     /**境界線の幅。0 である必要がある。 */
     border?: number;
 };
+
 /**テクスチャに使用できる画像ののピクセルソース*/
-type TexImageSource = HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | ImageBitmap | ImageData;
+type TexImageSource =
+    | HTMLImageElement
+    | HTMLCanvasElement
+    | HTMLVideoElement
+    | ImageBitmap
+    | ImageData;
+
 /** テクスチャに使用できる型付き配列のピクセルソース*/
 type TexTypedArray = Uint8Array | Uint16Array | Uint32Array | Float32Array | null;
+
 /**テクスチャに利用できるピクセルソース */
 type TexPixcels = TexImageSource | TexTypedArray;
+
 type TexPixcelsOptions = {
     enableNPOT?: boolean;
     repeat?: boolean;
@@ -29,12 +39,16 @@ type TexPixcelsOptions = {
  * WegGLの型付き配列テクスチャを管理するクラス。
  */
 class Texture2D {
-    /**テクスチャのサイズ */
-    private _size: Vec2 = new Vec2(0, 0);
     /**WebGL2のコンテキスト */
     private gl: WebGL2RenderingContext;
     /**内包する`WebGLTexture` */
     private webGLTexture: WebGLTexture;
+
+    /**現在のユニット番号 */
+    private _unitNumber: number | null;
+    /**現在のサイズ */
+    private _size: Vec2 = new Vec2(0, 0);
+
     /** 最大のミップ */
     readonly level: number;
     /**テクスチャの形式 */
@@ -43,8 +57,6 @@ class Texture2D {
     readonly format: GLenum;
     /**データの種類 */
     readonly type: GLenum;
-    /**使用するテクスチャユニットの番号。1～31 */
-    readonly unitNumber: number;
     /**境界線の幅。0 である必要がある。 */
     readonly border: number = 0;
 
@@ -58,25 +70,22 @@ class Texture2D {
             internalformat = gl.RGBA,
             format = gl.RGBA,
             type = gl.UNSIGNED_BYTE,
-            unitNumber = 0,
             border = 0,
         }: TexOptions = {}
     ) {
         this.gl = gl;
-        if (unitNumber > 31 || unitNumber < 0) {
-            console.error('Invalid unit number');
-            unitNumber = 0;
-        }
         this.webGLTexture = this.gl.createTexture() as WebGLTexture;
         this.level = level;
         this.internalformat = internalformat;
         this.format = format;
         this.type = type;
-        this.unitNumber = unitNumber;
+        this._unitNumber = null;
         this.border = border;
     }
-    bind() {
-        this.gl.activeTexture(this.gl.TEXTURE0 + this.unitNumber);
+    bind(unitNumber: number) {
+        this._unitNumber = unitNumber;
+
+        this.gl.activeTexture(this.gl.TEXTURE0 + this._unitNumber);
         this.gl.bindTexture(this.gl.TEXTURE_2D, this.webGLTexture);
         return this;
     }
@@ -84,15 +93,12 @@ class Texture2D {
      * 保持しているユニット番号のテクスチャに`null`を登録
      */
     unbind() {
-        this.gl.activeTexture(this.gl.TEXTURE0 + this.unitNumber);
+        if (this._unitNumber === null) return this;
+
+        this.gl.activeTexture(this.gl.TEXTURE0 + this._unitNumber);
         this.gl.bindTexture(this.gl.TEXTURE_2D, null);
-        return this;
-    }
-    /**
-     * 保持しているユニット番号のテクスチャをアクティブにする
-     */
-    refocus() {
-        this.gl.activeTexture(this.gl.TEXTURE0 + this.unitNumber);
+
+        this._unitNumber = null;
         return this;
     }
     /**
@@ -110,7 +116,7 @@ class Texture2D {
         { enableNPOT = true, repeat = false, yCoordinateInversion = false }: TexPixcelsOptions = {}
     ) {
         this._size = size;
-        this.bind();
+        this.bind(0);
 
         if (ArrayBuffer.isView(pixcels) || pixcels === null) {
             this.gl.texImage2D(
@@ -144,8 +150,16 @@ class Texture2D {
         }
 
         if (!repeat) {
-            this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
-            this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+            this.gl.texParameteri(
+                this.gl.TEXTURE_2D,
+                this.gl.TEXTURE_WRAP_S,
+                this.gl.CLAMP_TO_EDGE
+            );
+            this.gl.texParameteri(
+                this.gl.TEXTURE_2D,
+                this.gl.TEXTURE_WRAP_T,
+                this.gl.CLAMP_TO_EDGE
+            );
         }
 
         if (yCoordinateInversion) {
@@ -163,7 +177,7 @@ class Texture2D {
      * - `gl.STENCIL_ATTACHMENT` ステンシルバッファー
      */
     public attachToframebuffer(attachmentPoint: GLenum = this.gl.COLOR_ATTACHMENT0) {
-        this.bind();
+        this.bind(0);
         this.gl.framebufferTexture2D(
             this.gl.FRAMEBUFFER,
             attachmentPoint,
@@ -171,6 +185,7 @@ class Texture2D {
             this.webGLTexture,
             this.level
         );
+        this.unbind();
         return this;
     }
 }
