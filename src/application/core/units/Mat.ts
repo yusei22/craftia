@@ -9,19 +9,19 @@ type TypedArray =
     | Float32Array
     | Float64Array;
 
-class Mat<T extends number = number, U extends number = number> {
+class Mat<Width extends number = number, Height extends number = number> {
     /**行列の横幅 */
-    readonly width: T;
+    readonly width: Width;
     /**行列の高さ */
-    readonly heigth: U;
-    /**行列の要素` */
+    readonly heigth: Height;
+    /**行列の要素 */
     readonly item: number[] = [];
 
     /**
      * @param item 行列の要素
      * @param param1 `[ 行列の横幅,行列の高さ ]`
      */
-    constructor(item: TypedArray | number[], [width, heigth]: [T, U]) {
+    constructor(item: TypedArray | number[], [width, heigth]: [Width, Height]) {
         if (isCorrectShape(item, [width, heigth])) {
             this.width = width;
             this.heigth = heigth;
