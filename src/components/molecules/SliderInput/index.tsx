@@ -8,7 +8,7 @@ import { toPropValue, Color, FontSize, Space } from 'utils/styles';
 type SliderInputProps = {
     value: number;
     defaultValue: number;
-    setValue: (value: number) => any;
+    setValue: (value: number) => void;
     id: string;
     max?: number;
     min?: number;

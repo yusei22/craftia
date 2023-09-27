@@ -29,7 +29,10 @@ const FoldableButton = memo((props: FoldableButtonProps) => {
             >
                 <Flex $justifyContent={'center'} $alignItems={'center'} $height={'100%'}>
                     <Box $display={{ base: 'block', sm: 'none' }}>{props.icon}</Box>
-                    <Text $color={props.isActive ? 'white' : 'text'} $display={{ base: 'none', sm: 'block' }}>
+                    <Text
+                        $color={props.isActive ? 'white' : 'text'}
+                        $display={{ base: 'none', sm: 'block' }}
+                    >
                         {props.text}
                     </Text>
                 </Flex>

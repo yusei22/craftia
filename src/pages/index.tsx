@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import { LayerColumn } from 'components/organisms/LayerColumn';
-import { LayerTreeRoot } from 'components/organisms/LayerTreeRoot';
-import { Renderer } from 'components/organisms/Renderer';
+import { GLtest } from 'components/organisms/web-gl-test';
 export default function Home() {
     return (
         <>
@@ -11,10 +9,9 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <LayerTreeRoot>
-                <LayerColumn />
-                <Renderer />
-            </LayerTreeRoot>
+            <>
+                <GLtest />
+            </>
         </>
     );
 }

@@ -20,7 +20,14 @@ export type Responsive<T> = T | ResponsiveProp<T>;
 /**
  * Flex
  */
-type SelfPosition = 'center' | 'end' | 'flex-end' | 'flex-start' | 'self-end' | 'self-start' | 'start';
+type SelfPosition =
+    | 'center'
+    | 'end'
+    | 'flex-end'
+    | 'flex-start'
+    | 'self-end'
+    | 'self-start'
+    | 'start';
 
 type ContentPosition = 'center' | 'end' | 'flex-end' | 'flex-start' | 'start';
 
@@ -107,6 +114,11 @@ export type CSSPropertyGridColumn = CSSPropertyGlobals | GridLine | (string & {}
 
 export type CSSPropertyGridRow = CSSPropertyGlobals | GridLine | (string & {});
 
-export type CSSPropertyGridAutoFlow = CSSPropertyGlobals | 'column' | 'dense' | 'row' | (string & {});
+export type CSSPropertyGridAutoFlow =
+    | CSSPropertyGlobals
+    | 'column'
+    | 'dense'
+    | 'row'
+    | (string & {});
 
 export type CSSPropertyGridArea = CSSPropertyGlobals | GridLine | (string & {});

@@ -42,7 +42,9 @@ export function toPropValue<T>(propKey: string, prop?: Responsive<T>, theme?: Ap
         for (const responsiveKey in prop) {
             if (responsiveKey === 'base') {
                 // デフォルトのスタイル
-                result.push(`${propKey}: ${toThemeValueIfNeeded(propKey, prop[responsiveKey], theme)};`);
+                result.push(
+                    `${propKey}: ${toThemeValueIfNeeded(propKey, prop[responsiveKey], theme)};`
+                );
             } else if (
                 responsiveKey === 'sm' ||
                 responsiveKey === 'md' ||
@@ -51,7 +53,11 @@ export function toPropValue<T>(propKey: string, prop?: Responsive<T>, theme?: Ap
             ) {
                 // メディアクエリでのスタイル
                 const breakpoint = BREAKPOINTS[responsiveKey];
-                const style = `${propKey}: ${toThemeValueIfNeeded(propKey, prop[responsiveKey], theme)};`;
+                const style = `${propKey}: ${toThemeValueIfNeeded(
+                    propKey,
+                    prop[responsiveKey],
+                    theme
+                )};`;
                 result.push(`@media screen and (min-width: ${breakpoint}) {${style}}`);
             }
         }
@@ -90,7 +96,12 @@ function toThemeValueIfNeeded<T>(propKey: string, value: T, theme?: AppTheme) {
         return theme.space[value];
     } else if (theme && theme.colors && COLOR_KEYS.has(propKey) && isColorThemeKeys(value, theme)) {
         return theme.colors[value];
-    } else if (theme && theme.fontSizes && FONT_SIZE_KEYS.has(propKey) && isFontSizeThemeKeys(value, theme)) {
+    } else if (
+        theme &&
+        theme.fontSizes &&
+        FONT_SIZE_KEYS.has(propKey) &&
+        isFontSizeThemeKeys(value, theme)
+    ) {
         return theme.fontSizes[value];
     } else if (
         theme &&

@@ -1,81 +1,102 @@
-import { createStaticLayerTree } from 'application/layers/layer-tree/layer-tree-management/createStaticLayerTree';
-import { LayerTree, StaticLayerTree } from 'application/types';
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-type Param = {
-    key: string;
-    defualt: StaticLayerTree;
+type Param<T> = {
+    pastKey: string;
+    currentKey: string;
+    futureKey: string;
+    defualt: T;
     storageLength: number;
-    useImageBitmap: boolean;
 };
 
-type UndoReno = {
-    useSaver: () => (value: StaticLayerTree) => StaticLayerTree;
-    useUndo: () => () => StaticLayerTree | undefined;
-    useReno: () => () => StaticLayerTree | undefined;
-    useCurrentValue: () => StaticLayerTree;
+type UndoReno<T> = {
+    useSaver: () => (valOrUpdater: T | ((currVal: T) => T)) => void;
+    useUndo: () => () => void;
+    useReno: () => () => void;
+    usePastValue: () => T[];
+    useCurrentValue: () => T;
+    useFutureValue: () => T[];
 };
 
-function useLayerTreeUndoRedo({ key, defualt, storageLength, useImageBitmap }: Param): UndoReno {
-    const history: {
-        past: StaticLayerTree[];
-        future: StaticLayerTree[];
-    } = {
-        past: [],
-        future: [],
-    };
-    const current = atom({
-        key: key,
+function useUndoRedo<T>({
+    pastKey,
+    currentKey,
+    futureKey,
+    defualt,
+    storageLength,
+}: Param<T>): UndoReno<T> {
+    const past = atom<T[]>({
+        key: pastKey,
+        default: [],
+    });
+
+    const current = atom<T>({
+        key: currentKey,
         default: defualt,
     });
-    function isOverCapacity(): boolean {
-        if (history.past.length + history.future.length >= storageLength) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    function useCurrentValue() {
-        return useRecoilValue(current);
-    }
+
+    const future = atom<T[]>({
+        key: futureKey,
+        default: [],
+    });
+
     function useSaver() {
+        const setPast = useSetRecoilState(past);
+        const setFuture = useSetRecoilState(future);
+
         const [currentValue, setCurrent] = useRecoilState(current);
-        return (value: StaticLayerTree) => {
-            history.past = [...history.past, currentValue];
-            history.future = [];
 
-            setCurrent(value);
-
-            if (isOverCapacity()) {
-                history.past.shift();
-            }
-
-            return value;
+        return (valOrUpdater: T | ((currVal: T) => T)) => {
+            setPast((pastValue) => {
+                const newPast = [...pastValue, currentValue];
+                if (newPast.length > storageLength) {
+                    newPast.shift();
+                }
+                return newPast;
+            });
+            setCurrent(valOrUpdater);
+            setFuture([]);
         };
     }
     function useUndo() {
         const [currentValue, setCurrent] = useRecoilState(current);
+        const [pastValue, setPast] = useRecoilState(past);
+        const setFuture = useSetRecoilState(future);
         return () => {
-            if (history.past.length < 0) return;
-
-            history.future = [currentValue, ...history.future];
-            const current = history.past.pop() as StaticLayerTree;
-            setCurrent(current);
-            return current;
+            if (pastValue.length <= 0) return;
+            setFuture((futureValue) => [currentValue, ...futureValue]);
+            setCurrent(pastValue[pastValue.length - 1]);
+            setPast((pastValue) => {
+                pastValue.pop();
+                return pastValue;
+            });
         };
     }
     function useReno() {
         const [currentValue, setCurrent] = useRecoilState(current);
+        const setPast = useSetRecoilState(past);
+        const [futureValue, setFuture] = useRecoilState(future);
         return () => {
-            if (history.future.length < 0) return;
+            if (futureValue.length <= 0) return;
 
-            history.past = [...history.past, currentValue];
-            const current = history.future.shift() as StaticLayerTree;
-            setCurrent(current);
-            return current;
+            setPast((pastValue) => [...pastValue, currentValue]);
+            setFuture((futureValue) => {
+                futureValue.shift();
+                return futureValue;
+            });
+            setCurrent(futureValue[0]);
         };
     }
-    return { useSaver, useUndo, useReno, useCurrentValue };
+    function useCurrentValue() {
+        return useRecoilValue(current);
+    }
+    function usePastValue() {
+        return useRecoilValue(past);
+    }
+    function useFutureValue() {
+        return useRecoilValue(future);
+    }
+    return { useSaver, useUndo, useReno, usePastValue, useCurrentValue, useFutureValue };
 }
-export { useLayerTreeUndoRedo };
+
+export { useUndoRedo };
 export type { UndoReno };
