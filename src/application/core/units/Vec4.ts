@@ -28,10 +28,10 @@ export class Vec4 implements IVec {
         return this.w;
     }
     public get rg() {
-        return new Vec2(this.x, this.y);
+        return this.xy;
     }
     public get rgb() {
-        return new Vec3(this.x, this.y, this.z);
+        return this.xyz;
     }
     public get rgba() {
         return this;
