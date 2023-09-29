@@ -13,7 +13,13 @@ type pointerProps = {
 type PointerMoveProps = pointerProps & { IsDragged: boolean };
 
 abstract class Pen {
+    abstract getPenWorker(image: TexImageSource): void;
+}
+
+abstract class PenWorker {
     abstract pointerDown(props: pointerProps): void;
     abstract pointermove(props: PointerMoveProps): void;
     abstract pointerUp(props: pointerProps): void;
 }
+
+export { Pen, PenWorker };
