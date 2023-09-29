@@ -1,5 +1,7 @@
 import { IUniform, IUniformValue, expandVecs } from './IUniform';
-import { Vec, Vec2, Vec3, Vec4, isVec } from 'application/core/units';
+import { Vec2, Vec3, Vec4, isVec } from 'application/core/units';
+
+type Vecs = Vec2[] | Vec3[] | Vec4[];
 
 class UniformInt<T extends IUniformValue> implements IUniform<T> {
     private gl: WebGL2RenderingContext;
@@ -19,7 +21,7 @@ class UniformInt<T extends IUniformValue> implements IUniform<T> {
                 return;
             }
             if (isVec(value[0])) {
-                this.setVecs(value as Vec2[] | Vec3[] | Vec4[]);
+                this.setVecs(value as Vecs);
                 return;
             }
             return;
@@ -44,7 +46,7 @@ class UniformInt<T extends IUniformValue> implements IUniform<T> {
     private setArray(arr: number[]) {
         this.gl.uniform1iv(this.location, arr);
     }
-    private setVecs(vecs: Vec2[] | Vec3[] | Vec4[]) {
+    private setVecs(vecs: Vecs) {
         if (vecs[0] instanceof Vec2) {
             this.gl.uniform2iv(this.location, expandVecs(vecs));
         } else if (vecs[0] instanceof Vec3) {
