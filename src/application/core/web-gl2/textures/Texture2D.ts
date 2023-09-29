@@ -45,7 +45,7 @@ class Texture2D {
     private webGLTexture: WebGLTexture;
 
     /**現在のユニット番号 */
-    private _unitNumber: number | null;
+    private _unitNumber: number;
     /**現在のサイズ */
     private _size: Vec2 = new Vec2(0, 0);
 
@@ -63,6 +63,9 @@ class Texture2D {
     public get size() {
         return this._size;
     }
+    public get unitNumber() {
+        return this._unitNumber;
+    }
     constructor(
         gl: WebGL2RenderingContext,
         {
@@ -70,6 +73,7 @@ class Texture2D {
             internalformat = gl.RGBA,
             format = gl.RGBA,
             type = gl.UNSIGNED_BYTE,
+            unitNumber = 0,
             border = 0,
         }: TexOptions = {}
     ) {
@@ -79,12 +83,10 @@ class Texture2D {
         this.internalformat = internalformat;
         this.format = format;
         this.type = type;
-        this._unitNumber = null;
+        this._unitNumber = unitNumber;
         this.border = border;
     }
-    bind(unitNumber: number) {
-        this._unitNumber = unitNumber;
-
+    bind() {
         this.gl.activeTexture(this.gl.TEXTURE0 + this._unitNumber);
         this.gl.bindTexture(this.gl.TEXTURE_2D, this.webGLTexture);
         return this;
@@ -93,13 +95,13 @@ class Texture2D {
      * 保持しているユニット番号のテクスチャに`null`を登録
      */
     unbind() {
-        if (this._unitNumber === null) return this;
-
         this.gl.activeTexture(this.gl.TEXTURE0 + this._unitNumber);
         this.gl.bindTexture(this.gl.TEXTURE_2D, null);
-
-        this._unitNumber = null;
         return this;
+    }
+    changeUnitNumber(number: number) {
+        this.unbind();
+        this._unitNumber = number;
     }
     /**
      * テクスチャに画像を転送
@@ -116,7 +118,7 @@ class Texture2D {
         { enableNPOT = true, repeat = false, yCoordinateInversion = false }: TexPixcelsOptions = {}
     ) {
         this._size = size;
-        this.bind(0);
+        this.bind();
 
         if (ArrayBuffer.isView(pixcels) || pixcels === null) {
             this.gl.texImage2D(
@@ -177,7 +179,7 @@ class Texture2D {
      * - `gl.STENCIL_ATTACHMENT` ステンシルバッファー
      */
     public attachToframebuffer(attachmentPoint: GLenum = this.gl.COLOR_ATTACHMENT0) {
-        this.bind(0);
+        this.bind();
         this.gl.framebufferTexture2D(
             this.gl.FRAMEBUFFER,
             attachmentPoint,
