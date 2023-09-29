@@ -1,4 +1,4 @@
 ## Colla-editor
 
-# A multifunctional image editing software.
+### A multifunctional image editing software.
 
