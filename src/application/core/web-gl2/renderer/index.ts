@@ -1,2 +1,2 @@
-export * from './FixedRenderer';
-export * from './CachebleFixedRenderer';
+export * from './Renderer'
+export * from './CacheableRenderer'
