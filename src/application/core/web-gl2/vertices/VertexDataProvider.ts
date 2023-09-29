@@ -5,10 +5,9 @@ import {
     IndexBufferData,
     IndexBuffer,
     VertexBufer,
-    Program,
 } from 'application/core/web-gl2';
 
-abstract class VertexDataProvider {
+class VertexDataProvider {
     public get bufferElementCount() {
         return this.ibo.length;
     }
@@ -36,7 +35,7 @@ abstract class VertexDataProvider {
         this.vao.unbind();
         return this;
     }
-    protected addAttributes(...attributes: VertexAttribute[]) {
+    public setAttributes(...attributes: VertexAttribute[]) {
         this.vao.bind();
         attributes.forEach((attribute) => {
             attribute.setPointer(this.gl2);
@@ -50,6 +49,5 @@ abstract class VertexDataProvider {
         this.vbo.bind();
         this.vao.unbind();
     }
-    abstract setAttrsFrom(program: Program): this;
 }
 export { VertexDataProvider };
