@@ -99,12 +99,10 @@ class ImageEditor {
     }
     /**
      * フラグメントシェーダーを変更する
-     * @param fragmentShaderSource 
+     * @param fragmentShaderSource
      */
     public changeFragmentShader(fragmentShaderSource: string) {
-        const shader = this.renderer.compileShader(
-            createCustomShader(fragmentShaderSource)
-        );
+        const shader = this.renderer.compileShader(createCustomShader(fragmentShaderSource));
         this.renderer.setCompiledShader(shader);
     }
     /**
@@ -124,8 +122,7 @@ class ImageEditor {
         this.renderer
             .setUniformSampler2D('u_texture', this.texture) //テクスチャ
             .setUniformFloat('u_resolution', this.renderer.getResolution()) //画面の解像度
-            .setUniformFloat('u_flipY', -1.0) //上下反転させる
-
+            .setUniformFloat('u_flipY', -1.0); //上下反転させる
 
         this.listener[0]?.(this.getListenerPorops());
 
@@ -141,9 +138,9 @@ class ImageEditor {
 
         //`uniform`に初期値を送り込む
         this.renderer
-            .setUniformSampler2D('u_texture', this.texture)//テクスチャ
+            .setUniformSampler2D('u_texture', this.texture) //テクスチャ
             .setUniformFloat('u_flipY', 1.0) //上下反転しない
-            .setUniformFloat('u_resolution', this.renderer.getResolution()) //画面の解像度
+            .setUniformFloat('u_resolution', this.renderer.getResolution()); //画面の解像度
 
         let count = 0;
 
@@ -166,7 +163,7 @@ class ImageEditor {
     }
     /**
      * レンダリング時のリスナーに送るプロップスを得る
-     * @returns 
+     * @returns
      */
     private getListenerPorops() {
         return {

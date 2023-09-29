@@ -1,13 +1,13 @@
-import { Program } from "../program";
-import { FragmentShader, VertexShader } from "../shader";
-import { VertexAttribute } from "../vertex-attribute";
-import { Vec2 } from 'application/core/units';
 import { WebGL2 } from '../WebGL2';
 import { IndexBufferData, VertexBuferData } from '../buffer';
 import { OffscreenRenderer } from '../offscreeen';
+import { Program } from '../program';
+import { FragmentShader, VertexShader } from '../shader';
 import { TexOptions, Texture2D } from '../textures';
 import { IUniformValue } from '../uniforms';
+import { VertexAttribute } from '../vertex-attribute';
 import { VertexDataProvider } from '../vertices';
+import { Vec2 } from 'application/core/units';
 
 type AttributeConfig = {
     name: string;
@@ -43,10 +43,10 @@ class RendererShader {
             gl2,
             new VertexShader(gl2, this.vertexShaderSource),
             new FragmentShader(gl2, this.fragmentShaderSource)
-        )
+        );
         const attributes = this.attributeConfigs.map((attr) =>
             program.getAttribute(attr.name, attr.size, attr.stride, attr.offset)
-        )
+        );
         return new RenderCompiledShader(program, attributes);
     }
 }
@@ -69,11 +69,7 @@ class RendererBufferData {
         this.vertexData = vertexData;
     }
     public createVertex(gl2: WebGL2RenderingContext) {
-        return new VertexDataProvider(
-            gl2,
-            this.indexData,
-            this.vertexData
-        );
+        return new VertexDataProvider(gl2, this.indexData, this.vertexData);
     }
 }
 
@@ -163,7 +159,6 @@ class Renderer extends WebGL2 {
     }
 
     public render({ mode, type, offset }: RenderOptions = {}) {
-
         this.gl2.clearColor(0, 0, 0, 0);
         this.gl2.clear(this.gl2.COLOR_BUFFER_BIT);
 
@@ -177,5 +172,5 @@ class Renderer extends WebGL2 {
     }
 }
 
-export type { RendererShaderParam, RenderOptions, AttributeConfig }
+export type { RendererShaderParam, RenderOptions, AttributeConfig };
 export { Renderer, RendererShader, RenderCompiledShader, RendererBufferData };
