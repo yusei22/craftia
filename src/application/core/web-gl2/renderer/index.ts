@@ -1,1 +1,2 @@
-export * from './ElementRenderer';
+export * from './FixedRenderer';
+export * from './CachebleFixedRenderer';
