@@ -6,7 +6,7 @@ class WebGL2 {
     /**
      * キャンバスのサイズ
      */
-    protected get size() {
+    protected getResolution() {
         return new Vec2(this.canvas.width, this.canvas.height);
     }
     constructor() {
@@ -31,9 +31,10 @@ class WebGL2 {
     /**
      * canvasをクリア
      */
-    protected clear(color: Vec4 = new Vec4(0, 0, 0, 0)) {
+    protected clear(color: Vec4 = new Vec4(0, 0, 0, 1)) {
         this.gl2.clearColor(color.x, color.y, color.z, color.w);
         this.gl2.clear(this.gl2.COLOR_BUFFER_BIT);
+        return this;
     }
 }
 function createContextAndWebGL2(): [HTMLCanvasElement, WebGL2RenderingContext] {
