@@ -3,7 +3,7 @@
  * WebGLVertexArrayObjectを作成、保持。
  */
 class VertexArray {
-    private gl: WebGL2RenderingContext;
+    protected gl: WebGL2RenderingContext;
     private webGLVAO: WebGLVertexArrayObject;
     /**
      * @param gl WebGL2のコンストラクター
