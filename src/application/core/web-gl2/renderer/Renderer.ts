@@ -93,7 +93,7 @@ class Renderer extends WebGL2 {
         return shader.compile(this.gl2);
     }
 
-    public setShader(compiledShader: RenderCompiledShader) {
+    public setCompiledShader(compiledShader: RenderCompiledShader) {
         this.shader = compiledShader;
         this.vertex.setAttributes(...this.shader.attributes);
     }
