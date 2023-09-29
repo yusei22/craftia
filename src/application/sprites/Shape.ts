@@ -11,6 +11,7 @@ interface ShapePrefs extends SpritePrefs {
     readonly strokeWidth: number | null;
     readonly fillStyle: string | CanvasGradient | CanvasPattern | null;
     readonly scale: Vec2;
+    readonly rotation: number;
 }
 abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
     constructor(config: SpriteConfig, prefs: T) {
