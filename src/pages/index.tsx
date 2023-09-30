@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { GLtest } from 'components/organisms/web-gl-test';
+import { GLtest } from 'components/organisms/webgl-test';
 export default function Home() {
     return (
         <>
