@@ -1,11 +1,11 @@
 import { Shape, ShapePrefs } from '../Shape';
-import { SpriteConfig } from '../Sprite';
+import { SpriteConfig, SpritePrefsValue } from '../Sprite';
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 
 interface ArcPrefs extends ShapePrefs {
-    readonly startAngle: number;
-    readonly endAngle: number;
+    startAngle: number;
+    endAngle: number;
 }
 class Arc extends Shape<ArcPrefs> {
     constructor(prefs: ArcPrefs) {
@@ -22,35 +22,28 @@ class Arc extends Shape<ArcPrefs> {
                 shadowOffset: prefs.shadowOffset,
             },
             text: null,
-            fillStyle: prefs.fillStyle,
+            fillStyle: null,
             globalAlpha: prefs.opacity,
             globalCompositeOperation: prefs.blendMode,
-            strokeStyle: prefs.strokeStyle,
+            strokeStyle: null,
         };
         super(config, prefs);
     }
-    private getAnchorRerativeLoc() {
-        return new Vec2(
-            this.prefs.anchor.x * this.prefs.scale.x,
-            this.prefs.anchor.y * this.prefs.scale.y
-        );
+    public clone() {
+        return new Arc({ ...this.prefs });
     }
     public drawFunc(context: Context2D): void {
-        if (!this.prefs.visible) return;
-
-        const centerPoint = this.prefs.globalLocation
-            .sub(this.getAnchorRerativeLoc())
-            .add(this.prefs.scale.times(0.5));
-        context
-            .beginPath()
-            .ellipse(
-                centerPoint,
-                this.prefs.scale,
-                this.prefs.rotation,
-                this.prefs.startAngle,
-                this.prefs.endAngle
-            )
-            .stroke();
+        const centerPoint = this.getCenterPoint();
+        context.beginPath();
+        context.ellipse(
+            centerPoint,
+            this.prefs.scale,
+            this.prefs.rotation,
+            this.prefs.startAngle,
+            this.prefs.endAngle
+        );
+        context.fill();
+        context.stroke();
     }
 }
 export { Arc };
