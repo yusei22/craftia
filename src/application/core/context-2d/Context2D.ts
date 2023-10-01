@@ -1,10 +1,11 @@
-import { Vec, Vec2 } from 'application/core/units';
+import { Vec, Vec2, Vec4, isVec } from 'application/core/units';
 
 type Context2DAttr =
     | 'fillStyle'
     | 'font'
     | 'globalAlpha'
     | 'globalCompositeOperation'
+    | 'imageSmoothingEnabled'
     | 'lineCap'
     | 'lineDashOffset'
     | 'lineJoin'
@@ -41,7 +42,6 @@ type ContextLineConfig = {
     /**線の太さ */
     readonly lineWidth: number | null;
 };
-
 type ContextTextConfig = {
     readonly font: string | null;
     readonly textAlign: CanvasTextAlign | null;
@@ -53,6 +53,7 @@ const CONTEXT_ATTRS_DEFAULT: Context2DMap = {
     font: '10px serif',
     globalAlpha: 1.0,
     globalCompositeOperation: 'source-over',
+    imageSmoothingEnabled: true,
     lineCap: 'butt',
     lineDashOffset: 0.0,
     lineJoin: 'miter',
@@ -187,9 +188,13 @@ class Context2D {
      * @param startPoint 始点
      * @param endPoint 終点
      */
-    public createLinearGradient(startPoint: Vec2, endPoint: Vec2): this {
-        this.context.createLinearGradient(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
-        return this;
+    public createLinearGradient(startPoint: Vec2, endPoint: Vec2): CanvasGradient {
+        return this.context.createLinearGradient(
+            startPoint.x,
+            startPoint.y,
+            endPoint.x,
+            endPoint.y
+        );
     }
     /**
      * 円形グラデーションを描画
@@ -203,8 +208,8 @@ class Context2D {
         startRound: number,
         endPoint: Vec2,
         endRound: number
-    ): this {
-        this.context.createRadialGradient(
+    ): CanvasGradient {
+        return this.context.createRadialGradient(
             startPoint.x,
             startPoint.y,
             startRound,
@@ -212,16 +217,14 @@ class Context2D {
             endPoint.y,
             endRound
         );
-        return this;
     }
     /**
      * 画像と繰り返しを使用してパターンを作成(適用はされない)
      * @param image 画像
      * @param repetition 繰り返しのスタイル
      */
-    public createPattern(image: CanvasImageSource, repetition: Repetition): this {
-        this.context.createPattern(image, repetition);
-        return this;
+    public createPattern(image: CanvasImageSource, repetition: Repetition): CanvasPattern | null {
+        return this.context.createPattern(image, repetition);
     }
     /**
      * 現在のパスを閉じる
@@ -603,6 +606,7 @@ class Context2D {
             this.setAttr('shadowOffsetY', CONTEXT_ATTRS_DEFAULT.shadowOffsetY);
             return this;
         }
+
         this.setAttr('shadowColor', shadowConfig.shadowColor ?? CONTEXT_ATTRS_DEFAULT.shadowColor);
         this.setAttr('shadowBlur', shadowConfig.shadowBlur ?? CONTEXT_ATTRS_DEFAULT.shadowBlur);
         this.setAttr(
@@ -736,5 +740,6 @@ export type {
     ContextLineConfig,
     ContextShadowConfig,
     ContextTextConfig,
+    Repetition,
 };
 export { Context2D, CONTEXT_ATTRS_DEFAULT };
