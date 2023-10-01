@@ -38,7 +38,7 @@ class RendererShader {
         this.fragmentShaderSource = fragmentShader;
         this.attributeConfigs = attributes;
     }
-    public compile(gl2: WebGL2RenderingContext) {
+    public compile(gl2: WebGL2RenderingContext): [Program, VertexAttribute[]] {
         const program = new Program(
             gl2,
             new VertexShader(gl2, this.vertexShaderSource),
@@ -47,16 +47,7 @@ class RendererShader {
         const attributes = this.attributeConfigs.map((attr) =>
             program.getAttribute(attr.name, attr.size, attr.stride, attr.offset)
         );
-        return new RenderCompiledShader(program, attributes);
-    }
-}
-
-class RenderCompiledShader {
-    readonly program: Program;
-    readonly attributes: VertexAttribute[];
-    constructor(program: Program, attributes: VertexAttribute[]) {
-        this.program = program;
-        this.attributes = attributes;
+        return [program, attributes];
     }
 }
 
@@ -74,33 +65,25 @@ class RendererBufferData {
 }
 
 class Renderer extends WebGL2 {
-    private shader: RenderCompiledShader;
+    private program: Program;
+    private attributes: VertexAttribute[];
     private vertex: VertexDataProvider;
 
     constructor(shader: RendererShader, bufferData: RendererBufferData) {
         super();
-        this.shader = shader.compile(this.gl2);
+        [this.program, this.attributes] = shader.compile(this.gl2);
 
         this.vertex = bufferData.createVertex(this.gl2);
-        this.vertex.setAttributes(...this.shader.attributes);
+        this.vertex.setAttributes(...this.attributes);
     }
 
-    public compileShader(shader: RendererShader) {
-        return shader.compile(this.gl2);
+    public setBufferData(bufferData: RendererBufferData) {
+        this.vertex = bufferData.createVertex(this.gl2);
+        this.vertex.setAttributes(...this.attributes);
     }
-
-    public setCompiledShader(compiledShader: RenderCompiledShader) {
-        this.shader = compiledShader;
-        this.vertex.setAttributes(...this.shader.attributes);
-    }
-
-    public createVertex(bufferData: RendererBufferData) {
-        return bufferData.createVertex(this.gl2);
-    }
-
-    public setVertex(vertex: VertexDataProvider) {
-        this.vertex = vertex;
-        this.vertex.setAttributes(...this.shader.attributes);
+    public setShader(shader: RendererShader) {
+        [this.program, this.attributes] = shader.compile(this.gl2);
+        this.vertex.setAttributes(...this.attributes);
     }
 
     public createTexture2D(op?: TexOptions) {
@@ -133,7 +116,7 @@ class Renderer extends WebGL2 {
 
     public activate() {
         this.vertex.activate();
-        this.shader.program.use();
+        this.program.use();
         return this;
     }
 
@@ -143,18 +126,18 @@ class Renderer extends WebGL2 {
     }
 
     public setUniformInt(name: string, value: IUniformValue) {
-        this.shader.program.getUniformInt(name).set(value);
+        this.program.getUniformInt(name).set(value);
         return this;
     }
 
     public setUniformFloat(name: string, value: IUniformValue) {
-        this.shader.program.getUniformFloat(name).set(value);
+        this.program.getUniformFloat(name).set(value);
         return this;
     }
 
     public setUniformSampler2D(name: string, texture: Texture2D) {
         texture.bind();
-        this.shader.program.getUniformInt(name).set(texture.unitNumber);
+        this.program.getUniformInt(name).set(texture.unitNumber);
         return this;
     }
 
@@ -173,4 +156,4 @@ class Renderer extends WebGL2 {
 }
 
 export type { RendererShaderParam, RenderOptions, AttributeConfig };
-export { Renderer, RendererShader, RenderCompiledShader, RendererBufferData };
+export { Renderer, RendererShader, RendererBufferData };
