@@ -1,8 +1,8 @@
 import { useState } from '@storybook/addons';
 import type { Meta, StoryObj } from '@storybook/react';
 import DraggableWindow from '.';
-import Button from 'components/atoms/Button';
-import Box from 'components/layout/Box';
+import Box from 'components/ui-elements/Box';
+import Button from 'components/ui-elements/Button';
 
 const meta = {
     title: 'Molecules/DraggableWindow',

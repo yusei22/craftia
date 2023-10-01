@@ -22,11 +22,14 @@ export const Active: Story = {
     args: {
         icon: (
             <>
-                <ColorLensIcon sx={{ color: theme.colors['white'] }} />
+                <ColorLensIcon sx={{ color: theme.colors['white'] }} fontSize="small" />
             </>
         ),
-        height: 40,
         text: '描画',
+        height: 30,
+        heightMobile: 28,
+        paddingSide: 15,
+        paddingSideMobile: 8,
         isActive: true,
     },
 };
@@ -34,10 +37,9 @@ export const NotActive: Story = {
     args: {
         icon: (
             <>
-                <ColorLensIcon sx={{ color: theme.colors['text'] }} />
+                <ColorLensIcon sx={{ color: theme.colors['text'] }} fontSize="small" />
             </>
         ),
-        height: 40,
         text: '描画',
         isActive: false,
     },
@@ -48,12 +50,12 @@ export const Switchable: Story = {
         return (
             <>
                 <FoldableButton
-                    height={40}
                     icon={
                         <ColorLensIcon
                             sx={{
                                 color: isActive ? theme.colors['white'] : theme.colors['text'],
                             }}
+                            fontSize="small"
                         />
                     }
                     text="描画"

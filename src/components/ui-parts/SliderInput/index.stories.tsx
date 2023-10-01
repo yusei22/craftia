@@ -2,7 +2,7 @@ import { useState } from '@storybook/addons';
 import type { Meta, StoryObj } from '@storybook/react';
 import DraggableWindow from '../DraggableWindow';
 import SliderInput from '.';
-import Box from 'components/layout/Box';
+import Box from 'components/ui-elements/Box';
 
 const meta = {
     title: 'Molecules/SliderInput',

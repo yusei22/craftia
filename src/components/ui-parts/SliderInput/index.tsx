@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import Text from 'components/atoms/Text';
-import Flex from 'components/layout/Flex';
+import Flex from 'components/ui-elements/Flex';
+import Text from 'components/ui-elements/Text';
 import type { Responsive } from 'types';
 import { toPropValue, Color, FontSize, Space } from 'utils/styles';
 

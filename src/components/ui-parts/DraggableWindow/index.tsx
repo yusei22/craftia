@@ -1,9 +1,9 @@
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useDrag } from '@use-gesture/react';
 import React, { useState } from 'react';
-import Text from 'components/atoms/Text';
-import Box from 'components/layout/Box';
-import Flex from 'components/layout/Flex';
+import Box from 'components/ui-elements/Box';
+import Flex from 'components/ui-elements/Flex';
+import Text from 'components/ui-elements/Text';
 import { theme } from 'themes';
 import type { Responsive } from 'types';
 
