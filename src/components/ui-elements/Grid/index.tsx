@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import styled from 'styled-components'
-import Box, { BoxProps } from 'components/layout/Box'
+import Box, { BoxProps } from 'components/ui-elements/Box'
 import type { CSSPropertyGridArea, CSSPropertyGridAutoFlow, CSSPropertyGridColumn, CSSPropertyGridRow, Responsive } from 'types/styles'
 import { toPropValue } from 'utils/styles'
 

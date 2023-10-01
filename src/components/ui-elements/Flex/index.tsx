@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import styled from 'styled-components'
-import Box, { BoxProps } from 'components/layout/Box'
+import Box, { BoxProps } from 'components/ui-elements/Box'
 import type {
   Responsive,
   CSSPropertyAlignItems,
