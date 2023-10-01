@@ -1,23 +1,36 @@
 import { Context2D } from '../core/context-2d';
-import { Vec2 } from '../core/units';
-import { Sprite, SpriteConfig, SpritePrefs } from './Sprite';
+import { Vec2, Vec4 } from '../core/units';
+import { Sprite, SpriteConfig, SpritePrefs, SpriteFillStyle, SpritePrefsValue } from './Sprite';
 
 interface ShapePrefs extends SpritePrefs {
-    readonly size: Vec2;
-    readonly strokeStyle: string | CanvasGradient | CanvasPattern | null;
-    readonly strokeCap: CanvasLineCap | null;
-    readonly strokeDashOffset: number | null;
-    readonly strokeJoin: CanvasLineJoin | null;
-    readonly strokeWidth: number | null;
-    readonly fillStyle: string | CanvasGradient | CanvasPattern | null;
-    readonly scale: Vec2;
-    readonly rotation: number;
+    fillStyle: SpriteFillStyle;
+    strokeCap: CanvasLineCap | null;
+    strokeDashOffset: number | null;
+    strokeJoin: CanvasLineJoin | null;
+    strokeWidth: number | null;
+    strokeStyle: SpriteFillStyle;
+    scale: Vec2;
 }
 abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
     constructor(config: SpriteConfig, prefs: T) {
         super(config, prefs);
     }
     public abstract drawFunc(context: Context2D): void;
+    protected getAnchorRerativeLoc() {
+        return new Vec2(
+            this.prefs.anchor.x * this.prefs.scale.x,
+            this.prefs.anchor.y * this.prefs.scale.y
+        );
+    }
+    public getStartPoint() {
+        return this.prefs.globalLocation.sub(this.getAnchorRerativeLoc());
+    }
+    public getCenterPoint() {
+        return this.getStartPoint().add(this.prefs.scale.times(0.5));
+    }
+    public drawPointFunc(context: Context2D) {
+        this.drawFunc(context);
+    }
 }
 export type { ShapePrefs };
 export { Shape };
