@@ -66,15 +66,6 @@ function createCustomShader(fragmentShaderSource: string) {
         ],
     });
 }
-class ImageEditorSource {
-    readonly source: TexPixcels;
-    readonly size: Vec2;
-    constructor(image: TexPixcels, imageSize: Vec2) {
-        this.source = image;
-        this.size = imageSize;
-    }
-}
-
 type ListenerProps = {
     setUniformInt: (name: string, value: IUniformValue) => void;
     setUniformFloat: (name: string, value: IUniformValue) => void;
@@ -88,22 +79,42 @@ class ImageEditor {
     private renderer: CacheableRenderer;
     private texture: Texture2D;
 
-    constructor(image: ImageEditorSource, fragmentShaderSource: string) {
-        const bufferData = createBufferData(new Vec2(0, 0), image.size);
+    /**
+     * @param size 初期サイズ
+     * @param fragmentShaderSource シェーダー
+     */
+    constructor(size: Vec2, fragmentShaderSource: string) {
+        const bufferData = createBufferData(new Vec2(0, 0), size);
         const shader = createCustomShader(fragmentShaderSource);
 
-        this.renderer = new CacheableRenderer(bufferData, shader, image.size);
-        this.renderer.viewport(image.size);
+        this.renderer = new CacheableRenderer(bufferData, shader, size);
+        this.renderer.viewport(size);
 
-        this.texture = this.renderer.createTexture2D().attachImage(image.source, image.size);
+        this.texture = this.renderer.createTexture2D();
+    }
+    /**
+     * 画像サイズをセット
+     * @param size サイズ
+     */
+    public setImageSize(size: Vec2) {
+        this.renderer.setNewCache(size);
+        this.renderer.viewport(size);
+        this.renderer.setBufferData(createBufferData(new Vec2(0, 0), size));
+    }
+    /**
+     * 画像をセット
+     * @param image 画像
+     * @param imageSize サイズ
+     */
+    public setImage(image: TexPixcels, imageSize: Vec2) {
+        this.texture.attachImage(image, imageSize);
     }
     /**
      * フラグメントシェーダーを変更する
      * @param fragmentShaderSource
      */
     public changeFragmentShader(fragmentShaderSource: string) {
-        const shader = this.renderer.compileShader(createCustomShader(fragmentShaderSource));
-        this.renderer.setCompiledShader(shader);
+        this.renderer.setShader(createCustomShader(fragmentShaderSource));
     }
     /**
      * 実行結果を得る
@@ -112,33 +123,12 @@ class ImageEditor {
     public getResult() {
         return this.renderer.getCanvas();
     }
-    /**
-     * 一回のみ実行
-     */
-    public execute() {
-        this.renderer.activate();
-
-        //`uniform`に値を送り込む
-        this.renderer
-            .setUniformSampler2D('u_texture', this.texture) //テクスチャ
-            .setUniformFloat('u_resolution', this.renderer.getResolution()) //画面の解像度
-            .setUniformFloat('u_flipY', -1.0); //上下反転させる
-
-        this.listener[0]?.(this.getListenerPorops());
-
-        this.renderer.render();
-        this.renderer.deactivate();
-    }
-    /**
-     * 複数回実行
-     * @param time 実行回数
-     */
-    public executeMultiple(time: number) {
+    private _execute(time: number, texture: Texture2D) {
         this.renderer.activate();
 
         //`uniform`に初期値を送り込む
         this.renderer
-            .setUniformSampler2D('u_texture', this.texture) //テクスチャ
+            .setUniformSampler2D('u_texture', texture) //テクスチャ
             .setUniformFloat('u_flipY', 1.0) //上下反転しない
             .setUniformFloat('u_resolution', this.renderer.getResolution()); //画面の解像度
 
@@ -162,6 +152,20 @@ class ImageEditor {
         this.renderer.deactivate();
     }
     /**
+     * 実行
+     * @param time 実行回数
+     */
+    public execute(time: number) {
+        this._execute(time, this.texture);
+    }
+    /**
+     * 続きを実行
+     * @param time
+     */
+    public executeContinuation(time: number) {
+        this._execute(time, this.renderer.getCacheTex());
+    }
+    /**
      * レンダリング時のリスナーに送るプロップスを得る
      * @returns
      */
@@ -180,4 +184,4 @@ class ImageEditor {
     }
 }
 
-export { ImageEditor, ImageEditorSource };
+export { ImageEditor };
