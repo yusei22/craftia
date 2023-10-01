@@ -17,7 +17,7 @@ type UndoReno<T> = {
     useFutureValue: () => T[];
 };
 
-function useUndoRedo<T>({
+function createUndoRedo<T>({
     pastKey,
     currentKey,
     futureKey,
@@ -48,6 +48,7 @@ function useUndoRedo<T>({
         return (valOrUpdater: T | ((currVal: T) => T)) => {
             setPast((pastValue) => {
                 const newPast = [...pastValue, currentValue];
+
                 if (newPast.length > storageLength) {
                     newPast.shift();
                 }
@@ -61,13 +62,16 @@ function useUndoRedo<T>({
         const [currentValue, setCurrent] = useRecoilState(current);
         const [pastValue, setPast] = useRecoilState(past);
         const setFuture = useSetRecoilState(future);
+
         return () => {
             if (pastValue.length <= 0) return;
+
             setFuture((futureValue) => [currentValue, ...futureValue]);
             setCurrent(pastValue[pastValue.length - 1]);
             setPast((pastValue) => {
-                pastValue.pop();
-                return pastValue;
+                const newPastValue = [...pastValue];
+                newPastValue.pop();
+                return newPastValue;
             });
         };
     }
@@ -75,13 +79,15 @@ function useUndoRedo<T>({
         const [currentValue, setCurrent] = useRecoilState(current);
         const setPast = useSetRecoilState(past);
         const [futureValue, setFuture] = useRecoilState(future);
+
         return () => {
             if (futureValue.length <= 0) return;
 
             setPast((pastValue) => [...pastValue, currentValue]);
             setFuture((futureValue) => {
-                futureValue.shift();
-                return futureValue;
+                const newFutureValue = [...futureValue];
+                newFutureValue.shift();
+                return newFutureValue;
             });
             setCurrent(futureValue[0]);
         };
@@ -98,5 +104,5 @@ function useUndoRedo<T>({
     return { useSaver, useUndo, useReno, usePastValue, useCurrentValue, useFutureValue };
 }
 
-export { useUndoRedo };
+export { createUndoRedo };
 export type { UndoReno };
