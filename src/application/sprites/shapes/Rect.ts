@@ -1,10 +1,10 @@
 import { Shape, ShapePrefs } from '../Shape';
-import { SpriteConfig } from '../Sprite';
+import { SpriteConfig, SpritePrefsValue } from '../Sprite';
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 
 interface RectPrefs extends ShapePrefs {
-    readonly round: number;
+    round: number;
 }
 
 class Rect extends Shape<RectPrefs> {
@@ -29,25 +29,16 @@ class Rect extends Shape<RectPrefs> {
         };
         super(config, prefs);
     }
-    private getAnchorRerativeLoc() {
-        return new Vec2(
-            this.prefs.anchor.x * this.prefs.scale.x,
-            this.prefs.anchor.y * this.prefs.scale.y
-        );
+    public clone() {
+        return new Rect({ ...this.prefs });
     }
     public drawFunc(context: Context2D): void {
-        if (!this.prefs.visible) return;
-
-        const startPoint = this.prefs.globalLocation.sub(this.getAnchorRerativeLoc());
-        const centerPoint = startPoint.add(this.prefs.scale.times(0.5));
-        context
-            .translate(centerPoint)
-            .rotate(this.prefs.rotation)
-            .roundRect(startPoint, this.prefs.scale, this.prefs.round)
-            .stroke();
-    }
-    editPrefs(param: Partial<RectPrefs>) {
-        const prefsClone = Object.assign({}, this.prefs);
+        context.translate(this.getCenterPoint());
+        context.rotate(this.prefs.rotation);
+        context.translate(this.getCenterPoint().times(-1));
+        context.roundRect(this.getStartPoint(), this.prefs.scale, this.prefs.round);
+        context.fill();
+        context.stroke();
     }
 }
 export { Rect };
