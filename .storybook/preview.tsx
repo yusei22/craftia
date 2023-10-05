@@ -1,25 +1,9 @@
-import { withThemeFromJSXProvider } from '@storybook/addon-styling';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { theme } from '../src/themes'
 import type { Preview } from "@storybook/react";
-const GlobalStyles = createGlobalStyle`
-  html,
-  body,
-  textarea {
-    padding: 0;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  }
-  * {
-    box-sizing: border-box;
-  }
-  a {
-    text-decoration: none;
-    transition: .25s;
-    color: #000000;
-  }
-`
+import { CssVarsProvider } from "@mui/joy";
+import { CssBaseline } from "@mui/joy"
+import theme from '../src/theme'
+import React from 'react';
+
 export const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
@@ -30,15 +14,14 @@ export const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => {
+      return (
+        <CssVarsProvider theme={theme}>
+          <CssBaseline />
+          <Story />
+        </CssVarsProvider>
+      )
+    }
+  ]
 };
-
-export const decorators = [
-  withThemeFromJSXProvider({
-    GlobalStyles, // Adds your GlobalStyle component to all stories
-    themes: {
-      light: theme,
-    },
-    defaultTheme: 'light',
-    Provider: ThemeProvider,
-  })
-];
