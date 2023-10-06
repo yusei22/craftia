@@ -1,5 +1,12 @@
 import { Vec2 } from 'application/core/units';
-
+/**
+ * 
+ * @param currentLoc 
+ * @param currentScale 
+ * @param zoom 
+ * @param zoomPoint 
+ * @returns [位置、サイズ]
+ */
 function rectZoom(
     currentLoc: Vec2,
     currentScale: Vec2,
@@ -10,6 +17,16 @@ function rectZoom(
     const y = zoomPoint.y - zoom * (zoomPoint.y - currentLoc.y);
 
     return [new Vec2(x, y), currentScale.times(zoom)];
+}
+function getRectZoomLoc(
+    currentLoc: Vec2,
+    zoom: number,
+    zoomPoint: Vec2
+): Vec2 {
+    const x = zoomPoint.x - zoom * (zoomPoint.x - currentLoc.x);
+    const y = zoomPoint.y - zoom * (zoomPoint.y - currentLoc.y);
+
+    return new Vec2(x, y);
 }
 
 function getArtBoardPointFromGlobal(
@@ -29,14 +46,13 @@ function getArtBoardPointFromGlobal(
 
     const pointerRelativeLoc = pointerLoc.sub(centerPoint);
 
-    //ここだけ右手系の計算式
     const artBoardPointerLoc_x =
-        pointerRelativeLoc.x * Math.cos(-artBoardRotation) -
-        pointerRelativeLoc.y * Math.sin(-artBoardRotation);
+        pointerRelativeLoc.x * Math.cos(artBoardRotation) +
+        pointerRelativeLoc.y * Math.sin(artBoardRotation);
 
-    const artBoardPointerLoc_y =
-        pointerRelativeLoc.x * Math.sin(-artBoardRotation) +
-        pointerRelativeLoc.y * Math.cos(-artBoardRotation)
+    const artBoardPointerLoc_y = (
+        pointerRelativeLoc.x * Math.sin(artBoardRotation) +
+        pointerRelativeLoc.y * Math.cos(artBoardRotation)) * -1
 
     return new Vec2(artBoardPointerLoc_x, artBoardPointerLoc_y).add(rerativeCenterfPoint);
 }
@@ -59,16 +75,15 @@ function getGlobalFromArtBoardPoint(
 
     const pointRelativeLoc = artboardPoint.sub(rerativeCenterfPoint);
 
-    //ここだけ右手系の計算式
     const rotatedRelativeLoc_x =
-        pointRelativeLoc.x * Math.cos(artBoardRotation) -
-        pointRelativeLoc.y * Math.sin(artBoardRotation);
+        pointRelativeLoc.x * Math.cos(-artBoardRotation) +
+        pointRelativeLoc.y * Math.sin(-artBoardRotation);
 
-    const rotatedRelativeLoc_y =
-        pointRelativeLoc.x * Math.sin(artBoardRotation) +
-        pointRelativeLoc.y * Math.cos(artBoardRotation)
+    const rotatedRelativeLoc_y = (
+        pointRelativeLoc.x * Math.sin(-artBoardRotation) +
+        pointRelativeLoc.y * Math.cos(-artBoardRotation)) * -1
 
     return new Vec2(rotatedRelativeLoc_x, rotatedRelativeLoc_y).add(centerPoint);
 }
 
-export { rectZoom, getArtBoardPointFromGlobal, getGlobalFromArtBoardPoint };
+export { rectZoom, getRectZoomLoc, getArtBoardPointFromGlobal, getGlobalFromArtBoardPoint };
