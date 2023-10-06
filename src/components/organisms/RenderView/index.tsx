@@ -1,4 +1,4 @@
-import useArtboardRender from "hooks/artboard/useArtboardRender"
+import useArtboardRender from "hooks/artboard/render/useArtboardRender"
 import { useEffect, useState, useRef } from 'react';
 
 const RenderView = () => {
