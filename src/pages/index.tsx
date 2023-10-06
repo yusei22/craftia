@@ -1,5 +1,8 @@
-
 import Head from 'next/head';
+import { ArtboardRoot } from 'components/organisms/ArtboardRoot';
+import { SpriteSelectModeButton } from 'components/organisms/SpriteSelectModeButton';
+import { RenderingArea } from 'components/organisms/RenderingArea';
+
 export default function Home() {
     return (
         <>
@@ -10,6 +13,11 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <>
+                <ArtboardRoot>
+                    <SpriteSelectModeButton />
+                    <RenderingArea />
+                </ArtboardRoot>
+
             </>
         </>
     );
