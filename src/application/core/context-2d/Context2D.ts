@@ -71,8 +71,8 @@ const CONTEXT_ATTRS_DEFAULT: Context2DMap = {
 class Context2D {
     protected canvas: HTMLCanvasElement;
     protected context: CanvasRenderingContext2D;
-    constructor() {
-        [this.canvas, this.context] = createCanvasAndContext2D();
+    constructor(op?: CanvasRenderingContext2DSettings) {
+        [this.canvas, this.context] = createCanvasAndContext2D(op);
     }
     /**
      * キャンバスのサイズ
@@ -715,9 +715,9 @@ class Context2D {
     }
 }
 
-function createCanvasAndContext2D(): [HTMLCanvasElement, CanvasRenderingContext2D] {
+function createCanvasAndContext2D(op?: CanvasRenderingContext2DSettings): [HTMLCanvasElement, CanvasRenderingContext2D] {
     const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext('2d', op);
     if (context === null) {
         throw Error('Failed to get context 2D.');
     }
