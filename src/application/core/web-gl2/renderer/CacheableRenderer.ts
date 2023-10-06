@@ -1,6 +1,6 @@
 import { OffscreenRenderer } from '../offscreeen';
 import { Texture2D } from '../textures';
-import { RendererBufferData, RendererShader, Renderer, RenderOptions } from './Renderer';
+import { RendererShader, Renderer, RenderOptions } from './Renderer';
 import { Vec2 } from 'application/core/units';
 
 class CacheableRenderer extends Renderer {
@@ -8,8 +8,8 @@ class CacheableRenderer extends Renderer {
     private resultTex: Texture2D;
     private count: number = 0;
 
-    constructor(bufferData: RendererBufferData, shader: RendererShader, cacheSize: Vec2) {
-        super(shader, bufferData);
+    constructor(shader: RendererShader, cacheSize: Vec2) {
+        super(shader);
         this.offScreens[0] = this.createOffscreen(cacheSize);
         this.offScreens[1] = this.createOffscreen(cacheSize);
 
