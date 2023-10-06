@@ -67,23 +67,21 @@ class RendererBufferData {
 class Renderer extends WebGL2 {
     private program: Program;
     private attributes: VertexAttribute[];
-    private vertex: VertexDataProvider;
+    private vertex?: VertexDataProvider;
 
-    constructor(shader: RendererShader, bufferData: RendererBufferData) {
+    constructor(shader: RendererShader) {
         super();
         [this.program, this.attributes] = shader.compile(this.gl2);
-
-        this.vertex = bufferData.createVertex(this.gl2);
-        this.vertex.setAttributes(...this.attributes);
     }
 
     public setBufferData(bufferData: RendererBufferData) {
         this.vertex = bufferData.createVertex(this.gl2);
         this.vertex.setAttributes(...this.attributes);
     }
+    
     public setShader(shader: RendererShader) {
         [this.program, this.attributes] = shader.compile(this.gl2);
-        this.vertex.setAttributes(...this.attributes);
+        this.vertex?.setAttributes(...this.attributes);
     }
 
     public createTexture2D(op?: TexOptions) {
@@ -115,13 +113,13 @@ class Renderer extends WebGL2 {
     }
 
     public activate() {
-        this.vertex.activate();
+        this.vertex?.activate();
         this.program.use();
         return this;
     }
 
     public deactivate() {
-        this.vertex.deactivate();
+        this.vertex?.deactivate();
         return this;
     }
 
@@ -142,6 +140,10 @@ class Renderer extends WebGL2 {
     }
 
     public render({ mode, type, offset }: RenderOptions = {}) {
+        if (!this.vertex) {
+            console.log('BufferData is not set.')
+            return;
+        }
         this.gl2.clearColor(0, 0, 0, 0);
         this.gl2.clear(this.gl2.COLOR_BUFFER_BIT);
 
