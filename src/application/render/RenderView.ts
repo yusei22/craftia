@@ -10,7 +10,7 @@ type RenderViewRenderProps = {
 class RenderView {
     private context: Context2D;
     constructor() {
-        this.context = new Context2D();
+        this.context = new Context2D({ willReadFrequently: true });
         this.context.setAttr('imageSmoothingEnabled', false);
     }
     public get size() {
@@ -23,18 +23,26 @@ class RenderView {
         image: HTMLCanvasElement | ImageBitmap,
         { anchor, location, rotate, scale }: RenderViewRenderProps
     ) {
+        this.context.setAttr('imageSmoothingEnabled', false);
+        this.context.resetTransform();
+
+        this.context.clear();
+        this.context.setFillStyle('#e6e6e6');
+        this.context.fillRect(new Vec2(0, 0), this.context.size);
+
         const anchorRerativeLoc = new Vec2(anchor.x * scale.x, anchor.y * scale.y);
         const startPoint = location.sub(anchorRerativeLoc);
-        const centerPoint = startPoint.add(scale.times(0.5));
-
-        this.context.resetTransform();
-        this.context.translate(centerPoint);
+        
+        this.context.translate(location);
         this.context.rotate(rotate);
-        this.context.translate(centerPoint.times(-1));
-        this.context.drawImage(image, new Vec2(0, 0), scale);
+        this.context.translate(location.times(-1));
+        this.context.drawImage(image, startPoint, scale);
     }
-    public getResult() {
+    public getCanvas() {
         return this.context.getCanvas();
+    }
+    public getImageData() {
+        return this.context.getImageData(new Vec2(0, 0), this.size);
     }
 }
 export { RenderView };
