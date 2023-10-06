@@ -18,7 +18,7 @@ class Bilateral extends FilterWorker<BilateralConfig> {
         const imageSize = new Vec2(image.width, image.height);
 
         this.editor = new ImageEditor(imageSize, bilateral.default);
-        this.editor.setImage(image, imageSize);
+        this.editor.setImage(image, imageSize, false);
     }
     public execute(config: BilateralConfig) {
         const executionTimes = Math.ceil(config.radius / MAX_RADIUS);
