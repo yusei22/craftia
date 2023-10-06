@@ -80,34 +80,31 @@ class ImageEditor {
     private texture: Texture2D;
 
     /**
-     * @param size 初期サイズ
+     * @param editorSize 初期サイズ
      * @param fragmentShaderSource シェーダー
      */
-    constructor(size: Vec2, fragmentShaderSource: string) {
-        const bufferData = createBufferData(new Vec2(0, 0), size);
+    constructor(editorSize: Vec2, fragmentShaderSource: string) {
+        const bufferData = createBufferData(new Vec2(0, 0), editorSize);
         const shader = createCustomShader(fragmentShaderSource);
 
-        this.renderer = new CacheableRenderer(bufferData, shader, size);
-        this.renderer.viewport(size);
+        this.renderer = new CacheableRenderer(shader, editorSize);
+        this.renderer.setBufferData(bufferData);
+        this.renderer.viewport(editorSize);
 
         this.texture = this.renderer.createTexture2D();
-    }
-    /**
-     * 画像サイズをセット
-     * @param size サイズ
-     */
-    public setImageSize(size: Vec2) {
-        this.renderer.setNewCache(size);
-        this.renderer.viewport(size);
-        this.renderer.setBufferData(createBufferData(new Vec2(0, 0), size));
     }
     /**
      * 画像をセット
      * @param image 画像
      * @param imageSize サイズ
      */
-    public setImage(image: TexPixcels, imageSize: Vec2) {
+    public setImage(image: TexPixcels, imageSize: Vec2, changeEditorSize: boolean) {
         this.texture.attachImage(image, imageSize);
+        if(changeEditorSize){
+            this.renderer.setNewCache(imageSize);
+            this.renderer.viewport(imageSize);
+            this.renderer.setBufferData(createBufferData(new Vec2(0, 0), imageSize));
+        }
     }
     /**
      * フラグメントシェーダーを変更する
