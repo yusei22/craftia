@@ -17,7 +17,7 @@ class UnsharpMasking extends FilterWorker<UnsharpMaskingConfig> {
         const imageSize = new Vec2(image.width, image.height);
 
         this.editor = new ImageEditor(imageSize, unsharpMasking.default);
-        this.editor.setImage(image, imageSize);
+        this.editor.setImage(image, imageSize, false);
     }
     public execute(config: UnsharpMaskingConfig) {
         this.editor.listener[0] = ({ setUniformFloat, setUniformInt }) => {
