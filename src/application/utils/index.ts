@@ -33,28 +33,21 @@ function getArtBoardPointFromGlobal(
     artBoardLoc: Vec2,
     artBoardSize: Vec2,
     artBoardAnchor: Vec2,
-    artBoardRotation: number,
+    artboardRotation: number,
     pointerLoc: Vec2
 ) {
     const anchorRerativeLoc = new Vec2(
         artBoardAnchor.x * artBoardSize.x,
         artBoardAnchor.y * artBoardSize.y
     );
-    const startPoint = artBoardLoc.sub(anchorRerativeLoc);
-    const centerPoint = startPoint.add(artBoardSize.times(0.5));
-    const rerativeCenterfPoint = artBoardSize.times(0.5);
+    const notRotatedStartPoint = artBoardLoc.sub(anchorRerativeLoc);
+    const ArtBoardPoint = rotatePointAroundCenter(
+        artBoardLoc,
+        pointerLoc.sub(notRotatedStartPoint),
+        - artboardRotation
+    )
 
-    const pointerRelativeLoc = pointerLoc.sub(centerPoint);
-
-    const artBoardPointerLoc_x =
-        pointerRelativeLoc.x * Math.cos(artBoardRotation) +
-        pointerRelativeLoc.y * Math.sin(artBoardRotation);
-
-    const artBoardPointerLoc_y = (
-        pointerRelativeLoc.x * Math.sin(artBoardRotation) +
-        pointerRelativeLoc.y * Math.cos(artBoardRotation)) * -1
-
-    return new Vec2(artBoardPointerLoc_x, artBoardPointerLoc_y).add(rerativeCenterfPoint);
+    return ArtBoardPoint;
 }
 
 
@@ -62,28 +55,36 @@ function getGlobalFromArtBoardPoint(
     artBoardLoc: Vec2,
     artBoardSize: Vec2,
     artBoardAnchor: Vec2,
-    artBoardRotation: number,
+    artboardRotation: number,
     artboardPoint: Vec2
 ) {
     const anchorRerativeLoc = new Vec2(
         artBoardAnchor.x * artBoardSize.x,
         artBoardAnchor.y * artBoardSize.y
     );
-    const startPoint = artBoardLoc.sub(anchorRerativeLoc);
-    const centerPoint = startPoint.add(artBoardSize.times(0.5));
-    const rerativeCenterfPoint = artBoardSize.times(0.5);
+    const notRotatedStartPoint = artBoardLoc.sub(anchorRerativeLoc);
+    const globalPoint = rotatePointAroundCenter(
+        artBoardLoc,
+        artboardPoint.add(notRotatedStartPoint),
+        artboardRotation
+    )
 
-    const pointRelativeLoc = artboardPoint.sub(rerativeCenterfPoint);
-
-    const rotatedRelativeLoc_x =
-        pointRelativeLoc.x * Math.cos(-artBoardRotation) +
-        pointRelativeLoc.y * Math.sin(-artBoardRotation);
-
-    const rotatedRelativeLoc_y = (
-        pointRelativeLoc.x * Math.sin(-artBoardRotation) +
-        pointRelativeLoc.y * Math.cos(-artBoardRotation)) * -1
-
-    return new Vec2(rotatedRelativeLoc_x, rotatedRelativeLoc_y).add(centerPoint);
+    return globalPoint;
 }
 
-export { rectZoom, getRectZoomLoc, getArtBoardPointFromGlobal, getGlobalFromArtBoardPoint };
+function rotatePointAroundOrigin(point: Vec2, angle: number): Vec2 {
+    const rotatedX = point.x * Math.cos(angle) - point.y * Math.sin(angle);
+    const rotatedY = point.x * Math.sin(angle) + point.y * Math.cos(angle);
+    return new Vec2(rotatedX, rotatedY)
+}
+function rotatePointAroundCenter(center: Vec2, point: Vec2, angle: number): Vec2 {
+    //平行移動
+    const translatedPoint = new Vec2(point.x - center.x, point.y - center.y);
+    //回転
+    const rotatedPoint = rotatePointAroundOrigin(translatedPoint, angle);
+    //平行移動した分戻す
+    return new Vec2(rotatedPoint.x + center.x, rotatedPoint.y + center.y)
+}
+
+
+export { rectZoom, getRectZoomLoc, getArtBoardPointFromGlobal, getGlobalFromArtBoardPoint, rotatePointAroundCenter };
