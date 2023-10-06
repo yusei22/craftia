@@ -1,5 +1,5 @@
-import { useArtboardTouchGesture } from "hooks/artboard/useArtboardTouchGesture";
-import { useArtboardWheelGesture } from "hooks/artboard/useArtboardWheelGesture";
+import { useArtboardTouchGesture } from "hooks/artboard/gestures/useArtboardTouchGesture";
+import { useArtboardWheelGesture } from "hooks/artboard/gestures/useArtboardWheelGesture";
 import { useSetRecoilState } from 'recoil';
 import { RenderViewListenersAtom } from 'stores';
 
