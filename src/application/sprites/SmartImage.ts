@@ -27,14 +27,12 @@ class SmartImage extends Sprite<SmartImagePrefs> {
         super(config, prefs);
         this.image = image;
     }
-    private getAnchorRerativeLoc() {
-        return new Vec2(
+    public getStartPoint() {
+        const anchorRerativeLoc = new Vec2(
             this.prefs.anchor.x * this.prefs.scale.x,
             this.prefs.anchor.y * this.prefs.scale.y
         );
-    }
-    public getStartPoint() {
-        return this.prefs.globalLocation.sub(this.getAnchorRerativeLoc());
+        return this.prefs.globalLocation.sub(anchorRerativeLoc);
     }
     public getCenterPoint() {
         return this.getStartPoint().add(this.prefs.scale.times(0.5));
