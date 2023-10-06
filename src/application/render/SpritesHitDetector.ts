@@ -6,7 +6,7 @@ class SpritesHitDetector {
     private context: Context2D;
 
     constructor() {
-        this.context = new Context2D();
+        this.context = new Context2D({ willReadFrequently: true });
     }
     public viewport(size: Vec2) {
         this.context.viewport(size);
@@ -26,7 +26,7 @@ class SpritesHitDetector {
 
 function isTransparent(imageData: ImageData, threshold: number = 0): boolean {
     const data = imageData.data;
-    for (let i = 3; i < data.length; i + 4) {
+    for (let i = 3; i < data.length; i += 4) {
         if (data[i] > threshold) return false;
     }
     return true;
