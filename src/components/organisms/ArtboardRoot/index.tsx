@@ -4,20 +4,15 @@ import { Rasterizedmage } from "application/sprites/RasterizedImage";
 import { SmartImage } from "application/sprites/SmartImage";
 import { FillSolid } from "application/sprites/SpriteFill";
 import { Rect } from "application/sprites/shapes/Rect";
-import { useSetArtboardPrefs } from "hooks/artboard/useSetArtboardPrefs"
 import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { RenderViewScaleAtom, SpriteTreeAtom } from "stores";
+import { RenderViewScaleAtom, SpriteTreeAtom, ArtboardResolutionAtom ,ArtboardScaleAtom} from "stores";
 import { v4 as uuidv4 } from 'uuid';
 
 const ArtboardRoot = ({ children }: { children?: React.ReactNode }) => {
 
-    const {
-        setArtboardLocation,
-        setArtboardResolution,
-        setArtboardRotate,
-        setArtboardScale
-    } = useSetArtboardPrefs();
+    const setArtboardResolution = useSetRecoilState(ArtboardResolutionAtom);
+    const setArtboardScale = useSetRecoilState(ArtboardScaleAtom )
 
     const setSpriteTree = useSetRecoilState(SpriteTreeAtom);
     const setRenderViewSize = useSetRecoilState(RenderViewScaleAtom)
@@ -25,11 +20,8 @@ const ArtboardRoot = ({ children }: { children?: React.ReactNode }) => {
 
 
     useEffect(() => {
-        setArtboardLocation([0, 0]);
         setArtboardResolution([1000, 800]);
-        setArtboardRotate(0);
         setArtboardScale([1000, 800]);
-
         setRenderViewSize([1000, 800]);
         (async () => {
             const imageSource = await new DataURLDecoder().decode('/m.png');
