@@ -9,7 +9,7 @@ class SpritesRenderer {
     private context: Context2D;
 
     constructor() {
-        this.context = new Context2D();
+        this.context = new Context2D({ willReadFrequently: true });
     }
     public viewport(size: Vec2) {
         this.context.viewport(size);
