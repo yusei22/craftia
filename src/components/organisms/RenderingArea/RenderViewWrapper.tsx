@@ -1,6 +1,6 @@
 import { useGesture, useMove, usePinch, useScroll, useWheel } from "@use-gesture/react"
 import { useRef } from "react"
-import { RenderViewListeners } from "stores"
+import { RenderViewListeners } from "dataflow"
 
 type RenderViewWrapperProps = {
     children?: React.ReactNode,
@@ -10,7 +10,6 @@ type RenderViewWrapperProps = {
 const RenderViewWrapper = ({ children, events }: RenderViewWrapperProps) => {
     const wrapperRef = useRef<HTMLDivElement>(null)
     useGesture(events, { eventOptions: { passive: false }, target: wrapperRef })
-
     return (
         <div
             ref={wrapperRef}
@@ -21,7 +20,7 @@ const RenderViewWrapper = ({ children, events }: RenderViewWrapperProps) => {
                 width: 'fit-content',
                 margin: '0px',
                 padding: '0px',
-                touchAction:'none'
+                touchAction: 'none'
             }}
         >
             {children}

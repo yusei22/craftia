@@ -1,10 +1,10 @@
-import { RenderView } from 'components/organisms/RenderView';
-import { RenderViewWrapper } from 'components/organisms/RenderViewWrapper';
+import { RenderView } from 'components/organisms/RenderingArea/RenderView';
+import { RenderViewWrapper } from 'components/organisms/RenderingArea/RenderViewWrapper';
 import { useRecoilValue } from "recoil"
-import { RenderViewListenersAtom } from "stores"
+import { renderViewListenersAtom } from "dataflow"
 
 const RenderingArea = () => {
-    const RenderViewEventFuncs = useRecoilValue(RenderViewListenersAtom);
+    const RenderViewEventFuncs = useRecoilValue(renderViewListenersAtom);
 
     return (
         <>
