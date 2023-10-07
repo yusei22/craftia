@@ -1,3 +1,3 @@
-export * from './window-events/useWindowEvent';
-export * from './window-events/useWindowSize';
+export * from './windows/useWindowEvent';
+export * from './windows/useWindowSize';
 export * from './undo-reno/useUndoReno';
