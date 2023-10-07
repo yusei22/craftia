@@ -4,16 +4,13 @@ import { Vec2 } from 'application/core/units';
 import { RenderView } from 'application/render/RenderView';
 import { SpritesRenderer } from 'application/render/SpritesRenderer';
 import {
-    ArtboardRotationAtom,
-    ArtboardLocationAtom,
-    ArtboardScaleAtom,
-    SpriteTreeAtom,
-    ArtboardResolutionAtom,
-    ArtboardAnchorAtom,
-    RenderViewScaleAtom,
-} from 'stores';
+    artboardTransformAtom,
+    artboardResolutionAtom,
+    spriteTreeAtom,
+    renderViewScaleAtom,
+} from 'dataflow';
 
-const useArtboardRender = () => {
+const useRenderViewRender = () => {
 
     const [renderViewCanvasUpdateCount, setRenderViewCanvasUpdateCount] = useState<number>(0);
     const [renderViewCanvas, setRenderViewCanvas] = useState<HTMLCanvasElement | null>(null);
@@ -21,14 +18,13 @@ const useArtboardRender = () => {
     const [renderView, setRenderView] = useState<RenderView | null>(null);
     const [artboardRenderer, setArtboardRenderer] = useState<SpritesRenderer | null>(null);
 
-    const artboardRotate = useRecoilValue(ArtboardRotationAtom);
-    const artboardScale = useRecoilValue(ArtboardScaleAtom);
-    const artboardLocation = useRecoilValue(ArtboardLocationAtom);
-    const artboardResolution = useRecoilValue(ArtboardResolutionAtom);
-    const artboardAnchor = useRecoilValue(ArtboardAnchorAtom);
 
-    const renderViewSize = useRecoilValue(RenderViewScaleAtom);
-    const sprites = useRecoilValue(SpriteTreeAtom);
+    const artboardTransform = useRecoilValue(artboardTransformAtom);
+    const artboardResolution = useRecoilValue(artboardResolutionAtom);
+
+    const renderViewScale = useRecoilValue(renderViewScaleAtom);
+    const sprites = useRecoilValue(spriteTreeAtom);
+
 
     const renderArtboardRendererResult = () => {
         if (artboardRenderer === null) {
@@ -37,14 +33,17 @@ const useArtboardRender = () => {
         if (renderView === null) {
             return;
         }
-        renderView.viewport(new Vec2(renderViewSize));
+        const { anchor, location, scale, rotation } = artboardTransform;
+        
+        renderView.viewport(new Vec2(renderViewScale));
         renderView.render(artboardRenderer.getResult(), {
-            anchor: new Vec2(artboardAnchor),
-            location: new Vec2(artboardLocation),
-            rotate: artboardRotate,
-            scale: new Vec2(artboardScale),
+            anchor: new Vec2(anchor),
+            location: new Vec2(location),
+            rotate: rotation,
+            scale: new Vec2(scale),
         });
-        console.log(artboardAnchor, artboardLocation, artboardRotate, artboardScale)
+
+
         setRenderViewCanvasUpdateCount((value) => value + 1);
     }
 
@@ -62,20 +61,15 @@ const useArtboardRender = () => {
         renderArtboardRendererResult();
     }, [
         sprites,
-
         artboardRenderer,
         renderView
     ]);
     useEffect(() => {
         renderArtboardRendererResult();
     }, [
-        renderViewSize,
-        artboardRotate,
-        artboardScale,
-        artboardLocation,
+        renderViewScale,
+        artboardTransform,
         artboardResolution,
-        artboardAnchor,
-
         artboardRenderer,
         renderView
     ])
@@ -88,4 +82,4 @@ const useArtboardRender = () => {
     return { source: renderViewCanvas, deps: [renderViewCanvas, renderViewCanvasUpdateCount] };
 }
 
-export default useArtboardRender;
+export default useRenderViewRender;
