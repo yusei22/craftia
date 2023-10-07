@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { ArtboardRoot } from 'components/organisms/ArtboardRoot';
 import { SpriteSelectModeButton } from 'components/organisms/SpriteSelectModeButton';
 import { RenderingArea } from 'components/organisms/RenderingArea';
+import { RenderingAreaRoot } from 'components/organisms/RenderingAreaRoot';
 
 export default function Home() {
     return (
@@ -14,8 +15,10 @@ export default function Home() {
             </Head>
             <>
                 <ArtboardRoot>
-                    <SpriteSelectModeButton />
-                    <RenderingArea />
+                    <RenderingAreaRoot>
+                        <SpriteSelectModeButton />
+                        <RenderingArea />
+                    </RenderingAreaRoot>
                 </ArtboardRoot>
 
             </>
