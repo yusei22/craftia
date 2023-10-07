@@ -10,7 +10,7 @@ import {
     renderViewScaleAtom,
 } from 'dataflow';
 
-const useRenderViewRender = () => {
+const useRenderView = () => {
 
     const [renderViewCanvasUpdateCount, setRenderViewCanvasUpdateCount] = useState<number>(0);
     const [renderViewCanvas, setRenderViewCanvas] = useState<HTMLCanvasElement | null>(null);
@@ -82,4 +82,4 @@ const useRenderViewRender = () => {
     return { source: renderViewCanvas, deps: [renderViewCanvas, renderViewCanvasUpdateCount] };
 }
 
-export default useRenderViewRender;
+export default useRenderView;
