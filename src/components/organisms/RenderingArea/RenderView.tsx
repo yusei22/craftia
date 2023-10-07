@@ -1,4 +1,4 @@
-import useRenderViewRender from "hooks/renderView/useArtboardRender"
+import useRenderView from "hooks/renderViews/useRenderView"
 import { useEffect, useState, useRef } from 'react';
 
 const RenderView = () => {
@@ -6,7 +6,7 @@ const RenderView = () => {
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const { source: renderViewSource, deps: renderViewDeps } = useRenderViewRender();
+    const { source: renderViewSource, deps: renderViewDeps } = useRenderView();
     useEffect(() => {
         if (!canvasRef.current) {
             console.error('canvas is null')
