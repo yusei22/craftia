@@ -1,17 +1,13 @@
-import { ArtboardAnchorAtom, RenderViewListeners } from 'stores';
 import { Vec2 } from 'application/core/units';
-import { useSetRecoilState } from 'recoil';
-import { ArtboardLocationAtom, ArtboardRotationAtom, ArtboardScaleAtom, } from 'stores';
-import { getRectZoomLoc } from 'application/utils';
+import { RenderViewListeners } from 'dataflow';
 import { useCallback } from 'react';
-
+import { useChangeArtboardAnchorFromViewPoint } from '../anchor/useChangeArtboardAnchorFromViewPoint';
+import { artboardTransformAtom } from 'dataflow';
+import { useSetRecoilState } from 'recoil';
 
 const useArtboardTouchGesture = () => {
-    const setArtboardLocation = useSetRecoilState(ArtboardLocationAtom);
-    const setArtboardScale = useSetRecoilState(ArtboardScaleAtom);
-    const setArtboardRotate = useSetRecoilState(ArtboardRotationAtom);
-    const setArtboardAnchor = useSetRecoilState(ArtboardAnchorAtom);
-
+    const changeArtboardAnchorFromViewPoint = useChangeArtboardAnchorFromViewPoint();
+    const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
 
     let PinchPreviousOffset = 0
     let PinchPreviousOrigin = new Vec2(0, 0);
@@ -20,9 +16,9 @@ const useArtboardTouchGesture = () => {
     const onPinch: RenderViewListeners['onPinch'] = ({ offset, origin, event, first, last }) => {
         event.preventDefault();
         if (first) {
-            PinchPreviousOrigin = new Vec2(origin);
             PinchPreviousOffset = offset[0];
             PinchPreviousAngle = offset[1];
+            PinchPreviousOrigin = new Vec2(origin);
             return;
         }
         if (last) {
@@ -31,27 +27,26 @@ const useArtboardTouchGesture = () => {
             PinchPreviousAngle = 0;
             return;
         }
+        changeArtboardAnchorFromViewPoint(new Vec2(origin), true);
 
         const zoom = offset[0] / PinchPreviousOffset || 1;
-        setArtboardAnchor(
-            [0.5, 0.5]
-        );
 
-        setArtboardLocation((currentLoc) =>
-            getRectZoomLoc(
-                new Vec2(currentLoc),
-                zoom,
-                new Vec2(origin)
-            ).add(new Vec2(origin)).sub(PinchPreviousOrigin).toArray()
-        )
-        setArtboardScale((currentScale) =>
-            new Vec2(currentScale).times(zoom).toArray()
-        )
-        setArtboardRotate((currentRotate) => {
-            const currentDegree = currentRotate * (180 / Math.PI);
-            const newDegree = (currentDegree + offset[1] - PinchPreviousAngle);
+        const rotateCurrent = (currentRotate: number) =>
+            currentRotate + offset[1] / 180 * Math.PI - PinchPreviousAngle / 180 * Math.PI;
 
-            return newDegree / 180 * Math.PI
+        const scaleCurrent = (currentScale: [number, number]) =>
+            new Vec2(currentScale).times(zoom).toArray();
+
+        const translateCurrent = (currentLoc: [number, number]) =>
+            new Vec2(currentLoc).add(new Vec2(origin)).sub(PinchPreviousOrigin).toArray();
+
+        setArtboardTransform(({ rotation, scale, location, ...param }) => {
+            return {
+                ...param,
+                rotation: rotateCurrent(rotation),
+                scale: scaleCurrent(scale),
+                location: translateCurrent(location)
+            }
         })
 
         PinchPreviousOrigin = new Vec2(origin);
