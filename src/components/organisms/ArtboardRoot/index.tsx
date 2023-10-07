@@ -6,22 +6,25 @@ import { FillSolid } from "application/sprites/SpriteFill";
 import { Rect } from "application/sprites/shapes/Rect";
 import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { RenderViewScaleAtom, SpriteTreeAtom, ArtboardResolutionAtom ,ArtboardScaleAtom} from "stores";
+import { artboardTransformAtom, artboardResolutionAtom, renderViewScaleAtom, spriteTreeAtom } from 'dataflow'
 import { v4 as uuidv4 } from 'uuid';
 
 const ArtboardRoot = ({ children }: { children?: React.ReactNode }) => {
 
-    const setArtboardResolution = useSetRecoilState(ArtboardResolutionAtom);
-    const setArtboardScale = useSetRecoilState(ArtboardScaleAtom )
+    const setArtboardResolution = useSetRecoilState(artboardResolutionAtom);
+    const setArtboardTrans = useSetRecoilState(artboardTransformAtom)
 
-    const setSpriteTree = useSetRecoilState(SpriteTreeAtom);
-    const setRenderViewSize = useSetRecoilState(RenderViewScaleAtom)
-
-
+    const setSpriteTree = useSetRecoilState(spriteTreeAtom);
+    const setRenderViewSize = useSetRecoilState(renderViewScaleAtom)
 
     useEffect(() => {
         setArtboardResolution([1000, 800]);
-        setArtboardScale([1000, 800]);
+        setArtboardTrans({
+            anchor: [0.5, 0.5],
+            location: [0, 0],
+            rotation: 0/ 180 * Math.PI,
+            scale: [1000, 800]
+        });
         setRenderViewSize([1000, 800]);
         (async () => {
             const imageSource = await new DataURLDecoder().decode('/m.png');
@@ -66,7 +69,7 @@ const ArtboardRoot = ({ children }: { children?: React.ReactNode }) => {
                 name: 'image',
                 anchor: new Vec2(0, 0),
                 globalLocation: new Vec2(0, 0),
-                rotation: 180 / 180 * Math.PI,
+                rotation: 0 / 180 * Math.PI,
                 visible: true,
                 blendMode: 'lighten',
                 opacity: 1.0,
