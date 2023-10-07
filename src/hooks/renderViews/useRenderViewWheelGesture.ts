@@ -1,13 +1,13 @@
 import { RenderViewListeners } from 'dataflow';
 import { Vec2 } from 'application/core/units';
 import { useCallback } from 'react';
-import { useChangeArtboardAnchorFromViewPoint } from '../anchor/useChangeArtboardAnchorFromViewPoint';
+import { useChangeArtboardAnchorFromViewPoint } from '../artboards/useChangeArtboardAnchorFromViewPoint';
 import { WHEEL_CLOSE_UP_DEGREES } from 'consts';
 import { artboardTransformAtom } from 'dataflow';
 import { useSetRecoilState } from 'recoil';
 
 
-const useArtboardWheelGesture = () => {
+const useRenderViewWheelGesture = () => {
     const changeArtboardAnchorFromViewPoint = useChangeArtboardAnchorFromViewPoint()
     const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
 
@@ -33,4 +33,4 @@ const useArtboardWheelGesture = () => {
     }
 }
 
-export { useArtboardWheelGesture };
+export { useRenderViewWheelGesture };

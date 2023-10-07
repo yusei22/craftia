@@ -3,7 +3,7 @@ import { Vec2 } from 'application/core/units';
 import { artboardTransformAtom } from 'dataflow';
 import { useSetRecoilState } from 'recoil';
 
-const useArtboardMouseGesture = () => {
+const useRenderViewMouseGesture = () => {
     const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
 
     let PinchPreviousOffset = new Vec2(0, 0);
@@ -23,4 +23,4 @@ const useArtboardMouseGesture = () => {
 
     return { onMove }
 }
-export { useArtboardMouseGesture }
+export { useRenderViewMouseGesture }

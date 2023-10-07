@@ -1,11 +1,11 @@
 import { Vec2 } from 'application/core/units';
 import { RenderViewListeners } from 'dataflow';
 import { useCallback } from 'react';
-import { useChangeArtboardAnchorFromViewPoint } from '../anchor/useChangeArtboardAnchorFromViewPoint';
+import { useChangeArtboardAnchorFromViewPoint } from '../artboards/useChangeArtboardAnchorFromViewPoint';
 import { artboardTransformAtom } from 'dataflow';
 import { useSetRecoilState } from 'recoil';
 
-const useArtboardTouchGesture = () => {
+const useRenderViewTouchGesture = () => {
     const changeArtboardAnchorFromViewPoint = useChangeArtboardAnchorFromViewPoint();
     const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
 
@@ -59,4 +59,4 @@ const useArtboardTouchGesture = () => {
     }
 }
 
-export { useArtboardTouchGesture };
+export { useRenderViewTouchGesture  };
