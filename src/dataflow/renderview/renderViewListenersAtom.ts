@@ -1,20 +1,21 @@
 import { atom } from 'recoil';
 import { Handler, WebKitGestureEvent } from '@use-gesture/react';
-import { AtomKeys } from 'stores/recoilKeys';
 
 type RenderViewListeners = {
     onMove: Handler<"move", PointerEvent>;
     onPinch: Handler<"pinch", PointerEvent | TouchEvent | WheelEvent | WebKitGestureEvent>;
     onWheel: Handler<"wheel", WheelEvent>;
+    onDrag: Handler<"drag", PointerEvent | MouseEvent | TouchEvent | KeyboardEvent>;
 }
-const RenderViewListenersAtom = atom<RenderViewListeners>({
-    key: AtomKeys.RENDERVIEW_LISTENERS_ATOM,
+const renderViewListenersAtom = atom<RenderViewListeners>({
+    key: 'renderViewListenersAtom',
     default: {
         onMove: () => { },
         onPinch: () => { },
         onWheel: () => { },
+        onDrag: () => { }
     }
 });
 
-export type { RenderViewListeners };
-export { RenderViewListenersAtom };
+export type { RenderViewListeners }
+export { renderViewListenersAtom }
