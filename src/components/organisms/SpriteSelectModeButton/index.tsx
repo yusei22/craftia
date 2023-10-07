@@ -1,14 +1,14 @@
-import { useArtboardTouchGesture } from "hooks/artboard/gestures/useArtboardTouchGesture";
-import { useArtboardWheelGesture } from "hooks/artboard/gestures/useArtboardWheelGesture";
+import { useRenderViewTouchGesture } from "hooks/renderViews/useRenderViewTouchGesture";
+import { useRenderViewWheelGesture } from "hooks/renderViews/useRenderViewWheelGesture";
 import { useSetRecoilState } from 'recoil';
 import { renderViewListenersAtom } from 'dataflow';
-import { useArtboardMouseGesture } from "hooks/artboard/gestures/useArtboardMouseGesture";
+import { useRenderViewMouseGesture } from "hooks/renderViews/useRenderViewMouseGesture";
 
 
 const SpriteSelectModeButton = () => {
-    const { onWheel } = useArtboardWheelGesture();
-    const { onPinch } = useArtboardTouchGesture();
-    const { onMove, } = useArtboardMouseGesture();
+    const { onWheel } = useRenderViewWheelGesture();
+    const { onPinch } = useRenderViewTouchGesture();
+    const { onMove, } = useRenderViewMouseGesture();
 
     const setRenderViewListeners = useSetRecoilState(renderViewListenersAtom);
 
