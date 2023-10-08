@@ -1,52 +1,122 @@
-import { extendTheme } from "@mui/joy/styles";
+import { Theme } from '@emotion/react';
 
-declare module '@mui/joy/styles' {
-    interface PaletteTextOverrides {
-        whiten: true;
+declare module '@emotion/react' {
+    interface Theme {
+        colors: Colors;
+        fontSize: FontSizes;
+        letterSpacing: LetterSpacings;
+        lineHeights: LineHeights;
+        space: Space;
     }
 }
+interface Colors {
+    primary: string;
+    primaryDark: string;
+    primaryLight: string;
 
-const theme = extendTheme({
-    "colorSchemes": {
-        "light": {
-            "palette": {
-                "neutral": {
-                    "50": "#FCFCFC",
-                    "100": "#E0E0E0",
-                    "200": "#C4C4C4",
-                    "300": "#A8A8A8",
-                    "400": "#8C8C8C",
-                    "500": "#707070",
-                    "600": "#545454",
-                    "700": "#383838",
-                    "800": "#1C1C1C",
-                    "900": "#000000 "
-                },
-                "primary": {
-                    "50": "#F7FCFC",
-                    "100": "#d0f5ef",
-                    "200": "#9EE6D5",
-                    "300": "#7CBCC1",
-                    "400": "#5AA2AE",
-                    "500": "#4C8E98",
-                    "600": "#3E7B82",
-                    "700": "#30676B",
-                    "800": "#225356",
-                    "900": "#143040"
-                },
-                "text": {
-                    "whiten": "#fafafa"
-                }
-            }
-        },
-        "dark": {
-            "palette": {
-                "text": {
-                    "whiten": "#fafafa"
-                }
-            }
-        }
-    }
-})
+    neutral: string;
+    neutralDark: string;
+    neutralLight: string;
 
-export default theme;
+    warn: string;
+    warnLight: string;
+    warnDark: string;
+
+    danger: string;
+    dangerDark: string;
+    dangerLight: string;
+
+    text: string;
+
+    black: string;
+    white: string;
+}
+
+interface FontSizes {
+    xs: string;
+    sm: string;
+    md: string;
+    md2: string;
+    lg: string;
+    xl: string;
+}
+interface LetterSpacings {
+    xs: string;
+    sm: string;
+    md: string;
+    md2: string;
+    lg: string;
+    xl: string;
+}
+interface LineHeights {
+    xs: string;
+    sm: string;
+    md: string;
+    md2: string;
+    lg: string;
+    xl: string;
+}
+interface Space {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+}
+
+const defaultTheme: Theme = {
+    colors: {
+        primary: ' #5AA2AE',
+        primaryDark: '#30676b',
+        primaryLight: '#d0f5ef',
+
+        neutral: '#707070',
+        neutralDark: '#383838',
+        neutralLight: '#E0E0E0',
+
+        warnLight: '#FBDCB7',
+        warn: '#F29727',
+        warnDark: '#9A5B13',
+
+        dangerLight: '#fcd2df',
+        danger: '#E44276',
+        dangerDark: '#9e2048',
+
+        black: '#000000',
+        white: '#ffffff',
+        text: '#5C5C5C',
+    },
+    fontSize: {
+        xs: '12px',
+        sm: '14px',
+        md: '16px',
+        md2: '20px',
+        lg: '24px',
+        xl: '32px',
+    },
+    letterSpacing: {
+        xs: '0.06px',
+        sm: '0.07px',
+        md: '0.08px',
+        md2: '0.09px',
+        lg: '0.1px',
+        xl: '0.1px',
+    },
+    lineHeights: {
+        xs: '17px',
+        sm: '19px',
+        md: '22px',
+        md2: '26px',
+        lg: '28px',
+        xl: '37px',
+    },
+    space: {
+        xs: '0px',
+        sm: '8px',
+        md: '16px',
+        lg: '32px',
+        xl: '64px',
+    },
+};
+
+export default defaultTheme;
