@@ -1,30 +1,20 @@
-import { useGesture, useMove, usePinch, useScroll, useWheel } from "@use-gesture/react"
-import { useRef } from "react"
-import { RenderViewListeners } from "dataflow"
-
+import { useGesture } from '@use-gesture/react';
+import { useRef } from 'react';
+import Wrapper from 'components/layout/Wrapper';
+import { RenderViewListeners } from 'dataflow';
 type RenderViewWrapperProps = {
-    children?: React.ReactNode,
-    events: RenderViewListeners
-}
+    children?: React.ReactNode;
+    events: RenderViewListeners;
+};
 
 const RenderViewWrapper = ({ children, events }: RenderViewWrapperProps) => {
-    const wrapperRef = useRef<HTMLDivElement>(null)
-    useGesture(events, { eventOptions: { passive: false }, target: wrapperRef })
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    useGesture(events, { eventOptions: { passive: false }, target: wrapperRef });
+
     return (
-        <div
-            ref={wrapperRef}
-            css={{
-                display: 'flex',
-                position: 'relative',
-                height: '100%',
-                width: 'fit-content',
-                margin: '0px',
-                padding: '0px',
-                touchAction: 'none'
-            }}
-        >
+        <Wrapper ref={wrapperRef} css={{ touchAction: 'none' }}>
             {children}
-        </div>
-    )
-}
+        </Wrapper>
+    );
+};
 export { RenderViewWrapper };
