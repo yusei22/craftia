@@ -1,9 +1,9 @@
+import NearMeIcon from '@mui/icons-material/NearMe';
 import Head from 'next/head';
-import { ArtboardRoot } from 'components/organisms/ArtboardRoot';
-import { SpriteSelectModeButton } from 'components/organisms/SpriteSelectModeButton';
+import Button from 'components/atoms/button';
 import { RenderingArea } from 'components/organisms/RenderingArea';
-import { RenderingAreaRoot } from 'components/organisms/RenderingAreaRoot';
-
+import { SpriteSelectModeButton } from 'components/organisms/SpriteSelectModeButton';
+import { Provider } from 'components/provider';
 export default function Home() {
     return (
         <>
@@ -14,13 +14,13 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <>
-                <ArtboardRoot>
-                    <RenderingAreaRoot>
-                        <SpriteSelectModeButton />
-                        <RenderingArea />
-                    </RenderingAreaRoot>
-                </ArtboardRoot>
-
+                <Provider>
+                    <Button variant={'primary'}>ボタン</Button>
+                    <SpriteSelectModeButton>
+                        <NearMeIcon />
+                    </SpriteSelectModeButton>
+                    <RenderingArea />
+                </Provider>
             </>
         </>
     );
