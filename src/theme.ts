@@ -10,26 +10,37 @@ declare module '@emotion/react' {
     }
 }
 interface Colors {
-    primary: string;
+    primaryBrighter: string;
+    primaryBright: string;
+    primaryMedium: string;
     primaryDark: string;
-    primaryLight: string;
+    primaryDarker: string;
 
-    neutral: string;
+    neutralBrighter: string;
+    neutralBright: string;
+    neutralMedium: string;
     neutralDark: string;
-    neutralLight: string;
+    neutralDarker: string;
 
-    warn: string;
-    warnLight: string;
+    warnBrighter: string;
+    warnBright: string;
+    warnMedium: string;
     warnDark: string;
+    warnDarker: string;
 
-    danger: string;
+    dangerBrighter: string;
+    dangerBright: string;
+    dangerMedium: string;
     dangerDark: string;
-    dangerLight: string;
+    dangerDarker: string;
 
     text: string;
 
     black: string;
     white: string;
+    translucentMedium: string;
+    translucentDeep: string,
+    translucentPale: string;
 }
 
 interface FontSizes {
@@ -66,25 +77,37 @@ interface Space {
 
 const defaultTheme: Theme = {
     colors: {
-        primary: ' #5AA2AE',
-        primaryDark: '#30676b',
-        primaryLight: '#d0f5ef',
+        primaryBrighter: '#DEECEF',
+        primaryBright: '#BDDADF',
+        primaryMedium: '#5AA2AE',
+        primaryDark: '#417B85',
+        primaryDarker: '#247C89',
 
-        neutral: '#707070',
-        neutralDark: '#383838',
-        neutralLight: '#E0E0E0',
+        neutralBrighter: '#DADADA',
+        neutralBright: '#C1C1C1',
+        neutralMedium: '#707070',
+        neutralDark: '#505050',
+        neutralDarker: '#404040',
 
-        warnLight: '#FBDCB7',
-        warn: '#F29727',
-        warnDark: '#9A5B13',
+        warnBrighter: '#FCEAD4',
+        warnBright: '#FAD5A9',
+        warnMedium: '#F29727',
+        warnDark: '#D87E1D',
+        warnDarker: '#B56415',
 
-        dangerLight: '#fcd2df',
-        danger: '#E44276',
-        dangerDark: '#9e2048',
+        dangerBrighter: '#FAD9E4',
+        dangerBright: '#F4B3C8',
+        dangerMedium: '#E44276',
+        dangerDark: '#B12C54',
+        dangerDarker: '#8F2143',
 
         black: '#000000',
         white: '#ffffff',
         text: '#5C5C5C',
+
+        translucentMedium: 'rgba(88,88,88,0.2)',
+        translucentDeep: 'rgba(88,88,88,0.8)',
+        translucentPale: 'rgba(88,88,88,0.08)'
     },
     fontSize: {
         xs: '12px',
@@ -111,12 +134,12 @@ const defaultTheme: Theme = {
         xl: '37px',
     },
     space: {
-        xs: '0px',
+        xs: '4px',
         sm: '8px',
         md: '16px',
         lg: '32px',
         xl: '64px',
-    },
+    }
 };
 
 export default defaultTheme;
