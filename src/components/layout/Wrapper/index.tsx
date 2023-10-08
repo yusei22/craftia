@@ -1,23 +1,22 @@
 import { Interpolation, Theme } from '@emotion/react';
-import { ClassAttributes, HTMLAttributes, forwardRef } from 'react';
+import { HTMLAttributes, forwardRef } from 'react';
 
-type WrapperProps = ClassAttributes<HTMLDivElement> &
-    HTMLAttributes<HTMLDivElement> & {
-        css?: Interpolation<Theme>;
-    };
+type WrapperProps = HTMLAttributes<HTMLDivElement> & {
+    css?: Interpolation<Theme>;
+};
 
-const Wrapper = forwardRef<HTMLDivElement, WrapperProps>((props, ref) => {
+const Wrapper = forwardRef<HTMLDivElement, WrapperProps>(({ css, ...props }, ref) => {
     return (
         <div
-            {...props}
             ref={ref}
-            css={{
+            css={[{
                 position: 'relative',
                 width: 'fit-content',
                 margin: '0px',
                 padding: '0px',
                 fontSize: '0px',
-            }}
+            }, css]}
+            {...props}
         ></div>
     );
 });
