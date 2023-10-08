@@ -1,6 +1,6 @@
 import NearMeIcon from '@mui/icons-material/NearMe';
 import Head from 'next/head';
-import Button from 'components/atoms/button';
+import Button from 'components/atoms/Button';
 import { RenderingArea } from 'components/organisms/RenderingArea';
 import { SpriteSelectModeButton } from 'components/organisms/SpriteSelectModeButton';
 import { Provider } from 'components/provider';
