@@ -249,10 +249,6 @@ class Context2D {
     ): void;
 
     public drawImage(souce: CanvasImageSource, a: Vec2, b?: Vec2, c?: Vec2, d?: Vec2): this {
-        if (!isDrawableSource(souce)) {
-            console.error('Unable to draw image.');
-            return this;
-        }
         if (b && c && d) {
             this.context.drawImage(souce, a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y);
         } else if (b) {
@@ -715,23 +711,15 @@ class Context2D {
     }
 }
 
-function createCanvasAndContext2D(op?: CanvasRenderingContext2DSettings): [HTMLCanvasElement, CanvasRenderingContext2D] {
+function createCanvasAndContext2D(
+    op?: CanvasRenderingContext2DSettings
+): [HTMLCanvasElement, CanvasRenderingContext2D] {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d', op);
     if (context === null) {
         throw Error('Failed to get context 2D.');
     }
     return [canvas, context];
-}
-
-function isDrawableSource(source: CanvasImageSource): boolean {
-    if (source instanceof VideoFrame) {
-        return source.codedWidth > 0 && source.codedHeight > 0;
-    }
-    if (source instanceof SVGImageElement) {
-        return source.width.animVal.value > 0 && source.height.animVal.value > 0;
-    }
-    return source.width > 0 && source.height > 0;
 }
 
 export type {
