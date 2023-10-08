@@ -1,9 +1,9 @@
 import { Interpolation, Theme, FunctionInterpolation } from '@emotion/react';
 
-export type ButtonVariant = 'primary' | 'danger';
+export type ButtonVariant = 'primary' | 'danger' | 'translucent' | 'warn';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    variant: ButtonVariant;
+    variant?: ButtonVariant;
     css?: Interpolation<Theme>;
 };
 
@@ -12,33 +12,55 @@ const variants: {
 } = {
     primary: (theme) => ({
         color: theme.colors.primaryDark,
-        backgroundColor: theme.colors.primaryLight,
+        backgroundColor: theme.colors.primaryBrighter,
+        fontSize: theme.fontSize.md,
         border: 'none',
+        padding: '6px 16px',
 
-        ':hover': {
-            backgroundColor: theme.colors.primary,
-        },
-        ':disabled': {
-            backgroundColor: theme.colors.primary,
+        ':active': {
+            backgroundColor: theme.colors.primaryBright,
         },
     }),
     danger: (theme) => ({
         color: theme.colors.dangerDark,
-        backgroundColor: theme.colors.dangerLight,
+        backgroundColor: theme.colors.dangerBrighter,
+        fontSize: theme.fontSize.md,
+        padding: '6px 16px',
         border: 'none',
 
-        ':hover': {
-            backgroundColor: theme.colors.danger,
-        },
-        ':disabled': {
-            backgroundColor: theme.colors.danger,
+        ':active': {
+            backgroundColor: theme.colors.dangerBright,
         },
     }),
+    warn: (theme) => ({
+        color: theme.colors.warnDark,
+        backgroundColor: theme.colors.warnBrighter,
+        fontSize: theme.fontSize.md,
+        padding: '6px 16px',
+        border: 'none',
+
+        ':active': {
+            backgroundColor: theme.colors.warnBright,
+        },
+    }),
+    translucent: (theme) => ({
+        color: theme.colors.text,
+        backgroundColor: 'rgba(255,255,255,0)',
+        fontSize: theme.fontSize.md,
+        padding: '6px 16px',
+        border: 'none',
+        ":hover": {
+            backgroundColor: theme.colors.translucentPale,
+        },
+        ':active': {
+            backgroundColor: theme.colors.translucentMedium,
+        },
+    })
 };
 
-const Button = (props: ButtonProps) => {
+const Button = ({ variant = 'primary', css, ...props }: ButtonProps) => {
     return (
-        <button css={[variants[props.variant ?? 'primary'], props.css]}>{props.children}</button>
+        <button {...props} css={[variants[variant], css]}></button>
     );
 };
 

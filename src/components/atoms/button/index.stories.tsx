@@ -2,12 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Button from '.';
 
 const meta = {
-    title: 'Molecules/DraggableWindow',
+    title: 'Atoms/Button',
     component: Button,
     tags: ['autodocs'],
-    argTypes: {
-        variant: { type: 'string' },
-    },
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -25,3 +22,15 @@ export const Danger: Story = {
         children: 'ボタン',
     },
 };
+export const Warn: Story = {
+    args: {
+        variant: 'warn',
+        children: 'ボタン',
+    },
+};
+export const translucent: Story ={
+    args: {
+        variant: 'translucent',
+        children: 'ボタン',
+    },
+}
