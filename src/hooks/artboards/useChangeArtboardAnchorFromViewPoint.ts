@@ -1,7 +1,7 @@
-import { Vec2 } from "application/core/units";
-import { getArtBoardPointFromGlobal, getGlobalFromArtBoardPoint } from "application/utils";
-import { artboardTransformAtom } from "dataflow"
-import { useSetRecoilState } from "recoil"
+import { useSetRecoilState } from 'recoil';
+import { Vec2 } from 'application/core/units';
+import { getArtBoardPointFromGlobal, getGlobalFromArtBoardPoint } from 'application/utils';
+import { artboardTransformAtom } from 'dataflow';
 
 const getAnchorFromViewPoint = (
     artBoardLoc: Vec2,
@@ -16,19 +16,18 @@ const getAnchorFromViewPoint = (
         artBoardAnchor,
         artboardRotation,
         anchorViewPoint
-    )
+    );
     return new Vec2(
         newAnchorRerativeLoc.x / artBoardScale.x,
-        newAnchorRerativeLoc.y / artBoardScale.y,
-    )
-}
+        newAnchorRerativeLoc.y / artBoardScale.y
+    );
+};
 
 const useChangeArtboardAnchorFromViewPoint = () => {
     const setArtboardTrans = useSetRecoilState(artboardTransformAtom);
 
     return (newAnchorViewPoint: Vec2, freezeTransform: boolean) => {
         if (freezeTransform) {
-
             setArtboardTrans(({ anchor, location, scale, rotation }) => {
                 const newAnchor = getAnchorFromViewPoint(
                     new Vec2(location),
@@ -36,14 +35,14 @@ const useChangeArtboardAnchorFromViewPoint = () => {
                     new Vec2(anchor),
                     rotation,
                     newAnchorViewPoint
-                )
+                );
                 return {
                     anchor: newAnchor.toArray(),
                     location: newAnchorViewPoint.toArray(),
                     scale,
-                    rotation
-                }
-            })
+                    rotation,
+                };
+            });
         } else {
             setArtboardTrans(({ anchor, location, scale, rotation }) => {
                 const newAnchor = getAnchorFromViewPoint(
@@ -52,16 +51,16 @@ const useChangeArtboardAnchorFromViewPoint = () => {
                     new Vec2(anchor),
                     rotation,
                     newAnchorViewPoint
-                )
+                );
 
                 return {
                     anchor: newAnchor.toArray(),
                     location: location,
                     scale: scale,
                     rotation: rotation,
-                }
-            })
+                };
+            });
         }
-    }
-}
+    };
+};
 export { useChangeArtboardAnchorFromViewPoint };

@@ -100,7 +100,7 @@ class ImageEditor {
      */
     public setImage(image: TexPixcels, imageSize: Vec2, changeEditorSize: boolean) {
         this.texture.attachImage(image, imageSize);
-        if(changeEditorSize){
+        if (changeEditorSize) {
             this.renderer.setNewCache(imageSize);
             this.renderer.viewport(imageSize);
             this.renderer.setBufferData(createBufferData(new Vec2(0, 0), imageSize));

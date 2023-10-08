@@ -1,1 +1,1 @@
-export * from './spriteTreeAtom'
+export * from './spriteTreeAtom';

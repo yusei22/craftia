@@ -5,4 +5,4 @@ const spriteTreeAtom = atom<Sprite[]>({
     key: 'spriteTreeAtom',
     default: [],
 });
-export { spriteTreeAtom }
+export { spriteTreeAtom };

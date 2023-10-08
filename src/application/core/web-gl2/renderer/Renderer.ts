@@ -78,7 +78,7 @@ class Renderer extends WebGL2 {
         this.vertex = bufferData.createVertex(this.gl2);
         this.vertex.setAttributes(...this.attributes);
     }
-    
+
     public setShader(shader: RendererShader) {
         [this.program, this.attributes] = shader.compile(this.gl2);
         this.vertex?.setAttributes(...this.attributes);
@@ -141,7 +141,7 @@ class Renderer extends WebGL2 {
 
     public render({ mode, type, offset }: RenderOptions = {}) {
         if (!this.vertex) {
-            console.log('BufferData is not set.')
+            console.log('BufferData is not set.');
             return;
         }
         this.gl2.clearColor(0, 0, 0, 0);

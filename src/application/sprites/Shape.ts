@@ -24,7 +24,7 @@ abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
         );
         return this.prefs.globalLocation.sub(anchorRerativeLoc);
     }
-    
+
     public getCenterPoint() {
         return this.getStartPoint().add(this.prefs.scale.times(0.5));
     }

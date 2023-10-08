@@ -32,7 +32,7 @@ class RenderView {
 
         const anchorRerativeLoc = new Vec2(anchor.x * scale.x, anchor.y * scale.y);
         const startPoint = location.sub(anchorRerativeLoc);
-        
+
         this.context.translate(location);
         this.context.rotate(rotate);
         this.context.translate(location.times(-1));

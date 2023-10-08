@@ -1,2 +1,2 @@
-export * from './renderViewListenersAtom'
-export * from './renderViewScaleAtom'
+export * from './renderViewListenersAtom';
+export * from './renderViewScaleAtom';

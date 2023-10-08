@@ -12,7 +12,6 @@ const nextConfig = {
       ],
       exclude: /node_modules/,
     });
-
     return config;
   },
 }

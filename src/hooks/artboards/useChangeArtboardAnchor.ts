@@ -1,7 +1,7 @@
-import { Vec2 } from "application/core/units";
-import { rotatePoint } from "application/utils";
-import { artboardTransformAtom } from "dataflow"
-import { useSetRecoilState } from "recoil"
+import { useSetRecoilState } from 'recoil';
+import { Vec2 } from 'application/core/units';
+import { rotatePoint } from 'application/utils';
+import { artboardTransformAtom } from 'dataflow';
 
 const useChangeArtboardAnchor = () => {
     const setArtboardTrans = useSetRecoilState(artboardTransformAtom);
@@ -15,21 +15,21 @@ const useChangeArtboardAnchor = () => {
 
                 const AnchorsRelativeDifference = new Vec2(
                     (newAnchor.x - currentAnchor.x) * currentScale.x,
-                    (newAnchor.y - currentAnchor.y) * currentScale.y,
-                )
+                    (newAnchor.y - currentAnchor.y) * currentScale.y
+                );
 
                 const newLocation = rotatePoint(
                     currentLocation,
                     currentLocation.add(AnchorsRelativeDifference),
                     rotation
-                )
+                );
                 return {
                     anchor: newAnchor.toArray(),
                     location: newLocation.toArray(),
                     scale: currentScale.toArray(),
                     rotation: rotation,
-                }
-            })
+                };
+            });
         } else {
             setArtboardTrans(({ location, scale, rotation }) => {
                 return {
@@ -37,10 +37,10 @@ const useChangeArtboardAnchor = () => {
                     location,
                     scale,
                     rotation,
-                }
-            })
+                };
+            });
         }
-    }
-}
+    };
+};
 
 export { useChangeArtboardAnchor };

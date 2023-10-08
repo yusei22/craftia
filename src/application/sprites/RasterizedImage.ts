@@ -2,7 +2,7 @@ import { Sprite, SpriteConfig, SpritePrefs } from './Sprite';
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 
-interface RasterizedImagePrefs extends SpritePrefs { }
+interface RasterizedImagePrefs extends SpritePrefs {}
 
 class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
     private image: ImageBitmap;
@@ -55,7 +55,7 @@ class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
 
         context.drawImage(this.image, point, new Vec2(1, 1), this.getStartPoint(), this.scale);
     }
-    
+
     public setPreview(source: CanvasImageSource | ImageData) {
         if (this.previewContext === null) this.previewContext = new Context2D();
 

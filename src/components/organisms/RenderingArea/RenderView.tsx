@@ -1,15 +1,14 @@
-import useRenderView from "hooks/renderViews/useRenderView"
 import { useEffect, useState, useRef } from 'react';
+import useRenderView from 'hooks/renderViews/useRenderView';
 
 const RenderView = () => {
-
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const { source: renderViewSource, deps: renderViewDeps } = useRenderView();
     useEffect(() => {
         if (!canvasRef.current) {
-            console.error('canvas is null')
+            console.error('canvas is null');
             return;
         }
         const canvas = canvasRef.current;
@@ -28,13 +27,12 @@ const RenderView = () => {
         context.canvas.height = renderViewSource.height;
 
         context.drawImage(renderViewSource, 0, 0);
-
     }, [context, renderViewDeps]);
 
     return (
         <>
             <canvas ref={canvasRef}></canvas>
         </>
-    )
-}
+    );
+};
 export { RenderView };

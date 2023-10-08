@@ -16,11 +16,10 @@ function getArtBoardPointFromGlobal(
         anchorRerativeLoc,
         globalPoint.sub(notRotatedStartPoint),
         -artboardRotation
-    )
+    );
 
     return artBoardPoint;
 }
-
 
 function getGlobalFromArtBoardPoint(
     artBoardLoc: Vec2,
@@ -39,17 +38,17 @@ function getGlobalFromArtBoardPoint(
         artBoardLoc,
         artboardPoint.add(notRotatedStartPoint),
         artboardRotation
-    )
+    );
 
     return globalPoint;
 }
 
 /**
  * 点を時計回りに回転する
- * @param center 
- * @param point 
- * @param angle 
- * @returns 
+ * @param center
+ * @param point
+ * @param angle
+ * @returns
  */
 function rotatePoint(center: Vec2, point: Vec2, angle: number): Vec2 {
     // 平行移動
@@ -57,8 +56,8 @@ function rotatePoint(center: Vec2, point: Vec2, angle: number): Vec2 {
     // 回転
     const rotatedPoint = new Vec2(
         translatedPoint.x * Math.cos(angle) - translatedPoint.y * Math.sin(angle),
-        translatedPoint.x * Math.sin(angle) + translatedPoint.y * Math.cos(angle),
-    )
+        translatedPoint.x * Math.sin(angle) + translatedPoint.y * Math.cos(angle)
+    );
     // 平行移動した分戻す
     const finalPointB = rotatedPoint.add(center);
     return finalPointB;

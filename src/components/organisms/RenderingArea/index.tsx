@@ -1,7 +1,7 @@
+import { useRecoilValue } from 'recoil';
 import { RenderView } from 'components/organisms/RenderingArea/RenderView';
 import { RenderViewWrapper } from 'components/organisms/RenderingArea/RenderViewWrapper';
-import { useRecoilValue } from "recoil"
-import { renderViewListenersAtom } from "dataflow"
+import { renderViewListenersAtom } from 'dataflow';
 
 const RenderingArea = () => {
     const RenderViewEventFuncs = useRecoilValue(renderViewListenersAtom);
@@ -12,6 +12,6 @@ const RenderingArea = () => {
                 <RenderView />
             </RenderViewWrapper>
         </>
-    )
-}
-export { RenderingArea }
+    );
+};
+export { RenderingArea };

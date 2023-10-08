@@ -1,7 +1,6 @@
-import { RenderViewListeners } from 'dataflow';
-import { Vec2 } from 'application/core/units';
-import { artboardTransformAtom } from 'dataflow';
 import { useSetRecoilState } from 'recoil';
+import { Vec2 } from 'application/core/units';
+import { RenderViewListeners, artboardTransformAtom } from 'dataflow';
 
 const useRenderViewMouseGesture = () => {
     const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
@@ -14,13 +13,16 @@ const useRenderViewMouseGesture = () => {
             setArtboardTransform(({ location, ...param }) => {
                 return {
                     ...param,
-                    location: new Vec2(location).add(new Vec2(offset)).sub(PinchPreviousOffset).toArray()
-                }
-            })
+                    location: new Vec2(location)
+                        .add(new Vec2(offset))
+                        .sub(PinchPreviousOffset)
+                        .toArray(),
+                };
+            });
         }
         PinchPreviousOffset = new Vec2(offset);
-    }
+    };
 
-    return { onMove }
-}
-export { useRenderViewMouseGesture }
+    return { onMove };
+};
+export { useRenderViewMouseGesture };
