@@ -20,11 +20,6 @@
     "incremental": true,
     "baseUrl": "src",
     "jsxImportSource": "@emotion/react",
-    "paths": {
-      "@mui/material": [
-        "./node_modules/@mui/joy"
-      ]
-    }
   },
   "include": [
     "next-env.d.ts",
