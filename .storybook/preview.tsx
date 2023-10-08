@@ -1,8 +1,18 @@
 import type { Preview } from "@storybook/react";
-import { CssVarsProvider } from "@mui/joy";
-import { CssBaseline } from "@mui/joy"
-import theme from '../src/theme'
 import React from 'react';
+import defaultTheme from '../src/theme'
+import { withThemeFromJSXProvider } from '@storybook/addon-themes';
+import { Global, ThemeProvider, css } from '@emotion/react';
+
+const GlobalStyles = () => (
+  <Global
+    styles={css`
+      body {
+        font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+    `}
+  />
+);
 
 export const preview: Preview = {
   parameters: {
@@ -13,15 +23,17 @@ export const preview: Preview = {
         date: /Date$/,
       },
     },
-  },
-  decorators: [
-    (Story) => {
-      return (
-        <CssVarsProvider theme={theme}>
-          <CssBaseline />
-          <Story />
-        </CssVarsProvider>
-      )
-    }
-  ]
+  }
 };
+
+export const decorators = [
+  
+  withThemeFromJSXProvider({
+  themes: {
+    light: defaultTheme,
+  },
+  defaultTheme: 'light',
+  Provider: ThemeProvider,
+  GlobalStyles,
+
+})];
