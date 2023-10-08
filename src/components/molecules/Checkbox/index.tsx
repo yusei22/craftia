@@ -6,30 +6,27 @@ export type CheckboxSize = keyof Theme['fontSize']
 
 export type CheckboxProps = {
     uniqueId: string;
-    label?: string;
     size?: CheckboxSize;
+    label?: string;
+    value?: string | number | readonly string[];
     checked?: boolean;
-    setChecked?: (value: boolean) => void;
     onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
 const Checkbox = ({ size = 'md', ...props }: CheckboxProps) => {
-    const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        console.log(e.target.value)
-    }
     return (
         <Container>
             <input
                 checked={props.checked}
                 type="checkbox"
-                onChange={onChange}
+                value={props.value}
+                onChange={props.onChange}
                 id={props.uniqueId}
                 css={theme => ({
                     width: theme.fontSize[size],
                     height: theme.fontSize[size],
                     accentColor: theme.colors.primaryDark
                 })}
-                value={'vaaa'}
             />
             <Label size={size} htmlFor={props.uniqueId}>
                 {props.label}
