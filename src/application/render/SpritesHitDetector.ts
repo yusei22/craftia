@@ -13,11 +13,11 @@ class SpritesHitDetector {
     }
     public detect(sprites: Sprite[], point: Vec2) {
         for (let i = 0; i < sprites.length; i++) {
+            this.context.clear();
             //ポイント描画
             sprites[i].drawPoint(this.context, point);
             //ポイントのImageData得る
             const imageData = this.context.getImageData(point, new Vec2(1, 1));
-
             if (!isTransparent(imageData)) return sprites[i];
         }
         return null;
@@ -32,4 +32,4 @@ function isTransparent(imageData: ImageData, threshold: number = 0): boolean {
     return true;
 }
 
-export { SpritesHitDetector }
+export { SpritesHitDetector };
