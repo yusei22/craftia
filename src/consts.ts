@@ -1,1 +1,1 @@
-export const WHEEL_CLOSE_UP_DEGREES = 0.07;
+export const WHEEL_CLOSE_UP_DEGREES = 0.1;
