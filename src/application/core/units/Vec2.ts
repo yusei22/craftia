@@ -52,4 +52,7 @@ export class Vec2 implements IVec {
     public toArray(): [number, number] {
         return [this.x, this.y];
     }
+    public midpoint(v: Vec2): Vec2 {
+        return new Vec2(this.x + (v.x - this.x) / 2, this.y + (v.y - this.y) / 2);
+    }
 }
