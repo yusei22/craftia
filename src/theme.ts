@@ -39,7 +39,7 @@ interface Colors {
     black: string;
     white: string;
     translucentMedium: string;
-    translucentDeep: string,
+    translucentDeep: string;
     translucentPale: string;
 }
 
@@ -107,7 +107,7 @@ const defaultTheme: Theme = {
 
         translucentMedium: 'rgba(88,88,88,0.2)',
         translucentDeep: 'rgba(88,88,88,0.8)',
-        translucentPale: 'rgba(88,88,88,0.08)'
+        translucentPale: 'rgba(88,88,88,0.08)',
     },
     fontSize: {
         xs: '12px',
@@ -139,7 +139,7 @@ const defaultTheme: Theme = {
         md: '16px',
         lg: '32px',
         xl: '64px',
-    }
+    },
 };
 
 export default defaultTheme;
