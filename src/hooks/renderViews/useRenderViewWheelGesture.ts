@@ -24,7 +24,7 @@ const useRenderViewWheelGesture = () => {
         setArtboardTransform(({ scale, ...param }) => {
             return {
                 ...param,
-                scale: new Vec2(scale).times(zoom).toArray(),
+                scale: scale.times(zoom),
             };
         });
     };
