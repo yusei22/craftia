@@ -9,14 +9,14 @@ const artbordZoomSelector = selector<number>({
         const artboardTrans = get(artboardTransformAtom);
         const renderViewScale = get(renderViewScaleAtom);
 
-        const widthZoom = artboardTrans.scale[0] / renderViewScale[0];
-        const heightZoom = artboardTrans.scale[1] / renderViewScale[1];
+        const widthZoom = artboardTrans.scale.x / renderViewScale.x;
+        const heightZoom = artboardTrans.scale.y / renderViewScale.y;
 
         return Math.max(widthZoom, heightZoom);
     },
     set: ({ set, get }, newValue) => {
         if (typeof newValue === 'number') {
-            const newScale = new Vec2(get(renderViewScaleAtom)).times(newValue).toArray();
+            const newScale = get(renderViewScaleAtom).times(newValue);
 
             set(artboardTransformAtom, ({ anchor, location, rotation }) => {
                 return {
