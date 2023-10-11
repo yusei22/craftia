@@ -11,7 +11,7 @@ const useGetActiveSpriteIdsSync = () => {
     );
     const getActiveSpriteIdsSync = () => {
         return getActiveSpriteIdStateSync(activeSpriteIdsAtom);
-    }
+    };
     return getActiveSpriteIdsSync;
-}
+};
 export { useGetActiveSpriteIdsSync };
