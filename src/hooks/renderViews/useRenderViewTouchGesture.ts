@@ -33,11 +33,10 @@ const useRenderViewTouchGesture = () => {
         const rotateCurrent = (currentRotate: number) =>
             currentRotate + (offset[1] / 180) * Math.PI - (PinchPreviousAngle / 180) * Math.PI;
 
-        const scaleCurrent = (currentScale: [number, number]) =>
-            new Vec2(currentScale).times(zoom).toArray();
+        const scaleCurrent = (currentScale: Vec2) => currentScale.times(zoom);
 
-        const translateCurrent = (currentLoc: [number, number]) =>
-            new Vec2(currentLoc).add(new Vec2(origin)).sub(PinchPreviousOrigin).toArray();
+        const translateCurrent = (currentLoc: Vec2) =>
+            currentLoc.add(new Vec2(origin)).sub(PinchPreviousOrigin);
 
         setArtboardTransform(({ rotation, scale, location, ...param }) => {
             return {
