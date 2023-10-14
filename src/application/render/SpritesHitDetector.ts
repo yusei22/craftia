@@ -12,10 +12,10 @@ class SpritesHitDetector {
         this.context.viewport(size);
     }
     public detect(sprites: Sprite[], point: Vec2) {
-        for (let i = 0; i < sprites.length; i++) {
+        for (let i = sprites.length - 1; i >= 0; i--) {
             this.context.clear();
             //ポイント描画
-            sprites[i].drawPoint(this.context, point);
+            sprites[i].draw(this.context);
             //ポイントのImageData得る
             const imageData = this.context.getImageData(point, new Vec2(1, 1));
             if (!isTransparent(imageData)) return sprites[i];
