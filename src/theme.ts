@@ -83,8 +83,8 @@ const defaultTheme: Theme = {
         primaryDark: '#417B85',
         primaryDarker: '#247C89',
 
-        neutralBrighter: '#DADADA',
-        neutralBright: '#C1C1C1',
+        neutralBrighter: '#f9f9f9',
+        neutralBright: '#E9E9E9',
         neutralMedium: '#707070',
         neutralDark: '#505050',
         neutralDarker: '#404040',
