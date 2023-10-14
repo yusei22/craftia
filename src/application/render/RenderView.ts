@@ -1,8 +1,8 @@
 import { Context2D } from 'application/core/context-2d';
-import { Vec2 } from 'application/core/units';
+import { Vec2, Vec4 } from 'application/core/units';
 
 type RenderViewRenderProps = {
-    rotate: number;
+    rotation: number;
     anchor: Vec2;
     location: Vec2;
     scale: Vec2;
@@ -21,14 +21,20 @@ class RenderView {
     }
     public render(
         image: HTMLCanvasElement | ImageBitmap,
-        { anchor, location, rotate, scale }: RenderViewRenderProps
+        { anchor, location, rotation: rotate, scale }: RenderViewRenderProps
     ) {
         this.context.setAttr('imageSmoothingEnabled', false);
         this.context.resetTransform();
 
         this.context.clear();
-        this.context.setFillStyle('#e6e6e6');
+        this.context.setFillStyle('#ffffff');
         this.context.fillRect(new Vec2(0, 0), this.context.size);
+
+        this.context.setShadowConfig({
+            shadowOffset: new Vec2(0, 0),
+            shadowBlur: 30,
+            shadowColor: 'rgba(0,0,0,0.2)',
+        });
 
         const anchorRerativeLoc = new Vec2(anchor.x * scale.x, anchor.y * scale.y);
         const startPoint = location.sub(anchorRerativeLoc);
@@ -36,6 +42,8 @@ class RenderView {
         this.context.translate(location);
         this.context.rotate(rotate);
         this.context.translate(location.times(-1));
+        this.context.fillRect(startPoint, scale);
+        this.context.setShadowConfig(null);
         this.context.drawImage(image, startPoint, scale);
     }
     public getCanvas() {
