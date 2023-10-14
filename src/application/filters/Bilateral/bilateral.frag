@@ -7,7 +7,7 @@ out vec4 outColor;
 uniform sampler2D u_texture;
 uniform int u_radius;
 
-const float sigmaColor = 0.1f; 
+const float sigmaColor = 0.15f; 
 const float sigmaSpace = 1.5f; 
 
 float gaussian(float x, float sigma) {
