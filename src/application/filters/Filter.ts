@@ -1,13 +1,54 @@
-interface FilterConfig {}
-type FilterSource = HTMLCanvasElement | ImageBitmap;
+import { ISpriteWorker } from 'application/ISpriteWorker';
+import { Vec2 } from 'application/core/units';
+import { Rasterizedmage } from 'application/sprites/RasterizedImage';
+import { RasterizedPreviewer } from 'application/sprites/RasterizedPreviewer';
+import { SmartImage } from 'application/sprites/SmartImage';
+import { SmartImagePreviewer } from 'application/sprites/SmartImagePreviewer';
 
-abstract class Filter<T extends FilterConfig> {
-    abstract getFilterWorker(image: FilterSource): FilterWorker<T>;
+export interface FilterConfigs {}
+export type FilterTarget = Rasterizedmage | SmartImage;
+
+export abstract class Filter<T extends FilterConfigs = FilterConfigs> {
+    abstract getWorker(sprite: FilterTarget): FilterWorker<T>;
 }
 
-abstract class FilterWorker<T extends FilterConfig> {
-    abstract execute(config: T): void;
-}
+export abstract class FilterWorker<T extends FilterConfigs = FilterConfigs>
+    implements ISpriteWorker
+{
+    protected readonly targetSprite: FilterTarget;
 
-export type { FilterConfig, FilterSource };
-export { Filter, FilterWorker };
+    constructor(targetSprite: FilterTarget) {
+        this.targetSprite = targetSprite;
+    }
+
+    public abstract execute(config: T): void;
+    protected abstract getResult(): HTMLCanvasElement | OffscreenCanvas;
+
+    public getPreviewSprite() {
+        if (this.targetSprite instanceof Rasterizedmage) {
+            const newImage = this.getResult();
+            const newImageResolution = new Vec2(newImage.width, newImage.height);
+
+            return new RasterizedPreviewer(newImage, {
+                ...this.targetSprite.prefs,
+                scale: newImageResolution,
+                rotation: 0,
+            });
+        } else {
+            const newImage = this.getResult();
+
+            const newScale = new Vec2(
+                (this.targetSprite.prefs.scale.x * newImage.width) / this.targetSprite.image.width,
+                (this.targetSprite.prefs.scale.y * newImage.height) / this.targetSprite.image.height
+            );
+
+            return new SmartImagePreviewer(this.getResult(), {
+                ...this.targetSprite.prefs,
+                scale: newScale,
+            });
+        }
+    }
+    public getOriginalSprite() {
+        return this.targetSprite;
+    }
+}
