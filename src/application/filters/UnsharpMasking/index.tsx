@@ -1,34 +1,41 @@
-import { FilterSource, FilterWorker } from '../Filter';
+import { Filter, FilterTarget, FilterWorker } from '../Filter';
 import { ImageEditor } from '../ImageEditor';
 import { Vec2 } from 'application/core/units';
 
 const unsharpMasking = require('./unsharpMasking.frag');
 
-interface UnsharpMaskingConfig {
+export interface UnsharpMaskingConfig {
     radius: number;
     threshold: number;
 }
 
-class UnsharpMasking extends FilterWorker<UnsharpMaskingConfig> {
-    private editor: ImageEditor;
-
-    constructor(image: FilterSource) {
-        super();
-        const imageSize = new Vec2(image.width, image.height);
-
-        this.editor = new ImageEditor(imageSize, unsharpMasking.default);
-        this.editor.setImage(image, imageSize, false);
-    }
-    public execute(config: UnsharpMaskingConfig) {
-        this.editor.listener[0] = ({ setUniformFloat, setUniformInt }) => {
-            setUniformFloat('u_threshold', config.threshold);
-            setUniformInt('u_radius', config.radius);
-        };
-        this.editor.execute(1);
-    }
-    public getResult() {
-        return this.editor.getResult();
+export class UnsharpMasking extends Filter<UnsharpMaskingConfig> {
+    public getWorker(sprite: FilterTarget): UnsharpMaskingWorker {
+        return new UnsharpMaskingWorker(sprite);
     }
 }
 
-export { UnsharpMasking };
+export class UnsharpMaskingWorker extends FilterWorker<UnsharpMaskingConfig> {
+    private editor: ImageEditor;
+
+    constructor(sprite: FilterTarget) {
+        super(sprite);
+        const imageSize = new Vec2(sprite.image.width, sprite.image.height);
+
+        this.editor = new ImageEditor(imageSize, unsharpMasking.default);
+        this.editor.setImage(sprite.image, imageSize, false);
+    }
+    protected getResult() {
+        return this.editor.getResult();
+    }
+    public execute(config: UnsharpMaskingConfig) {
+        const { threshold, radius } = config;
+
+        this.editor.listener[0] = ({ setUniformFloat, setUniformInt }) => {
+            setUniformFloat('u_threshold', threshold);
+            setUniformInt('u_radius', radius);
+        };
+
+        this.editor.execute(1);
+    }
+}
