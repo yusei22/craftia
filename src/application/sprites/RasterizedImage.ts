@@ -1,13 +1,14 @@
 import { Sprite, SpriteConfig, SpritePrefs } from './Sprite';
 import { Context2D } from 'application/core/context-2d';
+import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
+import { Filter } from 'application/filters/Filter';
+import { Pen } from 'application/pens/Pen';
 
-interface RasterizedImagePrefs extends SpritePrefs {}
+export interface RasterizedImagePrefs extends SpritePrefs {}
 
-class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
-    private image: ImageBitmap;
-    private scale: Vec2;
-    private previewContext: Context2D | null = null;
+export class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
+    public readonly image: ImageBitmap;
 
     constructor(image: ImageBitmap, prefs: RasterizedImagePrefs) {
         const config: SpriteConfig = {
@@ -25,9 +26,22 @@ class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
         };
         super(config, prefs);
         this.image = image;
-        this.scale = new Vec2(image.width, image.height);
     }
-
+    private getImageSize() {
+        return new Vec2(this.image.width, this.image.height);
+    }
+    public drawFunc(context: Context2D) {
+        context.drawImage(this.image, this.getStartPoint());
+    }
+    public drawPointFunc(context: Context2D, point: Vec2) {
+        context.drawImage(
+            this.image,
+            point.sub(new Vec2(10, 10)),
+            new Vec2(10, 10),
+            point.sub(new Vec2(10, 10)),
+            new Vec2(10, 10)
+        );
+    }
     public getStartPoint() {
         const anchorRerativeLoc = new Vec2(
             this.prefs.anchor.x * this.image.width,
@@ -38,54 +52,41 @@ class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
     public getCenterPoint() {
         return this.getStartPoint().add(this.getImageSize().times(0.5));
     }
-    private getImageSize() {
-        return new Vec2(this.image.width, this.image.height);
-    }
-    public drawFunc(context: Context2D) {
-        context.translate(this.getCenterPoint());
-        context.rotate(this.prefs.rotation);
-        context.translate(this.getCenterPoint().times(-1));
-        context.drawImage(this.image, this.getStartPoint(), this.scale);
-    }
+    public setPrefs(valOrUpdater: ValueUpdater<RasterizedImagePrefs> | RasterizedImagePrefs) {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
 
-    public drawPointFunc(context: Context2D, point: Vec2) {
-        context.translate(this.getCenterPoint());
-        context.rotate(this.prefs.rotation);
-        context.translate(this.getCenterPoint().times(-1));
-
-        context.drawImage(this.image, point, new Vec2(1, 1), this.getStartPoint(), this.scale);
+        return new Rasterizedmage(this.image, newPrefs);
     }
-
-    public setPreview(source: CanvasImageSource | ImageData) {
-        if (this.previewContext === null) this.previewContext = new Context2D();
-
-        this.previewContext.viewport(this.getImageSize());
-
-        if (source instanceof ImageData) {
-            this.previewContext.putImageData(source, new Vec2(0, 0));
-        } else {
-            this.previewContext.drawImage(source, new Vec2(0, 0));
-        }
+    public setImage(val: ImageBitmap) {
+        return new Rasterizedmage(val, this.prefs);
     }
-    public clone() {
-        return new Rasterizedmage(this.image, { ...this.prefs });
-    }
-    public async cloneResize(size: Vec2) {
+    public async setResize(valOrUpdater: ValueUpdater<Vec2> | Vec2) {
         const resizer = new Resizer();
-        return new Rasterizedmage(await resizer.resize(this.image, size), { ...this.prefs });
-    }
-    public async cloneWithPreviewSource() {
-        if (this.previewContext === null) return this.clone();
+        const resize =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.getImageSize()) : valOrUpdater;
 
-        return new Rasterizedmage(await createImageBitmap(this.previewContext.getCanvas()), {
+        return new Rasterizedmage(await resizer.resize(this.image, resize), this.prefs);
+    }
+    public getSpriteWorker(workerSource: Filter | Pen) {
+        return workerSource.getWorker(this);
+    }
+    public moveAnchor(newAnchor: Vec2) {
+        const AnchorsRelativeDifference = new Vec2(
+            (newAnchor.x - this.prefs.anchor.x) * this.image.width,
+            (newAnchor.y - this.prefs.anchor.y) * this.image.height
+        );
+        const newLocation = this.prefs.globalLocation.add(AnchorsRelativeDifference);
+        return this.setPrefs({
             ...this.prefs,
+            anchor: newAnchor,
+            globalLocation: newLocation,
         });
     }
-    public previewScale(size: Vec2) {
-        this.scale = size;
-    }
-    public resetPreviewScale() {
-        this.scale = this.getImageSize();
+    public createStatic() {
+        return new Promise<Rasterizedmage>((resolve) => {
+            resolve(this);
+        });
     }
 }
 
@@ -97,8 +98,7 @@ class Resizer {
     public async resize(image: ImageBitmap, size: Vec2) {
         this.ctx.viewport(size);
         this.ctx.drawImage(image, new Vec2(0, 0), size);
+
         return await createImageBitmap(this.ctx.getCanvas());
     }
 }
-
-export { Rasterizedmage };
