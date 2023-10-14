@@ -1,40 +1,47 @@
-import { FilterSource, FilterWorker } from '../Filter';
+import { Filter, FilterTarget, FilterWorker } from '../Filter';
 import { ImageEditor } from '../ImageEditor';
 import { Vec2 } from 'application/core/units';
 
 const bilateral = require('./bilateral.frag');
-const MAX_RADIUS = 20;
+const MAX_RADIUS = 10;
 
-interface BilateralConfig {
+export interface BilateralConfig {
     radius: number;
-    threshold: number;
 }
 
-class Bilateral extends FilterWorker<BilateralConfig> {
+export class Bilateral extends Filter<BilateralConfig> {
+    public getWorker(sprite: FilterTarget): FilterWorker<BilateralConfig> {
+        return new BilateralWorker(sprite);
+    }
+}
+
+export class BilateralWorker extends FilterWorker<BilateralConfig> {
     private editor: ImageEditor;
 
-    constructor(image: FilterSource) {
-        super();
-        const imageSize = new Vec2(image.width, image.height);
+    constructor(sprite: FilterTarget) {
+        super(sprite);
+        const imageSize = new Vec2(sprite.image.width, sprite.image.height);
 
         this.editor = new ImageEditor(imageSize, bilateral.default);
-        this.editor.setImage(image, imageSize, false);
+        this.editor.setImage(sprite.image, imageSize, false);
+    }
+    protected getResult() {
+        return this.editor.getResult();
     }
     public execute(config: BilateralConfig) {
-        const executionTimes = Math.ceil(config.radius / MAX_RADIUS);
-        const finalRadius = config.radius % MAX_RADIUS;
+        const { radius } = config;
+
+        const executionTimes = Math.ceil(radius / MAX_RADIUS);
+        const finalRadius = radius % MAX_RADIUS;
 
         this.editor.listener[0] = ({ setUniformInt }) => {
             setUniformInt('u_radius', MAX_RADIUS);
         };
-        this.editor.listener[executionTimes - 1] = ({ setUniformInt }) => {
-            setUniformInt('u_radius', finalRadius);
-        };
+        if (finalRadius > 0) {
+            this.editor.listener[executionTimes - 1] = ({ setUniformInt }) => {
+                setUniformInt('u_radius', finalRadius);
+            };
+        }
         this.editor.execute(executionTimes);
     }
-    public getResult() {
-        return this.editor.getResult();
-    }
 }
-
-export { Bilateral };
