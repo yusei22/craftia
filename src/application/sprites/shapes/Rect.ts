@@ -1,10 +1,10 @@
 import { Shape, ShapePrefs } from '../Shape';
-import { SpriteConfig, SpritePrefsValue } from '../Sprite';
+import { SpriteConfig } from '../Sprite';
 import { Context2D } from 'application/core/context-2d';
-import { Vec2 } from 'application/core/units';
+import { ValueUpdater } from 'application/core/types';
 
 interface RectPrefs extends ShapePrefs {
-    round: number;
+    readonly round: number;
 }
 
 class Rect extends Shape<RectPrefs> {
@@ -29,13 +29,17 @@ class Rect extends Shape<RectPrefs> {
         };
         super(config, prefs);
     }
-    public clone() {
-        return new Rect({ ...this.prefs });
+    public setPrefs(valOrUpdater: ValueUpdater<RectPrefs> | RectPrefs) {
+        if (typeof valOrUpdater === 'function') {
+            return new Rect(valOrUpdater(this.prefs));
+        } else {
+            return new Rect(valOrUpdater);
+        }
     }
     public drawFunc(context: Context2D): void {
-        context.translate(this.getCenterPoint());
+        context.translate(this.prefs.globalLocation);
         context.rotate(this.prefs.rotation);
-        context.translate(this.getCenterPoint().times(-1));
+        context.translate(this.prefs.globalLocation.times(-1));
         context.roundRect(this.getStartPoint(), this.prefs.scale, this.prefs.round);
         context.fill();
         context.stroke();
