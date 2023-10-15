@@ -28,9 +28,9 @@ export const Warn: Story = {
         children: 'ボタン',
     },
 };
-export const translucent: Story ={
+export const translucent: Story = {
     args: {
         variant: 'translucent',
         children: 'ボタン',
     },
-}
+};

@@ -1,11 +1,13 @@
 import { Interpolation, Theme, FunctionInterpolation } from '@emotion/react';
+import { ClassAttributes } from 'react';
 
-export type ButtonVariant = 'primary' | 'danger' | 'translucent' | 'warn';
+export type ButtonVariant = 'primary' | 'danger' | 'translucent' | 'warn' | 'netural';
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = {
     variant?: ButtonVariant;
     css?: Interpolation<Theme>;
-};
+} & ClassAttributes<HTMLButtonElement> &
+    React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const variants: {
     [key in ButtonVariant]: FunctionInterpolation<Theme>;
@@ -49,19 +51,30 @@ const variants: {
         fontSize: theme.fontSize.md,
         padding: '6px 16px',
         border: 'none',
-        ":hover": {
+        ':hover': {
             backgroundColor: theme.colors.translucentPale,
         },
         ':active': {
             backgroundColor: theme.colors.translucentMedium,
         },
-    })
+    }),
+    netural: (theme) => ({
+        color: theme.colors.neutralDark,
+        backgroundColor: 'rgba(255,255,255,0)',
+        fontSize: theme.fontSize.md,
+        padding: '6px 16px',
+        border: 'none',
+        ':hover': {
+            backgroundColor: theme.colors.neutralBrighter,
+        },
+        ':active': {
+            backgroundColor: theme.colors.neutralBright,
+        },
+    }),
 };
 
 const Button = ({ variant = 'primary', css, ...props }: ButtonProps) => {
-    return (
-        <button {...props} css={[variants[variant], css]}></button>
-    );
+    return <button {...props} css={[variants[variant], css]}></button>;
 };
 
 export default Button;
