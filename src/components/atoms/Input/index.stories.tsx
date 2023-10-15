@@ -13,13 +13,12 @@ type Story = StoryObj<typeof Input>;
 
 export const Number: Story = {
     args: {
-        type:'number'
+        type: 'number',
     },
 };
 
 export const Text: Story = {
     args: {
-        type:'text'
+        type: 'text',
     },
 };
-
