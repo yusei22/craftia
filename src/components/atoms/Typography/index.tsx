@@ -1,5 +1,5 @@
 import { Interpolation, Theme, FunctionInterpolation } from '@emotion/react';
-import { HTMLAttributes } from 'react';
+import { ClassAttributes, HTMLAttributes } from 'react';
 
 export type TypographyVariant =
     | 'extraSmall'
@@ -7,52 +7,51 @@ export type TypographyVariant =
     | 'medium'
     | 'mediumLarge'
     | 'large'
-    | 'extraLarge'
+    | 'extraLarge';
 
-export type TypographyProps = HTMLAttributes<HTMLSpanElement> & {
+export type TypographyProps = {
     variant?: TypographyVariant;
     css?: Interpolation<Theme>;
-}
+} & HTMLAttributes<HTMLSpanElement> &
+    ClassAttributes<HTMLSpanElement>;
 
 const variants: {
     [key in TypographyVariant]: FunctionInterpolation<Theme>;
 } = {
-    extraSmall: theme => ({
+    extraSmall: (theme) => ({
         fontSize: theme.fontSize.xs,
         letterSpacing: theme.letterSpacing.xs,
-        lineHeight: theme.lineHeights.xs
+        lineHeight: theme.lineHeights.xs,
     }),
-    small: theme => ({
+    small: (theme) => ({
         fontSize: theme.fontSize.sm,
         letterSpacing: theme.letterSpacing.sm,
-        lineHeight: theme.lineHeights.sm
+        lineHeight: theme.lineHeights.sm,
     }),
-    medium: theme => ({
+    medium: (theme) => ({
         fontSize: theme.fontSize.md,
         letterSpacing: theme.letterSpacing.md,
-        lineHeight: theme.lineHeights.md
+        lineHeight: theme.lineHeights.md,
     }),
-    mediumLarge: theme => ({
+    mediumLarge: (theme) => ({
         fontSize: theme.fontSize.md2,
         letterSpacing: theme.letterSpacing.md2,
-        lineHeight: theme.lineHeights.md2
+        lineHeight: theme.lineHeights.md2,
     }),
-    large: theme => ({
+    large: (theme) => ({
         fontSize: theme.fontSize.lg,
         letterSpacing: theme.letterSpacing.lg,
-        lineHeight: theme.lineHeights.lg
+        lineHeight: theme.lineHeights.lg,
     }),
-    extraLarge: theme => ({
+    extraLarge: (theme) => ({
         fontSize: theme.fontSize.xl,
         letterSpacing: theme.letterSpacing.xl,
-        lineHeight: theme.lineHeights.xl
+        lineHeight: theme.lineHeights.xl,
     }),
-}
+};
 
 const Typography = ({ variant = 'medium', ...props }: TypographyProps) => {
-    return (
-        <span css={variants[variant]} {...props} />
-    )
-}
+    return <span css={variants[variant]} {...props} />;
+};
 
 export default Typography;
