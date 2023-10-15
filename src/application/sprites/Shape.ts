@@ -1,15 +1,16 @@
 import { Context2D } from '../core/context-2d';
-import { Vec2, Vec4 } from '../core/units';
+import { Vec2 } from '../core/units';
 import { Sprite, SpriteConfig, SpritePrefs, SpriteFillStyle, SpritePrefsValue } from './Sprite';
 
 interface ShapePrefs extends SpritePrefs {
-    fillStyle: SpriteFillStyle;
-    strokeCap: CanvasLineCap | null;
-    strokeDashOffset: number | null;
-    strokeJoin: CanvasLineJoin | null;
-    strokeWidth: number | null;
-    strokeStyle: SpriteFillStyle;
-    scale: Vec2;
+    readonly fillStyle: SpriteFillStyle;
+    readonly strokeCap: CanvasLineCap | null;
+    readonly strokeDashOffset: number | null;
+    readonly strokeJoin: CanvasLineJoin | null;
+    readonly strokeWidth: number | null;
+    readonly strokeStyle: SpriteFillStyle;
+    readonly scale: Vec2;
+    readonly rotation: number;
 }
 abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
     constructor(config: SpriteConfig, prefs: T) {
@@ -31,6 +32,11 @@ abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
 
     public drawPointFunc(context: Context2D) {
         this.drawFunc(context);
+    }
+    public createStatic() {
+        return new Promise<Shape<T>>((resolve) => {
+            resolve(this);
+        });
     }
 }
 export type { ShapePrefs };
