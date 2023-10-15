@@ -1,14 +1,18 @@
-import { Sprite, SpriteConfig, SpritePrefs, SpritePrefsValue } from './Sprite';
+import { Sprite, SpriteConfig, SpritePrefs } from './Sprite';
 import { Context2D } from 'application/core/context-2d';
+import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
+import { rotatePoint } from 'application/utils';
 
 interface SmartImagePrefs extends SpritePrefs {
-    scale: Vec2;
+    /**スケール */
+    readonly scale: Vec2;
+    /**回転 */
+    readonly rotation: number;
 }
 
 class SmartImage extends Sprite<SmartImagePrefs> {
-    private image: ImageBitmap;
-    private previewContext: Context2D | null = null;
+    public readonly image: ImageBitmap;
 
     constructor(image: ImageBitmap, prefs: SmartImagePrefs) {
         const config: SpriteConfig = {
@@ -34,19 +38,17 @@ class SmartImage extends Sprite<SmartImagePrefs> {
         );
         return this.prefs.globalLocation.sub(anchorRerativeLoc);
     }
-    public getCenterPoint() {
-        return this.getStartPoint().add(this.prefs.scale.times(0.5));
+    private setContextDrawTrans(context: Context2D) {
+        context.translate(this.prefs.globalLocation);
+        context.rotate(this.prefs.rotation);
+        context.translate(this.prefs.globalLocation.times(-1));
     }
     public drawFunc(context: Context2D) {
-        context.translate(this.getCenterPoint());
-        context.rotate(this.prefs.rotation);
-        context.translate(this.getCenterPoint().times(-1));
+        this.setContextDrawTrans(context);
         context.drawImage(this.image, this.getStartPoint(), this.prefs.scale);
     }
     public drawPointFunc(context: Context2D, point: Vec2) {
-        context.translate(this.getCenterPoint());
-        context.rotate(this.prefs.rotation);
-        context.translate(this.getCenterPoint().times(-1));
+        this.setContextDrawTrans(context);
         context.drawImage(
             this.image,
             point,
@@ -55,16 +57,37 @@ class SmartImage extends Sprite<SmartImagePrefs> {
             this.prefs.scale
         );
     }
-    public setPreview(source: CanvasImageSource | ImageData) {
-        if (this.previewContext === null) this.previewContext = new Context2D();
-        if (source instanceof ImageData) {
-            this.previewContext.putImageData(source, new Vec2(0, 0));
-        } else {
-            this.previewContext.drawImage(source, new Vec2(0, 0));
-        }
+    public setImage(val: ImageBitmap) {
+        return new SmartImage(val, this.prefs);
     }
-    public clone() {
-        return new SmartImage(this.image, { ...this.prefs });
+    public setPrefs(valOrUpdater: ValueUpdater<SmartImagePrefs> | SmartImagePrefs) {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+
+        return new SmartImage(this.image, newPrefs);
+    }
+    public moveAnchor(newAnchor: Vec2) {
+        const AnchorsRelativeDifference = new Vec2(
+            (newAnchor.x - this.prefs.anchor.x) * this.prefs.scale.x,
+            (newAnchor.y - this.prefs.anchor.y) * this.prefs.scale.y
+        );
+
+        const newLocation = rotatePoint(
+            this.prefs.globalLocation,
+            this.prefs.globalLocation.add(AnchorsRelativeDifference),
+            this.prefs.rotation
+        );
+
+        return this.setPrefs({
+            ...this.prefs,
+            anchor: newAnchor,
+            globalLocation: newLocation,
+        });
+    }
+    public createStatic() {
+        return new Promise<SmartImage>((resolve) => {
+            resolve(this);
+        });
     }
 }
 export { SmartImage };
