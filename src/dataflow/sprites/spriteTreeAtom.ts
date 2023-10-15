@@ -1,8 +1,29 @@
-import { atom } from 'recoil';
-import { Sprite } from 'application/sprites/Sprite';
+import { HISTORY_STORAGE_LENGTH } from 'consts';
+import { useSpriteTreeUndoRedo } from 'hooks/undo-reno/useSpriteTreeUndoReno';
 
-const spriteTreeAtom = atom<Sprite[]>({
-    key: 'spriteTreeAtom',
-    default: [],
+const {
+    currentState: spriteTreeAtom,
+    useSaver: useSpriteTreeSaver,
+    useUndo: useSpriteTreeUndo,
+    useReno: useSpriteTreeReno,
+    useHistFutureVal: useSpriteTreeHistFutureVal,
+    useHistPastVal: useSpriteTreeHistPastVal,
+    useHistPresentVal: useSpriteTreeHistPresentVal,
+} = useSpriteTreeUndoRedo({
+    histPastKey: 'spriteTreeHistPast',
+    histPresentKey: 'spriteTreeHistPresent',
+    histFutureKey: 'spriteTreeHistFuture',
+    currentKey: 'spriteTreeCurrent',
+    defualt: [],
+    storageLength: HISTORY_STORAGE_LENGTH,
 });
-export { spriteTreeAtom };
+
+export {
+    spriteTreeAtom,
+    useSpriteTreeSaver,
+    useSpriteTreeUndo,
+    useSpriteTreeReno,
+    useSpriteTreeHistFutureVal,
+    useSpriteTreeHistPastVal,
+    useSpriteTreeHistPresentVal,
+};
