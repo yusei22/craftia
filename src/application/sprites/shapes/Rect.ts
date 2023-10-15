@@ -37,6 +37,7 @@ class Rect extends Shape<RectPrefs> {
         }
     }
     public drawFunc(context: Context2D): void {
+        console.log(context,context.roundRect,context.rotate)
         context.translate(this.prefs.globalLocation);
         context.rotate(this.prefs.rotation);
         context.translate(this.prefs.globalLocation.times(-1));
