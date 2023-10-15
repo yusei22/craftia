@@ -1,3 +1,6 @@
+import { Rasterizedmage } from './RasterizedImage';
+import { Shape } from './Shape';
+import { SmartImage } from './SmartImage';
 import { FillLinerGradient, FillPattern, FillRadialGradient, FillSolid } from './SpriteFill';
 import {
     Context2D,
@@ -5,11 +8,17 @@ import {
     ContextShadowConfig,
     ContextTextConfig,
 } from 'application/core/context-2d';
+import { ValueUpdater } from 'application/core/types';
 import { Vec, Vec2 } from 'application/core/units';
 
-type SpriteFillStyle = null | FillLinerGradient | FillRadialGradient | FillPattern | FillSolid;
+export type SpriteFillStyle =
+    | null
+    | FillLinerGradient
+    | FillRadialGradient
+    | FillPattern
+    | FillSolid;
 
-interface SpriteConfig {
+export interface SpriteConfig {
     readonly line: ContextLineConfig | null;
     readonly shadow: ContextShadowConfig | null;
     readonly text: ContextTextConfig | null;
@@ -19,35 +28,34 @@ interface SpriteConfig {
     readonly strokeStyle: SpriteFillStyle;
 }
 
-type SpritePrefsValue = string | number | boolean | null | Vec | SpriteFillStyle;
+export type SpritePrefsValue = undefined | string | number | boolean | null | Vec | SpriteFillStyle;
 
-interface SpritePrefs {
-    [key: string]: SpritePrefsValue;
+export interface SpritePrefs {
+    readonly [key: string]: SpritePrefsValue;
     /**id */
-    id: string;
+    readonly id: string;
     /**名前 */
-    name: string;
+    readonly name: string;
     /**基準点 */
-    anchor: Vec2;
+    readonly anchor: Vec2;
     /**グローバル位置 */
-    globalLocation: Vec2;
-    /**回転 */
-    rotation: number;
+    readonly globalLocation: Vec2;
     /**可視 */
-    visible: boolean;
+    readonly visible: boolean;
     /**ブレンドモード */
-    blendMode: GlobalCompositeOperation;
+    readonly blendMode: GlobalCompositeOperation;
     /**透明度 */
-    opacity: number;
+    readonly opacity: number;
     /**影のぼかし */
-    shadowBlur: number | null;
+    readonly shadowBlur: number | null;
     /**影の色 */
-    shadowColor: string | null;
+    readonly shadowColor: string | null;
     /**影の位置 */
-    shadowOffset: Vec2 | null;
+    readonly shadowOffset: Vec2 | null;
 }
+export type SpritePrefsUpdater<T extends SpritePrefs> = ValueUpdater<T>;
 
-abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
+export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
     readonly config: SpriteConfig;
     readonly prefs: T;
 
@@ -88,10 +96,28 @@ abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
     }
     abstract drawFunc(context: Context2D): void;
     abstract drawPointFunc(context: Context2D, point: Vec2): void;
-    abstract clone(): Sprite;
+    abstract setPrefs(valOrUpdater: ValueUpdater<T> | T): Sprite<T>;
     abstract getStartPoint(): Vec2;
-    abstract getCenterPoint(): Vec2;
+    abstract createStatic(): Promise<StaticSprite>;
 }
 
-export type { SpriteConfig, SpritePrefs, SpritePrefsValue, SpriteFillStyle };
-export { Sprite };
+export type StaticSprite = Rasterizedmage | SmartImage | Shape<any>;
+
+export function searchSpriteFromID(sprites: Sprite[], id: string): [Sprite | null, number | null] {
+    for (let i = 0; i < sprites.length; i++) {
+        if (sprites[i].prefs.id === id) return [sprites[i], i];
+    }
+    return [null, null];
+}
+
+export function searchSpritesFromIDs(sprites: Sprite[], ids: string[]) {
+    const hitSprites: Sprite[] = [];
+    for (let i = 0; i < sprites.length; i++) {
+        for (let j = 0; j < ids.length; j++) {
+            if (sprites[i].prefs.id === ids[j]) {
+                hitSprites.push(sprites[i]);
+            }
+        }
+    }
+    return hitSprites;
+}
