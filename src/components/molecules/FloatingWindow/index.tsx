@@ -1,11 +1,11 @@
-import { useDrag } from '@use-gesture/react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { useDrag } from '@use-gesture/react';
 import React, { useState } from 'react';
-import Wrapper from 'components/layout/Wrapper';
-import Container from 'components/layout/Container';
-import Typography from 'components/atoms/Typography';
 import IconButton from 'components/atoms/IconButton';
+import Typography from 'components/atoms/Typography';
 import Box from 'components/layout/Box';
+import Container from 'components/layout/Container';
+import Wrapper from 'components/layout/Wrapper';
 
 export type FloatingWindowProps = {
     show?: boolean;
@@ -14,7 +14,7 @@ export type FloatingWindowProps = {
     height?: number;
     children?: React.ReactNode;
     onClose?: React.MouseEventHandler<HTMLButtonElement>;
-}
+};
 
 const FloatingWindow = ({ show = true, ...props }: FloatingWindowProps) => {
     const [[x, y], setMovementCoord] = useState([0, 0]);
@@ -33,35 +33,38 @@ const FloatingWindow = ({ show = true, ...props }: FloatingWindowProps) => {
                 style={{ transform: `translate(${x}px, ${y}px)` }}
                 css={{
                     width: props.width,
-                    boxShadow: '0 0 35px 0 rgba(0, 0, 0, .2)'
+                    boxShadow: '0 0 35px 0 rgba(0, 0, 0, .2)',
+                    position: 'absolute',
+                    zIndex: 500,
                 }}
             >
                 <Container
-                    css={theme => ({
+                    css={(theme) => ({
                         justifyContent: 'space-between',
                         width: '100%',
                         height: '40px',
                         padding: '0px 8px',
                         backgroundColor: theme.colors.primaryMedium,
-                        boxSizing:'border-box',
-                        touchAction: 'none'
+                        boxSizing: 'border-box',
+                        touchAction: 'none',
                     })}
                     {...bind()}
                 >
                     <Typography
-                        variant='small'
-                        css={theme => ({
+                        variant="small"
+                        css={(theme) => ({
                             color: theme.colors.white,
                         })}
                     >
                         {props.title}
                     </Typography>
                     <IconButton
-                        variant='translucent'
-                        css={theme => ({
+                        variant="translucent"
+                        css={(theme) => ({
                             color: theme.colors.white,
-                            padding: '5px'
+                            padding: '5px',
                         })}
+                        onClick={props.onClose}
                     >
                         <HighlightOffIcon />
                     </IconButton>
@@ -71,6 +74,6 @@ const FloatingWindow = ({ show = true, ...props }: FloatingWindowProps) => {
                 </Box>
             </Wrapper>
         </>
-    )
-}
+    );
+};
 export default FloatingWindow;

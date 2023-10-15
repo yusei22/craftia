@@ -9,8 +9,8 @@ const meta = {
         show: { type: 'boolean' },
         title: { type: 'string' },
         width: { type: 'number' },
-        height: { type: 'number' }
-    }
+        height: { type: 'number' },
+    },
 } satisfies Meta<typeof FloatingWindow>;
 
 export default meta;
@@ -21,5 +21,5 @@ export const Primary: Story = {
         width: 400,
         height: 300,
         title: 'ウィンドウ',
-    }
-}
+    },
+};
