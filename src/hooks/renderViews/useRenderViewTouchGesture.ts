@@ -14,7 +14,6 @@ const useRenderViewTouchGesture = () => {
 
     const onPinch: RenderViewListeners['onPinch'] = ({ offset, origin, event, first, last }) => {
         event.preventDefault();
-        console.log('onPinch');
         if (first) {
             PinchPreviousOffset = offset[0];
             PinchPreviousAngle = offset[1];

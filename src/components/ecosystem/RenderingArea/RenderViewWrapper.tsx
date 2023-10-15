@@ -15,7 +15,6 @@ const RenderViewWrapper = ({ children, events }: RenderViewWrapperProps) => {
     useWheel(events.onWheel, { eventOptions: { passive: false }, target: wrapperRef });
     useMove(events.onMove, { eventOptions: { passive: false }, target: wrapperRef });
 
-    console.log('RenderViewListeners : ', events);
     return (
         <Wrapper css={{ touchAction: 'none' }} ref={wrapperRef}>
             {children}

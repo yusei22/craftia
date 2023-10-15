@@ -12,8 +12,6 @@ export const RenderViewListenerProvider = ({ children }: { children?: React.Reac
     const { onPinch } = useRenderViewTouchGesture();
     const { onMove } = useRenderViewMouseGesture();
 
-    console.log(onWheel, onPinch);
-
     useEffect(() => {
         setRenderViewListeners({
             onPinch,

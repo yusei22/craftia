@@ -12,8 +12,6 @@ const useRenderViewWheelGesture = () => {
     const onWheel: RenderViewListeners['onWheel'] = ({ delta, event }) => {
         event.preventDefault();
 
-        console.log('onWheel');
-
         const zoom =
             delta[1] === 0
                 ? 1
