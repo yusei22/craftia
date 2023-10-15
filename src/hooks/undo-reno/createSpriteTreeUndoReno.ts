@@ -10,12 +10,12 @@ type Param = {
     histPresentKey: string;
     histFutureKey: string;
 };
-type SpriteTree = Sprite<any>[];
+type SpriteTree = Sprite<any>[];// eslint-disable-line
 type StaticSpriteTree = StaticSprite[];
 
 type UndoReno = {
     /**スプライトツリーのステートを使用する */
-    currentState: RecoilState<Sprite<any>[]>;
+    currentState: RecoilState<Sprite<any>[]>;// eslint-disable-line
 
     /**スプライトツリーの内容を履歴に保存 */
     useSaver: () => () => Promise<void>;
@@ -32,7 +32,7 @@ type UndoReno = {
     useHistFutureVal: () => StaticSpriteTree[];
 };
 
-export const useSpriteTreeUndoRedo = ({
+export const createSpriteTreeUndoRedo = ({
     histPastKey: pastKey,
     histPresentKey: currentKey,
     histFutureKey: futureKey,
