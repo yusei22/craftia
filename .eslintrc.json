@@ -20,6 +20,8 @@
         }
       }
     ],
+    "react/prop-types": "off",
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     "prettier/prettier": [
       "error",
       {
