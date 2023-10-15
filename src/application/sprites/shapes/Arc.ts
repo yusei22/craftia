@@ -1,11 +1,11 @@
 import { Shape, ShapePrefs } from '../Shape';
-import { SpriteConfig, SpritePrefsValue } from '../Sprite';
+import { SpriteConfig } from '../Sprite';
 import { Context2D } from 'application/core/context-2d';
-import { Vec2 } from 'application/core/units';
+import { ValueUpdater } from 'application/core/types';
 
 interface ArcPrefs extends ShapePrefs {
-    startAngle: number;
-    endAngle: number;
+    readonly startAngle: number;
+    readonly endAngle: number;
 }
 class Arc extends Shape<ArcPrefs> {
     constructor(prefs: ArcPrefs) {
@@ -29,14 +29,17 @@ class Arc extends Shape<ArcPrefs> {
         };
         super(config, prefs);
     }
-    public clone() {
-        return new Arc({ ...this.prefs });
+    public setPrefs(valOrUpdater: ValueUpdater<ArcPrefs> | ArcPrefs) {
+        if (typeof valOrUpdater === 'function') {
+            return new Arc(valOrUpdater(this.prefs));
+        } else {
+            return new Arc(valOrUpdater);
+        }
     }
     public drawFunc(context: Context2D): void {
-        const centerPoint = this.getCenterPoint();
         context.beginPath();
         context.ellipse(
-            centerPoint,
+            this.prefs.globalLocation,
             this.prefs.scale,
             this.prefs.rotation,
             this.prefs.startAngle,
