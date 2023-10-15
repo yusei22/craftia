@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import NearMeIcon from '@mui/icons-material/NearMe';
+import type { Meta, StoryObj } from '@storybook/react';
 import IconButton from '.';
 
 const meta = {
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof IconButton>;
 export const Primary: Story = {
     args: {
         variant: 'primary',
-        children: <HighlightOffIcon />
+        children: <HighlightOffIcon />,
     },
 };
 export const Danger: Story = {
@@ -24,9 +24,9 @@ export const Danger: Story = {
         children: <HighlightOffIcon />,
     },
 };
-export const translucent: Story ={
+export const translucent: Story = {
     args: {
         variant: 'translucent',
         children: <NearMeIcon />,
     },
-}
+};
