@@ -2,7 +2,7 @@ import { Filter, FilterTarget, FilterWorker } from '../Filter';
 import { ImageEditor } from '../ImageEditor';
 import { Vec2 } from 'application/core/units';
 
-const bilateral = require('./bilateral.frag');
+const bilateral = require('./bilateral.frag');// eslint-disable-line
 const MAX_RADIUS = 10;
 
 export interface BilateralConfig {

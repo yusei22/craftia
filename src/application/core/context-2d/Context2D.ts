@@ -1,4 +1,4 @@
-import { Vec, Vec2, Vec4, isVec } from 'application/core/units';
+import { Vec, Vec2 } from 'application/core/units';
 
 type Context2DAttr =
     | 'fillStyle'

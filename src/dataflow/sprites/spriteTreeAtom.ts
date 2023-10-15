@@ -1,5 +1,5 @@
 import { HISTORY_STORAGE_LENGTH } from 'consts';
-import { useSpriteTreeUndoRedo } from 'hooks/undo-reno/useSpriteTreeUndoReno';
+import { createSpriteTreeUndoRedo } from 'hooks/undo-reno/createSpriteTreeUndoReno';
 
 const {
     currentState: spriteTreeAtom,
@@ -9,7 +9,7 @@ const {
     useHistFutureVal: useSpriteTreeHistFutureVal,
     useHistPastVal: useSpriteTreeHistPastVal,
     useHistPresentVal: useSpriteTreeHistPresentVal,
-} = useSpriteTreeUndoRedo({
+} = createSpriteTreeUndoRedo({                 // eslint-disable-line
     histPastKey: 'spriteTreeHistPast',
     histPresentKey: 'spriteTreeHistPresent',
     histFutureKey: 'spriteTreeHistFuture',

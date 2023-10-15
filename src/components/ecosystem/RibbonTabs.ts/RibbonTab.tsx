@@ -9,7 +9,6 @@ type CustomTabProps = TabProps & {
 };
 
 export const RibbonTab: ReactTabsFunctionComponent<CustomTabProps> = ({
-    children,
     icon,
     text,
     isAcrive,

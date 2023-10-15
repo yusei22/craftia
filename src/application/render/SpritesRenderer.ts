@@ -1,5 +1,5 @@
 import { Context2D } from 'application/core/context-2d';
-import { Vec, Vec2, Vec4 } from 'application/core/units';
+import { Vec2, Vec4 } from 'application/core/units';
 import { Sprite } from 'application/sprites/Sprite';
 import { FillSolid } from 'application/sprites/SpriteFill';
 import { Arc } from 'application/sprites/shapes/Arc';

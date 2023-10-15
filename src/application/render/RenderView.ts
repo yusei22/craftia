@@ -1,5 +1,5 @@
 import { Context2D } from 'application/core/context-2d';
-import { Vec2, Vec4 } from 'application/core/units';
+import { Vec2 } from 'application/core/units';
 
 type RenderViewRenderProps = {
     rotation: number;

@@ -52,7 +52,7 @@ interface IVec {
     readonly toArray: () => number[];
 }
 
-function isVec(value: any): value is IVec {
+function isVec(value: unknown): value is IVec {
     if (value instanceof Vec2 || value instanceof Vec3 || value instanceof Vec4) {
         return true;
     }

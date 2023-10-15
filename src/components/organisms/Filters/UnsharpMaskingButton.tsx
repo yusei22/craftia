@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { FilterButton } from './FilterButton';
 import { UnsharpMasking, UnsharpMaskingConfig } from 'application/filters/UnsharpMasking';
-import Wrapper from 'components/layout/Wrapper';
 import Slider from 'components/molecules/Slider';
 import {
     MAX_CONVOLUTION_RADIUS,

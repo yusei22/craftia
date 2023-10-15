@@ -1,8 +1,8 @@
 import { DependencyList, useEffect } from 'react';
 
-const useWindowEvent = <K extends keyof WindowEventMap>(
+export const useWindowEvent = <K extends keyof WindowEventMap>(
     type: K,
-    listener: (this: Window, ev: WindowEventMap[K]) => any,
+    listener: (this: Window, ev: WindowEventMap[K]) => void,
     deps: DependencyList,
     options?: boolean | AddEventListenerOptions
 ) =>
@@ -14,5 +14,3 @@ const useWindowEvent = <K extends keyof WindowEventMap>(
             };
         }
     }, deps);
-
-export default useWindowEvent;

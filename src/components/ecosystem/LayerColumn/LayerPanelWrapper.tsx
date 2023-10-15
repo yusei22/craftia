@@ -1,11 +1,10 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { forwardRef } from 'react';
 import { Sprite } from 'application/sprites/Sprite';
 import Wrapper from 'components/layout/Wrapper';
 import { LayerPanel } from 'components/organisms/LayerPanel';
 
-export const LayerPanelWrapper = forwardRef(({ id, sprite }: { id: string; sprite: Sprite }) => {
+export const LayerPanelWrapper = ({ id, sprite }: { id: string; sprite: Sprite }) => {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: id });
     const style = {
         transform: CSS.Transform.toString(transform),
@@ -17,4 +16,4 @@ export const LayerPanelWrapper = forwardRef(({ id, sprite }: { id: string; sprit
             <LayerPanel sprite={sprite} />
         </Wrapper>
     );
-});
+};

@@ -1,9 +1,7 @@
 import { useRecoilState } from 'recoil';
-import Wrapper from 'components/layout/Wrapper';
 import Slider from 'components/molecules/Slider';
 import { MAX_PEN_WIDTH, MIN_PEN_WIDTH } from 'consts';
 import { penAtom } from 'dataflow/pens/penAtom';
-import { MQ } from 'mediaQuery';
 
 export const PenWidthSlider = () => {
     const [penVal, setPen] = useRecoilState(penAtom);

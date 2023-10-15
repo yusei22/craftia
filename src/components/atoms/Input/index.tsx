@@ -1,4 +1,4 @@
-import { Interpolation, Theme, FunctionInterpolation } from '@emotion/react';
+import { Interpolation, Theme } from '@emotion/react';
 import { ClassAttributes, InputHTMLAttributes } from 'react';
 
 export type InputProps = {

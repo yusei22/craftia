@@ -2,7 +2,7 @@ import { Filter, FilterTarget, FilterWorker } from '../Filter';
 import { ImageEditor } from '../ImageEditor';
 import { Vec2 } from 'application/core/units';
 
-const unsharpMasking = require('./unsharpMasking.frag');
+const unsharpMasking = require('./unsharpMasking.frag');// eslint-disable-line
 
 export interface UnsharpMaskingConfig {
     radius: number;

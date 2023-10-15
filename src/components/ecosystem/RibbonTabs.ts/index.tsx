@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import FilterIcon from '@mui/icons-material/Filter';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useState } from 'react';
-import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
+import { Tabs, TabList, TabPanel } from 'react-tabs';
 import { DrawTabPanel } from '../DrawTabPanel';
 import { FileTabPanel } from '../FileTabPanel.ts';
 import { FilterTabPabel } from '../FilterTabPabel';

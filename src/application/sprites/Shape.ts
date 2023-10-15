@@ -1,6 +1,6 @@
 import { Context2D } from '../core/context-2d';
 import { Vec2 } from '../core/units';
-import { Sprite, SpriteConfig, SpritePrefs, SpriteFillStyle, SpritePrefsValue } from './Sprite';
+import { Sprite, SpriteConfig, SpritePrefs, SpriteFillStyle } from './Sprite';
 
 interface ShapePrefs extends SpritePrefs {
     readonly fillStyle: SpriteFillStyle;

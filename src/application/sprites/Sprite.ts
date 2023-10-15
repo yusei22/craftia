@@ -101,7 +101,7 @@ export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
     abstract createStatic(): Promise<StaticSprite>;
 }
 
-export type StaticSprite = Rasterizedmage | SmartImage | Shape<any>;
+export type StaticSprite = Rasterizedmage | SmartImage | Shape<any>;// eslint-disable-line
 
 export function searchSpriteFromID(sprites: Sprite[], id: string): [Sprite | null, number | null] {
     for (let i = 0; i < sprites.length; i++) {

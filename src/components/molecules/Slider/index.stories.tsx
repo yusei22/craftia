@@ -13,7 +13,7 @@ type Story = StoryObj<typeof Slider>;
 
 export const Primary: Story = {
     render: () => {
-        const [value, setValue] = useState(50);
+        const [value, setValue] = useState(50);// eslint-disable-line
         return (
             <>
                 <Slider

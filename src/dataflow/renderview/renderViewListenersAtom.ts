@@ -9,9 +9,9 @@ type RenderViewListeners = {
     onClick: (
         state: SharedGestureState & {
             event: MouseEvent;
-            args: any;
+            args: any;// eslint-disable-line
         },
-        ...args: any
+        ...args: any// eslint-disable-line
     ) => void;
 };
 const renderViewListenersAtom = atom<RenderViewListeners>({

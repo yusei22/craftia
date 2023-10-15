@@ -6,7 +6,7 @@ type WrapperProps = {
 } & HTMLAttributes<HTMLDivElement> &
     ClassAttributes<HTMLDivElement>;
 
-const Wrapper = forwardRef<HTMLDivElement, WrapperProps>(({ css, ...props }, ref) => {
+const Wrapper = forwardRef<HTMLDivElement, WrapperProps>(({ css, ...props }, ref) => {// eslint-disable-line
     return (
         <div
             ref={ref}
