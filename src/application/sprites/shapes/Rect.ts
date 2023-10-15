@@ -40,7 +40,7 @@ class Rect extends Shape<RectPrefs> {
         context.translate(this.prefs.globalLocation);
         context.rotate(this.prefs.rotation);
         context.translate(this.prefs.globalLocation.times(-1));
-        context.roundRect(this.getStartPoint(), this.prefs.scale);
+        context.rect(this.getStartPoint(), this.prefs.scale);
         context.fill();
         context.stroke();
     }
