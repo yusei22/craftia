@@ -11,7 +11,7 @@ export default class MyDocument extends Document {
             <Html lang="ja">
                 <Head>
                     {/* PWA primary color */}
-                    <meta name="theme-color" content={theme.colors.primary} />
+                    <meta name="theme-color" content={theme.colors.primaryMedium} />
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
