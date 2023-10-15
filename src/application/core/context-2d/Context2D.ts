@@ -482,7 +482,6 @@ class Context2D {
      * @param radii 角丸半径
      */
     public roundRect(startPoint: Vec, size: Vec2, radii?: number): this {
-        console.log(this.context,this.context.roundRect);
         this.context.roundRect(startPoint.x, startPoint.y, size.x, size.y, radii);
         return this;
     }
@@ -717,7 +716,6 @@ function createCanvasAndContext2D(
 ): [HTMLCanvasElement, CanvasRenderingContext2D] {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d', op);
-    console.log(context)
     if (context === null) {
         throw Error('Failed to get context 2D.');
     }

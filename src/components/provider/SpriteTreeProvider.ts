@@ -33,7 +33,27 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
         (async () => {
             const imageSource = await new DataURLDecoder().decode('/sm.png');
             const imageSource2 = await new DataURLDecoder().decode('/sample.png');
-
+            const rect = new Rect({
+                id: uuidv4(),
+                name: '角丸矩形',
+                anchor: new Vec2(0, 0),
+                globalLocation: new Vec2(200, 300),
+                rotation: (0 / 180) * Math.PI,
+                visible: true,
+                blendMode: 'source-over',
+                opacity: 1.0,
+                shadowBlur: 0,
+                shadowColor: '#0000',
+                shadowOffset: new Vec2(0, 0),
+                fillStyle: new FillSolid({ color: new Vec4(255, 0, 0, 0.8) }),
+                strokeCap: 'round',
+                strokeDashOffset: 0,
+                strokeJoin: 'bevel',
+                strokeWidth: 10,
+                strokeStyle: new FillSolid({ color: new Vec4(0, 0, 0, 1) }),
+                scale: new Vec2(300, 300),
+                round: 20,
+            });
             const image = new Rasterizedmage(imageSource, {
                 id: uuidv4(),
                 name: '山の画像',
@@ -60,7 +80,7 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
                 shadowColor: '#0000',
                 shadowOffset: new Vec2(0, 0),
             });
-            setSpriteTree([image2, image]);
+            setSpriteTree([image2, rect, image]);
             saveSpriteTree();
         })();
     }, []);
