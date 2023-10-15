@@ -8,7 +8,7 @@ type RenderViewWrapperProps = {
 };
 
 const RenderViewWrapper = ({ children, events }: RenderViewWrapperProps) => {
-    console.log(events)
+    console.log(events);
     const wrapperRef = useRef<HTMLDivElement>(null);
     useGesture(events, { eventOptions: { passive: false }, target: wrapperRef });
 
