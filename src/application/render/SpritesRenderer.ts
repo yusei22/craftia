@@ -17,6 +17,7 @@ class SpritesRenderer {
         this.context.viewport(size);
     }
     public render(sprites: Sprite[]) {
+        console.log(this.context)
         this.context.clear();
         sprites.forEach((sprite) => {
             sprite.draw(this.context);
