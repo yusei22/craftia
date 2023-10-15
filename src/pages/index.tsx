@@ -1,9 +1,13 @@
-import NearMeIcon from '@mui/icons-material/NearMe';
 import Head from 'next/head';
-import Button from 'components/atoms/Button';
-import { RenderingArea } from 'components/organisms/RenderingArea';
-import { SpriteSelectModeButton } from 'components/organisms/SpriteSelectModeButton';
+import { LayerColumn } from 'components/ecosystem/LayerColumn';
+import { RenderingArea } from 'components/ecosystem/RenderingArea';
+import { RibbonTabs } from 'components/ecosystem/RibbonTabs.ts';
+import { SideBar } from 'components/ecosystem/SideBar';
+import Box from 'components/layout/Box';
+import Wrapper from 'components/layout/Wrapper';
 import { Provider } from 'components/provider';
+import { MQ } from 'mediaQuery';
+
 export default function Home() {
     return (
         <>
@@ -15,11 +19,45 @@ export default function Home() {
             </Head>
             <>
                 <Provider>
-                    <Button variant={'primary'}>ボタン</Button>
-                    <SpriteSelectModeButton>
-                        <NearMeIcon />
-                    </SpriteSelectModeButton>
+                    <Wrapper
+                        css={{
+                            position: 'absolute',
+                            zIndex: 1000,
+                            bottom: '0',
+                            [MQ.md]: {
+                                top: '0',
+                                left: '0',
+                            },
+                        }}
+                    >
+                        <RibbonTabs></RibbonTabs>
+                    </Wrapper>
+                    <Wrapper
+                        css={{
+                            position: 'absolute',
+                            zIndex: 500,
+                            top: '200PX',
+                            left: '20px',
+                            height: 'calc(100% - 300px)',
+                        }}
+                    >
+                        <SideBar></SideBar>
+                    </Wrapper>
                     <RenderingArea />
+                    <Box
+                        css={(theme) => ({
+                            backgroundColor: theme.colors.white,
+                            boxShadow: '0 0 35px 0 rgba(0, 0, 0, .2)',
+                            height: 'calc(100% - 500px)',
+                            position: 'absolute',
+                            zIndex: 500,
+                            bottom: '50px',
+                            right: '20px',
+                            padding: '10px',
+                        })}
+                    >
+                        <LayerColumn />
+                    </Box>
                 </Provider>
             </>
         </>
