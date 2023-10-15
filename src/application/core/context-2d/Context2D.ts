@@ -481,7 +481,7 @@ class Context2D {
      * @param size サイズ
      * @param radii 角丸半径
      */
-    public roundRect(startPoint: Vec, size: Vec2, radii?: number): this {
+    public roundRect(startPoint: Vec, size: Vec2, radii?: number[]): this {
         this.context.roundRect(startPoint.x, startPoint.y, size.x, size.y, radii);
         return this;
     }
