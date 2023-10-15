@@ -17,13 +17,12 @@ export const Primary: Story = {
         return (
             <>
                 <Slider
-                    uniqueId='sampleSlider'
+                    uniqueId="sampleSlider"
                     value={value}
                     setValue={setValue}
-                    size={150}
-                    label='Label'
+                    label="Label"
                 ></Slider>
             </>
-        )
-    }
+        );
+    },
 };
