@@ -1,10 +1,53 @@
-import { CacheProvider, EmotionCache, ThemeProvider } from '@emotion/react';
+import { CacheProvider, EmotionCache, ThemeProvider, css, Global } from '@emotion/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { RecoilRoot } from 'recoil';
 import createEmotionCache from 'createEmotionCache';
 import defaultTheme from 'theme';
+
+const GlobalStyles = () => (
+    <Global
+        styles={css`
+            html,
+            body,
+            textarea {
+                padding: 0;
+                margin: 0;
+                font-family:
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    Segoe UI,
+                    Roboto,
+                    Oxygen,
+                    Ubuntu,
+                    Cantarell,
+                    Fira Sans,
+                    Droid Sans,
+                    Helvetica Neue,
+                    sans-serif;
+            }
+            html,
+            body {
+                overflow: hidden;
+            }
+            * {
+                box-sizing: border-box;
+            }
+
+            a {
+                cursor: pointer;
+                text-decoration: none;
+                transition: 0.25s;
+            }
+
+            ol,
+            ul {
+                list-style: none;
+            }
+        `}
+    />
+);
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -15,7 +58,6 @@ interface MyAppProps extends AppProps {
 
 function MyApp(props: MyAppProps) {
     const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
     return (
         <>
             <Head>
@@ -28,13 +70,14 @@ function MyApp(props: MyAppProps) {
                 <meta property="og:locale" content="ja_JP" />
                 <meta property="og:type" content="website" />
             </Head>
-            <CacheProvider value={emotionCache}>
-                <ThemeProvider theme={defaultTheme}>
+            <ThemeProvider theme={defaultTheme}>
+                <CacheProvider value={emotionCache}>
+                    <GlobalStyles />
                     <RecoilRoot>
                         <Component {...pageProps} />
                     </RecoilRoot>
-                </ThemeProvider>
-            </CacheProvider>
+                </CacheProvider>
+            </ThemeProvider>
         </>
     );
 }
