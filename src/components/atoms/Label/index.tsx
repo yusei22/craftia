@@ -1,20 +1,23 @@
 import { Interpolation, Theme } from '@emotion/react';
-import { LabelHTMLAttributes } from "react";
+import { ClassAttributes, LabelHTMLAttributes } from 'react';
 
-type LabelProps = LabelHTMLAttributes<HTMLLabelElement> & {
+type LabelProps = {
     size?: keyof Theme['fontSize'];
     css?: Interpolation<Theme>;
-}
+} & LabelHTMLAttributes<HTMLLabelElement> &
+    ClassAttributes<HTMLLabelElement>;
 
 const Label = ({ size = 'md', css, ...props }: LabelProps) => {
     return (
         <label
-            css={[(theme) => ({
-                fontSize: theme.fontSize[size],
-                accentColor: theme.colors.primaryDark
-            })]}
+            css={[
+                (theme) => ({
+                    fontSize: theme.fontSize[size],
+                    accentColor: theme.colors.primaryDark,
+                }),
+            ]}
             {...props}
         />
-    )
-}
-export default Label
+    );
+};
+export default Label;
