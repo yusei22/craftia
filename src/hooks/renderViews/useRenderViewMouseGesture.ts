@@ -7,16 +7,13 @@ const useRenderViewMouseGesture = () => {
 
     let PinchPreviousOffset = new Vec2(0, 0);
 
-    const onMove: RenderViewListeners['onMove'] = ({ event, offset, down }) => {
+    const onMove: RenderViewListeners['onMove'] = ({ event, offset }) => {
         event.preventDefault();
         if (event.buttons === 4) {
             setArtboardTransform(({ location, ...param }) => {
                 return {
                     ...param,
-                    location: new Vec2(location)
-                        .add(new Vec2(offset))
-                        .sub(PinchPreviousOffset)
-                        .toArray(),
+                    location: location.add(new Vec2(offset)).sub(PinchPreviousOffset),
                 };
             });
         }
