@@ -14,19 +14,19 @@ export const Medium: Story = {
     args: {
         uniqueId: 'MediumCheckBox',
         label: 'Medium',
-    }
-}
+    },
+};
 export const Small: Story = {
     args: {
         uniqueId: 'SmallCheckBox',
         label: 'Small',
-        size: 'sm'
-    }
-}
+        size: 'sm',
+    },
+};
 export const Large: Story = {
     args: {
         uniqueId: 'MediumCheckBox',
         label: 'Large',
-        size:'lg'
-    }
-}
+        size: 'lg',
+    },
+};
