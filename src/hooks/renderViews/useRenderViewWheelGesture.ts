@@ -9,7 +9,7 @@ const useRenderViewWheelGesture = () => {
     const changeArtboardAnchorFromViewPoint = useChangeArtboardAnchorFromViewPoint();
     const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
 
-    const onWheel: RenderViewListeners['onWheel'] = ({ delta, event, startTime }) => {
+    const onWheel: RenderViewListeners['onWheel'] = ({ delta, event }) => {
         event.preventDefault();
 
         const zoom =
