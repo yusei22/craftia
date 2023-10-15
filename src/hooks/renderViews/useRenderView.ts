@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { Vec2 } from 'application/core/units';
 import { RenderView } from 'application/render/RenderView';
 import { SpritesRenderer } from 'application/render/SpritesRenderer';
 import {
@@ -32,12 +31,12 @@ const useRenderView = () => {
         }
         const { anchor, location, scale, rotation } = artboardTransform;
 
-        renderView.viewport(new Vec2(renderViewScale));
+        renderView.viewport(renderViewScale);
         renderView.render(artboardRenderer.getResult(), {
-            anchor: new Vec2(anchor),
-            location: new Vec2(location),
-            rotate: rotation,
-            scale: new Vec2(scale),
+            anchor,
+            location,
+            rotation,
+            scale,
         });
 
         setRenderViewCanvasUpdateCount((value) => value + 1);
@@ -49,16 +48,19 @@ const useRenderView = () => {
     }, []);
 
     useEffect(() => {
+        console.log('artboardの再描画');
         if (artboardRenderer === null) {
             return;
         }
-        artboardRenderer.viewport(new Vec2(artboardResolution));
+        artboardRenderer.viewport(artboardResolution);
         artboardRenderer.render(sprites);
         renderArtboardRendererResult();
     }, [sprites, artboardRenderer, renderView]);
+
     useEffect(() => {
         renderArtboardRendererResult();
     }, [renderViewScale, artboardTransform, artboardResolution, artboardRenderer, renderView]);
+
     useEffect(() => {
         if (renderView === null) {
             return;
