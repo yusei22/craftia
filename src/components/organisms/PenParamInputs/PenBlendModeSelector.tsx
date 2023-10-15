@@ -22,6 +22,7 @@ const options: BlendModeOption[] = [
     { value: 'soft-light', label: 'ソフトライト' },
     { value: 'difference', label: '差' },
     { value: 'exclusion', label: '除外' },
+    { value: 'destination-out', label: '消しごむ' }
 ];
 
 export const PenBlendModeSelector = () => {
