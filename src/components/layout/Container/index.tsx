@@ -1,22 +1,26 @@
 import { Interpolation, Theme } from '@emotion/react';
-import { HTMLAttributes } from 'react';
+import { ClassAttributes, HTMLAttributes } from 'react';
 
-type ContainerProps = HTMLAttributes<HTMLDivElement> & {
+type ContainerProps = {
     css?: Interpolation<Theme>;
-};
+} & HTMLAttributes<HTMLDivElement> &
+    ClassAttributes<HTMLDivElement>;
 
 const Container = ({ css, ...props }: ContainerProps) => {
     return (
         <div
-            css={[{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 'fit-content'
-            }, css]}
+            css={[
+                {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 'fit-content',
+                },
+                css,
+            ]}
             {...props}
         />
-    )
-}
+    );
+};
 
 export default Container;
