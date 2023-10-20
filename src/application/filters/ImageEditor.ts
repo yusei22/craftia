@@ -66,7 +66,7 @@ function createCustomShader(editorShader: EditorShader) {
                 offset: TEXTURE_OFFSET,
             },
         ],
-        uniforms: editorShader.uniforms
+        uniforms: editorShader.uniforms,
     });
 }
 
@@ -77,10 +77,9 @@ export type EditorListenerProps = {
 };
 
 export type EditorShader = {
-    fragmentShaderSource: string,
-    uniforms?: UniformConfig[],
-}
-
+    fragmentShaderSource: string;
+    uniforms?: UniformConfig[];
+};
 
 export class ImageEditor {
     /**レンダリング時実行する関数 */
@@ -88,14 +87,14 @@ export class ImageEditor {
 
     private renderer: CacheableRenderer;
     private texture: Texture2D;
-    private editorShader: EditorShader
+    private editorShader: EditorShader;
 
     /**
      * @param editorSize 初期サイズ
      * @param fragmentShaderSource シェーダー
      */
     constructor(editorSize: Vec2, editorShader: EditorShader) {
-        this.editorShader = editorShader
+        this.editorShader = editorShader;
         const bufferData = createBufferData(new Vec2(0, 0), editorSize);
         const shader = createCustomShader(this.editorShader);
 

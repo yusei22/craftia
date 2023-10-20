@@ -1,12 +1,12 @@
+import { EditorShader, ImageEditor } from './ImageEditor';
 import { Vec2, Mat } from 'application/core/units';
 import { TexPixcels } from 'application/core/web-gl2';
-import { EditorShader, ImageEditor } from './ImageEditor';
 
 type ConvolutionListenerProps<T extends number> = {
     setKernel(kernel: Mat<T>): void;
-}
+};
 
-export class Convolution<T extends number>{
+export class Convolution<T extends number> {
     private editor: ImageEditor;
     private kernelSize: number;
     public listeners: ((props: ConvolutionListenerProps<T>) => void)[] = [];
@@ -20,15 +20,15 @@ export class Convolution<T extends number>{
                 {
                     name: 'u_kernel',
                     type: 'float',
-                    value: kernel.item
+                    value: kernel.item,
                 },
                 {
                     name: 'u_kernelWeight',
                     type: 'float',
-                    value: getKernelWeight(kernel, this.kernelSize)
-                }
-            ]
-        }
+                    value: getKernelWeight(kernel, this.kernelSize),
+                },
+            ],
+        };
         this.editor = new ImageEditor(imageSize, shader);
         this.editor.setImage(image, imageSize, false);
     }
@@ -37,16 +37,16 @@ export class Convolution<T extends number>{
             this.editor.listeners[i] = ({ setUniformFloat }) => {
                 listener({
                     setKernel: (kernel) => {
-                        setUniformFloat('u_kernel', kernel.item)
-                        setUniformFloat('u_kernelWeight', getKernelWeight(kernel, this.kernelSize))
-                    }
-                })
-            }
-        })
+                        setUniformFloat('u_kernel', kernel.item);
+                        setUniformFloat('u_kernelWeight', getKernelWeight(kernel, this.kernelSize));
+                    },
+                });
+            };
+        });
         this.editor.execute(time);
     }
     public getResult() {
-        return this.editor.getResult()
+        return this.editor.getResult();
     }
 }
 function getCorrectKernelSize(size: number) {

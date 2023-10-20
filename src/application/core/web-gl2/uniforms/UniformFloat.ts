@@ -1,5 +1,5 @@
-import { ValueUpdater } from 'application/core/types';
 import { IUniform, IUniformValue, expandVecs } from './IUniform';
+import { ValueUpdater } from 'application/core/types';
 import { Vec, Vec2, Vec3, Vec4, isVec } from 'application/core/units';
 
 class UniformFloat<T extends IUniformValue> implements IUniform<T> {
@@ -16,7 +16,7 @@ class UniformFloat<T extends IUniformValue> implements IUniform<T> {
             this.gl,
             this.location,
             typeof valOrUpdater === 'function' ? valOrUpdater(this.value) : valOrUpdater
-        )
+        );
     }
     public transfer() {
         if (typeof this.value === 'number') {

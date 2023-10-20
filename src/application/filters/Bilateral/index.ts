@@ -28,9 +28,9 @@ export class BilateralWorker extends FilterWorker<BilateralConfig> {
                     name: 'u_radius',
                     type: 'int',
                     value: MAX_RADIUS,
-                }
-            ]
-        }
+                },
+            ],
+        };
 
         this.editor = new ImageEditor(imageSize, shader);
         this.editor.setImage(sprite.image, imageSize, false);
@@ -49,7 +49,7 @@ export class BilateralWorker extends FilterWorker<BilateralConfig> {
                 setUniformInt('u_radius', finalRadius);
             };
         }
-        
+
         this.editor.execute(executionTimes);
     }
 }

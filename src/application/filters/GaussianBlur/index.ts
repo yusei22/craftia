@@ -16,8 +16,8 @@ export class GaussianBlur extends Filter<GaussianBlurConfig> {
 }
 
 const sigma = (ksize: number) => {
-    return ksize / 3.0
-}
+    return ksize / 3.0;
+};
 
 export class GaussianBlurWorker extends FilterWorker<GaussianBlurConfig> {
     private editor: ImageEditor;
@@ -31,14 +31,15 @@ export class GaussianBlurWorker extends FilterWorker<GaussianBlurConfig> {
                 {
                     name: 'u_radius',
                     type: 'int',
-                    value: MAX_RADIUS
-                }, {
+                    value: MAX_RADIUS,
+                },
+                {
                     name: 'u_sigma',
                     type: 'float',
-                    value: sigma(MAX_RADIUS)
-                }
-            ]
-        }
+                    value: sigma(MAX_RADIUS),
+                },
+            ],
+        };
 
         this.editor = new ImageEditor(imageSize, shader);
         this.editor.setImage(sprite.image, imageSize, false);
@@ -56,11 +57,11 @@ export class GaussianBlurWorker extends FilterWorker<GaussianBlurConfig> {
             if (i % 2 === 0) {
                 this.editor.listeners[i] = ({ setUniformFloat }) => {
                     setUniformFloat('u_horizontal', 1.0);
-                }
+                };
             } else {
                 this.editor.listeners[i] = ({ setUniformFloat }) => {
                     setUniformFloat('u_horizontal', 0.0);
-                }
+                };
             }
         }
 

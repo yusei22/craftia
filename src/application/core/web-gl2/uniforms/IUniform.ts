@@ -3,6 +3,7 @@ import { Vec2, Vec3, Vec4 } from 'application/core/units';
 type IUniformValue = number | Vec2 | Vec3 | Vec4 | number[] | Vec2[] | Vec3[] | Vec4[];
 interface IUniform<T extends IUniformValue> {
     transfer(): void;
+    readonly value: T;
 }
 
 function expandVecs(vecs: Vec2[] | Vec3[] | Vec4[]) {

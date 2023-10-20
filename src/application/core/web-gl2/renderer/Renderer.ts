@@ -19,8 +19,8 @@ type AttributeConfig = {
 type UniformConfig = {
     name: string;
     type: 'int' | 'float';
-    value: IUniformValue
-}
+    value: IUniformValue;
+};
 
 type RendererShaderParam = {
     vertexShader: string;
@@ -41,13 +41,20 @@ class RendererShader {
     readonly attributeConfigs: AttributeConfig[];
     readonly uniformConfigs: UniformConfig[];
 
-    constructor({ vertexShader, fragmentShader, attributes = [], uniforms = [] }: RendererShaderParam) {
+    constructor({
+        vertexShader,
+        fragmentShader,
+        attributes = [],
+        uniforms = [],
+    }: RendererShaderParam) {
         this.vertexShaderSource = vertexShader;
         this.fragmentShaderSource = fragmentShader;
         this.attributeConfigs = attributes;
         this.uniformConfigs = uniforms;
     }
-    public compile(gl2: WebGL2RenderingContext): [Program, VertexAttribute[], IUniform<IUniformValue>[]] {
+    public compile(
+        gl2: WebGL2RenderingContext
+    ): [Program, VertexAttribute[], IUniform<IUniformValue>[]] {
         const program = new Program(
             gl2,
             new VertexShader(gl2, this.vertexShaderSource),
@@ -56,11 +63,11 @@ class RendererShader {
         const attributes = this.attributeConfigs.map((attr) =>
             program.getAttribute(attr.name, attr.size, attr.stride, attr.offset)
         );
-        const unifomrs = this.uniformConfigs.map<IUniform<IUniformValue>>(uniform =>
+        const unifomrs = this.uniformConfigs.map<IUniform<IUniformValue>>((uniform) =>
             uniform.type === 'float'
                 ? program.getUniformFloat(uniform.name, uniform.value)
                 : program.getUniformInt(uniform.name, uniform.value)
-        )
+        );
         return [program, attributes, unifomrs];
     }
 }
@@ -133,7 +140,7 @@ class Renderer extends WebGL2 {
     public activate() {
         this.vertex?.activate();
         this.program.use();
-        this.uniforms.forEach(uniform => uniform.transfer());
+        this.uniforms.forEach((uniform) => uniform.transfer());
         return this;
     }
 
