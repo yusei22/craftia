@@ -8,6 +8,10 @@ interface RectPrefs extends ShapePrefs {
 }
 
 class Rect extends Shape<RectPrefs> {
+    /**
+     * コンストラクタ
+     * @param prefs スプライトの環境設定
+     */
     constructor(prefs: RectPrefs) {
         const config: SpriteConfig = {
             line: {
@@ -36,6 +40,10 @@ class Rect extends Shape<RectPrefs> {
             return new Rect(valOrUpdater);
         }
     }
+    /**
+     * 描画
+     * @param context レンダリング先のコンテクスト
+     */
     public drawFunc(context: Context2D): void {
         context.translate(this.prefs.globalLocation);
         context.rotate(this.prefs.rotation);
