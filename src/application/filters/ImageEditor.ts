@@ -117,6 +117,17 @@ export class ImageEditor {
             this.renderer.setBufferData(createBufferData(new Vec2(0, 0), imageSize));
         }
     }
+    public setTexture(tex: Texture2D, texSize: Vec2, changeEditorSize: boolean) {
+        this.texture = tex;
+        if (changeEditorSize) {
+            this.renderer.setNewCache(texSize);
+            this.renderer.viewport(texSize);
+            this.renderer.setBufferData(createBufferData(new Vec2(0, 0), texSize));
+        }
+    }
+    public getCurerntCacheTex() {
+        return this.renderer.getCacheTex();
+    }
     /**
      * フラグメントシェーダーを変更する
      * @param fragmentShaderSource
