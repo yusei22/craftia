@@ -7,6 +7,7 @@ import { Tabs, TabList, TabPanel } from 'react-tabs';
 import { DrawTabPanel } from '../DrawTabPanel';
 import { FileTabPanel } from '../FileTabPanel.ts';
 import { FilterTabPabel } from '../FilterTabPabel';
+import { ImportTabPanel } from '../ImportTabPanel';
 import { RibbonTab } from './RibbonTab';
 import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
@@ -70,6 +71,11 @@ export const RibbonTabs = () => {
                     <FilterTabPabel />
                 </TabPanelChildWrapper>
             </TabPanel>
+            <TabPanel>
+                <TabPanelChildWrapper>
+                    <ImportTabPanel />
+                </TabPanelChildWrapper>
+            </TabPanel>
             <TabList>
                 <Container
                     css={{
@@ -88,6 +94,7 @@ export const RibbonTabs = () => {
                     />
                     <RibbonTab icon={<EditIcon />} text="描画" isAcrive={tabIndex === 1} />
                     <RibbonTab icon={<FilterIcon />} text="フィルタ" isAcrive={tabIndex === 2} />
+                    <RibbonTab icon={<FilterIcon />} text="挿入" isAcrive={tabIndex === 3} />
                 </Container>
             </TabList>
         </Tabs>
