@@ -22,7 +22,7 @@ export abstract class FilterWorker<T extends FilterConfigs = FilterConfigs>
     }
 
     public abstract execute(config: T): void;
-    protected abstract getResult(): HTMLCanvasElement | OffscreenCanvas;
+    public abstract getResult(): HTMLCanvasElement | OffscreenCanvas;
 
     public getPreviewSprite() {
         if (this.targetSprite instanceof Rasterizedmage) {
