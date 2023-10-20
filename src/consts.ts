@@ -12,7 +12,7 @@ export const MIN_PEN_Stabilization = 0;
 export const MAX_PEN_Stabilization = 40;
 
 export const MAX_CONVOLUTION_RADIUS = 50;
-export const MIN_CONVOLUTION_RADIUS = 0;
+export const MIN_CONVOLUTION_RADIUS = 0.5;
 
 export const MAX_UNSHARPMASKING_THRESHOLD = 5.0;
 export const MIN_UNSHARPMASKING_THRESHOLD = 0.1;
