@@ -67,16 +67,16 @@ class Program {
      * @param name 名前
      * @returns `UniformFloat`
      */
-    public getUniformFloat<T extends IUniformValue>(name: string) {
-        return new UniformFloat<T>(this.gl, this.getUniformLocation(name));
+    public getUniformFloat<T extends IUniformValue>(name: string, value: T) {
+        return new UniformFloat<T>(this.gl, this.getUniformLocation(name), value);
     }
     /**
      * uniform変数(整数型)を取得
      * @param name 名前
      * @returns `UniformInt`
      */
-    public getUniformInt<T extends IUniformValue>(name: string) {
-        return new UniformInt<T>(this.gl, this.getUniformLocation(name));
+    public getUniformInt<T extends IUniformValue>(name: string, value: T) {
+        return new UniformInt<T>(this.gl, this.getUniformLocation(name), value);
     }
     /**
      * 頂点属性を取得
