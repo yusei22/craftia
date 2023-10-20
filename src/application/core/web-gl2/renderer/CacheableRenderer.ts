@@ -13,7 +13,7 @@ class CacheableRenderer extends Renderer {
         this.offScreens[0] = this.createOffscreen(cacheSize);
         this.offScreens[1] = this.createOffscreen(cacheSize);
 
-        this.resultTex = this.offScreens[0].resultTexture;
+        this.resultTex = this.offScreens[1].resultTexture;
     }
     public renderToCache(renderOp: RenderOptions = {}) {
         super.setOffscreen(this.offScreens[this.count % 2]);
