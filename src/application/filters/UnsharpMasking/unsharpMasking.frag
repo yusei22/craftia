@@ -27,5 +27,5 @@ void main() {
         }
     }
 
-    outColor = vec4((destColor / totalWeight).rgb, 1);
+    outColor = vec4((destColor / totalWeight).rgb, texture(u_texture, v_texCoord).a);
 }

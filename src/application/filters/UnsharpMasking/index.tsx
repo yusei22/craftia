@@ -1,5 +1,5 @@
 import { Filter, FilterTarget, FilterWorker } from '../Filter';
-import { ImageEditor } from '../ImageEditor';
+import { EditorShader, ImageEditor } from '../ImageEditor';
 import { Vec2 } from 'application/core/units';
 
 const unsharpMasking = require('./unsharpMasking.frag');// eslint-disable-line
@@ -21,17 +21,20 @@ export class UnsharpMaskingWorker extends FilterWorker<UnsharpMaskingConfig> {
     constructor(sprite: FilterTarget) {
         super(sprite);
         const imageSize = new Vec2(sprite.image.width, sprite.image.height);
+        const shader: EditorShader = {
+            fragmentShaderSource: unsharpMasking.default,
+        };
 
-        this.editor = new ImageEditor(imageSize, unsharpMasking.default);
+        this.editor = new ImageEditor(imageSize, shader);
         this.editor.setImage(sprite.image, imageSize, false);
     }
-    protected getResult() {
+    public getResult() {
         return this.editor.getResult();
     }
     public execute(config: UnsharpMaskingConfig) {
         const { threshold, radius } = config;
 
-        this.editor.listener[0] = ({ setUniformFloat, setUniformInt }) => {
+        this.editor.listeners[0] = ({ setUniformFloat, setUniformInt }) => {
             setUniformFloat('u_threshold', threshold);
             setUniformInt('u_radius', radius);
         };
