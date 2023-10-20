@@ -35,5 +35,5 @@ void main() {
         }
     }
 
-    outColor = vec4(destColor / totalWeight, 1.0f);
+    outColor = vec4(destColor / totalWeight, texture(u_texture, v_texCoord).a);
 }
