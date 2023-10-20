@@ -1,5 +1,5 @@
 import { Context2D } from 'application/core/context-2d';
-import { Vec2 } from 'application/core/units';
+import { Vec2, Vec4 } from 'application/core/units';
 
 type RenderViewRenderProps = {
     rotation: number;
@@ -16,8 +16,23 @@ class RenderView {
     public get size() {
         return this.context.size;
     }
+    public clear({ r, g, b, a }: Vec4 = new Vec4(255, 255, 255, 1)) {
+        this.context.setFillStyle(`rgba(${r},${g},${b},${a})`);
+        this.context.fillRect(new Vec2(0, 0), this.context.size);
+    }
     public viewport(size: Vec2) {
         this.context.viewport(size);
+    }
+    public clearRect({ anchor, location, rotation, scale }: RenderViewRenderProps) {
+        const anchorRerativeLoc = new Vec2(anchor.x * scale.x, anchor.y * scale.y);
+        const startPoint = location.sub(anchorRerativeLoc);
+
+        this.context.resetTransform();
+        this.context.translate(location);
+        this.context.rotate(rotation);
+        this.context.translate(location.times(-1));
+
+        this.context.clearRect(startPoint, scale);
     }
     public render(
         image: HTMLCanvasElement | ImageBitmap,
@@ -26,24 +41,12 @@ class RenderView {
         this.context.setAttr('imageSmoothingEnabled', false);
         this.context.resetTransform();
 
-        this.context.clear();
-        this.context.setFillStyle('#ffffff');
-        this.context.fillRect(new Vec2(0, 0), this.context.size);
-
-        this.context.setShadowConfig({
-            shadowOffset: new Vec2(0, 0),
-            shadowBlur: 30,
-            shadowColor: 'rgba(0,0,0,0.2)',
-        });
-
         const anchorRerativeLoc = new Vec2(anchor.x * scale.x, anchor.y * scale.y);
         const startPoint = location.sub(anchorRerativeLoc);
 
         this.context.translate(location);
         this.context.rotate(rotate);
         this.context.translate(location.times(-1));
-        this.context.fillRect(startPoint, scale);
-        this.context.setShadowConfig(null);
         this.context.drawImage(image, startPoint, scale);
     }
     public getCanvas() {
