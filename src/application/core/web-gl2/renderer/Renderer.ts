@@ -4,7 +4,7 @@ import { OffscreenRenderer } from '../offscreeen';
 import { Program } from '../program';
 import { FragmentShader, VertexShader } from '../shader';
 import { TexOptions, Texture2D } from '../textures';
-import { IUniformValue } from '../uniforms';
+import { IUniform, IUniformValue } from '../uniforms';
 import { VertexAttribute } from '../vertex-attribute';
 import { VertexDataProvider } from '../vertices';
 import { Vec2 } from 'application/core/units';
@@ -16,10 +16,17 @@ type AttributeConfig = {
     offset: number;
 };
 
+type UniformConfig = {
+    name: string;
+    type: 'int' | 'float';
+    value: IUniformValue
+}
+
 type RendererShaderParam = {
     vertexShader: string;
     fragmentShader: string;
     attributes?: AttributeConfig[];
+    uniforms?: UniformConfig[];
 };
 
 type RenderOptions = {
@@ -32,13 +39,15 @@ class RendererShader {
     readonly vertexShaderSource: string;
     readonly fragmentShaderSource: string;
     readonly attributeConfigs: AttributeConfig[];
+    readonly uniformConfigs: UniformConfig[];
 
-    constructor({ vertexShader, fragmentShader, attributes = [] }: RendererShaderParam) {
+    constructor({ vertexShader, fragmentShader, attributes = [], uniforms = [] }: RendererShaderParam) {
         this.vertexShaderSource = vertexShader;
         this.fragmentShaderSource = fragmentShader;
         this.attributeConfigs = attributes;
+        this.uniformConfigs = uniforms;
     }
-    public compile(gl2: WebGL2RenderingContext): [Program, VertexAttribute[]] {
+    public compile(gl2: WebGL2RenderingContext): [Program, VertexAttribute[], IUniform<IUniformValue>[]] {
         const program = new Program(
             gl2,
             new VertexShader(gl2, this.vertexShaderSource),
@@ -47,7 +56,12 @@ class RendererShader {
         const attributes = this.attributeConfigs.map((attr) =>
             program.getAttribute(attr.name, attr.size, attr.stride, attr.offset)
         );
-        return [program, attributes];
+        const unifomrs = this.uniformConfigs.map<IUniform<IUniformValue>>(uniform =>
+            uniform.type === 'float'
+                ? program.getUniformFloat(uniform.name, uniform.value)
+                : program.getUniformInt(uniform.name, uniform.value)
+        )
+        return [program, attributes, unifomrs];
     }
 }
 
@@ -67,21 +81,26 @@ class RendererBufferData {
 class Renderer extends WebGL2 {
     private program: Program;
     private attributes: VertexAttribute[];
+    private uniforms: IUniform<IUniformValue>[];
     private vertex?: VertexDataProvider;
 
     constructor(shader: RendererShader) {
         super();
-        [this.program, this.attributes] = shader.compile(this.gl2);
+        [this.program, this.attributes, this.uniforms] = shader.compile(this.gl2);
+    }
+
+    private retransferAttributes() {
+        this.vertex?.setAttributes(...this.attributes);
     }
 
     public setBufferData(bufferData: RendererBufferData) {
         this.vertex = bufferData.createVertex(this.gl2);
-        this.vertex.setAttributes(...this.attributes);
+        this.retransferAttributes();
     }
 
     public setShader(shader: RendererShader) {
-        [this.program, this.attributes] = shader.compile(this.gl2);
-        this.vertex?.setAttributes(...this.attributes);
+        [this.program, this.attributes, this.uniforms] = shader.compile(this.gl2);
+        this.retransferAttributes();
     }
 
     public createTexture2D(op?: TexOptions) {
@@ -111,10 +130,10 @@ class Renderer extends WebGL2 {
             offscreenRenderer.activate();
         }
     }
-
     public activate() {
         this.vertex?.activate();
         this.program.use();
+        this.uniforms.forEach(uniform => uniform.transfer());
         return this;
     }
 
@@ -124,18 +143,18 @@ class Renderer extends WebGL2 {
     }
 
     public setUniformInt(name: string, value: IUniformValue) {
-        this.program.getUniformInt(name).set(value);
+        this.program.getUniformInt(name, value).transfer();
         return this;
     }
 
     public setUniformFloat(name: string, value: IUniformValue) {
-        this.program.getUniformFloat(name).set(value);
+        this.program.getUniformFloat(name, value).transfer();
         return this;
     }
 
     public setUniformSampler2D(name: string, texture: Texture2D) {
         texture.bind();
-        this.program.getUniformInt(name).set(texture.unitNumber);
+        this.program.getUniformInt(name, texture.unitNumber).transfer();
         return this;
     }
 
@@ -157,5 +176,5 @@ class Renderer extends WebGL2 {
     }
 }
 
-export type { RendererShaderParam, RenderOptions, AttributeConfig };
+export type { RendererShaderParam, RenderOptions, AttributeConfig, UniformConfig };
 export { Renderer, RendererShader, RendererBufferData };
