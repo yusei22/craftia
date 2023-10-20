@@ -21,7 +21,6 @@ const RenderView = () => {
         if (renderViewSource === null) {
             return;
         }
-
         context.imageSmoothingEnabled = false;
         context.canvas.width = renderViewSource.width;
         context.canvas.height = renderViewSource.height;
