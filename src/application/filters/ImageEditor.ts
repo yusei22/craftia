@@ -1,3 +1,4 @@
+import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
 import {
     TexPixcels,
@@ -6,6 +7,7 @@ import {
     RendererBufferData,
     IUniformValue,
     CacheableRenderer,
+    UniformConfig,
 } from 'application/core/web-gl2';
 
 const VERTEX_SIZE = 2;
@@ -46,9 +48,9 @@ function createBufferData(location: Vec2, texSize: Vec2) {
     return new RendererBufferData(indexData, vertexData);
 }
 
-function createCustomShader(fragmentShaderSource: string) {
+function createCustomShader(editorShader: EditorShader) {
     return new RendererShader({
-        fragmentShader: fragmentShaderSource,
+        fragmentShader: editorShader.fragmentShaderSource,
         vertexShader: vertexShaderSource,
         attributes: [
             {
@@ -64,28 +66,38 @@ function createCustomShader(fragmentShaderSource: string) {
                 offset: TEXTURE_OFFSET,
             },
         ],
+        uniforms: editorShader.uniforms
     });
 }
-type ListenerProps = {
+
+export type EditorListenerProps = {
     setUniformInt: (name: string, value: IUniformValue) => void;
     setUniformFloat: (name: string, value: IUniformValue) => void;
     setUniformTexture: (name: string, value: Texture2D) => void;
 };
 
-class ImageEditor {
+export type EditorShader = {
+    fragmentShaderSource: string,
+    uniforms?: UniformConfig[],
+}
+
+
+export class ImageEditor {
     /**レンダリング時実行する関数 */
-    public listener: ((pops: ListenerProps) => void)[] = [];
+    public listeners: ((pops: EditorListenerProps) => void)[] = [];
 
     private renderer: CacheableRenderer;
     private texture: Texture2D;
+    private editorShader: EditorShader
 
     /**
      * @param editorSize 初期サイズ
      * @param fragmentShaderSource シェーダー
      */
-    constructor(editorSize: Vec2, fragmentShaderSource: string) {
+    constructor(editorSize: Vec2, editorShader: EditorShader) {
+        this.editorShader = editorShader
         const bufferData = createBufferData(new Vec2(0, 0), editorSize);
-        const shader = createCustomShader(fragmentShaderSource);
+        const shader = createCustomShader(this.editorShader);
 
         this.renderer = new CacheableRenderer(shader, editorSize);
         this.renderer.setBufferData(bufferData);
@@ -110,8 +122,12 @@ class ImageEditor {
      * フラグメントシェーダーを変更する
      * @param fragmentShaderSource
      */
-    public changeFragmentShader(fragmentShaderSource: string) {
-        this.renderer.setShader(createCustomShader(fragmentShaderSource));
+    public changeShader(valOrUpdater: ValueUpdater<EditorShader> | EditorShader) {
+        if (typeof valOrUpdater === 'function') {
+            this.renderer.setShader(createCustomShader(valOrUpdater(this.editorShader)));
+        } else {
+            this.renderer.setShader(createCustomShader(this.editorShader));
+        }
     }
     /**
      * 実行結果を得る
@@ -132,7 +148,7 @@ class ImageEditor {
         let count = 0;
 
         for (let i = 0; i < time - 1; i++) {
-            this.listener[i]?.(this.getListenerPorops());
+            this.listeners[i]?.(this.getListenerPorops());
 
             //テクスチャにキャッシュする
             this.renderer.renderToCache();
@@ -143,7 +159,7 @@ class ImageEditor {
             count++;
         }
         this.renderer.setUniformFloat('u_flipY', -1.0); //最後に上下反転する
-        this.listener[count]?.(this.getListenerPorops());
+        this.listeners[count]?.(this.getListenerPorops());
 
         this.renderer.render();
         this.renderer.deactivate();
@@ -180,5 +196,3 @@ class ImageEditor {
         };
     }
 }
-
-export { ImageEditor };
