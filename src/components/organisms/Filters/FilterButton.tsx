@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { ISpriteWorker } from 'application/ISpriteWorker';
 import { Filter, FilterConfigs, FilterWorker } from 'application/filters/Filter';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { SmartImage } from 'application/sprites/SmartImage';
@@ -14,7 +15,7 @@ import { useGetActiveSprites } from 'hooks/sprites/useGetActiveSprites';
 
 type FilterButtonProps<T extends FilterConfigs> = {
     children?: React.ReactNode;
-    getWindowChildren?: (onChangeFunc: () => void) => React.ReactNode;
+    getWindowChildren?: (updateFilter: () => void) => React.ReactNode;
     title?: string;
     filter: Filter<T>;
     config: T;
@@ -35,17 +36,16 @@ export const FilterButton = <T extends FilterConfigs>({
     const [filterWorker, setFilterWorker] = useState<FilterWorker<T> | null>(null);
     const [targetID, setTargetID] = useState('');
 
-    const setPenWorkerPreviewSprite = () => {
+    const setWorkerPreviewSprite = (id: string, worker: ISpriteWorker | null) => {
         setSpriteTree((currentTree) => {
             const newTree = [...currentTree];
-            const [targetSprite, index] = searchSpriteFromID(currentTree, targetID);
-
+            const [targetSprite, index] = searchSpriteFromID(currentTree, id);
             if (
                 (targetSprite instanceof Rasterizedmage || targetSprite instanceof SmartImage) &&
                 index !== null &&
-                filterWorker
+                worker !== null
             ) {
-                newTree[index] = filterWorker.getPreviewSprite();
+                newTree[index] = worker.getPreviewSprite();
             }
             return newTree;
         });
@@ -57,12 +57,15 @@ export const FilterButton = <T extends FilterConfigs>({
             setShow(true);
             setTargetID(activeSprite.prefs.id);
             setFilterWorker(worker);
+
+            worker?.execute(config);
+            setWorkerPreviewSprite(activeSprite.prefs.id, worker);
         }
     };
 
     const onValueChange = () => {
         filterWorker?.execute(config);
-        setPenWorkerPreviewSprite();
+        setWorkerPreviewSprite(targetID, filterWorker);
     };
     const onDecision = () => {
         saveSpriteTree();
