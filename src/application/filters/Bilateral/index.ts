@@ -1,5 +1,5 @@
 import { Filter, FilterTarget, FilterWorker } from '../Filter';
-import { ImageEditor } from '../ImageEditor';
+import { EditorShader, ImageEditor } from '../ImageEditor';
 import { Vec2 } from 'application/core/units';
 
 const bilateral = require('./bilateral.frag');// eslint-disable-line
@@ -21,11 +21,21 @@ export class BilateralWorker extends FilterWorker<BilateralConfig> {
     constructor(sprite: FilterTarget) {
         super(sprite);
         const imageSize = new Vec2(sprite.image.width, sprite.image.height);
+        const shader: EditorShader = {
+            fragmentShaderSource: bilateral.default,
+            uniforms: [
+                {
+                    name: 'u_radius',
+                    type: 'int',
+                    value: MAX_RADIUS,
+                }
+            ]
+        }
 
-        this.editor = new ImageEditor(imageSize, bilateral.default);
+        this.editor = new ImageEditor(imageSize, shader);
         this.editor.setImage(sprite.image, imageSize, false);
     }
-    protected getResult() {
+    public getResult() {
         return this.editor.getResult();
     }
     public execute(config: BilateralConfig) {
@@ -34,14 +44,12 @@ export class BilateralWorker extends FilterWorker<BilateralConfig> {
         const executionTimes = Math.ceil(radius / MAX_RADIUS);
         const finalRadius = radius % MAX_RADIUS;
 
-        this.editor.listener[0] = ({ setUniformInt }) => {
-            setUniformInt('u_radius', MAX_RADIUS);
-        };
         if (finalRadius > 0) {
-            this.editor.listener[executionTimes - 1] = ({ setUniformInt }) => {
+            this.editor.listeners[executionTimes - 1] = ({ setUniformInt }) => {
                 setUniformInt('u_radius', finalRadius);
             };
         }
+        
         this.editor.execute(executionTimes);
     }
 }
