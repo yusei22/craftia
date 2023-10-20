@@ -96,24 +96,6 @@ class Renderer extends WebGL2 {
         [this.program, this.attributes, this.uniforms] = shader.compile(this.gl2);
     }
 
-    private retransferAttributes() {
-        this.vertex?.setAttributes(...this.attributes);
-    }
-
-    public setBufferData(bufferData: RendererBufferData) {
-        this.vertex = bufferData.createVertex(this.gl2);
-        this.retransferAttributes();
-    }
-
-    public setShader(shader: RendererShader) {
-        [this.program, this.attributes, this.uniforms] = shader.compile(this.gl2);
-        this.retransferAttributes();
-    }
-
-    public createTexture2D(op?: TexOptions) {
-        return new Texture2D(this.gl2, op);
-    }
-
     public getCanvas(): HTMLCanvasElement | OffscreenCanvas {
         return super.getCanvas();
     }
@@ -124,6 +106,24 @@ class Renderer extends WebGL2 {
 
     public getResolution(): Vec2 {
         return super.getResolution();
+    }
+
+    private _retransferAttributes() {
+        this.vertex?.setAttributes(...this.attributes);
+    }
+
+    public setBufferData(bufferData: RendererBufferData) {
+        this.vertex = bufferData.createVertex(this.gl2);
+        this._retransferAttributes();
+    }
+
+    public setShader(shader: RendererShader) {
+        [this.program, this.attributes, this.uniforms] = shader.compile(this.gl2);
+        this._retransferAttributes();
+    }
+
+    public createTexture2D(op?: TexOptions) {
+        return new Texture2D(this.gl2, op);
     }
 
     public createOffscreen(size: Vec2) {
