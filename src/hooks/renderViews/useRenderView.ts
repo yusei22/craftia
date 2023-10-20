@@ -10,7 +10,6 @@ import {
 } from 'dataflow';
 
 const useRenderView = () => {
-    const [renderViewCanvasUpdateCount, setRenderViewCanvasUpdateCount] = useState<number>(0);
     const [renderViewCanvas, setRenderViewCanvas] = useState<HTMLCanvasElement | null>(null);
 
     const [renderView, setRenderView] = useState<RenderView | null>(null);
@@ -29,17 +28,10 @@ const useRenderView = () => {
         if (renderView === null) {
             return;
         }
-        const { anchor, location, scale, rotation } = artboardTransform;
-
         renderView.viewport(renderViewScale);
-        renderView.render(artboardRenderer.getResult(), {
-            anchor,
-            location,
-            rotation,
-            scale,
-        });
-
-        setRenderViewCanvasUpdateCount((value) => value + 1);
+        renderView.clear();
+        renderView.clearRect(artboardTransform);
+        renderView.render(artboardRenderer.getResult(), artboardTransform);
     };
 
     useEffect(() => {
@@ -67,7 +59,8 @@ const useRenderView = () => {
         }
         setRenderViewCanvas(renderView.getCanvas());
     }, [renderView]);
-    return { source: renderViewCanvas, deps: [renderViewCanvas, renderViewCanvasUpdateCount] };
+
+    return { source: renderViewCanvas, deps: [renderViewCanvas] };
 };
 
 export default useRenderView;
