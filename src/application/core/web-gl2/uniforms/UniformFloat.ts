@@ -1,32 +1,41 @@
+import { ValueUpdater } from 'application/core/types';
 import { IUniform, IUniformValue, expandVecs } from './IUniform';
 import { Vec, Vec2, Vec3, Vec4, isVec } from 'application/core/units';
 
 class UniformFloat<T extends IUniformValue> implements IUniform<T> {
-    private gl: WebGL2RenderingContext;
-    private location: WebGLUniformLocation | null;
-
-    constructor(gl: WebGL2RenderingContext, location: WebGLUniformLocation | null) {
+    private readonly gl: WebGL2RenderingContext;
+    private readonly location: WebGLUniformLocation | null;
+    public readonly value: T;
+    constructor(gl: WebGL2RenderingContext, location: WebGLUniformLocation | null, value: T) {
         this.gl = gl;
         this.location = location;
+        this.value = value;
     }
-    public set(value: T) {
-        if (typeof value === 'number') {
-            this.setNumber(value);
+    public setValue(valOrUpdater: ValueUpdater<T> | T): UniformFloat<T> {
+        return new UniformFloat(
+            this.gl,
+            this.location,
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.value) : valOrUpdater
+        )
+    }
+    public transfer() {
+        if (typeof this.value === 'number') {
+            this.setNumber(this.value);
             return;
         }
-        if (Array.isArray(value)) {
-            if (typeof value[0] === 'number') {
-                this.setArray(value as number[]);
+        if (Array.isArray(this.value)) {
+            if (typeof this.value[0] === 'number') {
+                this.setArray(this.value as number[]);
                 return;
             }
-            if (isVec(value[0])) {
-                this.setVecs(value as Vec2[] | Vec3[] | Vec4[]);
+            if (isVec(this.value[0])) {
+                this.setVecs(this.value as Vec2[] | Vec3[] | Vec4[]);
                 return;
             }
             return;
         }
-        if (isVec(value)) {
-            this.setVec(value);
+        if (isVec(this.value)) {
+            this.setVec(this.value);
             return;
         }
     }
