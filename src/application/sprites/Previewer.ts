@@ -44,14 +44,12 @@ export abstract class Previewer extends Sprite<PreviewerPrefs> {
         this.setContextDrawTrans(context);
         context.drawImage(this.source, this.getStartPoint(), this.prefs.scale);
     }
-    public drawPointFunc(context: Context2D, point: Vec2) {
-        this.setContextDrawTrans(context);
-        context.drawImage(
-            this.source,
-            point,
-            new Vec2(1, 1),
-            this.getStartPoint(),
-            this.prefs.scale
-        );
+    public drawZoomFunc(context: Context2D, zoom: number) {
+        const _previewer = this.setPrefs(curVal => ({
+            ...curVal,
+            scale: curVal.scale.times(zoom),
+            globalLocation: curVal.globalLocation.times(zoom),
+        }))
+        _previewer.draw(context);
     }
 }
