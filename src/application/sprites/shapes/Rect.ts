@@ -2,7 +2,6 @@ import { Shape, ShapePrefs } from '../Shape';
 import { SpriteConfig } from '../Sprite';
 import { Context2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
-import { Vec2 } from 'application/core/units';
 
 interface RectPrefs extends ShapePrefs {
     readonly round: number;
