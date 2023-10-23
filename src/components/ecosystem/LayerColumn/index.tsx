@@ -18,12 +18,13 @@ import { useRecoilState } from 'recoil';
 import { LayerPanelWrapper } from './LayerPanelWrapper';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
 
-import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
+import { spriteTreeAtom, useSpriteTreeHistPresentVal, useSpriteTreeSaver } from 'dataflow';
 import { useGetSpriteTreeSync } from 'hooks/sprites/useGetSpriteTreeSync';
 
 export const LayerColumn = () => {
     const getSpriteTreeSync = useGetSpriteTreeSync();
     const [spriteTree, setSpriteTree] = useRecoilState(spriteTreeAtom);
+    //const spriteTreeHistPresent = useSpriteTreeHistPresentVal();
     const saveSpriteTree = useSpriteTreeSaver();
 
     const sensors = useSensors(
