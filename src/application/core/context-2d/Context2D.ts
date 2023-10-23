@@ -68,10 +68,19 @@ const CONTEXT_ATTRS_DEFAULT: Context2DMap = {
     textBaseline: 'alphabetic',
 } as const;
 
+type Context2DOptions = CanvasRenderingContext2DSettings & {
+    canvasContext2D?: CanvasRenderingContext2D;
+}
+
 class Context2D {
     protected canvas: HTMLCanvasElement;
     protected context: CanvasRenderingContext2D;
-    constructor(op?: CanvasRenderingContext2DSettings) {
+    constructor(op?: Context2DOptions) {
+        if (op?.canvasContext2D) {
+            this.context = op.canvasContext2D;
+            this.canvas = op.canvasContext2D.canvas;
+            return;
+        }
         [this.canvas, this.context] = createCanvasAndContext2D(op);
     }
     /**
