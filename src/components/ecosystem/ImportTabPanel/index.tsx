@@ -6,10 +6,11 @@ import { DataURLDecoder } from 'application/files/data-url/DataURLDecoder';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
-import { spriteTreeAtom } from 'dataflow';
+import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 
 export const ImportTabPanel = () => {
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
+    const saveSpriteTree = useSpriteTreeSaver();
 
     const fileInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files;
@@ -40,6 +41,7 @@ export const ImportTabPanel = () => {
                 shadowOffset: new Vec2(0, 0),
             });
             setSpriteTree((curVal) => [...curVal, image]);
+            saveSpriteTree();
         };
     };
     return (
