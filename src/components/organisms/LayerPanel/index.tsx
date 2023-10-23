@@ -3,19 +3,21 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { MouseEventHandler } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { Sprite, searchSpriteFromID } from 'application/sprites/Sprite';
+import { SpriteSmallPreview } from './SpriteSmallPreview';
+import { Sprite, SpritePrefs, searchSpriteFromID } from 'application/sprites/Sprite';
 import IconButton from 'components/atoms/IconButton';
 import Typography from 'components/atoms/Typography';
 import Container from 'components/layout/Container';
+import Wrapper from 'components/layout/Wrapper';
 import { spriteTreeAtom } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useGetSpriteTreeSync } from 'hooks/sprites/useGetSpriteTreeSync';
 
-type LayerPanelProps = {
-    sprite: Sprite;
+type LayerPanelProps<T extends SpritePrefs> = {
+    sprite: Sprite<T>;
 };
 
-export const LayerPanel = ({ sprite }: LayerPanelProps) => {
+export const LayerPanel = <T extends SpritePrefs>({ sprite }: LayerPanelProps<T>) => {
     const getSpriteTreeSync = useGetSpriteTreeSync();
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
     const [activeSpriteIds, setActiveSpriteIds] = useRecoilState(activeSpriteIdsAtom);
@@ -64,6 +66,18 @@ export const LayerPanel = ({ sprite }: LayerPanelProps) => {
                 >
                     <DragIndicatorIcon />
                 </IconButton>
+                <Wrapper
+                    css={(theme) => ({
+                        margin: '0px 10px ',
+                        background: `
+                    repeating-conic-gradient(
+                        ${theme.colors.neutralBright} 0% 25%, ${theme.colors.white} 0% 50%
+                        ) 50% / 15px 15px
+                        `,
+                    })}
+                >
+                    <SpriteSmallPreview sprite={sprite} width={50} height={50} />
+                </Wrapper>
                 <Typography variant="small" css={(theme) => ({ color: theme.colors.text })}>
                     {sprite.prefs.name}
                 </Typography>
