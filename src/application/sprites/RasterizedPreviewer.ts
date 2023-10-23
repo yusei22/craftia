@@ -24,9 +24,9 @@ class PreviewRasterizer {
     public rasterize(previewer: Previewer) {
         this.ctx.viewport(previewer.prefs.scale);
 
-        this.ctx.translate(previewer.prefs.scale.times(1 / 2));
+        this.ctx.translate(previewer.prefs.globalLocation.times(1 / 2));
         this.ctx.rotate(previewer.prefs.rotation);
-        this.ctx.translate(previewer.prefs.scale.times(1 / 2).times(-1));
+        this.ctx.translate(previewer.prefs.globalLocation.times(1 / 2).times(-1));
 
         this.ctx.drawImage(previewer.source, new Vec2(0, 0), previewer.prefs.scale);
         return createImageBitmap(this.ctx.getCanvas());
