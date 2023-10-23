@@ -2,6 +2,7 @@ import { Shape, ShapePrefs } from '../Shape';
 import { SpriteConfig } from '../Sprite';
 import { Context2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
+import { Vec2 } from 'application/core/units';
 
 interface RectPrefs extends ShapePrefs {
     readonly round: number;
@@ -51,6 +52,15 @@ class Rect extends Shape<RectPrefs> {
         context.rect(this.getStartPoint(), this.prefs.scale);
         context.fill();
         context.stroke();
+    }
+    public drawZoomFunc(context: Context2D, zoom: number) {
+        const _rect = this.setPrefs((curVal) => ({
+            ...curVal,
+            scale: curVal.scale.times(zoom),
+            globalLocation: curVal.globalLocation.times(zoom),
+            strokeWidth: curVal.strokeWidth ? curVal.strokeWidth * zoom : null,
+        }));
+        _rect.draw(context);
     }
 }
 export { Rect };
