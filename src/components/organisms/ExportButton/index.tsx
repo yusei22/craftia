@@ -1,15 +1,15 @@
-import { SpritesRenderer } from "application/render/SpritesRenderer";
-import Button from "components/atoms/Button";
-import { useGetArtobardResolutionSync } from "hooks/artboards/useGetArtobardResolutionSync";
-import { useGetSpriteTreeSync } from "hooks/sprites/useGetSpriteTreeSync";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { SpritesRenderer } from 'application/render/SpritesRenderer';
+import Button from 'components/atoms/Button';
+import { useGetArtobardResolutionSync } from 'hooks/artboards/useGetArtobardResolutionSync';
+import { useGetSpriteTreeSync } from 'hooks/sprites/useGetSpriteTreeSync';
 
 export const ExportButton = () => {
     const [artboardRenderer, setArtboardRenderer] = useState<SpritesRenderer | null>(null);
     const getSpriteTreeSync = useGetSpriteTreeSync();
     const getArtobardResolutionSync = useGetArtobardResolutionSync();
-    const [url, setUrl] = useState('#')
-    const [fileName, setFilename] = useState('project.png')
+    const [url, setUrl] = useState('#');
+    const [fileName, setFilename] = useState('project.png');
 
     const onClick = () => {
         if (artboardRenderer === null) {
@@ -20,8 +20,8 @@ export const ExportButton = () => {
         artboardRenderer.viewport(resolution);
         artboardRenderer.render(sprites);
         setUrl(artboardRenderer.getResult().toDataURL());
-        setFilename('project.png')
-    }
+        setFilename('project.png');
+    };
 
     useEffect(() => {
         setArtboardRenderer(new SpritesRenderer());
@@ -29,9 +29,7 @@ export const ExportButton = () => {
 
     return (
         <a onClick={onClick} href={url} download={fileName}>
-            <Button>
-                書き出し
-            </Button>
+            <Button>書き出し</Button>
         </a>
-    )
-}
+    );
+};
