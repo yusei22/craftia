@@ -88,17 +88,17 @@ export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
         this.setconfig(context);
         this.drawFunc(context);
     }
-    public drawPoint(context: Context2D, point: Vec2) {
+    public drawZoom(context: Context2D, zoom: number) {
         if (!this.prefs.visible) return;
         context.resetTransform();
         this.setconfig(context);
-        this.drawPointFunc(context, point);
+        this.drawZoomFunc(context, zoom);
     }
     abstract drawFunc(context: Context2D): void;
-    abstract drawPointFunc(context: Context2D, point: Vec2): void;
     abstract setPrefs(valOrUpdater: ValueUpdater<T> | T): Sprite<T>;
     abstract getStartPoint(): Vec2;
     abstract createStatic(): Promise<StaticSprite>;
+    abstract drawZoomFunc(context: Context2D, zoom: number): void;
 }
 
 export type StaticSprite = Rasterizedmage | SmartImage | Shape<any>;// eslint-disable-line
