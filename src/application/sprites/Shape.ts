@@ -29,10 +29,6 @@ abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
     public getCenterPoint() {
         return this.getStartPoint().add(this.prefs.scale.times(0.5));
     }
-
-    public drawPointFunc(context: Context2D) {
-        this.drawFunc(context);
-    }
     public createStatic() {
         return new Promise<Shape<T>>((resolve) => {
             resolve(this);
