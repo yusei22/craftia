@@ -33,15 +33,6 @@ export class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
     public drawFunc(context: Context2D) {
         context.drawImage(this.image, this.getStartPoint());
     }
-    public drawPointFunc(context: Context2D, point: Vec2) {
-        context.drawImage(
-            this.image,
-            point.sub(new Vec2(10, 10)),
-            new Vec2(10, 10),
-            point.sub(new Vec2(10, 10)),
-            new Vec2(10, 10)
-        );
-    }
     public getStartPoint() {
         const anchorRerativeLoc = new Vec2(
             this.prefs.anchor.x * this.image.width,
@@ -87,6 +78,18 @@ export class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
         return new Promise<Rasterizedmage>((resolve) => {
             resolve(this);
         });
+    }
+    public drawZoomFunc(context: Context2D, zoom: number) {
+        const _scale = this.getImageSize().times(zoom);
+        const _location = this.prefs.globalLocation.times(zoom);
+
+        const anchorRerativeLoc = new Vec2(
+            this.prefs.anchor.x * _scale.x,
+            this.prefs.anchor.y * _scale.y
+        );
+        const _startPoint = _location.sub(anchorRerativeLoc);
+
+        context.drawImage(this.image, _startPoint, _scale);
     }
 }
 
