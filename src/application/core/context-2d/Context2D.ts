@@ -70,7 +70,7 @@ const CONTEXT_ATTRS_DEFAULT: Context2DMap = {
 
 type Context2DOptions = CanvasRenderingContext2DSettings & {
     canvasContext2D?: CanvasRenderingContext2D;
-}
+};
 
 class Context2D {
     protected canvas: HTMLCanvasElement;

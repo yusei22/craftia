@@ -45,11 +45,11 @@ export abstract class Previewer extends Sprite<PreviewerPrefs> {
         context.drawImage(this.source, this.getStartPoint(), this.prefs.scale);
     }
     public drawZoomFunc(context: Context2D, zoom: number) {
-        const _previewer = this.setPrefs(curVal => ({
+        const _previewer = this.setPrefs((curVal) => ({
             ...curVal,
             scale: curVal.scale.times(zoom),
             globalLocation: curVal.globalLocation.times(zoom),
-        }))
+        }));
         _previewer.draw(context);
     }
 }
