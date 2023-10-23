@@ -48,5 +48,14 @@ class Arc extends Shape<ArcPrefs> {
         context.fill();
         context.stroke();
     }
+    public drawZoomFunc(context: Context2D, zoom: number) {
+        const _arc = this.setPrefs((curVal) => ({
+            ...curVal,
+            scale: curVal.scale.times(zoom),
+            globalLocation: curVal.globalLocation.times(zoom),
+            strokeWidth: curVal.strokeWidth ? curVal.strokeWidth * zoom : null,
+        }));
+        _arc.draw(context);
+    }
 }
 export { Arc };
