@@ -38,24 +38,11 @@ class SmartImage extends Sprite<SmartImagePrefs> {
         );
         return this.prefs.globalLocation.sub(anchorRerativeLoc);
     }
-    private setContextDrawTrans(context: Context2D) {
+    public drawFunc(context: Context2D) {
         context.translate(this.prefs.globalLocation);
         context.rotate(this.prefs.rotation);
         context.translate(this.prefs.globalLocation.times(-1));
-    }
-    public drawFunc(context: Context2D) {
-        this.setContextDrawTrans(context);
         context.drawImage(this.image, this.getStartPoint(), this.prefs.scale);
-    }
-    public drawPointFunc(context: Context2D, point: Vec2) {
-        this.setContextDrawTrans(context);
-        context.drawImage(
-            this.image,
-            point,
-            new Vec2(1, 1),
-            this.getStartPoint(),
-            this.prefs.scale
-        );
     }
     public setImage(val: ImageBitmap) {
         return new SmartImage(val, this.prefs);
@@ -88,6 +75,14 @@ class SmartImage extends Sprite<SmartImagePrefs> {
         return new Promise<SmartImage>((resolve) => {
             resolve(this);
         });
+    }
+    public drawZoomFunc(context: Context2D, zoom: number) {
+        const _smartImage = this.setPrefs((curVal) => ({
+            ...curVal,
+            scale: curVal.scale.times(zoom),
+            globalLocation: curVal.globalLocation.times(zoom),
+        }));
+        _smartImage.draw(context);
     }
 }
 export { SmartImage };
