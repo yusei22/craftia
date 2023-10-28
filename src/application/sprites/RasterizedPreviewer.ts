@@ -1,18 +1,27 @@
 import { Previewer, PreviewerPrefs } from './Previewer';
 import { Rasterizedmage } from './RasterizedImage';
+import { SpritePrefs } from './Sprite';
 import { Context2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
 
 export class RasterizedPreviewer extends Previewer {
-    public async createStatic() {
-        const image = await new PreviewRasterizer().rasterize(this);
-        return new Rasterizedmage(image, this.prefs);
+    public setSpritePrefs(valOrUpdater: ValueUpdater<SpritePrefs> | SpritePrefs) {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+
+        const newRasterizedPreviewerPrefs = { ...this.prefs, ...newPrefs };
+
+        return new RasterizedPreviewer(this.source, newRasterizedPreviewerPrefs);
     }
-    public setPrefs(valOrUpdater: ValueUpdater<PreviewerPrefs> | PreviewerPrefs) {
+    public setPreviewerPrefs(valOrUpdater: ValueUpdater<PreviewerPrefs> | PreviewerPrefs) {
         const newPrefs =
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
         return new RasterizedPreviewer(this.source, newPrefs);
+    }
+    public async createStatic() {
+        const image = await new PreviewRasterizer().rasterize(this);
+        return new Rasterizedmage(image, this.prefs);
     }
 }
 
