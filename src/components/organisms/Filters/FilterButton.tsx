@@ -11,7 +11,7 @@ import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
 import FloatingWindow from 'components/molecules/FloatingWindow';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
-import { useGetActiveSprites } from 'hooks/sprites/useGetActiveSprites';
+import { useActiveSpritesReader } from 'hooks/sprites/useActiveSpritesReader';
 
 type FilterButtonProps<T extends FilterConfigs> = {
     children?: React.ReactNode;
@@ -28,7 +28,7 @@ export const FilterButton = <T extends FilterConfigs>({
     config,
     getWindowChildren: windowChildren,
 }: FilterButtonProps<T>) => {
-    const getActiveSprite = useGetActiveSprites();
+    const getActiveSprite = useActiveSpritesReader();
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
     const saveSpriteTree = useSpriteTreeSaver();
     const [show, setShow] = useState(false);
