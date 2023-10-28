@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { useChangeArtboardAnchorFromViewPoint } from '../artboards/useChangeArtboardAnchorFromViewPoint';
+import { useArtboardAnchorMoverViewPoint } from '../artboards/useArtboardAnchorMoverViewPoint';
 import { Vec2 } from 'application/core/units';
 import { RenderViewListeners, artboardTransformAtom } from 'dataflow';
 
 const useRenderViewTouchGesture = () => {
-    const changeArtboardAnchorFromViewPoint = useChangeArtboardAnchorFromViewPoint();
+    const changeArtboardAnchorFromViewPoint = useArtboardAnchorMoverViewPoint();
     const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
 
     let PinchPreviousOffset = 0;
