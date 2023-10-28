@@ -50,9 +50,9 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
                 strokeWidth: 10,
                 strokeStyle: new FillSolid({ color: new Vec4(0, 0, 0, 1) }),
                 scale: new Vec2(300, 300),
-                round: 20,
+                round: [10, 20, 0, 30],
             });
-            const image = new SmartImage(imageSource, {
+            const image = new SmartImage(imageSource, {// eslint-disable-line
                 id: uuidv4(),
                 name: '山の画像',
                 anchor: new Vec2(0, 0),
@@ -66,7 +66,7 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
                 shadowOffset: new Vec2(0, 0),
                 scale: new Vec2(1000, 700),
             });
-            const image2 = new Rasterizedmage(imageSource2, {
+            const image2 = new Rasterizedmage(imageSource2, {// eslint-disable-line
                 id: uuidv4(),
                 name: '車の画像',
                 anchor: new Vec2(0, 0),
@@ -79,6 +79,7 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
                 shadowColor: '#0000',
                 shadowOffset: new Vec2(0, 0),
             });
+
             setSpriteTree([rect]);
             saveSpriteTree();
         })();
