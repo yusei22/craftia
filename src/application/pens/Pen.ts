@@ -10,6 +10,7 @@ import { Vec2 } from 'application/core/units';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { RasterizedPreviewer } from 'application/sprites/RasterizedPreviewer';
 import { SpriteFillStyle } from 'application/sprites/Sprite';
+import { BlendMode } from 'types';
 
 export type PenEvent = {
     /**ポインタの位置 */
@@ -25,7 +26,7 @@ export interface PenPrefs {
     /**塗りつぶし */
     readonly fillStyle: SpriteFillStyle;
     /**ブレンドモード */
-    readonly blendMode: GlobalCompositeOperation;
+    readonly blendMode: BlendMode;
     /**透明度 */
     readonly opacity: number;
     /**線の太さ */
