@@ -1,35 +1,15 @@
-import { RecoilState, atom, useRecoilCallback, useRecoilValue } from 'recoil';
-import { Sprite, StaticSprite } from 'application/sprites/Sprite';
+import { atom, useRecoilCallback, useRecoilValue } from 'recoil';
+import { SpriteTree, StaticSpriteTree } from 'application/sprites';
+import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 type Param = {
     currentKey: string;
-    defualt: StaticSprite[];
+    defualt: StaticSpriteTree;
     storageLength: number;
 
     histPastKey: string;
     histPresentKey: string;
     histFutureKey: string;
-};
-type SpriteTree = Sprite<any>[];// eslint-disable-line
-type StaticSpriteTree = StaticSprite[];
-
-type UndoReno = {
-    /**スプライトツリーのステートを使用する */
-    currentState: RecoilState<Sprite<any>[]>;// eslint-disable-line
-
-    /**スプライトツリーの内容を履歴に保存 */
-    useSaver: () => () => Promise<void>;
-    /**スプライトツリーを履歴から元に戻す */
-    useUndo: () => () => Promise<void>;
-    /**スプライトツリーを履歴からやり直す */
-    useReno: () => () => Promise<void>;
-
-    /**履歴中の過去(読み取り専用)を得る */
-    useHistPastVal: () => StaticSpriteTree[];
-    /**履歴中の現在(読み取り専用)を得る */
-    useHistPresentVal: () => StaticSpriteTree;
-    /**履歴中の未来(読み取り専用)を得る */
-    useHistFutureVal: () => StaticSpriteTree[];
 };
 
 export const createSpriteTreeUndoRedo = ({
@@ -39,7 +19,7 @@ export const createSpriteTreeUndoRedo = ({
     currentKey: realTimeKey,
     defualt,
     storageLength,
-}: Param): UndoReno => {
+}: Param) => {
     const current = atom<SpriteTree>({
         key: realTimeKey,
         default: defualt,
@@ -132,7 +112,18 @@ export const createSpriteTreeUndoRedo = ({
     const useHistFutureVal = () => {
         return useRecoilValue(histFuture);
     };
-
+    const useHistPastValSyncReader = () => {
+        const getHistPastValSync = useRecoilValueSyncReader<StaticSpriteTree[]>();
+        return () => getHistPastValSync(histPast);
+    };
+    const useHistPresentValSyncReader = () => {
+        const getHistPresentValSync = useRecoilValueSyncReader<StaticSpriteTree>();
+        return () => getHistPresentValSync(histPresent);
+    };
+    const useHistFutureValSyncReader = () => {
+        const getHistFutureValSync = useRecoilValueSyncReader<StaticSpriteTree[]>();
+        return () => getHistFutureValSync(histFuture);
+    };
     return {
         currentState: current,
         useSaver,
@@ -141,5 +132,8 @@ export const createSpriteTreeUndoRedo = ({
         useHistPastVal,
         useHistPresentVal,
         useHistFutureVal,
+        useHistPastValSyncReader,
+        useHistPresentValSyncReader,
+        useHistFutureValSyncReader,
     };
 };
