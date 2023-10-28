@@ -9,33 +9,34 @@ import IconButton from 'components/atoms/IconButton';
 import Typography from 'components/atoms/Typography';
 import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
-import { spriteTreeAtom } from 'dataflow';
+import { spriteTreeAtom, useSpriteHistPresentValSyncReader, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
-import { useGetSpriteTreeSync } from 'hooks/sprites/useGetSpriteTreeSync';
 
 type LayerPanelProps<T extends SpritePrefs> = {
     sprite: Sprite<T>;
 };
 
 export const LayerPanel = <T extends SpritePrefs>({ sprite }: LayerPanelProps<T>) => {
-    const getSpriteTreeSync = useGetSpriteTreeSync();
+    const getSpriteTreeHistPresentSync = useSpriteHistPresentValSyncReader();
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
+    const saveSpriteTree = useSpriteTreeSaver();
     const [activeSpriteIds, setActiveSpriteIds] = useRecoilState(activeSpriteIdsAtom);
 
     const onVisibilityClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.stopPropagation();
-        const sprites = getSpriteTreeSync();
+        const sprites = getSpriteTreeHistPresentSync();
         const [, index] = searchSpriteFromID(sprites, sprite.prefs.id);
 
         if (index !== null) {
             setSpriteTree((culVal) => {
                 const newTree = [...culVal];
-                newTree[index] = sprite.setPrefs((culPrefs) => ({
+                newTree[index] = sprite.setSpritePrefs((culPrefs) => ({
                     ...culPrefs,
                     visible: !culPrefs.visible,
                 }));
                 return newTree;
             });
+            saveSpriteTree();
         }
     };
     const onclick = () => {
