@@ -1,29 +1,13 @@
 import Select from 'react-select';
 import { useRecoilState } from 'recoil';
 import Label from 'components/atoms/Label';
+import { BLEND_MODE_LABEL, PEN_BLEND_MODE_VALUE } from 'consts';
 import { penAtom } from 'dataflow/pens/penAtom';
-type BlendModeOption = {
-    value: GlobalCompositeOperation;
-    label: string;
-};
 
-const options: BlendModeOption[] = [
-    { value: 'source-over', label: 'ノーマル' },
-    { value: 'lighter', label: 'ライター' },
-    { value: 'xor', label: 'XOR' },
-    { value: 'multiply', label: '乗算' },
-    { value: 'screen', label: 'スクリーン' },
-    { value: 'overlay', label: 'オーバーレイ' },
-    { value: 'darken', label: '暗くする' },
-    { value: 'lighten', label: '明るくする' },
-    { value: 'color-dodge', label: '覆い焼き' },
-    { value: 'color-burn', label: '焼き込み' },
-    { value: 'hard-light', label: 'ハードライト' },
-    { value: 'soft-light', label: 'ソフトライト' },
-    { value: 'difference', label: '差' },
-    { value: 'exclusion', label: '除外' },
-    { value: 'destination-out', label: '消しごむ' },
-];
+const options = PEN_BLEND_MODE_VALUE.map((value) => ({
+    value,
+    label: BLEND_MODE_LABEL[value],
+}));
 
 export const PenBlendModeSelector = () => {
     const [penVal, setPen] = useRecoilState(penAtom);
@@ -49,7 +33,10 @@ export const PenBlendModeSelector = () => {
                 isSearchable={false}
                 menuPosition={'fixed'}
                 options={options}
-                defaultValue={{ value: penVal.prefs.blendMode, label: '' }}
+                defaultValue={{
+                    value: penVal.prefs.blendMode,
+                    label: BLEND_MODE_LABEL[penVal.prefs.blendMode],
+                }}
                 onChange={(value) => {
                     setPen((pen) =>
                         pen.setPrefs((prefs) => ({
