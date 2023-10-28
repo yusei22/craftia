@@ -9,9 +9,7 @@ import {
     renderViewScaleAtom,
 } from 'dataflow';
 
-const useRenderView = () => {
-    const [renderViewCanvas, setRenderViewCanvas] = useState<HTMLCanvasElement | null>(null);
-
+const useRenderView = (context: CanvasRenderingContext2D | null) => {
     const [renderView, setRenderView] = useState<RenderView | null>(null);
     const [artboardRenderer, setArtboardRenderer] = useState<SpritesRenderer | null>(null);
 
@@ -35,12 +33,12 @@ const useRenderView = () => {
     };
 
     useEffect(() => {
+        if (context === null) return;
         setArtboardRenderer(new SpritesRenderer());
-        setRenderView(new RenderView());
-    }, []);
+        setRenderView(new RenderView({ context }));
+    }, [context]);
 
     useEffect(() => {
-        console.log('artboardの再描画');
         if (artboardRenderer === null) {
             return;
         }
@@ -52,15 +50,6 @@ const useRenderView = () => {
     useEffect(() => {
         renderArtboardRendererResult();
     }, [renderViewScale, artboardTransform, artboardResolution, artboardRenderer, renderView]);
-
-    useEffect(() => {
-        if (renderView === null) {
-            return;
-        }
-        setRenderViewCanvas(renderView.getCanvas());
-    }, [renderView]);
-
-    return { source: renderViewCanvas, deps: [renderViewCanvas] };
 };
 
 export default useRenderView;
