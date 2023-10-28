@@ -16,33 +16,35 @@ export const ImportTabPanel = () => {
         const file = e.target.files;
         if (file === null) return;
 
-        const reader = new FileReader();
-        reader.readAsDataURL(file[0]);
+        for (let i = 0; i < file.length; i++) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file[i]);
+            reader.onload = async () => {
+                const dataUrl = reader.result;
 
-        reader.onload = async () => {
-            const dataUrl = reader.result;
+                if (dataUrl === null) return;
+                if (dataUrl instanceof ArrayBuffer) return;
 
-            if (dataUrl === null) return;
-            if (dataUrl instanceof ArrayBuffer) return;
+                const imageSource = await new DataURLDecoder().decode(dataUrl);
 
-            const imageSource = await new DataURLDecoder().decode(dataUrl);
+                const image = new Rasterizedmage(imageSource, {
+                    id: uuidv4(),
+                    name: '新規レイヤー',
+                    anchor: new Vec2(0, 0),
+                    globalLocation: new Vec2(0, 0),
+                    rotation: (0 / 180) * Math.PI,
+                    visible: true,
+                    blendMode: 'source-over',
+                    opacity: 1.0,
+                    shadowBlur: 0,
+                    shadowColor: '#0000',
+                    shadowOffset: new Vec2(0, 0),
+                });
 
-            const image = new Rasterizedmage(imageSource, {
-                id: uuidv4(),
-                name: '新規レイヤー',
-                anchor: new Vec2(0, 0),
-                globalLocation: new Vec2(0, 0),
-                rotation: (0 / 180) * Math.PI,
-                visible: true,
-                blendMode: 'source-over',
-                opacity: 1.0,
-                shadowBlur: 0,
-                shadowColor: '#0000',
-                shadowOffset: new Vec2(0, 0),
-            });
-            setSpriteTree((curVal) => [...curVal, image]);
-            saveSpriteTree();
-        };
+                setSpriteTree((curVal) => [...curVal, image]);
+                saveSpriteTree();
+            };
+        }
     };
     return (
         <>
@@ -57,7 +59,7 @@ export const ImportTabPanel = () => {
                 }}
             >
                 <TabSection>
-                    <input type="file" onChange={fileInputOnChange}></input>
+                    <input type="file" multiple onChange={fileInputOnChange}></input>
                 </TabSection>
             </Container>
         </>
