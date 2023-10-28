@@ -1,17 +1,17 @@
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { useGetActivePen } from './useGetActivePen';
+import { useGetActivePen } from './useActivePenReader';
 import { Vec2 } from 'application/core/units';
 import { PenWorker } from 'application/pens/Pen';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
 import { RenderViewListeners, spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
-import { useGetViewPointToArtboardPointConverter } from 'hooks/artboards/useGetViewPointToArtboardPointConverter';
-import { useGetActiveSprites } from 'hooks/sprites/useGetActiveSprites';
+import { useViewPointToArtboardPointConverter } from 'hooks/artboards/useViewPointToArtboardPointConverter';
+import { useActiveSpritesReader } from 'hooks/sprites/useActiveSpritesReader';
 
 const usePen = () => {
-    const getActiveSprite = useGetActiveSprites();
-    const viewPointToArtboardPoint = useGetViewPointToArtboardPointConverter();
+    const getActiveSprite = useActiveSpritesReader();
+    const viewPointToArtboardPoint = useViewPointToArtboardPointConverter();
     const getActivePen = useGetActivePen();
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
     const saveSpriteTree = useSpriteTreeSaver();
