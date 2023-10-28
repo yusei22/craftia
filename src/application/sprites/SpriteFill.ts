@@ -1,16 +1,17 @@
 import { Context2D, Repetition } from 'application/core/context-2d';
+import { ValueUpdater } from 'application/core/types';
 import { Vec2, Vec4 } from 'application/core/units';
-interface FillPrefs<T> {
-    cloneEdit(param: Partial<T>): T;
+export interface FillPrefs<T> {
     createCanvasFillStyle(context: Context2D): CanvasGradient | CanvasPattern | null | string;
+    setPrefs(valOrUpdater: ValueUpdater<T> | T): T;
 }
 
-interface IFillLinerGradient {
+export interface IFillLinerGradient {
     readonly startPoint: Vec2;
     readonly endPoint: Vec2;
 }
 
-class FillLinerGradient implements IFillLinerGradient, FillPrefs<IFillLinerGradient> {
+export class FillLinerGradient implements IFillLinerGradient, FillPrefs<IFillLinerGradient> {
     readonly startPoint: Vec2;
     readonly endPoint: Vec2;
     constructor({ startPoint, endPoint }: IFillLinerGradient) {
@@ -20,22 +21,20 @@ class FillLinerGradient implements IFillLinerGradient, FillPrefs<IFillLinerGradi
     public createCanvasFillStyle(context: Context2D) {
         return context.createLinearGradient(this.startPoint, this.endPoint);
     }
-    public cloneEdit({ startPoint, endPoint }: Partial<IFillLinerGradient>) {
-        return new FillLinerGradient({
-            startPoint: startPoint ?? this.startPoint,
-            endPoint: endPoint ?? this.endPoint,
-        });
+    public setPrefs(valOrUpdater: ValueUpdater<IFillLinerGradient> | IFillLinerGradient) {
+        const newPrefs = typeof valOrUpdater === 'function' ? valOrUpdater(this) : valOrUpdater;
+        return new FillLinerGradient(newPrefs);
     }
 }
 
-interface IFillRadialGradient {
+export interface IFillRadialGradient {
     readonly startPoint: Vec2;
     readonly startRound: number;
     readonly endPoint: Vec2;
     readonly endRound: number;
 }
 
-class FillRadialGradient implements IFillRadialGradient, FillPrefs<IFillRadialGradient> {
+export class FillRadialGradient implements IFillRadialGradient, FillPrefs<IFillRadialGradient> {
     readonly startPoint: Vec2;
     readonly startRound: number;
     readonly endPoint: Vec2;
@@ -54,22 +53,18 @@ class FillRadialGradient implements IFillRadialGradient, FillPrefs<IFillRadialGr
             this.endRound
         );
     }
-    public cloneEdit({ startPoint, startRound, endPoint, endRound }: Partial<IFillRadialGradient>) {
-        return new FillRadialGradient({
-            startPoint: startPoint ?? this.startPoint,
-            startRound: startRound ?? this.startRound,
-            endPoint: endPoint ?? this.endPoint,
-            endRound: endRound ?? this.endRound,
-        });
+    public setPrefs(valOrUpdater: ValueUpdater<IFillRadialGradient> | IFillRadialGradient) {
+        const newPrefs = typeof valOrUpdater === 'function' ? valOrUpdater(this) : valOrUpdater;
+        return new FillRadialGradient(newPrefs);
     }
 }
 
-interface IFillPattern {
+export interface IFillPattern {
     readonly image: ImageBitmap;
     readonly repetition: Repetition;
 }
 
-class FillPattern implements IFillPattern, FillPrefs<IFillPattern> {
+export class FillPattern implements IFillPattern, FillPrefs<IFillPattern> {
     readonly image: ImageBitmap;
     readonly repetition: Repetition;
     constructor({ image, repetition }: IFillPattern) {
@@ -79,18 +74,16 @@ class FillPattern implements IFillPattern, FillPrefs<IFillPattern> {
     public createCanvasFillStyle(context: Context2D) {
         return context.createPattern(this.image, this.repetition);
     }
-    public cloneEdit({ image, repetition }: Partial<IFillPattern>) {
-        return new FillPattern({
-            image: image ?? this.image,
-            repetition: repetition ?? this.repetition,
-        });
+    public setPrefs(valOrUpdater: ValueUpdater<IFillPattern> | IFillPattern) {
+        const newPrefs = typeof valOrUpdater === 'function' ? valOrUpdater(this) : valOrUpdater;
+        return new FillPattern(newPrefs);
     }
 }
 
-interface IFillSolid {
+export interface IFillSolid {
     readonly color: Vec4;
 }
-class FillSolid implements IFillSolid, FillPrefs<IFillSolid> {
+export class FillSolid implements IFillSolid, FillPrefs<IFillSolid> {
     readonly color: Vec4;
     constructor({ color }: IFillSolid) {
         this.color = color;
@@ -98,9 +91,9 @@ class FillSolid implements IFillSolid, FillPrefs<IFillSolid> {
     public createCanvasFillStyle() {
         return `rgba(${this.color.r},${this.color.g},${this.color.b},${this.color.a})`;
     }
-    public cloneEdit({ color }: Partial<IFillSolid>): IFillSolid {
-        return new FillSolid({ color: color ?? this.color });
+    public setPrefs(valOrUpdater: ValueUpdater<IFillSolid> | IFillSolid) {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater({ color: this.color }) : valOrUpdater;
+        return new FillSolid(newPrefs);
     }
 }
-export type { IFillLinerGradient, IFillRadialGradient, IFillPattern, IFillSolid };
-export { FillLinerGradient, FillRadialGradient, FillPattern, FillSolid };
