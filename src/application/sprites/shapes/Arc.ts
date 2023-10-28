@@ -1,5 +1,5 @@
 import { Shape, ShapePrefs } from '../Shape';
-import { SpriteConfig } from '../Sprite';
+import { SpriteConfig, SpritePrefs } from '../Sprite';
 import { Context2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 
@@ -29,13 +29,27 @@ class Arc extends Shape<ArcPrefs> {
         };
         super(config, prefs);
     }
-    public setPrefs(valOrUpdater: ValueUpdater<ArcPrefs> | ArcPrefs) {
-        if (typeof valOrUpdater === 'function') {
-            return new Arc(valOrUpdater(this.prefs));
-        } else {
-            return new Arc(valOrUpdater);
-        }
+    public setSpritePrefs(valOrUpdater: ValueUpdater<SpritePrefs> | SpritePrefs) {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+        const newRasterizedImagePrefs = { ...this.prefs, ...newPrefs };
+
+        return new Arc(newRasterizedImagePrefs);
     }
+    public setShapePrefs(valOrUpdater: ShapePrefs | ValueUpdater<ShapePrefs>): Shape<ArcPrefs> {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+        const newRasterizedImagePrefs = { ...this.prefs, ...newPrefs };
+
+        return new Arc(newRasterizedImagePrefs);
+    }
+    public setArcPrefs(valOrUpdater: ValueUpdater<ArcPrefs> | ArcPrefs) {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+
+        return new Arc(newPrefs);
+    }
+
     public drawFunc(context: Context2D): void {
         context.beginPath();
         context.ellipse(
@@ -49,13 +63,18 @@ class Arc extends Shape<ArcPrefs> {
         context.stroke();
     }
     public drawZoomFunc(context: Context2D, zoom: number) {
-        const _arc = this.setPrefs((curVal) => ({
+        const _arc = this.setArcPrefs((curVal) => ({
             ...curVal,
             scale: curVal.scale.times(zoom),
             globalLocation: curVal.globalLocation.times(zoom),
             strokeWidth: curVal.strokeWidth ? curVal.strokeWidth * zoom : null,
         }));
         _arc.draw(context);
+    }
+    public createStatic() {
+        return new Promise<Arc>((resolve) => {
+            resolve(this);
+        });
     }
 }
 export { Arc };
