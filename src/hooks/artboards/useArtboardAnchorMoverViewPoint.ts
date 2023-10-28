@@ -4,7 +4,7 @@ import { Vec2 } from 'application/core/units';
 import { getArtBoardNormalizedPointFromViewPoint } from 'application/utils';
 import { artboardTransformAtom } from 'dataflow';
 
-const useChangeArtboardAnchorFromViewPoint = () => {
+export const useArtboardAnchorMoverViewPoint = () => {
     const setArtboardTrans = useSetRecoilState(artboardTransformAtom);
 
     return useCallback((newAnchorViewPoint: Vec2, freezeTransform: boolean) => {
@@ -44,4 +44,3 @@ const useChangeArtboardAnchorFromViewPoint = () => {
         }
     }, []);
 };
-export { useChangeArtboardAnchorFromViewPoint };
