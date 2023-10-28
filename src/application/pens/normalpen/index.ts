@@ -52,7 +52,7 @@ export class NormalPenWorker extends ContextPenWorker {
     constructor(artboardSize: Vec2, targetSprite: Rasterizedmage, prefs: NormalPenPrefs) {
         super(targetSprite, artboardSize);
 
-        this.targetSpriteVisible = targetSprite.setPrefs((culPrefs) => ({
+        this.targetSpriteVisible = targetSprite.setSpritePrefs((culPrefs) => ({
             ...culPrefs,
             visible: true,
         }));
