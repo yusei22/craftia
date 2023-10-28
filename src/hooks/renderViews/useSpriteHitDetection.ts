@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Vec2 } from 'application/core/units';
 import { SpritesHitDetector } from 'application/render/SpritesHitDetector';
-import { SpriteTree } from 'application/sprites/ISprite';
+import { SpriteTree } from 'application/sprites';
 import { artboardResolutionAtom, spriteTreeAtom } from 'dataflow';
 import { useViewPointToArtboardPointConverter } from 'hooks/artboards/useViewPointToArtboardPointConverter';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
