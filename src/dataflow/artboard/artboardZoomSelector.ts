@@ -2,7 +2,7 @@ import { selector } from 'recoil';
 import { artboardResolutionAtom } from './artboardResolutionAtom';
 import { artboardTransformAtom } from './artboardTransformAtom';
 
-const artbordZoomSelector = selector<number>({
+export const artbordZoomSelector = selector<number>({
     key: 'artbordZoomSelector',
     get: ({ get }) => {
         const artboardTrans = get(artboardTransformAtom);
@@ -28,5 +28,3 @@ const artbordZoomSelector = selector<number>({
         }
     },
 });
-
-export { artbordZoomSelector };
