@@ -1,3 +1,4 @@
+import { AtLeastArray } from '../types';
 import { Vec, Vec2 } from 'application/core/units';
 
 type Context2DAttr =
@@ -69,28 +70,33 @@ const CONTEXT_ATTRS_DEFAULT: Context2DMap = {
 } as const;
 
 type Context2DOptions = CanvasRenderingContext2DSettings & {
-    canvasContext2D?: CanvasRenderingContext2D;
+    context?: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
+    ofscreen?: boolean;
 };
 
 class Context2D {
-    protected canvas: HTMLCanvasElement;
-    protected context: CanvasRenderingContext2D;
-    constructor(op?: Context2DOptions) {
-        if (op?.canvasContext2D) {
-            this.context = op.canvasContext2D;
-            this.canvas = op.canvasContext2D.canvas;
+    protected context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
+
+    constructor(op: Context2DOptions = {}) {
+        if (op.context) {
+            this.context = op.context;
             return;
         }
-        [this.canvas, this.context] = createCanvasAndContext2D(op);
+        if (op.ofscreen) {
+            [, this.context] = createOffscreenCanvasAndContext2D(op);
+            return;
+        }
+        [, this.context] = createCanvasAndContext2D(op);
+        return;
     }
     /**
      * キャンバスのサイズ
      */
     public get size(): Vec2 {
-        return new Vec2(this.canvas.width, this.canvas.height);
+        return new Vec2(this.context.canvas.width, this.context.canvas.height);
     }
-    public getCanvas(): HTMLCanvasElement {
-        return this.canvas;
+    public getCanvas(): HTMLCanvasElement | OffscreenCanvas {
+        return this.context.canvas;
     }
     /**
      * canvasをリサイズ
@@ -193,7 +199,7 @@ class Context2D {
         }
     }
     /**
-     * 線形グラデーションを描画
+     * 線形グラデーションを作成
      * @param startPoint 始点
      * @param endPoint 終点
      */
@@ -206,7 +212,7 @@ class Context2D {
         );
     }
     /**
-     * 円形グラデーションを描画
+     * 円形グラデーションを作成
      * @param startPoint 始点となる円の座標
      * @param startRound 始点となる円のサイズ
      * @param endPoint 終点となる円の座標
@@ -490,8 +496,33 @@ class Context2D {
      * @param size サイズ
      * @param radii 角丸半径
      */
-    public roundRect(startPoint: Vec, size: Vec2, radii?: number[]): this {
-        this.context.roundRect(startPoint.x, startPoint.y, size.x, size.y, radii);
+    public roundRect(
+        startPoint: Vec,
+        size: Vec2,
+        radii: AtLeastArray<4, number> = [0, 0, 0, 0]
+    ): this {
+        const y = startPoint.y;
+        const x = startPoint.x;
+        const w = size.x;
+        const h = size.y;
+        const r = radii;
+
+        this.context.beginPath();
+        this.context.moveTo(x + r[3], y);
+
+        this.context.lineTo(x + w - r[0], y);
+        this.context.arc(x + w - r[0], y + r[0], r[0], Math.PI * (3 / 2), 0, false);
+
+        this.context.lineTo(x + w, y + h - r[1]);
+        this.context.arc(x + w - r[1], y + h - r[1], r[1], 0, Math.PI * (1 / 2), false);
+
+        this.context.lineTo(x + r[2], y + h);
+        this.context.arc(x + r[2], y + h - r[2], r[2], Math.PI * (1 / 2), Math.PI, false);
+
+        this.context.lineTo(x, y + r[3]);
+        this.context.arc(x + r[3], y + r[3], r[3], Math.PI, Math.PI * (3 / 2), false);
+
+        this.context.closePath();
         return this;
     }
     /**
@@ -506,7 +537,10 @@ class Context2D {
      * @param attr プロパティのインデックス
      * @param val セットする値
      */
-    public setAttr<T extends Context2DAttr>(attr: T, val: CanvasRenderingContext2D[T]): this {
+    public setAttr<T extends Context2DAttr>(
+        attr: T,
+        val: (CanvasRenderingContext2D & OffscreenCanvasRenderingContext2D)[T]
+    ): this {
         this.context[attr] = val;
         return this;
     }
@@ -590,13 +624,6 @@ class Context2D {
     public translate(translate: Vec2): this {
         this.context.translate(translate.x, translate.y);
         return this;
-    }
-    /**
-     * canvas描画内容のデータURLをエクスポート
-     * @returns データURL
-     */
-    public toDataURL(): string {
-        return this.getCanvas().toDataURL();
     }
     /**
      * 影を設定
@@ -724,6 +751,16 @@ function createCanvasAndContext2D(
     op?: CanvasRenderingContext2DSettings
 ): [HTMLCanvasElement, CanvasRenderingContext2D] {
     const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d', op);
+    if (context === null) {
+        throw Error('Failed to get context 2D.');
+    }
+    return [canvas, context];
+}
+function createOffscreenCanvasAndContext2D(
+    op?: CanvasRenderingContext2DSettings
+): [OffscreenCanvas, OffscreenCanvasRenderingContext2D] {
+    const canvas = new OffscreenCanvas(1, 1);
     const context = canvas.getContext('2d', op);
     if (context === null) {
         throw Error('Failed to get context 2D.');
