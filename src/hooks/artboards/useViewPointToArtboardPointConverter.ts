@@ -1,16 +1,16 @@
 import { useCallback } from 'react';
 import { Vec2 } from 'application/core/units';
 import { getArtBoardNormalizedPointFromViewPoint } from 'application/utils';
-import { useGetArtboardTransSync } from 'hooks/artboards/useGetArtboardTransSync';
-import { useGetArtobardResolutionSync } from 'hooks/artboards/useGetArtobardResolutionSync';
+import { ArtboardTransform, artboardResolutionAtom, artboardTransformAtom } from 'dataflow';
+import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
-const useGetViewPointToArtboardPointConverter = () => {
-    const getArtboardTransSync = useGetArtboardTransSync();
-    const getArtobardResolutionSync = useGetArtobardResolutionSync();
+export const useViewPointToArtboardPointConverter = () => {
+    const getArtboardTransSync = useRecoilValueSyncReader<ArtboardTransform>();
+    const getArtobardResolutionSync = useRecoilValueSyncReader<Vec2>();
 
     const getViewPointToArtbpardPoint = useCallback((viewPoint: Vec2) => {
-        const artboardResolution = getArtobardResolutionSync();
-        const { anchor, location, scale, rotation } = getArtboardTransSync();
+        const artboardResolution = getArtobardResolutionSync(artboardResolutionAtom);
+        const { anchor, location, scale, rotation } = getArtboardTransSync(artboardTransformAtom);
 
         const artboardNormalizedPoint = getArtBoardNormalizedPointFromViewPoint(
             anchor,
@@ -26,4 +26,3 @@ const useGetViewPointToArtboardPointConverter = () => {
     }, []);
     return getViewPointToArtbpardPoint;
 };
-export { useGetViewPointToArtboardPointConverter };
