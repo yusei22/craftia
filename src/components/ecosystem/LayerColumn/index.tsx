@@ -18,13 +18,17 @@ import { useRecoilState } from 'recoil';
 import { LayerPanelWrapper } from './LayerPanelWrapper';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
 
-import { spriteTreeAtom, useSpriteTreeHistPresentVal, useSpriteTreeSaver } from 'dataflow';
-import { useGetSpriteTreeSync } from 'hooks/sprites/useGetSpriteTreeSync';
+import {
+    spriteTreeAtom,
+    useSpriteHistPresentValSyncReader,
+    useSpriteTreeHistPresentVal,
+    useSpriteTreeSaver,
+} from 'dataflow';
 
 export const LayerColumn = () => {
-    const getSpriteTreeSync = useGetSpriteTreeSync();
-    const [spriteTree, setSpriteTree] = useRecoilState(spriteTreeAtom);
-    //const spriteTreeHistPresent = useSpriteTreeHistPresentVal();
+    const [, setSpriteTree] = useRecoilState(spriteTreeAtom);
+    const getSpriteTreeHistPresentSync = useSpriteHistPresentValSyncReader();
+    const spriteTreeHistPresent = useSpriteTreeHistPresentVal();
     const saveSpriteTree = useSpriteTreeSaver();
 
     const sensors = useSensors(
@@ -49,7 +53,7 @@ export const LayerColumn = () => {
         }
 
         if (active.id !== over.id) {
-            const sprites = getSpriteTreeSync();
+            const sprites = getSpriteTreeHistPresentSync();
 
             const [, oldIndex] = searchSpriteFromID(sprites, active.id.toString());
             const [, newIndex] = searchSpriteFromID(sprites, over.id.toString());
@@ -64,10 +68,10 @@ export const LayerColumn = () => {
     return (
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext
-                items={spriteTree.map((sprite) => sprite.prefs.id).reverse()}
+                items={spriteTreeHistPresent.map((sprite) => sprite.prefs.id).reverse()}
                 strategy={verticalListSortingStrategy}
             >
-                {spriteTree
+                {spriteTreeHistPresent
                     .map((sprite) => (
                         <LayerPanelWrapper
                             id={sprite.prefs.id}
