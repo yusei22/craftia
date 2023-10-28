@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
+import { Vec2 } from 'application/core/units';
 import { SpritesRenderer } from 'application/render/SpritesRenderer';
+import { Sprite } from 'application/sprites/Sprite';
 import Button from 'components/atoms/Button';
-import { useGetArtobardResolutionSync } from 'hooks/artboards/useGetArtobardResolutionSync';
-import { useGetSpriteTreeSync } from 'hooks/sprites/useGetSpriteTreeSync';
+import { artboardResolutionAtom, spriteTreeAtom } from 'dataflow';
+import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 export const ExportButton = () => {
     const [artboardRenderer, setArtboardRenderer] = useState<SpritesRenderer | null>(null);
-    const getSpriteTreeSync = useGetSpriteTreeSync();
-    const getArtobardResolutionSync = useGetArtobardResolutionSync();
+    const getSpriteTreeSync = useRecoilValueSyncReader<Sprite<any>[]>();// eslint-disable-line
+    const getArtobardResolutionSync = useRecoilValueSyncReader<Vec2>();
     const [url, setUrl] = useState('#');
     const [fileName, setFilename] = useState('project.png');
 
@@ -15,11 +17,11 @@ export const ExportButton = () => {
         if (artboardRenderer === null) {
             return;
         }
-        const resolution = getArtobardResolutionSync();
-        const sprites = getSpriteTreeSync();
+        const resolution = getArtobardResolutionSync(artboardResolutionAtom);
+        const sprites = getSpriteTreeSync(spriteTreeAtom);
         artboardRenderer.viewport(resolution);
         artboardRenderer.render(sprites);
-        setUrl(artboardRenderer.getResult().toDataURL());
+        setUrl((artboardRenderer.getResult() as HTMLCanvasElement).toDataURL());
         setFilename('project.png');
     };
 
