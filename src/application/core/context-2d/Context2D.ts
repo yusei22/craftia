@@ -745,11 +745,11 @@ class Context2D {
         this.setAttr('strokeStyle', value);
         return this;
     }
-    public toDataURL(){
-        if(this.context.canvas instanceof OffscreenCanvas){
-            return ''
+    public toDataURL() {
+        if (this.context.canvas instanceof OffscreenCanvas) {
+            return '';
         }
-        return this.context.canvas.toDataURL()
+        return this.context.canvas.toDataURL();
     }
 }
 
