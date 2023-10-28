@@ -1,23 +1,25 @@
 import { Context2D } from 'application/core/context-2d';
 import { Vec2, Vec4 } from 'application/core/units';
-import { Sprite } from 'application/sprites/Sprite';
-import { FillSolid } from 'application/sprites/SpriteFill';
-import { Arc } from 'application/sprites/shapes/Arc';
+import { Sprite, FillSolid, Arc } from 'application/sprites';
 
 /**
  * TODO:キャシュとかで最適化できるようにする
  */
 class SpritesRenderer {
     private context: Context2D;
-
+    private cacheContext: Context2D;
+    private previousSprites: Sprite[] = [];
     constructor() {
         this.context = new Context2D({ willReadFrequently: true });
+        this.cacheContext = new Context2D({ willReadFrequently: true });
     }
     public viewport(size: Vec2) {
         this.context.viewport(size);
     }
     public render(sprites: Sprite[]) {
+        this.previousSprites = sprites;
         this.context.clear();
+        sprites.forEach((sprite) => {});
         sprites.forEach((sprite) => {
             sprite.draw(this.context);
         });
