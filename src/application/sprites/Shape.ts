@@ -1,6 +1,7 @@
 import { Context2D } from '../core/context-2d';
 import { Vec2 } from '../core/units';
 import { Sprite, SpriteConfig, SpritePrefs, SpriteFillStyle } from './Sprite';
+import { ValueUpdater } from 'application/core/types';
 
 interface ShapePrefs extends SpritePrefs {
     readonly fillStyle: SpriteFillStyle;
@@ -16,8 +17,7 @@ abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
     constructor(config: SpriteConfig, prefs: T) {
         super(config, prefs);
     }
-    public abstract drawFunc(context: Context2D): void;
-
+    public abstract setShapePrefs(valOrUpdater: ValueUpdater<ShapePrefs> | ShapePrefs): Shape<T>;
     public getStartPoint() {
         const anchorRerativeLoc = new Vec2(
             this.prefs.anchor.x * this.prefs.scale.x,
@@ -28,11 +28,6 @@ abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
 
     public getCenterPoint() {
         return this.getStartPoint().add(this.prefs.scale.times(0.5));
-    }
-    public createStatic() {
-        return new Promise<Shape<T>>((resolve) => {
-            resolve(this);
-        });
     }
 }
 export type { ShapePrefs };
