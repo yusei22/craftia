@@ -8,6 +8,7 @@ import {
     useSensors,
     DragEndEvent,
 } from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import {
     arrayMove,
     SortableContext,
@@ -66,7 +67,12 @@ export const LayerColumn = () => {
         }
     }
     return (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToVerticalAxis]}
+        >
             <SortableContext
                 items={spriteTreeHistPresent.map((sprite) => sprite.prefs.id).reverse()}
                 strategy={verticalListSortingStrategy}
