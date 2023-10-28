@@ -9,8 +9,8 @@ type RenderViewRenderProps = {
 };
 class RenderView {
     private context: Context2D;
-    constructor() {
-        this.context = new Context2D({ willReadFrequently: true });
+    constructor({ context }: { context?: CanvasRenderingContext2D } = {}) {
+        this.context = new Context2D({ willReadFrequently: true, context });
         this.context.setAttr('imageSmoothingEnabled', false);
     }
     public get size() {
@@ -35,7 +35,7 @@ class RenderView {
         this.context.clearRect(startPoint, scale);
     }
     public render(
-        image: HTMLCanvasElement | ImageBitmap,
+        image: HTMLCanvasElement | ImageBitmap | OffscreenCanvas,
         { anchor, location, rotation: rotate, scale }: RenderViewRenderProps
     ) {
         this.context.setAttr('imageSmoothingEnabled', false);
