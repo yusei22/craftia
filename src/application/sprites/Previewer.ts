@@ -1,5 +1,6 @@
 import { Sprite, SpriteConfig, SpritePrefs } from './Sprite';
 import { Context2D } from 'application/core/context-2d';
+import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
 
 export interface PreviewerPrefs extends SpritePrefs {
@@ -28,6 +29,9 @@ export abstract class Previewer extends Sprite<PreviewerPrefs> {
         super(config, prefs);
         this.source = source;
     }
+    public abstract setPreviewerPrefs(
+        valOrUpdater: ValueUpdater<PreviewerPrefs> | PreviewerPrefs
+    ): Previewer;
     public getStartPoint() {
         const anchorRerativeLoc = new Vec2(
             this.prefs.anchor.x * this.prefs.scale.x,
@@ -45,7 +49,7 @@ export abstract class Previewer extends Sprite<PreviewerPrefs> {
         context.drawImage(this.source, this.getStartPoint(), this.prefs.scale);
     }
     public drawZoomFunc(context: Context2D, zoom: number) {
-        const _previewer = this.setPrefs((curVal) => ({
+        const _previewer = this.setPreviewerPrefs((curVal) => ({
             ...curVal,
             scale: curVal.scale.times(zoom),
             globalLocation: curVal.globalLocation.times(zoom),
