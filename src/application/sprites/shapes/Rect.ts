@@ -1,10 +1,11 @@
 import { Shape, ShapePrefs } from '../Shape';
-import { SpriteConfig } from '../Sprite';
+import { SpriteConfig, SpritePrefs } from '../Sprite';
 import { Context2D } from 'application/core/context-2d';
-import { ValueUpdater } from 'application/core/types';
+import { AtLeastArray, ValueUpdater } from 'application/core/types';
+import { Vec4 } from 'application/core/units';
 
 interface RectPrefs extends ShapePrefs {
-    readonly round: number;
+    readonly round: AtLeastArray<4, number>;
 }
 
 class Rect extends Shape<RectPrefs> {
@@ -33,33 +34,48 @@ class Rect extends Shape<RectPrefs> {
         };
         super(config, prefs);
     }
-    public setPrefs(valOrUpdater: ValueUpdater<RectPrefs> | RectPrefs) {
-        if (typeof valOrUpdater === 'function') {
-            return new Rect(valOrUpdater(this.prefs));
-        } else {
-            return new Rect(valOrUpdater);
-        }
+    public setSpritePrefs(valOrUpdater: ValueUpdater<SpritePrefs> | SpritePrefs) {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+        const newRasterizedImagePrefs = { ...this.prefs, ...newPrefs };
+
+        return new Rect(newRasterizedImagePrefs);
     }
-    /**
-     * 描画
-     * @param context レンダリング先のコンテクスト
-     */
+    public setShapePrefs(valOrUpdater: ShapePrefs | ValueUpdater<ShapePrefs>): Shape<RectPrefs> {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+        const newRasterizedImagePrefs = { ...this.prefs, ...newPrefs };
+
+        return new Rect(newRasterizedImagePrefs);
+    }
+    public setRectPrefs(valOrUpdater: ValueUpdater<RectPrefs> | RectPrefs) {
+        const newPrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+
+        return new Rect(newPrefs);
+    }
     public drawFunc(context: Context2D): void {
         context.translate(this.prefs.globalLocation);
         context.rotate(this.prefs.rotation);
         context.translate(this.prefs.globalLocation.times(-1));
-        context.rect(this.getStartPoint(), this.prefs.scale);
+        context.roundRect(this.getStartPoint(), this.prefs.scale, this.prefs.round);
         context.fill();
         context.stroke();
     }
     public drawZoomFunc(context: Context2D, zoom: number) {
-        const _rect = this.setPrefs((curVal) => ({
+        const _rect = this.setRectPrefs((curVal) => ({
             ...curVal,
             scale: curVal.scale.times(zoom),
             globalLocation: curVal.globalLocation.times(zoom),
             strokeWidth: curVal.strokeWidth ? curVal.strokeWidth * zoom : null,
+            round: new Vec4(curVal.round).times(zoom).toArray(),
         }));
         _rect.draw(context);
+    }
+    public createStatic() {
+        return new Promise<Rect>((resolve) => {
+            resolve(this);
+        });
     }
 }
 export { Rect };
