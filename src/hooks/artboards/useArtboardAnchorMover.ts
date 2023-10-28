@@ -4,7 +4,7 @@ import { Vec2 } from 'application/core/units';
 import { rotatePoint } from 'application/utils';
 import { artboardTransformAtom } from 'dataflow';
 
-const useChangeArtboardAnchor = () => {
+export const useArtboardAnchorMover = () => {
     const setArtboardTrans = useSetRecoilState(artboardTransformAtom);
 
     return useCallback((newAnchor: Vec2, freezeTransform: boolean) => {
@@ -39,5 +39,3 @@ const useChangeArtboardAnchor = () => {
         }
     }, []);
 };
-
-export { useChangeArtboardAnchor };
