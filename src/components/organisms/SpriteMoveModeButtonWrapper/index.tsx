@@ -2,19 +2,19 @@ import { useSetRecoilState } from 'recoil';
 import { Vec2 } from 'application/core/units';
 import Wrapper from 'components/layout/Wrapper';
 import { renderViewListenersAtom, useSpriteTreeSaver } from 'dataflow';
-import { useMoveSprite } from 'hooks/renderViews/useMoveSprite';
 import { useRenderViewMouseGesture } from 'hooks/renderViews/useRenderViewMouseGesture';
 import { useRenderViewTouchGesture } from 'hooks/renderViews/useRenderViewTouchGesture';
 import { useRenderViewWheelGesture } from 'hooks/renderViews/useRenderViewWheelGesture';
-import { useGetActiveSprites } from 'hooks/sprites/useGetActiveSprites';
+import { useSpriteMover } from 'hooks/renderViews/useSpriteMover';
+import { useActiveSpritesReader } from 'hooks/sprites/useActiveSpritesReader';
 
 const SpriteMoveModeButtonWrapper = ({ children }: { children?: React.ReactNode }) => {
     const { onWheel } = useRenderViewWheelGesture();
     const { onPinch } = useRenderViewTouchGesture();
     const { onMove } = useRenderViewMouseGesture();
     const setRenderViewListeners = useSetRecoilState(renderViewListenersAtom);
-    const getActiveSprites = useGetActiveSprites();
-    const moveSprite = useMoveSprite();
+    const getActiveSprites = useActiveSpritesReader();
+    const moveSprite = useSpriteMover();
     const saveSpriteTree = useSpriteTreeSaver();
 
     const onClick = () => {
