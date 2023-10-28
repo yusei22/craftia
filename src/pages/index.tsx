@@ -54,6 +54,7 @@ export default function Home() {
                             bottom: '50px',
                             right: '20px',
                             padding: '10px',
+                            overflowY: 'scroll',
                         })}
                     >
                         <LayerColumn />
