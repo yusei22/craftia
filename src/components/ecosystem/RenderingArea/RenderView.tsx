@@ -4,30 +4,16 @@ import useRenderView from 'hooks/renderViews/useRenderView';
 const RenderView = () => {
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    useRenderView(context);
 
-    const { source: renderViewSource, deps: renderViewDeps } = useRenderView();
     useEffect(() => {
         if (!canvasRef.current) {
             console.error('canvas is null');
             return;
         }
         const canvas = canvasRef.current;
-        setContext(canvas.getContext('2d'));
+        setContext(canvas.getContext('2d', { willReadFrequently: true }));
     }, []);
-    useEffect(() => {
-        if (context === null) {
-            return;
-        }
-        if (renderViewSource === null) {
-            return;
-        }
-        context.imageSmoothingEnabled = false;
-        context.canvas.width = renderViewSource.width;
-        context.canvas.height = renderViewSource.height;
-
-        context.drawImage(renderViewSource, 0, 0);
-    }, [context, renderViewDeps]);
-
     return (
         <>
             <canvas ref={canvasRef}></canvas>
