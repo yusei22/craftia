@@ -31,27 +31,22 @@ class SmartImage extends Sprite<SmartImagePrefs> {
         super(config, prefs);
         this.image = image;
     }
-    public getStartPoint() {
-        const anchorRerativeLoc = new Vec2(
-            this.prefs.anchor.x * this.prefs.scale.x,
-            this.prefs.anchor.y * this.prefs.scale.y
-        );
-        return this.prefs.globalLocation.sub(anchorRerativeLoc);
+    public setSpritePrefs(valOrUpdater: ValueUpdater<SpritePrefs> | SpritePrefs) {
+        const newSpritePrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+
+        const SmartImagePrefs = { ...this.prefs, ...newSpritePrefs };
+
+        return new SmartImage(this.image, SmartImagePrefs);
     }
-    public drawFunc(context: Context2D) {
-        context.translate(this.prefs.globalLocation);
-        context.rotate(this.prefs.rotation);
-        context.translate(this.prefs.globalLocation.times(-1));
-        context.drawImage(this.image, this.getStartPoint(), this.prefs.scale);
+    public setSmartImagePrefs(valOrUpdater: ValueUpdater<SmartImagePrefs> | SmartImagePrefs) {
+        const newSpritePrefs =
+            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+
+        return new SmartImage(this.image, newSpritePrefs);
     }
     public setImage(val: ImageBitmap) {
         return new SmartImage(val, this.prefs);
-    }
-    public setPrefs(valOrUpdater: ValueUpdater<SmartImagePrefs> | SmartImagePrefs) {
-        const newPrefs =
-            typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
-
-        return new SmartImage(this.image, newPrefs);
     }
     public moveAnchor(newAnchor: Vec2) {
         const AnchorsRelativeDifference = new Vec2(
@@ -65,24 +60,37 @@ class SmartImage extends Sprite<SmartImagePrefs> {
             this.prefs.rotation
         );
 
-        return this.setPrefs({
+        return this.setSpritePrefs({
             ...this.prefs,
             anchor: newAnchor,
             globalLocation: newLocation,
         });
     }
-    public createStatic() {
-        return new Promise<SmartImage>((resolve) => {
-            resolve(this);
-        });
+    public getStartPoint() {
+        const anchorRerativeLoc = new Vec2(
+            this.prefs.anchor.x * this.prefs.scale.x,
+            this.prefs.anchor.y * this.prefs.scale.y
+        );
+        return this.prefs.globalLocation.sub(anchorRerativeLoc);
+    }
+    public drawFunc(context: Context2D) {
+        context.translate(this.prefs.globalLocation);
+        context.rotate(this.prefs.rotation);
+        context.translate(this.prefs.globalLocation.times(-1));
+        context.drawImage(this.image, this.getStartPoint(), this.prefs.scale);
     }
     public drawZoomFunc(context: Context2D, zoom: number) {
-        const _smartImage = this.setPrefs((curVal) => ({
+        const _smartImage = this.setSmartImagePrefs((curVal) => ({
             ...curVal,
             scale: curVal.scale.times(zoom),
             globalLocation: curVal.globalLocation.times(zoom),
         }));
         _smartImage.draw(context);
+    }
+    public createStatic() {
+        return new Promise<SmartImage>((resolve) => {
+            resolve(this);
+        });
     }
 }
 export { SmartImage };
