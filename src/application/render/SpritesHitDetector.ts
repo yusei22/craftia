@@ -1,6 +1,6 @@
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
-import { Sprite } from 'application/sprites/Sprite';
+import { SpriteTree } from 'application/sprites';
 
 class SpritesHitDetector {
     private context: Context2D;
@@ -11,7 +11,7 @@ class SpritesHitDetector {
     public viewport(size: Vec2) {
         this.context.viewport(size);
     }
-    public detect(sprites: Sprite[], point: Vec2) {
+    public detect(sprites: SpriteTree, point: Vec2) {
         for (let i = sprites.length - 1; i >= 0; i--) {
             this.context.clear();
             //ポイント描画
