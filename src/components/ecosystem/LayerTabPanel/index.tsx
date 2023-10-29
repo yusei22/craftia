@@ -2,6 +2,7 @@ import Label from 'components/atoms/Label';
 import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
 import { LayerBlendModeSelector } from 'components/organisms/LayerBlendModeSelector';
+import { LayerCreateButton } from 'components/organisms/LayerCreateButton';
 import { LayerOpacitySlider } from 'components/organisms/LayerOpacitySlider';
 
 export const LayerTabPanel = () => {
@@ -24,6 +25,9 @@ export const LayerTabPanel = () => {
                 <TabSection>
                     <Label size="sm">レイヤーの不透明度：</Label>
                     <LayerOpacitySlider />
+                </TabSection>
+                <TabSection>
+                    <LayerCreateButton />
                 </TabSection>
             </Container>
         </>
