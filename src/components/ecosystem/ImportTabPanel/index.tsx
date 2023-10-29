@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Vec2 } from 'application/core/units';
 import { DataURLDecoder } from 'application/files/data-url/DataURLDecoder';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
+import Label from 'components/atoms/Label';
 import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
@@ -59,6 +60,7 @@ export const ImportTabPanel = () => {
                 }}
             >
                 <TabSection>
+                    <Label size="sm">画像をインポート:</Label>
                     <input type="file" multiple onChange={fileInputOnChange}></input>
                 </TabSection>
             </Container>
