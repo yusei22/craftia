@@ -7,19 +7,14 @@ import { Sprite, FillSolid, Arc } from 'application/sprites';
  */
 class SpritesRenderer {
     private context: Context2D;
-    private cacheContext: Context2D;
-    private previousSprites: Sprite[] = [];
     constructor() {
         this.context = new Context2D({ willReadFrequently: true });
-        this.cacheContext = new Context2D({ willReadFrequently: true });
     }
     public viewport(size: Vec2) {
         this.context.viewport(size);
     }
     public render(sprites: Sprite[]) {
-        this.previousSprites = sprites;
         this.context.clear();
-        sprites.forEach((sprite) => {});
         sprites.forEach((sprite) => {
             sprite.draw(this.context);
         });
