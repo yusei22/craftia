@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { searchSpritesFromIDs } from 'application/sprites';
 import Slider from 'components/molecules/Slider';
-import { spriteTreeAtom } from 'dataflow';
+import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
@@ -11,6 +11,7 @@ export const LayerOpacitySlider = () => {
     const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
     const [spriteTree, setSpriteTree] = useRecoilState(spriteTreeAtom);
     const activeSpriteIds = useRecoilValue(activeSpriteIdsAtom);
+    const saveSpriteTree = useSpriteTreeSaver();
 
     useEffect(() => {
         let n = 1;
@@ -40,6 +41,7 @@ export const LayerOpacitySlider = () => {
                     : sprite
             )
         );
+        saveSpriteTree();
         setOpacity(Math.round(_opacity * 100));
     };
 
