@@ -47,7 +47,7 @@ const TabPanelChildWrapper = ({ children }: { children?: React.ReactNode }) => {
 };
 
 export const RibbonTabs = () => {
-    const [tabIndex, setTabIndex] = useState<number>(0);
+    const [tabIndex, setTabIndex] = useState<number>(-1);
 
     return (
         <Tabs
