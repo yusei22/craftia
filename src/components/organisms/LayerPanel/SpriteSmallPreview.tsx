@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 import { Sprite, SpritePrefs } from 'application/sprites/Sprite';
@@ -10,6 +11,9 @@ type SpriteSmallPreviewProps<T extends SpritePrefs> = {
     height: number;
     sprite: Sprite<T>;
 };
+const getZoom = (width: number, height: number, artobardResolution: Vec2) => {
+    return Math.max(width / artobardResolution.x, height / artobardResolution.y);
+};
 export const SpriteSmallPreview = <T extends SpritePrefs>({
     width,
     height,
@@ -18,6 +22,7 @@ export const SpriteSmallPreview = <T extends SpritePrefs>({
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const getArtobardResolution = useRecoilValueSyncReader<Vec2>();
+    const artobardResolution = useRecoilValue(artboardResolutionAtom);
 
     useEffect(() => {
         if (!canvasRef.current) {
@@ -47,7 +52,11 @@ export const SpriteSmallPreview = <T extends SpritePrefs>({
     }, [context, sprite]);
     return (
         <>
-            <canvas ref={canvasRef}></canvas>
+            <canvas
+                ref={canvasRef}
+                width={artobardResolution.x * getZoom(width, height, artobardResolution)}
+                height={artobardResolution.y * getZoom(width, height, artobardResolution)}
+            />
         </>
     );
 };
