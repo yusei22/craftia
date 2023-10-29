@@ -1,6 +1,8 @@
+import Label from 'components/atoms/Label';
 import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
 import { LayerBlendModeSelector } from 'components/organisms/LayerBlendModeSelector';
+import { LayerOpacitySlider } from 'components/organisms/LayerOpacitySlider';
 
 export const LayerTabPanel = () => {
     return (
@@ -16,7 +18,12 @@ export const LayerTabPanel = () => {
                 }}
             >
                 <TabSection>
+                    <Label size="sm">レイヤーのブレンドモード：</Label>
                     <LayerBlendModeSelector />
+                </TabSection>
+                <TabSection>
+                    <Label size="sm">レイヤーの不透明度：</Label>
+                    <LayerOpacitySlider />
                 </TabSection>
             </Container>
         </>
