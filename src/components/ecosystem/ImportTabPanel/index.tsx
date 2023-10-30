@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import { Vec2 } from 'application/core/units';
-import { DataURLDecoder } from 'application/files/data-url/DataURLDecoder';
+import { ImageURLDecoder } from 'application/files/ImageURLDecoder';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import Label from 'components/atoms/Label';
 import Container from 'components/layout/Container';
@@ -26,7 +26,7 @@ export const ImportTabPanel = () => {
                 if (dataUrl === null) return;
                 if (dataUrl instanceof ArrayBuffer) return;
 
-                const imageSource = await new DataURLDecoder().decode(dataUrl);
+                const imageSource = await new ImageURLDecoder().decode(dataUrl);
 
                 const image = new Rasterizedmage(imageSource, {
                     id: uuidv4(),
