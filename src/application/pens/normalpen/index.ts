@@ -55,6 +55,8 @@ export class NormalPenWorker extends ContextPenWorker {
         this.targetSpriteVisible = targetSprite.setSpritePrefs((culPrefs) => ({
             ...culPrefs,
             visible: true,
+            opacity: 1.0,
+            blendMode: 'source-over',
         }));
 
         this.prefs = prefs;
