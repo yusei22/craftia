@@ -4,4 +4,3 @@ export class ImageURLDecoder {
         return createImageBitmap(blob);
     }
 }
-
