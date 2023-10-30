@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { searchSpritesFromIDs } from 'application/sprites';
 import Slider from 'components/molecules/Slider';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
+import { useSpritesSetterIds } from 'hooks/sprites/useSritePrefsSetter';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 export const LayerOpacitySlider = () => {
     const [opacity, setOpacity] = useState(0);
-    const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
-    const [spriteTree, setSpriteTree] = useRecoilState(spriteTreeAtom);
+
+    const spriteTree = useRecoilValue(spriteTreeAtom);
     const activeSpriteIds = useRecoilValue(activeSpriteIdsAtom);
+
+    const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
     const saveSpriteTree = useSpriteTreeSaver();
+
+    const setSpritesFromIds = useSpritesSetterIds();
 
     useEffect(() => {
         let n = 1;
@@ -31,16 +36,13 @@ export const LayerOpacitySlider = () => {
         const _opacity = opacity / 100;
         const activeIds = getActiveSpriteIds(activeSpriteIdsAtom);
 
-        setSpriteTree((sprites) =>
-            sprites.map((sprite) =>
-                activeIds.includes(sprite.prefs.id)
-                    ? sprite.setSpritePrefs((prefs) => ({
-                          ...prefs,
-                          opacity: _opacity,
-                      }))
-                    : sprite
-            )
+        setSpritesFromIds(activeIds, (sprite) =>
+            sprite.setSpritePrefs((prefs) => ({
+                ...prefs,
+                opacity: _opacity,
+            }))
         );
+
         saveSpriteTree();
         setOpacity(Math.round(_opacity * 100));
     };
