@@ -6,9 +6,9 @@ import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useRenderViewMouseGesture } from 'hooks/renderViews/useRenderViewMouseGesture';
 import { useRenderViewTouchGesture } from 'hooks/renderViews/useRenderViewTouchGesture';
 import { useRenderViewWheelGesture } from 'hooks/renderViews/useRenderViewWheelGesture';
-import { useSpriteHitDetection } from 'hooks/renderViews/useSpriteHitDetection';
-import { useSpriteMover } from 'hooks/renderViews/useSpriteMover';
-import { useActiveSpritesReader } from 'hooks/sprites/useActiveSpritesReader';
+import { useSpriteHitDetection } from 'hooks/sprites/useSpriteHitDetection';
+import { useSpriteMover } from 'hooks/sprites/useSpriteMover';
+import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 const SpriteSelectModeButtonWrapper = ({ children }: { children?: React.ReactNode }) => {
     const { onWheel } = useRenderViewWheelGesture();
@@ -19,8 +19,8 @@ const SpriteSelectModeButtonWrapper = ({ children }: { children?: React.ReactNod
     const setActiveSpriteIds = useSetRecoilState(activeSpriteIdsAtom);
     const detectHitSprite = useSpriteHitDetection();
     const setRenderViewListeners = useSetRecoilState(renderViewListenersAtom);
-    const getActiveSprites = useActiveSpritesReader();
     const saveSpriteTree = useSpriteTreeSaver();
+    const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
 
     const onClick = () => {
         setRenderViewListeners({
@@ -35,12 +35,12 @@ const SpriteSelectModeButtonWrapper = ({ children }: { children?: React.ReactNod
                     setActiveSpriteIds(hitSprite?.prefs.id ? [hitSprite?.prefs.id] : []);
                     return;
                 }
-                const activeSprite = getActiveSprites()[0];
-                if (activeSprite) {
-                    moveSprite(activeSprite, new Vec2(delta));
-                    if (last) {
-                        saveSpriteTree();
-                    }
+
+                const activeSpriteIds = getActiveSpriteIds(activeSpriteIdsAtom);
+                moveSprite(activeSpriteIds, new Vec2(delta));
+
+                if (last) {
+                    saveSpriteTree();
                 }
             },
             onMove,
