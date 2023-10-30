@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import useRenderView from 'hooks/renderViews/useRenderView';
+import { useRenderView } from 'hooks/renderViews/useRenderView';
 
 const RenderView = () => {
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
