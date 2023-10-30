@@ -69,7 +69,7 @@ export const RibbonTabs = () => {
             </TabPanel>
             <TabPanel>
                 <TabPanelChildWrapper>
-                    <FilterTabPabel />
+                    <LayerTabPanel />
                 </TabPanelChildWrapper>
             </TabPanel>
             <TabPanel>
@@ -77,12 +77,12 @@ export const RibbonTabs = () => {
                     <ImportTabPanel />
                 </TabPanelChildWrapper>
             </TabPanel>
+
             <TabPanel>
                 <TabPanelChildWrapper>
-                    <LayerTabPanel />
+                    <FilterTabPabel />
                 </TabPanelChildWrapper>
             </TabPanel>
-
             <TabList>
                 <Container
                     css={{
@@ -100,9 +100,9 @@ export const RibbonTabs = () => {
                         isAcrive={tabIndex === 0}
                     />
                     <RibbonTab icon={<EditIcon />} text="描画" isAcrive={tabIndex === 1} />
-                    <RibbonTab icon={<FilterIcon />} text="フィルタ" isAcrive={tabIndex === 2} />
+                    <RibbonTab icon={<FilterIcon />} text="レイヤー" isAcrive={tabIndex === 2} />
                     <RibbonTab icon={<FilterIcon />} text="挿入" isAcrive={tabIndex === 3} />
-                    <RibbonTab icon={<FilterIcon />} text="レイヤー" isAcrive={tabIndex === 4} />
+                    <RibbonTab icon={<FilterIcon />} text="フィルタ" isAcrive={tabIndex === 4} />
                 </Container>
             </TabList>
         </Tabs>
