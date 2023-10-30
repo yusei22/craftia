@@ -3,6 +3,7 @@ import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
 import { LayerBlendModeSelector } from 'components/organisms/LayerBlendModeSelector';
 import { LayerCreateButton } from 'components/organisms/LayerCreateButton';
+import { LayerDeleteButton } from 'components/organisms/LayerDeleteButton';
 import { LayerOpacitySlider } from 'components/organisms/LayerOpacitySlider';
 
 export const LayerTabPanel = () => {
@@ -28,6 +29,9 @@ export const LayerTabPanel = () => {
                 </TabSection>
                 <TabSection>
                     <LayerCreateButton />
+                </TabSection>
+                <TabSection>
+                    <LayerDeleteButton />
                 </TabSection>
             </Container>
         </>
