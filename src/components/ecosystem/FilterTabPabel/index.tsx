@@ -1,4 +1,5 @@
 import Button from 'components/atoms/Button';
+import Typography from 'components/atoms/Typography';
 import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
 import { BilateralButton } from 'components/organisms/Filters/BilateralButton';
@@ -23,32 +24,44 @@ export const FilterTabPabel = () => {
             >
                 <TabSection>
                     <UnsharpMaskingButton>
-                        <Button>アンシャープマスキング</Button>
+                        <Button>
+                            <Typography variant="small">アンシャープマスキング</Typography>
+                        </Button>
                     </UnsharpMaskingButton>
                 </TabSection>
                 <TabSection>
                     <BilateralButton>
-                        <Button>バイラテラル</Button>
+                        <Button>
+                            <Typography variant="small">バイラテラルフィルタ</Typography>
+                        </Button>
                     </BilateralButton>
                 </TabSection>
                 <TabSection>
                     <GaussianBlurButton>
-                        <Button>ガウシアンフィルタ</Button>
+                        <Button>
+                            <Typography variant="small">ガウシアンフィルタ</Typography>
+                        </Button>
                     </GaussianBlurButton>
                 </TabSection>
                 <TabSection>
                     <SobelButton>
-                        <Button>ソーベル</Button>
+                        <Button>
+                            <Typography variant="small">ソーベル</Typography>
+                        </Button>
                     </SobelButton>
                 </TabSection>
                 <TabSection>
                     <InversionButton>
-                        <Button>ネガポジ反転</Button>
+                        <Button>
+                            <Typography variant="small">ネガポジ反転</Typography>
+                        </Button>
                     </InversionButton>
                 </TabSection>
                 <TabSection>
                     <IllustrationButton>
-                        <Button variant="danger">{'[NEW]'} イラスト化</Button>
+                        <Button variant="danger">
+                            <Typography variant="small">{'[NEW]'} イラスト化</Typography>
+                        </Button>
                     </IllustrationButton>
                 </TabSection>
             </Container>
