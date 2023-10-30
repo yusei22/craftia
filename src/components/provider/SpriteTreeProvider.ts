@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import { Vec2, Vec4 } from 'application/core/units';
-import { DataURLDecoder } from 'application/files/data-url/DataURLDecoder';
+import { ImageURLDecoder } from 'application/files/ImageURLDecoder';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { SmartImage } from 'application/sprites/SmartImage';
 import { FillSolid } from 'application/sprites/SpriteFill';
@@ -29,8 +29,10 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
             scale: new Vec2(1920, 1080),
         });
         (async () => {
-            const imageSource = await new DataURLDecoder().decode('/sm.png');
-            const imageSource2 = await new DataURLDecoder().decode('/sample.png');
+            const decoder = new ImageURLDecoder();
+
+            const imageSource = await decoder.decode('/sm.png');
+            const imageSource2 = await decoder.decode('/sample.png');
             const rect = new Rect({
                 id: uuidv4(),
                 name: '角丸矩形',
