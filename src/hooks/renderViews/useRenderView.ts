@@ -9,7 +9,7 @@ import {
     renderViewScaleAtom,
 } from 'dataflow';
 
-const useRenderView = (context: CanvasRenderingContext2D | null) => {
+export const useRenderView = (context: CanvasRenderingContext2D | null) => {
     const [renderView, setRenderView] = useState<RenderView | null>(null);
     const [artboardRenderer, setArtboardRenderer] = useState<SpritesRenderer | null>(null);
 
@@ -51,5 +51,3 @@ const useRenderView = (context: CanvasRenderingContext2D | null) => {
         renderArtboardRendererResult();
     }, [renderViewScale, artboardTransform, artboardResolution, artboardRenderer, renderView]);
 };
-
-export default useRenderView;
