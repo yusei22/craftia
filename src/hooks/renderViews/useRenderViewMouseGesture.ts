@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { Vec2 } from 'application/core/units';
 import { RenderViewListeners, artboardTransformAtom } from 'dataflow';
@@ -20,6 +21,6 @@ const useRenderViewMouseGesture = () => {
         PinchPreviousOffset = new Vec2(offset);
     };
 
-    return { onMove };
+    return { onMove: useCallback(onMove, []) };
 };
 export { useRenderViewMouseGesture };
