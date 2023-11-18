@@ -28,6 +28,7 @@ export class Vec3 implements IVec {
     public get inverse() {
         return this.times(-1);
     }
+    constructor(xyz: number);
     constructor(x: number, y: number, z: number);
     constructor(coordArray: [number, number, number, ...number[]]);
     constructor(a: number | [number, number, number, ...number[]], b?: number, c?: number) {
@@ -35,6 +36,10 @@ export class Vec3 implements IVec {
             this.x = a;
             this.y = b;
             this.z = c;
+        } else if (typeof a === 'number') {
+            this.x = a;
+            this.y = a;
+            this.z = a;
         } else if (Array.isArray(a)) {
             this.x = a[0];
             this.y = a[1];
