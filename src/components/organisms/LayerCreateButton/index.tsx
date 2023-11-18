@@ -4,6 +4,7 @@ import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 import { RasterizedImagePrefs, Rasterizedmage } from 'application/sprites';
 import Button from 'components/atoms/Button';
+import Typography from 'components/atoms/Typography';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 
 export const LayerCreateButton = () => {
@@ -34,7 +35,9 @@ export const LayerCreateButton = () => {
     };
     return (
         <>
-            <Button onClick={onClick}>新規レイヤーを追加</Button>
+            <Button onClick={onClick} variant="translucent">
+                <Typography variant="small">新規レイヤーを追加</Typography>
+            </Button>
         </>
     );
 };
