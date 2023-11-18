@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { ISpriteWorker } from 'application/ISpriteWorker';
-import { Filter, FilterConfigs, FilterWorker } from 'application/filters/Filter';
+import { GLFilter, FilterConfigs, FilterWorker } from 'application/filters/Filter';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { SmartImage } from 'application/sprites/SmartImage';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
@@ -17,7 +17,7 @@ type FilterButtonProps<T extends FilterConfigs> = {
     children?: React.ReactNode;
     getWindowChildren?: (updateFilter: () => void) => React.ReactNode;
     title?: string;
-    filter: Filter<T>;
+    filter: GLFilter<T>;
     config: T;
 };
 
@@ -53,7 +53,10 @@ export const FilterButton = <T extends FilterConfigs>({
     const onClick = () => {
         const activeSprite = getActiveSprite()[0];
         if (activeSprite instanceof Rasterizedmage || activeSprite instanceof SmartImage) {
-            const worker = filter.getWorker(activeSprite);
+            const worker = filter.getWorker(
+                new OffscreenCanvas(1, 1).getContext('webgl2') as WebGL2RenderingContext,
+                activeSprite
+            );
             setShow(true);
             setTargetID(activeSprite.prefs.id);
             setFilterWorker(worker);
