@@ -12,11 +12,18 @@ interface ShapePrefs extends SpritePrefs {
     readonly scale: Vec2;
     readonly rotation: number;
 }
+
 abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
     constructor(config: SpriteConfig, prefs: T) {
         super(config, prefs);
     }
+
+    /**
+     * シェイプ固有の環境設定をセットする
+     * @param valOrUpdater 新しいシェイプ
+     */
     public abstract setShapePrefs(valOrUpdater: ValueUpdater<ShapePrefs> | ShapePrefs): Shape<T>;
+
     public getStartPoint() {
         const anchorRerativeLoc = new Vec2(
             this.prefs.anchor.x * this.prefs.scale.x,
@@ -25,6 +32,10 @@ abstract class Shape<T extends ShapePrefs = ShapePrefs> extends Sprite<T> {
         return this.prefs.globalLocation.sub(anchorRerativeLoc);
     }
 
+    /**
+     * スプライトのセンター位置を得る
+     * @returns
+     */
     public getCenterPoint() {
         return this.getStartPoint().add(this.prefs.scale.times(0.5));
     }
