@@ -5,6 +5,7 @@ import { LayerBlendModeSelector } from 'components/organisms/LayerBlendModeSelec
 import { LayerCreateButton } from 'components/organisms/LayerCreateButton';
 import { LayerDeleteButton } from 'components/organisms/LayerDeleteButton';
 import { LayerOpacitySlider } from 'components/organisms/LayerOpacitySlider';
+import { LayerShadowCheakBox } from 'components/organisms/LayerShadowInputs/LayerShadowCheakBox';
 
 export const LayerTabPanel = () => {
     return (
@@ -20,6 +21,10 @@ export const LayerTabPanel = () => {
                 }}
             >
                 <TabSection>
+                    <LayerCreateButton />
+                    <LayerDeleteButton />
+                </TabSection>
+                <TabSection>
                     <Label size="sm">レイヤーのブレンドモード：</Label>
                     <LayerBlendModeSelector />
                 </TabSection>
@@ -28,10 +33,7 @@ export const LayerTabPanel = () => {
                     <LayerOpacitySlider />
                 </TabSection>
                 <TabSection>
-                    <LayerCreateButton />
-                </TabSection>
-                <TabSection>
-                    <LayerDeleteButton />
+                    <LayerShadowCheakBox />
                 </TabSection>
             </Container>
         </>
