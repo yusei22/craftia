@@ -1,6 +1,6 @@
 import { FilterTarget, FilterWorker, GLFilter } from '../Filter';
 import { TexRenderer } from '../TexRenderer';
-import { Vec2 } from 'application/core/units';
+import { Vec2, Vec3 } from 'application/core/units';
 import { UniformFloat, UniformInt } from 'application/core/web-gl2';
 const sobel = require('./sobel.frag');// eslint-disable-line
 
@@ -29,6 +29,7 @@ export class SobelWorker extends FilterWorker<SobelConfig> {
             new UniformInt('u_texture', TEX_UNITNUMBER),
             new UniformFloat('u_lateralKernel', lateralKernel),
             new UniformFloat('u_verticalKernel', verticalKernel),
+            new UniformFloat('u_lineColor', new Vec3(0, 0, 0)),
         ]);
         this.renderer.setTexVertex(new Vec2(0, 0), imageSize);
         this.renderer.setTexPixels(sprite.image);
