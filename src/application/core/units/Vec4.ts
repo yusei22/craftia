@@ -39,6 +39,7 @@ export class Vec4 implements IVec {
     public get inverse() {
         return this.times(-1);
     }
+    constructor(xyzw: number);
     constructor(x: number, y: number, z: number, w: number);
     constructor(coordArray: [number, number, number, number, ...number[]]);
     constructor(
@@ -57,6 +58,11 @@ export class Vec4 implements IVec {
             this.y = b;
             this.z = c;
             this.w = d;
+        } else if (typeof a === 'number') {
+            this.x = a;
+            this.y = a;
+            this.z = a;
+            this.w = a;
         } else if (Array.isArray(a)) {
             this.x = a[0];
             this.y = a[1];
