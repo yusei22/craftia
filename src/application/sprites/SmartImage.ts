@@ -1,5 +1,5 @@
 import { Sprite, SpriteConfig, SpritePrefs } from './Sprite';
-import { Context2D } from 'application/core/context-2d';
+import { AbstractContext2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
 import { rotatePoint } from 'application/utils';
@@ -73,13 +73,13 @@ class SmartImage extends Sprite<SmartImagePrefs> {
         );
         return this.prefs.globalLocation.sub(anchorRerativeLoc);
     }
-    public drawFunc(context: Context2D) {
+    public drawFunc(context: AbstractContext2D) {
         context.translate(this.prefs.globalLocation);
         context.rotate(this.prefs.rotation);
         context.translate(this.prefs.globalLocation.times(-1));
         context.drawImage(this.image, this.getStartPoint(), this.prefs.scale);
     }
-    public drawZoomFunc(context: Context2D, zoom: number) {
+    public drawZoomFunc(context: AbstractContext2D, zoom: number) {
         const _smartImage = this.setSmartImagePrefs((curVal) => ({
             ...curVal,
             scale: curVal.scale.times(zoom),
