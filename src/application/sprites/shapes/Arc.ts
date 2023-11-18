@@ -1,6 +1,6 @@
 import { Shape, ShapePrefs } from '../Shape';
 import { SpriteConfig, SpritePrefs } from '../Sprite';
-import { Context2D } from 'application/core/context-2d';
+import { AbstractContext2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 
 interface ArcPrefs extends ShapePrefs {
@@ -43,6 +43,12 @@ class Arc extends Shape<ArcPrefs> {
 
         return new Arc(newRasterizedImagePrefs);
     }
+
+    /**
+     * Arcスプライト固有の環境設定をセットする
+     * @param valOrUpdater 更新関数または新しい環境設定
+     * @returns 新しいシェイプ
+     */
     public setArcPrefs(valOrUpdater: ValueUpdater<ArcPrefs> | ArcPrefs) {
         const newPrefs =
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
@@ -50,7 +56,7 @@ class Arc extends Shape<ArcPrefs> {
         return new Arc(newPrefs);
     }
 
-    public drawFunc(context: Context2D): void {
+    public drawFunc(context: AbstractContext2D): void {
         context.beginPath();
         context.ellipse(
             this.prefs.globalLocation,
@@ -62,7 +68,7 @@ class Arc extends Shape<ArcPrefs> {
         context.fill();
         context.stroke();
     }
-    public drawZoomFunc(context: Context2D, zoom: number) {
+    public drawZoomFunc(context: AbstractContext2D, zoom: number) {
         const _arc = this.setArcPrefs((curVal) => ({
             ...curVal,
             scale: curVal.scale.times(zoom),
