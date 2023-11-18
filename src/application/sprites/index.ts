@@ -1,4 +1,4 @@
-export * from './Previewer';
+export * from './ImagePreviewer';
 export * from './RasterizedImage';
 export * from './RasterizedPreviewer';
 export * from './Shape';
