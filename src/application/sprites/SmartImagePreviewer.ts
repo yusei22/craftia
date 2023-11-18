@@ -1,9 +1,9 @@
-import { Previewer, PreviewerPrefs } from './Previewer';
+import { ImagePreviewer, PreviewerPrefs } from './ImagePreviewer';
 import { SmartImage } from './SmartImage';
 import { SpritePrefs } from './Sprite';
 import { ValueUpdater } from 'application/core/types';
 
-export class SmartImagePreviewer extends Previewer {
+export class SmartImagePreviewer extends ImagePreviewer {
     public setSpritePrefs(valOrUpdater: ValueUpdater<SpritePrefs> | SpritePrefs) {
         const newPrefs =
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
