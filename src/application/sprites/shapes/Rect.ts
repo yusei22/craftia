@@ -1,6 +1,6 @@
 import { Shape, ShapePrefs } from '../Shape';
 import { SpriteConfig, SpritePrefs } from '../Sprite';
-import { Context2D } from 'application/core/context-2d';
+import { AbstractContext2D } from 'application/core/context-2d';
 import { AtLeastArray, ValueUpdater } from 'application/core/types';
 import { Vec4 } from 'application/core/units';
 
@@ -54,7 +54,7 @@ class Rect extends Shape<RectPrefs> {
 
         return new Rect(newPrefs);
     }
-    public drawFunc(context: Context2D): void {
+    public drawFunc(context: AbstractContext2D): void {
         context.translate(this.prefs.globalLocation);
         context.rotate(this.prefs.rotation);
         context.translate(this.prefs.globalLocation.times(-1));
@@ -62,7 +62,7 @@ class Rect extends Shape<RectPrefs> {
         context.fill();
         context.stroke();
     }
-    public drawZoomFunc(context: Context2D, zoom: number) {
+    public drawZoomFunc(context: AbstractContext2D, zoom: number) {
         const _rect = this.setRectPrefs((curVal) => ({
             ...curVal,
             scale: curVal.scale.times(zoom),
