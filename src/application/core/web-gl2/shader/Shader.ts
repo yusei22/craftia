@@ -1,39 +1,41 @@
-/**
- * WebGLのシェーダーを管理するクラス。
- * ソースをコンパイルしたWebGLShaderを保持。
- */
-class Shader {
-    readonly webGLShader: WebGLShader;
-    readonly type: GLenum;
+import { UniformFloat } from '../uniforms/UniformFloat';
+import { UniformGroup } from '../uniforms/UniformGroup';
+import { UniformInt } from '../uniforms/UniformInt';
+import { Program } from './Program';
+
+export class Shader {
+    public readonly program: Program;
+    public readonly uniforms: UniformGroup;
+
     /**
-     * @param gl WebGL2のコンストラクター
-     * @param type シェーダーのタイプ。
-     * - `gl.VERTEX_SHADER`
-     * - `gl.FRAGMENT_SHADER`
-     * @param source GLSLシェーダーソース
+     * シェーダーを作成する
+     * @param program シェーダーのプログラム
+     * @param uniforms シェーダーのuniform変数
      */
-    constructor(
-        gl: WebGL2RenderingContext,
-        type: WebGL2RenderingContext['VERTEX_SHADER' | 'FRAGMENT_SHADER'],
-        source: string
-    ) {
-        this.type = type;
-        const shader = gl.createShader(this.type) as WebGLShader;
+    constructor(program: Program, uniforms: (UniformFloat | UniformInt)[] | UniformGroup) {
+        this.program = program;
+        this.uniforms = uniforms instanceof UniformGroup ? uniforms : new UniformGroup(uniforms);
+    }
 
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
+    /**
+     * シェーダーソースとuniform変数からシェーダーを作成する
+     * @param vertexSrc 頂点シェーダーソース
+     * @param fragmentSrc フラグメントシェーダーソース
+     * @param uniforms uniform変数
+     * @returns 新規シェーダー
+     */
+    static from(vertexSrc: string, fragmentSrc: string, uniforms: (UniformFloat | UniformInt)[]) {
+        return new Shader(new Program(vertexSrc, fragmentSrc), uniforms);
+    }
+    public destroy(): this {
+        this.program.destroy();
 
-        const ShaderCompileStatus = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+        return this;
+    }
+    public bind(): this {
+        this.program.bind();
+        this.uniforms.transfer(this);
 
-        if (ShaderCompileStatus) {
-            this.webGLShader = shader;
-        } else {
-            const info = gl.getShaderInfoLog(shader);
-            gl.deleteShader(shader);
-
-            throw Error(info + `shadertype:${this.type}`);
-        }
+        return this;
     }
 }
-
-export { Shader };
