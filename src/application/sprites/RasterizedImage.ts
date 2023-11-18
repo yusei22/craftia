@@ -1,9 +1,7 @@
 import { Sprite, SpriteConfig, SpritePrefs } from './Sprite';
-import { Context2D } from 'application/core/context-2d';
+import { AbstractContext2D, Context2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
-import { Filter } from 'application/filters/Filter';
-import { Pen } from 'application/pens/Pen';
 
 export interface RasterizedImagePrefs extends SpritePrefs {}
 
@@ -101,15 +99,6 @@ export class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
         return new Vec2(this.image.width, this.image.height);
     }
 
-    /**
-     * スプライトワーカーを得る
-     * @param workerSource スプライトワーカーソース
-     * @returns 新規スプライトワーカー
-     */
-    public getSpriteWorker(workerSource: Filter | Pen) {
-        return workerSource.getWorker(this);
-    }
-
     public getStartPoint() {
         const anchorRerativeLoc = new Vec2(
             this.prefs.anchor.x * this.image.width,
@@ -117,6 +106,7 @@ export class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
         );
         return this.prefs.globalLocation.sub(anchorRerativeLoc);
     }
+
     /**
      * スプライトのセンター位置を得る
      * @returns
@@ -124,10 +114,10 @@ export class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
     public getCenterPoint() {
         return this.getStartPoint().add(this.getImageSize().times(0.5));
     }
-    public drawFunc(context: Context2D) {
+    public drawFunc(context: AbstractContext2D) {
         context.drawImage(this.image, this.getStartPoint());
     }
-    public drawZoomFunc(context: Context2D, zoom: number) {
+    public drawZoomFunc(context: AbstractContext2D, zoom: number) {
         const _scale = this.getImageSize().times(zoom);
         const _location = this.prefs.globalLocation.times(zoom);
 
