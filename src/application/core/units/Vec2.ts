@@ -17,12 +17,16 @@ export class Vec2 implements IVec {
     public get inverse() {
         return this.times(-1);
     }
+    constructor(xy: number);
     constructor(x: number, y: number);
     constructor(coordArray: [number, number, ...number[]]);
     constructor(a: number | [number, number, ...number[]], b?: number) {
         if (typeof a === 'number' && typeof b === 'number') {
             this.x = a;
             this.y = b;
+        } else if (typeof a === 'number') {
+            this.x = a;
+            this.y = a;
         } else if (Array.isArray(a)) {
             this.x = a[0];
             this.y = a[1];
@@ -54,5 +58,8 @@ export class Vec2 implements IVec {
     }
     public midpoint(v: Vec2): Vec2 {
         return new Vec2(this.x + (v.x - this.x) / 2, this.y + (v.y - this.y) / 2);
+    }
+    public round() {
+        return new Vec2(Math.round(this.x), Math.round(this.y));
     }
 }
