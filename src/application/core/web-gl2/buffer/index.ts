@@ -1,3 +1,5 @@
-export * from './Buffer';
+export * from './GLBuffer';
+export * from './AbstractBuffer';
+export * from './BufferManager';
 export * from './IndexBuffer';
-export * from './VertexBufer';
+export * from './VertexBuffer';

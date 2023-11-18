@@ -1,1 +1,3 @@
-export * from './Texture2D';
+export * from './GLTexture';
+export * from './Texture';
+export * from './TextureManager';
