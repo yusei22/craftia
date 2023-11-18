@@ -8,8 +8,8 @@ import { SmartImagePreviewer } from 'application/sprites/SmartImagePreviewer';
 export interface FilterConfigs {}
 export type FilterTarget = Rasterizedmage | SmartImage;
 
-export abstract class Filter<T extends FilterConfigs = FilterConfigs> {
-    abstract getWorker(sprite: FilterTarget): FilterWorker<T>;
+export abstract class GLFilter<T extends FilterConfigs = FilterConfigs> {
+    abstract getWorker(gl2: WebGL2RenderingContext, sprite: FilterTarget): FilterWorker<T>;
 }
 
 export abstract class FilterWorker<T extends FilterConfigs = FilterConfigs>
