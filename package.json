@@ -1,5 +1,5 @@
 {
-  "name": "colla-editor",
+  "name": "craftia",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
-    "typedoc": "typedoc --out ./docs/ ./src/"
+    "typedoc": "typedoc --out ./docs/ ./src/",
+    "watch": "tsc -w"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.8",
