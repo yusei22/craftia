@@ -1,49 +1,48 @@
-import { Filter, FilterTarget, FilterWorker } from '../Filter';
-import { EditorShader, ImageEditor } from '../ImageEditor';
+import { FilterTarget, FilterWorker, GLFilter } from '../Filter';
+import { TexRenderer } from '../TexRenderer';
 import { Vec2 } from 'application/core/units';
-
+import { UniformFloat, UniformInt } from 'application/core/web-gl2';
 const sobel = require('./sobel.frag');// eslint-disable-line
 
 const lateralKernel = [-1.0, 0.0, 1.0, -2.0, 0.0, 2.0, -1.0, 0.0, 1.0];
 const verticalKernel = [1.0, 2.0, 1.0, 0.0, 0.0, 0.0, -1.0, -2.0, -1.0];
+const TEX_UNITNUMBER = 0;
 
 export interface SobelConfig {}
 
-export class Sobel extends Filter<SobelConfig> {
-    public getWorker(sprite: FilterTarget): SobelWorker {
-        return new SobelWorker(sprite);
+export class Sobel extends GLFilter<SobelConfig> {
+    public getWorker(gl: WebGL2RenderingContext, sprite: FilterTarget): SobelWorker {
+        return new SobelWorker(gl, sprite);
     }
 }
 
 export class SobelWorker extends FilterWorker<SobelConfig> {
-    private editor: ImageEditor;
+    private renderer: TexRenderer;
 
-    constructor(sprite: FilterTarget) {
+    constructor(gl: WebGL2RenderingContext, sprite: FilterTarget) {
         super(sprite);
-        const imageSize = new Vec2(sprite.image.width, sprite.image.height);
-        const shader: EditorShader = {
-            fragmentShaderSource: sobel.default,
-            uniforms: [
-                {
-                    name: 'u_lateralKernel',
-                    type: 'float',
-                    value: lateralKernel,
-                },
-                {
-                    name: 'u_verticalKernel',
-                    type: 'float',
-                    value: verticalKernel,
-                },
-            ],
-        };
 
-        this.editor = new ImageEditor(imageSize, shader);
-        this.editor.setImage(sprite.image, imageSize, false);
+        const imageSize = new Vec2(sprite.image.width, sprite.image.height);
+
+        this.renderer = new TexRenderer(gl);
+        this.renderer.setFragmentShader(sobel.default, [
+            new UniformInt('u_texture', TEX_UNITNUMBER),
+            new UniformFloat('u_lateralKernel', lateralKernel),
+            new UniformFloat('u_verticalKernel', verticalKernel),
+        ]);
+        this.renderer.setTexVertex(new Vec2(0, 0), imageSize);
+        this.renderer.setTexPixels(sprite.image);
     }
     public getResult() {
-        return this.editor.getResult();
+        return this.renderer.renderer.getCanvas();
     }
     public execute() {
-        this.editor.execute(1);
+        this.renderer.setTexUnitnumber(TEX_UNITNUMBER);
+        this.renderer.activate();
+        this.renderer.draw({ flipY: true });
+        this.renderer.deactivate();
+    }
+    public destroy() {
+        this.renderer.destroy();
     }
 }
