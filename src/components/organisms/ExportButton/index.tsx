@@ -31,7 +31,7 @@ export const ExportButton = () => {
 
     return (
         <a onClick={onClick} href={url} download={fileName}>
-            <Button>書き出し</Button>
+            <Button variant="translucent">書き出し</Button>
         </a>
     );
 };
