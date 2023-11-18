@@ -1,11 +1,11 @@
-import { Previewer, PreviewerPrefs } from './Previewer';
+import { ImagePreviewer, PreviewerPrefs } from './ImagePreviewer';
 import { Rasterizedmage } from './RasterizedImage';
 import { SpritePrefs } from './Sprite';
 import { Context2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
 
-export class RasterizedPreviewer extends Previewer {
+export class RasterizedPreviewer extends ImagePreviewer {
     public setSpritePrefs(valOrUpdater: ValueUpdater<SpritePrefs> | SpritePrefs) {
         const newPrefs =
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
@@ -30,7 +30,7 @@ class PreviewRasterizer {
     constructor() {
         this.ctx = new Context2D();
     }
-    public rasterize(previewer: Previewer) {
+    public rasterize(previewer: ImagePreviewer) {
         this.ctx.viewport(previewer.prefs.scale);
 
         this.ctx.translate(previewer.prefs.globalLocation.times(1 / 2));
