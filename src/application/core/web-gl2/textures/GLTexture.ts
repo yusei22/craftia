@@ -1,7 +1,7 @@
 import { Vec2 } from 'application/core/units';
 
 /** テクスチャ画像の仕様・オプション */
-type TexOptions = {
+export type TexOptions = {
     /** 最大のミップ */
     level?: number;
     /**テクスチャの形式 */
@@ -17,7 +17,8 @@ type TexOptions = {
 };
 
 /**テクスチャに使用できる画像ののピクセルソース*/
-type TexImageSource =
+export type TexImageSource =
+    | OffscreenCanvas
     | HTMLImageElement
     | HTMLCanvasElement
     | HTMLVideoElement
@@ -25,24 +26,27 @@ type TexImageSource =
     | ImageData;
 
 /** テクスチャに使用できる型付き配列のピクセルソース*/
-type TexTypedArray = Uint8Array | Uint16Array | Uint32Array | Float32Array | null;
+export type TexTypedArray = Uint8Array | Uint16Array | Uint32Array | Float32Array | null;
 
 /**テクスチャに利用できるピクセルソース */
-type TexPixcels = TexImageSource | TexTypedArray;
+export type TexPixcels = TexImageSource | TexTypedArray;
 
-type TexPixcelsOptions = {
+export type TexPixcelsOptions = {
     enableNPOT?: boolean;
     repeat?: boolean;
     yCoordinateInversion?: boolean;
 };
+
 /**
  * WegGLの型付き配列テクスチャを管理するクラス。
  */
-class Texture2D {
+export class GLTexture {
+    public updateID: number;
+
     /**WebGL2のコンテキスト */
-    private gl: WebGL2RenderingContext;
+    private readonly gl: WebGL2RenderingContext;
     /**内包する`WebGLTexture` */
-    private webGLTexture: WebGLTexture;
+    private readonly webGLTexture: WebGLTexture;
 
     /**現在のユニット番号 */
     private _unitNumber: number;
@@ -50,15 +54,15 @@ class Texture2D {
     private _size: Vec2 = new Vec2(0, 0);
 
     /** 最大のミップ */
-    readonly level: number;
+    public readonly level: number;
     /**テクスチャの形式 */
-    readonly internalformat: GLenum;
+    public readonly internalformat: GLenum;
     /**データの形式 */
-    readonly format: GLenum;
+    public readonly format: GLenum;
     /**データの種類 */
-    readonly type: GLenum;
+    public readonly type: GLenum;
     /**境界線の幅。0 である必要がある。 */
-    readonly border: number = 0;
+    public readonly border: number = 0;
 
     public get size() {
         return this._size;
@@ -85,8 +89,10 @@ class Texture2D {
         this.type = type;
         this._unitNumber = unitNumber;
         this.border = border;
+
+        this.updateID = 0;
     }
-    bind() {
+    public bind() {
         this.gl.activeTexture(this.gl.TEXTURE0 + this._unitNumber);
         this.gl.bindTexture(this.gl.TEXTURE_2D, this.webGLTexture);
         return this;
@@ -94,12 +100,20 @@ class Texture2D {
     /**
      * 保持しているユニット番号のテクスチャに`null`を登録
      */
-    unbind() {
+    public unbind() {
         this.gl.activeTexture(this.gl.TEXTURE0 + this._unitNumber);
         this.gl.bindTexture(this.gl.TEXTURE_2D, null);
         return this;
     }
-    changeUnitNumber(number: number) {
+
+    /**
+     * ユニット番号を変更
+     * @param number 新しいユニット番号
+     */
+    public changeUnitNumber(number: number) {
+        if (number === this._unitNumber) {
+            return;
+        }
         this.unbind();
         this._unitNumber = number;
     }
@@ -112,7 +126,7 @@ class Texture2D {
      * @param param2.repeat 画像を繰り返すか
      * @param param2.yCoordinateInversion 画像の上下を反転するか
      */
-    attachImage(
+    public attachImage(
         pixcels: TexPixcels,
         size: Vec2,
         { enableNPOT = true, repeat = false, yCoordinateInversion = false }: TexPixcelsOptions = {}
@@ -171,6 +185,7 @@ class Texture2D {
         this.unbind();
         return this;
     }
+
     /**
      * フレームバッファに紐づけ
      * @param attachmentPoint texture の装着ポイントを指定
@@ -179,7 +194,6 @@ class Texture2D {
      * - `gl.STENCIL_ATTACHMENT` ステンシルバッファー
      */
     public attachToframebuffer(attachmentPoint: GLenum = this.gl.COLOR_ATTACHMENT0) {
-        this.bind();
         this.gl.framebufferTexture2D(
             this.gl.FRAMEBUFFER,
             attachmentPoint,
@@ -187,9 +201,9 @@ class Texture2D {
             this.webGLTexture,
             this.level
         );
-        this.unbind();
         return this;
     }
+    public destroy() {
+        this.gl.deleteTexture(this.webGLTexture);
+    }
 }
-export { Texture2D };
-export type { TexPixcels, TexOptions, TexPixcelsOptions };
