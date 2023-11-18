@@ -1,10 +1,10 @@
-import { Shader } from './Shader';
+import { GLShader } from './GLShader';
 
 /**
  * WebGLのフラグメントシェーダーを管理するクラス。
  * ソースをコンパイルしたWebGLShaderを保持。
  */
-class FragmentShader extends Shader {
+export class GLFragmentShader extends GLShader {
     /**
      * @param gl WebGL2のコンストラクター
      * @param source GLSLシェーダーソース
@@ -13,5 +13,3 @@ class FragmentShader extends Shader {
         super(gl, gl.FRAGMENT_SHADER, source);
     }
 }
-
-export { FragmentShader };
