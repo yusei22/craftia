@@ -1,8 +1,10 @@
-import { Context2D, Repetition } from 'application/core/context-2d';
+import { AbstractContext2D, Repetition } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 import { Vec2, Vec4 } from 'application/core/units';
 export interface FillPrefs<T> {
-    createCanvasFillStyle(context: Context2D): CanvasGradient | CanvasPattern | null | string;
+    createCanvasFillStyle(
+        context: AbstractContext2D
+    ): CanvasGradient | CanvasPattern | null | string;
     setPrefs(valOrUpdater: ValueUpdater<T> | T): T;
 }
 
@@ -18,7 +20,7 @@ export class FillLinerGradient implements IFillLinerGradient, FillPrefs<IFillLin
         this.startPoint = startPoint;
         this.endPoint = endPoint;
     }
-    public createCanvasFillStyle(context: Context2D) {
+    public createCanvasFillStyle(context: AbstractContext2D) {
         return context.createLinearGradient(this.startPoint, this.endPoint);
     }
     public setPrefs(valOrUpdater: ValueUpdater<IFillLinerGradient> | IFillLinerGradient) {
@@ -45,7 +47,7 @@ export class FillRadialGradient implements IFillRadialGradient, FillPrefs<IFillR
         this.endPoint = endPoint;
         this.endRound = endRound;
     }
-    public createCanvasFillStyle(context: Context2D) {
+    public createCanvasFillStyle(context: AbstractContext2D) {
         return context.createRadialGradient(
             this.startPoint,
             this.startRound,
@@ -71,7 +73,7 @@ export class FillPattern implements IFillPattern, FillPrefs<IFillPattern> {
         this.image = image;
         this.repetition = repetition;
     }
-    public createCanvasFillStyle(context: Context2D) {
+    public createCanvasFillStyle(context: AbstractContext2D) {
         return context.createPattern(this.image, this.repetition);
     }
     public setPrefs(valOrUpdater: ValueUpdater<IFillPattern> | IFillPattern) {
@@ -92,8 +94,7 @@ export class FillSolid implements IFillSolid, FillPrefs<IFillSolid> {
         return `rgba(${this.color.r},${this.color.g},${this.color.b},${this.color.a})`;
     }
     public setPrefs(valOrUpdater: ValueUpdater<IFillSolid> | IFillSolid) {
-        const newPrefs =
-            typeof valOrUpdater === 'function' ? valOrUpdater({ color: this.color }) : valOrUpdater;
+        const newPrefs = typeof valOrUpdater === 'function' ? valOrUpdater(this) : valOrUpdater;
         return new FillSolid(newPrefs);
     }
 }
