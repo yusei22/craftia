@@ -1,6 +1,7 @@
 import { useSetRecoilState } from 'recoil';
 import { Sprite, SpriteTree } from 'application/sprites';
 import Button from 'components/atoms/Button';
+import Typography from 'components/atoms/Typography';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
@@ -27,5 +28,9 @@ export const LayerDeleteButton = () => {
         setRecoilState(newSprites);
         saveSpriteTree();
     };
-    return <Button onClick={onClick}>レイヤーを削除</Button>;
+    return (
+        <Button onClick={onClick} variant="translucent">
+            <Typography variant="small">レイヤーを削除</Typography>
+        </Button>
+    );
 };
