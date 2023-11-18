@@ -1,34 +1,45 @@
-import { Filter, FilterTarget, FilterWorker } from '../Filter';
-import { EditorShader, ImageEditor } from '../ImageEditor';
+import { FilterTarget, FilterWorker, GLFilter } from '../Filter';
+import { TexRenderer } from '../TexRenderer';
 import { Vec2 } from 'application/core/units';
+import { Texture, UniformInt } from 'application/core/web-gl2';
 
 const inversion = require('./inversion.frag');// eslint-disable-line
+const TEX_UNITNUMBER = 0;
 
 export interface InversionConfig {}
 
-export class Inversion extends Filter<InversionConfig> {
-    public getWorker(sprite: FilterTarget): InversionWorker {
-        return new InversionWorker(sprite);
+export class Inversion extends GLFilter<InversionConfig> {
+    public getWorker(gl: WebGL2RenderingContext, sprite: FilterTarget): InversionWorker {
+        return new InversionWorker(gl, sprite);
     }
 }
 
 export class InversionWorker extends FilterWorker<InversionConfig> {
-    private editor: ImageEditor;
+    private rectRenderer: TexRenderer;
+    private texture: Texture;
 
-    constructor(sprite: FilterTarget) {
+    constructor(gl: WebGL2RenderingContext, sprite: FilterTarget) {
         super(sprite);
-        const imageSize = new Vec2(sprite.image.width, sprite.image.height);
-        const shader: EditorShader = {
-            fragmentShaderSource: inversion.default,
-        };
 
-        this.editor = new ImageEditor(imageSize, shader);
-        this.editor.setImage(sprite.image, imageSize, false);
+        const imageSize = new Vec2(sprite.image.width, sprite.image.height);
+
+        this.rectRenderer = new TexRenderer(gl);
+        this.rectRenderer.setFragmentShader(inversion.default, [
+            new UniformInt('u_texture', TEX_UNITNUMBER),
+        ]);
+        this.rectRenderer.setTexVertex(new Vec2(0, 0), imageSize);
+
+        this.texture = new Texture().setPixcels(sprite.image, imageSize);
+        this.rectRenderer.renderer.texture.update(this.texture);
     }
     public getResult() {
-        return this.editor.getResult();
+        return this.rectRenderer.renderer.getCanvas();
     }
     public execute() {
-        this.editor.execute(1);
+        this.rectRenderer.activate();
+
+        this.rectRenderer.renderer.texture.bind(this.texture, TEX_UNITNUMBER);
+        this.rectRenderer.draw({ flipY: true });
+        this.rectRenderer.deactivate();
     }
 }
