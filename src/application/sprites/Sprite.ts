@@ -3,7 +3,7 @@ import { SmartImage } from './SmartImage';
 import { FillLinerGradient, FillPattern, FillRadialGradient, FillSolid } from './SpriteFill';
 import { Arc, Rect } from './shapes';
 import {
-    Context2D,
+    AbstractContext2D,
     ContextLineConfig,
     ContextShadowConfig,
     ContextTextConfig,
@@ -110,6 +110,8 @@ export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
     /**環境設定 */
     readonly prefs: T;
 
+    protected cacheImage?: OffscreenCanvas | HTMLCanvasElement | ImageBitmap;
+
     /**
      * コンストラクタ
      * @param config 描画時の設定
@@ -124,7 +126,7 @@ export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
      * contextのプロパティをセット
      * @param context ターゲットのcontext
      */
-    private setconfig(context: Context2D) {
+    private setconfig(context: AbstractContext2D) {
         context
             .setLineConfig(this.config.line)
             .setShadowConfig(this.config.shadow)
@@ -148,7 +150,7 @@ export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
      * @param context ターゲットのContext2D
      * @returns
      */
-    public draw(context: Context2D) {
+    public draw(context: AbstractContext2D) {
         if (!this.prefs.visible) return;
 
         context.resetTransform();
@@ -162,7 +164,7 @@ export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
      * @param zoom 拡大縮小率
      * @returns
      */
-    public drawZoom(context: Context2D, zoom: number) {
+    public drawZoom(context: AbstractContext2D, zoom: number) {
         if (!this.prefs.visible) return;
 
         context.resetTransform();
@@ -170,18 +172,20 @@ export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
         this.drawZoomFunc(context, zoom);
     }
 
+    //public drawChacheFunc(context: AbstractContext2D) {}
+
     /**
      * 描画時のスプライト固有の描画処理
      * @param context ターゲットのContext2D
      */
-    protected abstract drawFunc(context: Context2D): void;
+    protected abstract drawFunc(context: AbstractContext2D): void;
 
     /**
      * 拡大縮小して描画するときのスプライト固有の描画処理
      * @param context ターゲットのContext2D
      * @param zoom 拡大縮小率
      */
-    protected abstract drawZoomFunc(context: Context2D, zoom: number): void;
+    protected abstract drawZoomFunc(context: AbstractContext2D, zoom: number): void;
 
     /**
      * スプライト環境設定をセットする
