@@ -3,5 +3,9 @@ import { useSpriteTreeReno } from 'dataflow';
 
 export const RenoButton = () => {
     const reno = useSpriteTreeReno();
-    return <Button onClick={reno}>やり直し</Button>;
+    return (
+        <Button onClick={reno} variant="translucent">
+            やり直し
+        </Button>
+    );
 };
