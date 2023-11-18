@@ -1,15 +1,15 @@
-import { FragmentShader, VertexShader } from '../shader';
-import { IUniformValue, UniformFloat, UniformInt } from '../uniforms';
-import { VertexAttribute } from '../vertex-attribute';
+import { IGLUniformValue, GLUniformFloat, GLUniformInt } from '../uniforms';
+import { GLFragmentShader, GLVertexShader } from '.';
+
 /**
  * WebGLのプログラムを管理するクラス。
  * ソースをコンパイルしたWebGLProgramを保持。
  */
-class Program {
+export class GLProgram {
     readonly gl: WebGL2RenderingContext;
     private webGLprogram: WebGLProgram;
-    private vertexShader: VertexShader;
-    private fragmentShader: FragmentShader;
+    private vertexShader: GLVertexShader;
+    private fragmentShader: GLFragmentShader;
     /**
      * @param gl WebGL2のコンストラクター
      * @param vertexShader `gzVertexShader`インスタンス
@@ -17,8 +17,8 @@ class Program {
      */
     constructor(
         gl: WebGL2RenderingContext,
-        vertexShader: VertexShader,
-        fragmentShader: FragmentShader
+        vertexShader: GLVertexShader,
+        fragmentShader: GLFragmentShader
     ) {
         this.gl = gl;
         const program = this.gl.createProgram() as WebGLProgram;
@@ -40,12 +40,14 @@ class Program {
             throw Error(info);
         }
     }
+
     /**
      * プログラムをアクティブにする
      */
     public use() {
         this.gl.useProgram(this.webGLprogram);
     }
+
     /**
      * 任意のin変数の位置を取得。
      * @param name in変数の名前
@@ -54,6 +56,7 @@ class Program {
     public getAttribLocation(name: string) {
         return this.gl.getAttribLocation(this.webGLprogram, name);
     }
+
     /**
      * 任意のuniform変数の位置を取得。
      * @param name uniform変数の名前
@@ -67,27 +70,21 @@ class Program {
      * @param name 名前
      * @returns `UniformFloat`
      */
-    public getUniformFloat<T extends IUniformValue>(name: string, value: T) {
-        return new UniformFloat<T>(this.gl, this.getUniformLocation(name), value);
+    public getUniformFloat<T extends IGLUniformValue>(name: string, value: T) {
+        return new GLUniformFloat<T>(this.gl, this.getUniformLocation(name), value);
     }
     /**
      * uniform変数(整数型)を取得
      * @param name 名前
      * @returns `UniformInt`
      */
-    public getUniformInt<T extends IUniformValue>(name: string, value: T) {
-        return new UniformInt<T>(this.gl, this.getUniformLocation(name), value);
+    public getUniformInt<T extends IGLUniformValue>(name: string, value: T) {
+        return new GLUniformInt<T>(this.gl, this.getUniformLocation(name), value);
     }
     /**
-     * 頂点属性を取得
-     * @param name 名前
-     * @param size 頂点属性あたりの要素数
-     * @param stride 連続する頂点属性の始端どうしの間にある、オフセット数
-     * @param offset 頂点属性配列の最初の要素のオフセット
-     * @returns `VertexAttribute`
+     * プログラムを破棄する
      */
-    public getAttribute(name: string, size: number, stride: number, offset: number) {
-        return new VertexAttribute(this.getAttribLocation(name), size, stride, offset);
+    public destroy() {
+        this.gl.deleteProgram(this.webGLprogram);
     }
 }
-export { Program };
