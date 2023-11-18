@@ -8,6 +8,8 @@ precision highp float;
 uniform sampler2D u_texture;
 uniform float u_lateralKernel[9];
 uniform float u_verticalKernel[9];
+uniform vec3 u_lineColor ;
+
 in vec2 v_texCoord;
 out vec4 outColor;
 
@@ -51,5 +53,6 @@ void main() {
     vec3 verticalColor = verticalColor();
     vec3 lateralColor = lateralColor();
     vec3 edge = verticalColor + lateralColor / 2.0f;
-    outColor = vec4(0.0f, 0.0f, 0.0f, (edge.r + edge.g + edge.b) / 3.0f);
+    float alpha = (edge.r + edge.g + edge.b) / 3.0f;
+    outColor = vec4(u_lineColor * alpha, alpha);
 }
