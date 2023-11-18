@@ -24,35 +24,35 @@ export const FilterTabPabel = () => {
             >
                 <TabSection>
                     <UnsharpMaskingButton>
-                        <Button>
+                        <Button variant="translucent">
                             <Typography variant="small">アンシャープマスキング</Typography>
                         </Button>
                     </UnsharpMaskingButton>
                 </TabSection>
                 <TabSection>
                     <BilateralButton>
-                        <Button>
+                        <Button variant="translucent">
                             <Typography variant="small">バイラテラルフィルタ</Typography>
                         </Button>
                     </BilateralButton>
                 </TabSection>
                 <TabSection>
                     <GaussianBlurButton>
-                        <Button>
+                        <Button variant="translucent">
                             <Typography variant="small">ガウシアンフィルタ</Typography>
                         </Button>
                     </GaussianBlurButton>
                 </TabSection>
                 <TabSection>
                     <SobelButton>
-                        <Button>
+                        <Button variant="translucent">
                             <Typography variant="small">ソーベル</Typography>
                         </Button>
                     </SobelButton>
                 </TabSection>
                 <TabSection>
                     <InversionButton>
-                        <Button>
+                        <Button variant="translucent">
                             <Typography variant="small">ネガポジ反転</Typography>
                         </Button>
                     </InversionButton>
