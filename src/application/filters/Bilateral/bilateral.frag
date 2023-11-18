@@ -6,9 +6,8 @@ out vec4 outColor;
 
 uniform sampler2D u_texture;
 uniform int u_radius;
-
-const float sigmaColor = 0.12f; 
-const float sigmaSpace = 1.5f; 
+uniform float u_sigmaColor;
+uniform float u_sigmaSpace;
 
 float gaussian(float x, float sigma) {
     return exp(-(x * x) / (2.0f * sigma * sigma));
@@ -22,12 +21,12 @@ void main() {
 
     for(int y = -u_radius; y <= u_radius; y++) {
         for(int x = -u_radius; x <= u_radius; x++) {
-            
+
             vec2 offset = vec2(float(y), float(x)) * onePixel;
             vec3 sampleColor = texture(u_texture, v_texCoord + offset).rgb;
 
-            float colorWeight = gaussian(distance(centerColor, sampleColor), sigmaColor);
-            float spatialWeight = gaussian(length(offset), sigmaSpace);
+            float colorWeight = gaussian(distance(centerColor, sampleColor), u_sigmaColor);
+            float spatialWeight = gaussian(distance(vec2(x, y), vec2(0, 0)), u_sigmaSpace);
 
             float weight = colorWeight * spatialWeight;
             destColor += sampleColor * weight;
@@ -35,5 +34,5 @@ void main() {
         }
     }
 
-    outColor = vec4(destColor / totalWeight, texture(u_texture, v_texCoord).a);
+    outColor = vec4(destColor / totalWeight, 1.0f);
 }
