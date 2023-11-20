@@ -30,7 +30,7 @@ export const LayerShadowCheakBox = () => {
         setSpritesFromIds(activeIds, (sprite) =>
             sprite.setSpritePrefs((curPrefs) => ({
                 ...curPrefs,
-                shadowBlur: val ? 5 : 0,
+                shadowBlur: val ? 10 : 0,
                 shadowColor: '#000',
                 shadowOffset: new Vec2(0, 0),
             }))
