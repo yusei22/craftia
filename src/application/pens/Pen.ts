@@ -12,6 +12,8 @@ import { RasterizedPreviewer } from 'application/sprites/RasterizedPreviewer';
 import { SpriteFillStyle } from 'application/sprites/Sprite';
 import { BlendMode } from 'types';
 
+//TODO : クラスの設計見直す
+
 export type PenEvent = {
     /**ポインタの位置 */
     readonly pointerLoc: Vec2;
