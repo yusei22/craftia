@@ -93,9 +93,9 @@ export abstract class AbstractContext2D<
     public get size(): Vec2 {
         return new Vec2(this.context.canvas.width, this.context.canvas.height);
     }
-    public getCanvas(): HTMLCanvasElement | OffscreenCanvas {
-        return this.context.canvas;
-    }
+    public abstract getCanvas(): T extends CanvasRenderingContext2D
+        ? HTMLCanvasElement
+        : OffscreenCanvas;
     /**
      * canvasをリサイズ
      * @param size 大きさ
@@ -109,6 +109,7 @@ export abstract class AbstractContext2D<
      * canvasをクリア
      */
     public clear(): this {
+        this.resetTransform();
         this.clearRect(new Vec2(0, 0), this.size);
         return this;
     }
