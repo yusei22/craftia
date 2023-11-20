@@ -29,7 +29,7 @@ export const LayerCreateButton = () => {
             const image = await createImageBitmap(
                 new Context2D().viewport(new Vec2(1, 1)).getCanvas()
             );
-            setSpriteTree((curVal) => [...curVal, new Rasterizedmage(image, initalPrefs)]);
+            setSpriteTree((curVal) => [...curVal, new Rasterizedmage(image, initalPrefs, null)]);
             saveSpriteTree();
         })();
     };
