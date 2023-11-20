@@ -176,7 +176,7 @@ export class Rasterizedmage extends Sprite<RasterizedImagePrefs> {
             this.cache?.setDrawConfigs(cachePrefs) ??
             new Cache<RasterizedImagePrefs>(cachePrefs, null);
 
-        if (this.needChacheUpdate(this.cache.deps, this.prefs)) {
+        if (!this.needChacheUpdate(this.cache.deps, this.prefs)) {
             return this.cache;
         }
 
