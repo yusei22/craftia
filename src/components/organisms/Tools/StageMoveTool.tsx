@@ -26,7 +26,7 @@ export const StageMoveTool = ({ children }: { children?: React.ReactNode }) => {
                 });
             },
             onMove,
-            onClick: () => { },
+            onClick: () => {},
         });
     };
 
