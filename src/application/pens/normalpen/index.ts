@@ -1,6 +1,7 @@
 import { DeferredStabilizer } from '../DeferredStabilizer';
 import { ContextPenWorker, ContextPenWorkerConfig, Pen, PenEvent, PenPrefs } from '../Pen';
 import { RealTimeStabilizer } from '../RealTimeStabilizer';
+import { Context2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
@@ -51,14 +52,14 @@ export class NormalPenWorker extends ContextPenWorker {
 
     constructor(artboardSize: Vec2, targetSprite: Rasterizedmage, prefs: NormalPenPrefs) {
         super(targetSprite, artboardSize);
-
-        this.targetSpriteVisible = targetSprite.setSpritePrefs((culPrefs) => ({
-            ...culPrefs,
-            visible: true,
-            opacity: 1.0,
+        this.targetSpriteVisible = this.targetSprite.copy().setSpritePrefs((culVal) => ({
+            ...culVal,
+            shadowBlur: null,
+            shadowColor: null,
+            shadowOffset: null,
             blendMode: 'source-over',
+            opacity: 1.0,
         }));
-
         this.prefs = prefs;
 
         this.stabilizer = this.prefs.realTimeStabilization
@@ -71,7 +72,9 @@ export class NormalPenWorker extends ContextPenWorker {
     }
     private applyLine() {
         this.baseContext.clear();
-        this.targetSpriteVisible.draw(this.baseContext);
+
+        //TODO:ここ何とかする
+        this.targetSpriteVisible.draw(this.baseContext, null as unknown as Context2D);
 
         this.setBaseContextconfig(baseContextConfig(this.prefs));
 
