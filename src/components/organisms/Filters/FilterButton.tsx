@@ -11,7 +11,9 @@ import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
 import FloatingWindow from 'components/molecules/FloatingWindow';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
+import { filterGLAtom } from 'dataflow/gl/filterGLAtom';
 import { useActiveSpritesReader } from 'hooks/sprites/useActiveSpritesReader';
+import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 type FilterButtonProps<T extends FilterConfigs> = {
     children?: React.ReactNode;
@@ -36,6 +38,8 @@ export const FilterButton = <T extends FilterConfigs>({
     const [filterWorker, setFilterWorker] = useState<FilterWorker<T> | null>(null);
     const [targetID, setTargetID] = useState('');
 
+    const getFilterGLSync = useRecoilValueSyncReader<WebGL2RenderingContext | null>();
+
     const setWorkerPreviewSprite = (id: string, worker: ISpriteWorker | null) => {
         setSpriteTree((currentTree) => {
             const newTree = [...currentTree];
@@ -51,12 +55,14 @@ export const FilterButton = <T extends FilterConfigs>({
         });
     };
     const onClick = () => {
+        const gl = getFilterGLSync(filterGLAtom);
+        if (!gl) {
+            console.warn('WebGLRenderingContext is null');
+            return;
+        }
         const activeSprite = getActiveSprite()[0];
         if (activeSprite instanceof Rasterizedmage || activeSprite instanceof SmartImage) {
-            const worker = filter.getWorker(
-                new OffscreenCanvas(1, 1).getContext('webgl2') as WebGL2RenderingContext,
-                activeSprite
-            );
+            const worker = filter.getWorker(gl, activeSprite);
             setShow(true);
             setTargetID(activeSprite.prefs.id);
             setFilterWorker(worker);
