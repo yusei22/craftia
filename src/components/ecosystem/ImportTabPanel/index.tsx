@@ -28,19 +28,23 @@ export const ImportTabPanel = () => {
 
                 const imageSource = await new ImageURLDecoder().decode(dataUrl);
 
-                const image = new Rasterizedmage(imageSource, {
-                    id: uuidv4(),
-                    name: '新規レイヤー',
-                    anchor: new Vec2(0, 0),
-                    globalLocation: new Vec2(0, 0),
-                    rotation: (0 / 180) * Math.PI,
-                    visible: true,
-                    blendMode: 'source-over',
-                    opacity: 1.0,
-                    shadowBlur: 0,
-                    shadowColor: '#0000',
-                    shadowOffset: new Vec2(0, 0),
-                },null);
+                const image = new Rasterizedmage(
+                    imageSource,
+                    {
+                        id: uuidv4(),
+                        name: '新規レイヤー',
+                        anchor: new Vec2(0, 0),
+                        globalLocation: new Vec2(0, 0),
+                        rotation: (0 / 180) * Math.PI,
+                        visible: true,
+                        blendMode: 'source-over',
+                        opacity: 1.0,
+                        shadowBlur: 0,
+                        shadowColor: '#0000',
+                        shadowOffset: new Vec2(0, 0),
+                    },
+                    null
+                );
 
                 setSpriteTree((curVal) => [...curVal, image]);
                 saveSpriteTree();
