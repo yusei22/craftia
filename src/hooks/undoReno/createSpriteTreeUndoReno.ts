@@ -23,21 +23,25 @@ export const createSpriteTreeUndoRedo = ({
     const current = atom<SpriteTree>({
         key: realTimeKey,
         default: defualt,
+        dangerouslyAllowMutability: true,
     });
 
     const histPast = atom<StaticSpriteTree[]>({
         key: pastKey,
         default: [],
+        dangerouslyAllowMutability: true,
     });
 
     const histPresent = atom<StaticSpriteTree>({
         key: currentKey,
         default: defualt,
+        dangerouslyAllowMutability: true,
     });
 
     const histFuture = atom<StaticSpriteTree[]>({
         key: futureKey,
         default: [],
+        dangerouslyAllowMutability: true,
     });
 
     const useSaver = () =>
