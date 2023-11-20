@@ -1,4 +1,4 @@
-import { IVec } from './Vec';
+import { IVec, Vec } from './Vec';
 import { Vec2 } from './Vec2';
 export class Vec3 implements IVec {
     readonly x: number;
@@ -68,8 +68,8 @@ export class Vec3 implements IVec {
         const z = this.x * v.y - this.y * v.x;
         return new Vec3(x, y, z);
     }
-    public equal(v: Vec3) {
-        return v.x === this.x && v.y === this.y && v.z === this.z;
+    public equal(v: Vec) {
+        return v instanceof Vec3 && v.x === this.x && v.y === this.y && v.z === this.z;
     }
     public distance(v: Vec3): number {
         return Math.sqrt((v.x - this.x) ** 2 + (v.y - this.y) ** 2 + (v.z - this.z) ** 2);
