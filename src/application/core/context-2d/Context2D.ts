@@ -2,7 +2,10 @@ import { AbstractContext2D, Context2DCreateOptions } from './AbstractContext2D';
 
 export class Context2D extends AbstractContext2D<CanvasRenderingContext2D> {
     constructor(op: Context2DCreateOptions<CanvasRenderingContext2D> = {}) {
-        super(op.context ?? createCanvasAndContext2D().context);
+        super(op.context ?? createCanvasAndContext2D(op).context);
+    }
+    public getCanvas(): HTMLCanvasElement {
+        return this.context.canvas;
     }
     public toDataURL() {
         return this.context.canvas.toDataURL();
