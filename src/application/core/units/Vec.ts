@@ -36,7 +36,7 @@ interface IVec {
      * @param v 比較するベクトル
      * @returns 真偽地
      */
-    readonly equal: (v: this) => boolean;
+    readonly equal: (v: Vec) => boolean;
 
     /**
      * ユーグリッド距離を求める
@@ -52,7 +52,7 @@ interface IVec {
     readonly toArray: () => number[];
 }
 
-function isVec(value: unknown): value is IVec {
+function isVec(value: unknown): value is Vec {
     if (value instanceof Vec2 || value instanceof Vec3 || value instanceof Vec4) {
         return true;
     }
