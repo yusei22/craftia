@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 import { Sprite, SpritePrefs } from 'application/sprites/Sprite';
-import { artboardResolutionAtom } from 'dataflow';
+import { stageResolutionAtom } from 'dataflow';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 type SpriteSmallPreviewProps<T extends SpritePrefs> = {
@@ -24,7 +24,7 @@ export const SpriteSmallPreview = <T extends SpritePrefs>({
     const getArtobardResolution = useRecoilValueSyncReader<Vec2>();
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const artboardResolution = useRecoilValue(artboardResolutionAtom);
+    const stageResolution = useRecoilValue(stageResolutionAtom);
 
     useEffect(() => {
         if (!canvasRef.current) {
@@ -41,9 +41,9 @@ export const SpriteSmallPreview = <T extends SpritePrefs>({
         if (context2D === null) {
             return;
         }
-        const artboardResolution = getArtobardResolution(artboardResolutionAtom);
+        const stageResolution = getArtobardResolution(stageResolutionAtom);
 
-        const zoom = Math.max(width / artboardResolution.x, height / artboardResolution.y);
+        const zoom = Math.max(width / stageResolution.x, height / stageResolution.y);
 
         const _sprite = sprite.setSpritePrefs((curVal) => ({
             ...curVal,
@@ -60,8 +60,8 @@ export const SpriteSmallPreview = <T extends SpritePrefs>({
         <>
             <canvas
                 ref={canvasRef}
-                width={artboardResolution.x * getZoom(width, height, artboardResolution)}
-                height={artboardResolution.y * getZoom(width, height, artboardResolution)}
+                width={stageResolution.x * getZoom(width, height, stageResolution)}
+                height={stageResolution.y * getZoom(width, height, stageResolution)}
             />
         </>
     );

@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { Vec2 } from 'application/core/units';
 import { SpritesHitDetector } from 'application/render/SpritesHitDetector';
 import { SpriteTree } from 'application/sprites';
-import { artboardResolutionAtom, spriteTreeAtom } from 'dataflow';
-import { useViewPointToArtboardPointConverter } from 'hooks/artboards/useViewPointToArtboardPointConverter';
+import { stageResolutionAtom, spriteTreeAtom } from 'dataflow';
+import { useViewPointToStagePointConverter } from 'hooks/stages/useViewPointToStagePointConverter';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 const useSpriteHitDetection = () => {
     const [spritesHitDetector, setSpritesHitDetector] = useState<SpritesHitDetector | null>(null);
-    const viewPointToArtboardPoint = useViewPointToArtboardPointConverter();
+    const viewPointToStagePoint = useViewPointToStagePointConverter();
     const getSpriteTreeSync = useRecoilValueSyncReader<SpriteTree>();
     const getArtobardResolutionSync = useRecoilValueSyncReader<Vec2>();
 
@@ -22,12 +22,12 @@ const useSpriteHitDetection = () => {
                 console.warn('spritesHitDetector is null');
                 return null;
             }
-            const artobardResolution = getArtobardResolutionSync(artboardResolutionAtom);
+            const artobardResolution = getArtobardResolutionSync(stageResolutionAtom);
             const sprites = getSpriteTreeSync(spriteTreeAtom);
-            const artboardPoint = viewPointToArtboardPoint(viewPoint);
+            const stagePoint = viewPointToStagePoint(viewPoint);
 
             spritesHitDetector.viewport(artobardResolution);
-            return spritesHitDetector.detect(sprites, artboardPoint);
+            return spritesHitDetector.detect(sprites, stagePoint);
         },
         [spritesHitDetector]
     );

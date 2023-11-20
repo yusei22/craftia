@@ -9,21 +9,21 @@ import { SmartImage } from 'application/sprites/SmartImage';
 import { FillSolid } from 'application/sprites/SpriteFill';
 import { Rect } from 'application/sprites/shapes/Rect';
 import {
-    artboardTransformAtom,
-    artboardResolutionAtom,
+    stageTransformAtom,
+    stageResolutionAtom,
     spriteTreeAtom,
     useSpriteTreeSaver,
 } from 'dataflow';
 
 const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
-    const setArtboardResolution = useSetRecoilState(artboardResolutionAtom);
-    const setArtboardTrans = useSetRecoilState(artboardTransformAtom);
+    const setStageResolution = useSetRecoilState(stageResolutionAtom);
+    const setStageTrans = useSetRecoilState(stageTransformAtom);
     const saveSpriteTree = useSpriteTreeSaver();
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
 
     useEffect(() => {
-        setArtboardResolution(new Vec2(1920, 1080));
-        setArtboardTrans({
+        setStageResolution(new Vec2(1920, 1080));
+        setStageTrans({
             anchor: new Vec2(0.5, 0.5),
             location: new Vec2(500, 400),
             rotation: (0 / 180) * Math.PI,

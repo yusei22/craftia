@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { useArtboardAnchorMoverViewPoint } from '../artboards/useArtboardAnchorMoverViewPoint';
+import { useStageAnchorMoverViewPoint } from '../stages/useStageAnchorMoverViewPoint';
 import { Vec2 } from 'application/core/units';
-import { RenderViewListeners, artboardTransformAtom } from 'dataflow';
+import { RenderViewListeners, stageTransformAtom } from 'dataflow';
 
 const useRenderViewTouchGesture = () => {
-    const changeArtboardAnchorFromViewPoint = useArtboardAnchorMoverViewPoint();
-    const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
+    const changeStageAnchorFromViewPoint = useStageAnchorMoverViewPoint();
+    const setStageTransform = useSetRecoilState(stageTransformAtom);
 
     let PinchPreviousOffset = 0;
     let PinchPreviousOrigin = new Vec2(0, 0);
@@ -26,7 +26,7 @@ const useRenderViewTouchGesture = () => {
             PinchPreviousAngle = 0;
             return;
         }
-        changeArtboardAnchorFromViewPoint(new Vec2(origin), true);
+        changeStageAnchorFromViewPoint(new Vec2(origin), true);
 
         const zoom = offset[0] / PinchPreviousOffset || 1;
 
@@ -38,7 +38,7 @@ const useRenderViewTouchGesture = () => {
         const translateCurrent = (currentLoc: Vec2) =>
             currentLoc.add(new Vec2(origin)).sub(PinchPreviousOrigin);
 
-        setArtboardTransform(({ rotation, scale, location, ...param }) => {
+        setStageTransform(({ rotation, scale, location, ...param }) => {
             return {
                 ...param,
                 rotation: rotateCurrent(rotation),

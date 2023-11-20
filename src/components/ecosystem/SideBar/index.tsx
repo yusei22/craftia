@@ -5,7 +5,7 @@ import PanToolIcon from '@mui/icons-material/PanTool';
 import { MouseEventHandler, useState } from 'react';
 import IconButton from 'components/atoms/IconButton';
 import Container from 'components/layout/Container';
-import { ArtboardMoveModeButtonWrapper } from 'components/organisms/ArtboardMoveModeButtonWrapper';
+import { StageMoveModeButtonWrapper } from 'components/organisms/StageMoveModeButtonWrapper';
 import { PenModeButtonWrapper } from 'components/organisms/PenModeButtonWrapper';
 import { SpriteMoveModeButtonWrapper } from 'components/organisms/SpriteMoveModeButtonWrapper';
 import { SpriteSelectModeButtonWrapper } from 'components/organisms/SpriteSelectModeButtonWrapper';
@@ -29,7 +29,7 @@ const SideBarIcon = ({ children, isActive, onClick }: SideBarIconProps) => {
         </IconButton>
     );
 };
-type SideBarButtonNames = 'select' | 'pen' | 'artboardPan' | 'spriteMove';
+type SideBarButtonNames = 'select' | 'pen' | 'stagePan' | 'spriteMove';
 
 export const SideBar = () => {
     const [active, setActive] = useState<SideBarButtonNames | null>(null);
@@ -66,16 +66,16 @@ export const SideBar = () => {
                     <ModeEditOutlineIcon></ModeEditOutlineIcon>
                 </SideBarIcon>
             </PenModeButtonWrapper>
-            <ArtboardMoveModeButtonWrapper>
+            <StageMoveModeButtonWrapper>
                 <SideBarIcon
                     onClick={() => {
-                        setActive('artboardPan');
+                        setActive('stagePan');
                     }}
-                    isActive={active === 'artboardPan'}
+                    isActive={active === 'stagePan'}
                 >
                     <PanToolIcon></PanToolIcon>
                 </SideBarIcon>
-            </ArtboardMoveModeButtonWrapper>
+            </StageMoveModeButtonWrapper>
             <SpriteMoveModeButtonWrapper>
                 <SideBarIcon
                     onClick={() => {

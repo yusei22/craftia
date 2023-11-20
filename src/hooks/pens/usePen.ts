@@ -6,12 +6,12 @@ import { PenWorker } from 'application/pens/Pen';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
 import { RenderViewListeners, spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
-import { useViewPointToArtboardPointConverter } from 'hooks/artboards/useViewPointToArtboardPointConverter';
+import { useViewPointToStagePointConverter } from 'hooks/stages/useViewPointToStagePointConverter';
 import { useActiveSpritesReader } from 'hooks/sprites/useActiveSpritesReader';
 
 const usePen = () => {
     const getActiveSprite = useActiveSpritesReader();
-    const viewPointToArtboardPoint = useViewPointToArtboardPointConverter();
+    const viewPointToStagePoint = useViewPointToStagePointConverter();
     const getActivePen = useGetActivePen();
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
     const saveSpriteTree = useSpriteTreeSaver();
@@ -40,12 +40,12 @@ const usePen = () => {
         if (!activeSprite) return;
 
         if (activeSprite instanceof Rasterizedmage) {
-            const artboardPoint = viewPointToArtboardPoint(new Vec2(xy));
+            const stagePoint = viewPointToStagePoint(new Vec2(xy));
 
             targetID = activeSprite.prefs.id;
             penWorker = getActivePen().getWorker(activeSprite);
             penWorker.pointerDown({
-                pointerLoc: artboardPoint,
+                pointerLoc: stagePoint,
                 pressure: 0.5,
             });
 
@@ -59,10 +59,10 @@ const usePen = () => {
         }
         if (!penWorker) return;
 
-        const artboardPoint = viewPointToArtboardPoint(new Vec2(xy));
+        const stagePoint = viewPointToStagePoint(new Vec2(xy));
 
         penWorker.pointerDrag({
-            pointerLoc: artboardPoint,
+            pointerLoc: stagePoint,
             pressure: 0.5,
         });
 
@@ -72,10 +72,10 @@ const usePen = () => {
     const onDragEnd: RenderViewListeners['onDrag'] = useCallback(({ xy }) => {
         if (!penWorker) return;
 
-        const artboardPoint = viewPointToArtboardPoint(new Vec2(xy));
+        const stagePoint = viewPointToStagePoint(new Vec2(xy));
 
         penWorker.pointerUp({
-            pointerLoc: artboardPoint,
+            pointerLoc: stagePoint,
             pressure: 0.5,
         });
 

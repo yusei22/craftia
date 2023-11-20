@@ -1,3 +1,3 @@
-export * from './artboard';
+export * from './stage';
 export * from './renderview';
 export * from './sprites';

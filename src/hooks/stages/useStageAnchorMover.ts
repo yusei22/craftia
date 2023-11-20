@@ -2,14 +2,14 @@ import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { Vec2 } from 'application/core/units';
 import { rotatePoint } from 'application/utils/BoardGeometry';
-import { artboardTransformAtom } from 'dataflow';
+import { stageTransformAtom } from 'dataflow';
 
-export const useArtboardAnchorMover = () => {
-    const setArtboardTrans = useSetRecoilState(artboardTransformAtom);
+export const useStageAnchorMover = () => {
+    const setStageTrans = useSetRecoilState(stageTransformAtom);
 
     return useCallback((newAnchor: Vec2, freezeTransform: boolean) => {
         if (freezeTransform) {
-            setArtboardTrans(({ anchor, location, scale, rotation }) => {
+            setStageTrans(({ anchor, location, scale, rotation }) => {
                 const AnchorsDiff = new Vec2(
                     (newAnchor.x - anchor.x) * scale.x,
                     (newAnchor.y - anchor.y) * scale.y
@@ -24,7 +24,7 @@ export const useArtboardAnchorMover = () => {
                 };
             });
         } else {
-            setArtboardTrans(({ location, scale, rotation }) => {
+            setStageTrans(({ location, scale, rotation }) => {
                 return {
                     anchor: newAnchor,
                     location,

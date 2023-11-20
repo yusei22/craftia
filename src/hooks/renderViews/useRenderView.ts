@@ -3,24 +3,24 @@ import { useRecoilValue } from 'recoil';
 import { RenderView } from 'application/render/RenderView';
 import { SpritesRenderer } from 'application/render/SpritesRenderer';
 import {
-    artboardTransformAtom,
-    artboardResolutionAtom,
+    stageTransformAtom,
+    stageResolutionAtom,
     spriteTreeAtom,
     renderViewScaleAtom,
 } from 'dataflow';
 
 export const useRenderView = (context: CanvasRenderingContext2D | null) => {
     const [renderView, setRenderView] = useState<RenderView | null>(null);
-    const [artboardRenderer, setArtboardRenderer] = useState<SpritesRenderer | null>(null);
+    const [stageRenderer, setStageRenderer] = useState<SpritesRenderer | null>(null);
 
-    const artboardTransform = useRecoilValue(artboardTransformAtom);
-    const artboardResolution = useRecoilValue(artboardResolutionAtom);
+    const stageTransform = useRecoilValue(stageTransformAtom);
+    const stageResolution = useRecoilValue(stageResolutionAtom);
 
     const renderViewScale = useRecoilValue(renderViewScaleAtom);
     const sprites = useRecoilValue(spriteTreeAtom);
 
-    const renderArtboardRendererResult = () => {
-        if (artboardRenderer === null) {
+    const renderStageRendererResult = () => {
+        if (stageRenderer === null) {
             return;
         }
         if (renderView === null) {
@@ -28,26 +28,26 @@ export const useRenderView = (context: CanvasRenderingContext2D | null) => {
         }
         renderView.viewport(renderViewScale);
         renderView.clear();
-        renderView.clearRect(artboardTransform);
-        renderView.render(artboardRenderer.getResult(), artboardTransform);
+        renderView.clearRect(stageTransform);
+        renderView.render(stageRenderer.getResult(), stageTransform);
     };
 
     useEffect(() => {
         if (context === null) return;
-        setArtboardRenderer(new SpritesRenderer());
+        setStageRenderer(new SpritesRenderer());
         setRenderView(new RenderView({ context }));
     }, [context]);
 
     useEffect(() => {
-        if (artboardRenderer === null) {
+        if (stageRenderer === null) {
             return;
         }
-        artboardRenderer.viewport(artboardResolution);
-        artboardRenderer.render(sprites);
-        renderArtboardRendererResult();
-    }, [sprites, artboardRenderer, renderView]);
+        stageRenderer.viewport(stageResolution);
+        stageRenderer.render(sprites);
+        renderStageRendererResult();
+    }, [sprites, stageRenderer, renderView]);
 
     useEffect(() => {
-        renderArtboardRendererResult();
-    }, [renderViewScale, artboardTransform, artboardResolution, artboardRenderer, renderView]);
+        renderStageRendererResult();
+    }, [renderViewScale, stageTransform, stageResolution, stageRenderer, renderView]);
 };

@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { useArtboardAnchorMoverViewPoint } from '../artboards/useArtboardAnchorMoverViewPoint';
+import { useStageAnchorMoverViewPoint } from '../stages/useStageAnchorMoverViewPoint';
 import { Vec2 } from 'application/core/units';
 import { WHEEL_CLOSE_UP_DEGREES } from 'consts';
-import { RenderViewListeners, artboardTransformAtom } from 'dataflow';
+import { RenderViewListeners, stageTransformAtom } from 'dataflow';
 
 const useRenderViewWheelGesture = () => {
-    const changeArtboardAnchorFromViewPoint = useArtboardAnchorMoverViewPoint();
-    const setArtboardTransform = useSetRecoilState(artboardTransformAtom);
+    const changeStageAnchorFromViewPoint = useStageAnchorMoverViewPoint();
+    const setStageTransform = useSetRecoilState(stageTransformAtom);
 
     const onWheel: RenderViewListeners['onWheel'] = ({ delta, event }) => {
         event.preventDefault();
@@ -19,9 +19,9 @@ const useRenderViewWheelGesture = () => {
                 ? 1 + WHEEL_CLOSE_UP_DEGREES
                 : 1 - WHEEL_CLOSE_UP_DEGREES;
 
-        changeArtboardAnchorFromViewPoint(new Vec2(event.offsetX, event.offsetY), true);
+        changeStageAnchorFromViewPoint(new Vec2(event.offsetX, event.offsetY), true);
 
-        setArtboardTransform(({ scale, ...param }) => {
+        setStageTransform(({ scale, ...param }) => {
             return {
                 ...param,
                 scale: scale.times(zoom),

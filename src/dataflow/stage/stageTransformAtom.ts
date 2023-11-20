@@ -1,14 +1,14 @@
 import { atom } from 'recoil';
 import { Vec2 } from 'application/core/units';
-type ArtboardTransform = {
+export type StageTransform = {
     anchor: Vec2;
     location: Vec2;
     scale: Vec2;
     rotation: number;
 };
 
-const artboardTransformAtom = atom<ArtboardTransform>({
-    key: 'artboardTransform',
+export const stageTransformAtom = atom<StageTransform>({
+    key: 'stageTransformAtom',
     default: {
         anchor: new Vec2(0.5, 0.5),
         location: new Vec2(0, 0),
@@ -16,5 +16,3 @@ const artboardTransformAtom = atom<ArtboardTransform>({
         rotation: 0,
     },
 });
-export type { ArtboardTransform };
-export { artboardTransformAtom };

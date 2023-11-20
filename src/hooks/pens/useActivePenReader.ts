@@ -5,9 +5,9 @@ import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 const useGetActivePen = () => {
     const getActivePenStateSync = useRecoilValueSyncReader<Pen>();
-    const getArtboardTransSync = useCallback(() => {
+    const getStageTransSync = useCallback(() => {
         return getActivePenStateSync(penAtom);
     }, []);
-    return getArtboardTransSync;
+    return getStageTransSync;
 };
 export { useGetActivePen };
