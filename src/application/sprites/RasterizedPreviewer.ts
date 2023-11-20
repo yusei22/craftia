@@ -17,11 +17,12 @@ export class RasterizedPreviewer extends ImagePreviewer {
     public setPreviewerPrefs(valOrUpdater: ValueUpdater<PreviewerPrefs> | PreviewerPrefs) {
         const newPrefs =
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
+
         return new RasterizedPreviewer(this.source, newPrefs);
     }
     public async createStatic() {
         const image = await new PreviewRasterizer().rasterize(this);
-        return new Rasterizedmage(image, this.prefs);
+        return new Rasterizedmage(image, this.prefs, null);
     }
 }
 
