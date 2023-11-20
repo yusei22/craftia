@@ -5,10 +5,10 @@ import PanToolIcon from '@mui/icons-material/PanTool';
 import { MouseEventHandler, useState } from 'react';
 import IconButton from 'components/atoms/IconButton';
 import Container from 'components/layout/Container';
-import { StageMoveModeButtonWrapper } from 'components/organisms/StageMoveModeButtonWrapper';
-import { PenModeButtonWrapper } from 'components/organisms/PenModeButtonWrapper';
-import { SpriteMoveModeButtonWrapper } from 'components/organisms/SpriteMoveModeButtonWrapper';
-import { SpriteSelectModeButtonWrapper } from 'components/organisms/SpriteSelectModeButtonWrapper';
+import { PenTool } from 'components/organisms/Tools/PenTool';
+import { SpriteMoveTool } from 'components/organisms/Tools/SpriteMoveTool';
+import { SpriteSelectTool } from 'components/organisms/Tools/SpriteSelectTool';
+import { StageMoveTool } from 'components/organisms/Tools/StageMoveTool';
 
 type SideBarIconProps = {
     children?: React.ReactNode;
@@ -46,7 +46,7 @@ export const SideBar = () => {
                 padding: '20px 0px',
             })}
         >
-            <SpriteSelectModeButtonWrapper>
+            <SpriteSelectTool>
                 <SideBarIcon
                     onClick={() => {
                         setActive('select');
@@ -55,8 +55,8 @@ export const SideBar = () => {
                 >
                     <NearMeIcon></NearMeIcon>
                 </SideBarIcon>
-            </SpriteSelectModeButtonWrapper>
-            <PenModeButtonWrapper>
+            </SpriteSelectTool>
+            <PenTool>
                 <SideBarIcon
                     onClick={() => {
                         setActive('pen');
@@ -65,8 +65,8 @@ export const SideBar = () => {
                 >
                     <ModeEditOutlineIcon></ModeEditOutlineIcon>
                 </SideBarIcon>
-            </PenModeButtonWrapper>
-            <StageMoveModeButtonWrapper>
+            </PenTool>
+            <StageMoveTool>
                 <SideBarIcon
                     onClick={() => {
                         setActive('stagePan');
@@ -75,8 +75,8 @@ export const SideBar = () => {
                 >
                     <PanToolIcon></PanToolIcon>
                 </SideBarIcon>
-            </StageMoveModeButtonWrapper>
-            <SpriteMoveModeButtonWrapper>
+            </StageMoveTool>
+            <SpriteMoveTool>
                 <SideBarIcon
                     onClick={() => {
                         setActive('spriteMove');
@@ -85,7 +85,7 @@ export const SideBar = () => {
                 >
                     <OpenWithIcon></OpenWithIcon>
                 </SideBarIcon>
-            </SpriteMoveModeButtonWrapper>
+            </SpriteMoveTool>
         </Container>
     );
 };

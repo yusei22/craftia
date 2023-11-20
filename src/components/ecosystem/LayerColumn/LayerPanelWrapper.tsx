@@ -2,7 +2,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Sprite, SpritePrefs } from 'application/sprites/Sprite';
 import Wrapper from 'components/layout/Wrapper';
-import { LayerPanel } from 'components/organisms/LayerPanel';
+import { LayerPanel } from 'components/organisms/LayerPanels/LayerPanel';
 
 export const LayerPanelWrapper = <T extends SpritePrefs>({
     id,

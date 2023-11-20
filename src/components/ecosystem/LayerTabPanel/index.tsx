@@ -1,11 +1,11 @@
 import Label from 'components/atoms/Label';
 import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
-import { LayerBlendModeSelector } from 'components/organisms/LayerBlendModeSelector';
-import { LayerCreateButton } from 'components/organisms/LayerCreateButton';
-import { LayerDeleteButton } from 'components/organisms/LayerDeleteButton';
-import { LayerOpacitySlider } from 'components/organisms/LayerOpacitySlider';
-import { LayerShadowCheakBox } from 'components/organisms/LayerShadowInputs/LayerShadowCheakBox';
+import { LayerBlendModeSelector } from 'components/organisms/Layers/LayerBlendModeSelector';
+import { LayerCreateButton } from 'components/organisms/Layers/LayerCreateButton';
+import { LayerDeleteButton } from 'components/organisms/Layers/LayerDeleteButton';
+import { LayerOpacitySlider } from 'components/organisms/Layers/LayerOpacitySlider';
+import { LayerShadowCheakBox } from 'components/organisms/Layers/LayerShadowCheakBox';
 
 export const LayerTabPanel = () => {
     return (

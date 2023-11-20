@@ -1,8 +1,8 @@
 import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
-import { ExportButton } from 'components/organisms/ExportButton';
-import { RenoButton } from 'components/organisms/RenoButton';
-import { UndoButton } from 'components/organisms/UndoButton';
+import { RenoButton } from 'components/organisms/Edits/RenoButton';
+import { UndoButton } from 'components/organisms/Edits/UndoButton';
+import { ExportButton } from 'components/organisms/Files/ExportButton';
 
 export const FileTabPanel = () => {
     return (

@@ -1,8 +1,8 @@
-import { PenBlendModeSelector } from '../../organisms/PenParamInputs/PenBlendModeSelector';
-import { PenOpacitySlider } from '../../organisms/PenParamInputs/PenOpacitySlider';
-import { PenRealTimeStabiCheaxkBox } from '../../organisms/PenParamInputs/PenRealTimeStabiCheaxkBox';
-import { PenStabilizationSlider } from '../../organisms/PenParamInputs/PenStabilizationSlider';
-import { PenWidthSlider } from '../../organisms/PenParamInputs/PenWidthSlider';
+import { PenBlendModeSelector } from '../../organisms/Pens/PenBlendModeSelector';
+import { PenOpacitySlider } from '../../organisms/Pens/PenOpacitySlider';
+import { PenRealTimeStabiCheaxkBox } from '../../organisms/Pens/PenRealTimeStabiCheaxkBox';
+import { PenStabilizationSlider } from '../../organisms/Pens/PenStabilizationSlider';
+import { PenWidthSlider } from '../../organisms/Pens/PenWidthSlider';
 import Container from 'components/layout/Container';
 import { TabSection } from 'components/molecules/TabSection';
 
