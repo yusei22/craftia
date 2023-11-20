@@ -1,3 +1,4 @@
+import { BaseSprite, BaseSpritePrefs } from './BaseSprite';
 import { Rasterizedmage } from './RasterizedImage';
 import { SmartImage } from './SmartImage';
 import { FillLinerGradient, FillPattern, FillRadialGradient, FillSolid } from './SpriteFill';
@@ -9,8 +10,6 @@ import {
     ContextTextConfig,
 } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
-import { Vec, Vec2 } from 'application/core/units';
-import { BlendMode } from 'types';
 
 /**
  * スプライトの塗りつぶし設定
@@ -42,45 +41,6 @@ export interface SpriteConfig {
 }
 
 /**
- * スプライト環境設定で許容されるプロパティ値
- */
-export type SpritePrefsValue =
-    | undefined
-    | string
-    | number
-    | boolean
-    | null
-    | Vec
-    | SpriteFillStyle
-    | ReadonlyArray<SpritePrefsValue>;
-
-/**
- * スプライトの環境設定
- */
-export interface SpritePrefs {
-    readonly [key: string]: SpritePrefsValue;
-    /**id */
-    readonly id: string;
-    /**名前 */
-    readonly name: string;
-    /**基準点 */
-    readonly anchor: Vec2;
-    /**グローバル位置 */
-    readonly globalLocation: Vec2;
-    /**可視 */
-    readonly visible: boolean;
-    /**ブレンドモード */
-    readonly blendMode: BlendMode;
-    /**透明度 */
-    readonly opacity: number;
-    /**影のぼかし */
-    readonly shadowBlur: number | null;
-    /**影の色 */
-    readonly shadowColor: string | null;
-    /**影の位置 */
-    readonly shadowOffset: Vec2 | null;
-}
-/**
  * スプライトの環境設定のアップデータ
  */
 export type SpritePrefsUpdater<T extends SpritePrefs> = ValueUpdater<T>;
@@ -101,92 +61,25 @@ export type StaticSprite = Rasterizedmage | SmartImage | Arc | Rect;
 export type StaticSpriteTree = StaticSprite[];
 
 /**
+ * スプライトの環境設定
+ */
+export interface SpritePrefs extends BaseSpritePrefs {
+    /**id */
+    readonly id: string;
+    /**名前 */
+    readonly name: string;
+}
+
+/**
  * 抽象クラス`Sprite`
  * ターゲットのContext2Dに対する描画処理の内容を提供
  */
-export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
-    /**contextプロパティの設定 */
-    readonly config: SpriteConfig;
-    /**環境設定 */
-    readonly prefs: T;
-
-    protected cacheImage?: OffscreenCanvas | HTMLCanvasElement | ImageBitmap;
-
-    /**
-     * コンストラクタ
-     * @param config 描画時の設定
-     * @param prefs スプライトの環境設定
-     */
-    constructor(config: SpriteConfig, prefs: T) {
-        this.config = config;
+export abstract class Sprite<T extends SpritePrefs = SpritePrefs> extends BaseSprite {
+    public readonly prefs: T;
+    constructor(prefs: T) {
+        super();
         this.prefs = prefs;
     }
-
-    /**
-     * contextのプロパティをセット
-     * @param context ターゲットのcontext
-     */
-    private setconfig(context: AbstractContext2D) {
-        context
-            .setLineConfig(this.config.line)
-            .setShadowConfig(this.config.shadow)
-            .setTextConfig(this.config.text)
-            .setGlobalAlpha(this.config.globalAlpha)
-            .setGlobalCompositeOperation(this.config.globalCompositeOperation)
-            .setFillStyle(
-                this.config.fillStyle === null
-                    ? null
-                    : this.config.fillStyle.createCanvasFillStyle(context)
-            )
-            .setStrokeStyle(
-                this.config.strokeStyle === null
-                    ? null
-                    : this.config.strokeStyle.createCanvasFillStyle(context)
-            );
-    }
-
-    /**
-     * スプライトを描画
-     * @param context ターゲットのContext2D
-     * @returns
-     */
-    public draw(context: AbstractContext2D) {
-        if (!this.prefs.visible) return;
-
-        context.resetTransform();
-        this.setconfig(context);
-        this.drawFunc(context);
-    }
-
-    /**
-     * 拡大縮小してスプライトを描画
-     * @param context ターゲットのContext2D
-     * @param zoom 拡大縮小率
-     * @returns
-     */
-    public drawZoom(context: AbstractContext2D, zoom: number) {
-        if (!this.prefs.visible) return;
-
-        context.resetTransform();
-        this.setconfig(context);
-        this.drawZoomFunc(context, zoom);
-    }
-
-    //public drawChacheFunc(context: AbstractContext2D) {}
-
-    /**
-     * 描画時のスプライト固有の描画処理
-     * @param context ターゲットのContext2D
-     */
-    protected abstract drawFunc(context: AbstractContext2D): void;
-
-    /**
-     * 拡大縮小して描画するときのスプライト固有の描画処理
-     * @param context ターゲットのContext2D
-     * @param zoom 拡大縮小率
-     */
-    protected abstract drawZoomFunc(context: AbstractContext2D, zoom: number): void;
-
     /**
      * スプライト環境設定をセットする
      * @param valOrUpdater 更新関数または新規スプライト環境設定
@@ -197,14 +90,21 @@ export abstract class Sprite<T extends SpritePrefs = SpritePrefs> {
     ): Sprite<T>;
 
     /**
-     * スプライトの始点を得る
-     */
-    public abstract getStartPoint(): Vec2;
-
-    /**
      * 静的スプライトを得る
      */
     public abstract createStatic(): Promise<StaticSprite>;
+
+    public draw(context: AbstractContext2D, contextAux: AbstractContext2D): void {
+        if (!this.prefs.visible) return;
+
+        super.draw(context, contextAux);
+    }
+
+    public drawZoom(context: AbstractContext2D, contextAux: AbstractContext2D, zoom: number): void {
+        if (!this.prefs.visible) return;
+
+        super.drawZoom(context, contextAux, zoom);
+    }
 }
 
 /**
