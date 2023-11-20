@@ -1,47 +1,32 @@
+import { Cache } from '../Cache';
 import { Shape, ShapePrefs } from '../Shape';
-import { SpriteConfig, SpritePrefs } from '../Sprite';
+import { SpritePrefs } from '../Sprite';
 import { AbstractContext2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
+import { Vec2 } from 'application/core/units';
 
 interface ArcPrefs extends ShapePrefs {
     readonly startAngle: number;
     readonly endAngle: number;
 }
 class Arc extends Shape<ArcPrefs> {
-    constructor(prefs: ArcPrefs) {
-        const config: SpriteConfig = {
-            line: {
-                lineCap: prefs.strokeCap,
-                lineDashOffset: prefs.strokeDashOffset,
-                lineJoin: prefs.strokeJoin,
-                lineWidth: prefs.strokeWidth,
-            },
-            shadow: {
-                shadowBlur: prefs.shadowBlur,
-                shadowColor: prefs.shadowColor,
-                shadowOffset: prefs.shadowOffset,
-            },
-            text: null,
-            fillStyle: null,
-            globalAlpha: prefs.opacity,
-            globalCompositeOperation: prefs.blendMode,
-            strokeStyle: null,
-        };
-        super(config, prefs);
+    constructor(prefs: ArcPrefs, cache: Cache<ArcPrefs> | null) {
+        super(prefs, cache);
     }
-    public setSpritePrefs(valOrUpdater: ValueUpdater<SpritePrefs> | SpritePrefs) {
+
+    public setSpritePrefs(valOrUpdater: ValueUpdater<SpritePrefs> | SpritePrefs): Arc {
         const newPrefs =
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
         const newRasterizedImagePrefs = { ...this.prefs, ...newPrefs };
 
-        return new Arc(newRasterizedImagePrefs);
+        return new Arc(newRasterizedImagePrefs, this.cache);
     }
     public setShapePrefs(valOrUpdater: ShapePrefs | ValueUpdater<ShapePrefs>): Shape<ArcPrefs> {
         const newPrefs =
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
         const newRasterizedImagePrefs = { ...this.prefs, ...newPrefs };
 
-        return new Arc(newRasterizedImagePrefs);
+        return new Arc(newRasterizedImagePrefs, this.cache);
     }
 
     /**
@@ -53,14 +38,43 @@ class Arc extends Shape<ArcPrefs> {
         const newPrefs =
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater;
 
-        return new Arc(newPrefs);
+        return new Arc(newPrefs, this.cache);
     }
 
-    public drawFunc(context: AbstractContext2D): void {
+    public getMaxSize() {
+        return this.prefs.scale
+            .add(new Vec2(this.prefs.strokeWidth || 0))
+            .add(new Vec2(this.prefs.shadowBlur || 0).times(2));
+    }
+    public createStatic() {
+        return new Promise<Arc>((resolve) => {
+            resolve(this);
+        });
+    }
+    public rasterizeFunc(context: AbstractContext2D): void {
+        const rasterizeSize = this.prefs.scale.add(new Vec2(this.prefs.strokeWidth || 0));
+
+        context.viewport(rasterizeSize);
+
+        this.setconfig(context, {
+            line: {
+                lineCap: this.prefs.strokeCap,
+                lineDashOffset: this.prefs.strokeDashOffset,
+                lineJoin: this.prefs.strokeJoin,
+                lineWidth: this.prefs.strokeWidth,
+            },
+            shadow: null,
+            text: null,
+            fillStyle: this.prefs.fillStyle,
+            globalAlpha: null,
+            globalCompositeOperation: null,
+            strokeStyle: this.prefs.strokeStyle,
+        });
+
         context.beginPath();
         context.ellipse(
-            this.prefs.globalLocation,
-            this.prefs.scale,
+            context.size.times(0.5),
+            this.prefs.scale.times(0.5),
             this.prefs.rotation,
             this.prefs.startAngle,
             this.prefs.endAngle
@@ -68,19 +82,8 @@ class Arc extends Shape<ArcPrefs> {
         context.fill();
         context.stroke();
     }
-    public drawZoomFunc(context: AbstractContext2D, zoom: number) {
-        const _arc = this.setArcPrefs((curVal) => ({
-            ...curVal,
-            scale: curVal.scale.times(zoom),
-            globalLocation: curVal.globalLocation.times(zoom),
-            strokeWidth: curVal.strokeWidth ? curVal.strokeWidth * zoom : null,
-        }));
-        _arc.draw(context);
-    }
-    public createStatic() {
-        return new Promise<Arc>((resolve) => {
-            resolve(this);
-        });
+    public copy() {
+        return new Arc(this.prefs, null);
     }
 }
 export { Arc };
