@@ -30,6 +30,7 @@ const usePen = () => {
             return newTree;
         });
     };
+
     const onDragStart: RenderViewListeners['onDrag'] = useCallback(({ xy, touches }) => {
         if (touches > 1) {
             return;
@@ -47,7 +48,7 @@ const usePen = () => {
                 pointerLoc: artboardPoint,
                 pressure: 0.5,
             });
-            console.log(penWorker);
+
             setPenWorkerPreviewSprite();
         }
     }, []);
@@ -59,22 +60,28 @@ const usePen = () => {
         if (!penWorker) return;
 
         const artboardPoint = viewPointToArtboardPoint(new Vec2(xy));
+
         penWorker.pointerDrag({
             pointerLoc: artboardPoint,
             pressure: 0.5,
         });
+
         setPenWorkerPreviewSprite();
     }, []);
+
     const onDragEnd: RenderViewListeners['onDrag'] = useCallback(({ xy }) => {
         if (!penWorker) return;
 
         const artboardPoint = viewPointToArtboardPoint(new Vec2(xy));
+
         penWorker.pointerUp({
             pointerLoc: artboardPoint,
             pressure: 0.5,
         });
+
         setPenWorkerPreviewSprite();
         saveSpriteTree();
+
         penWorker = null;
         targetID = '';
     }, []);
