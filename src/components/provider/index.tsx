@@ -1,3 +1,4 @@
+import { FilterGLProvider } from './FilterGLProvider';
 import { PenProvider } from './PenProvider';
 import { RenderViewListenerProvider } from './RenderViewListenerProvider';
 import { RenderViewProvider } from './RenderViewProvider';
@@ -7,9 +8,11 @@ const Provider = ({ children }: { children?: React.ReactNode }) => {
     return (
         <RenderViewProvider>
             <RenderViewListenerProvider>
-                <PenProvider>
-                    <SpriteTreeProvider>{children}</SpriteTreeProvider>
-                </PenProvider>
+                <FilterGLProvider>
+                    <PenProvider>
+                        <SpriteTreeProvider>{children}</SpriteTreeProvider>
+                    </PenProvider>
+                </FilterGLProvider>
             </RenderViewListenerProvider>
         </RenderViewProvider>
     );
