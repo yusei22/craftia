@@ -1,4 +1,4 @@
-import { IVec } from './Vec';
+import { IVec, Vec } from './Vec';
 export class Vec2 implements IVec {
     readonly x: number;
     readonly y: number;
@@ -47,8 +47,8 @@ export class Vec2 implements IVec {
     public dot(v: Vec2): number {
         return this.x * v.x + this.y * v.y;
     }
-    public equal(v: Vec2): boolean {
-        return v.x === this.x && v.y === this.y;
+    public equal(v: Vec): boolean {
+        return v instanceof Vec2 && v.x === this.x && v.y === this.y;
     }
     public distance(v: Vec2): number {
         return Math.sqrt((v.x - this.x) ** 2 + (v.y - this.y) ** 2);
