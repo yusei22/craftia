@@ -9,15 +9,15 @@ import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 export interface NormalPenPrefs extends PenPrefs {}
 
 export class NormalPen extends Pen<NormalPenPrefs> {
-    constructor(artboardSize: Vec2, prefs: NormalPenPrefs) {
-        super(artboardSize, prefs);
+    constructor(stageSize: Vec2, prefs: NormalPenPrefs) {
+        super(stageSize, prefs);
     }
     public getWorker(rasterizedImage: Rasterizedmage): NormalPenWorker {
-        return new NormalPenWorker(this.artboardSize, rasterizedImage, this.prefs);
+        return new NormalPenWorker(this.stageSize, rasterizedImage, this.prefs);
     }
     public setPrefs = (valOrUpdater: ValueUpdater<NormalPenPrefs>) => {
         return new NormalPen(
-            this.artboardSize,
+            this.stageSize,
             typeof valOrUpdater === 'function' ? valOrUpdater(this.prefs) : valOrUpdater
         );
     };
@@ -50,8 +50,8 @@ export class NormalPenWorker extends ContextPenWorker {
     private readonly stabilizer: DeferredStabilizer | RealTimeStabilizer;
     private readonly targetSpriteVisible: Rasterizedmage;
 
-    constructor(artboardSize: Vec2, targetSprite: Rasterizedmage, prefs: NormalPenPrefs) {
-        super(targetSprite, artboardSize);
+    constructor(stageSize: Vec2, targetSprite: Rasterizedmage, prefs: NormalPenPrefs) {
+        super(targetSprite, stageSize);
         this.targetSpriteVisible = this.targetSprite.copy().setSpritePrefs((culVal) => ({
             ...culVal,
             shadowBlur: null,
@@ -66,8 +66,8 @@ export class NormalPenWorker extends ContextPenWorker {
             ? new RealTimeStabilizer(this.prefs.stabilization)
             : new DeferredStabilizer(this.prefs.stabilization);
 
-        this.baseContext.viewport(artboardSize);
-        this.lineContext.viewport(artboardSize);
+        this.baseContext.viewport(stageSize);
+        this.lineContext.viewport(stageSize);
         this.applyLine();
     }
     private applyLine() {
