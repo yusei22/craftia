@@ -40,7 +40,7 @@ export const ImportTabPanel = () => {
                     shadowBlur: 0,
                     shadowColor: '#0000',
                     shadowOffset: new Vec2(0, 0),
-                });
+                },null);
 
                 setSpriteTree((curVal) => [...curVal, image]);
                 saveSpriteTree();
