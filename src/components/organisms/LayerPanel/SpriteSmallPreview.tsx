@@ -53,7 +53,7 @@ export const SpriteSmallPreview = <T extends SpritePrefs>({
         }));
 
         context2D.clear();
-        _sprite.drawZoom(context2D, zoom);
+        _sprite.drawZoom(context2D, new Context2D(), zoom);
     }, [context2D, sprite]);
 
     return (
