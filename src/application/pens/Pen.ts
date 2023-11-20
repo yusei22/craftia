@@ -37,9 +37,9 @@ export interface PenPrefs {
 
 export abstract class Pen<T extends PenPrefs = PenPrefs> {
     readonly prefs: T;
-    readonly artboardSize: Vec2;
-    constructor(artboardSize: Vec2, prefs: T) {
-        this.artboardSize = artboardSize;
+    readonly stageSize: Vec2;
+    constructor(stageSize: Vec2, prefs: T) {
+        this.stageSize = stageSize;
         this.prefs = prefs;
     }
     abstract getWorker(rasterizedImage: Rasterizedmage): PenWorker;
@@ -66,14 +66,14 @@ export abstract class ContextPenWorker extends PenWorker {
     protected readonly baseContext: Context2D;
     protected readonly lineContext: Context2D;
     protected readonly targetSprite: Rasterizedmage;
-    protected readonly artboardSize: Vec2;
+    protected readonly stageSize: Vec2;
 
-    constructor(targetSprite: Rasterizedmage, artboardSize: Vec2) {
+    constructor(targetSprite: Rasterizedmage, stageSize: Vec2) {
         super();
         this.baseContext = new Context2D();
         this.lineContext = new Context2D();
         this.targetSprite = targetSprite;
-        this.artboardSize = artboardSize;
+        this.stageSize = stageSize;
     }
     private setConfig(context: Context2D, config: ContextPenWorkerConfig) {
         context
