@@ -6,33 +6,27 @@ import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useRenderViewMouseGesture } from 'hooks/renderViews/useRenderViewMouseGesture';
 import { useRenderViewTouchGesture } from 'hooks/renderViews/useRenderViewTouchGesture';
 import { useRenderViewWheelGesture } from 'hooks/renderViews/useRenderViewWheelGesture';
-import { useSpriteHitDetection } from 'hooks/sprites/useSpriteHitDetection';
 import { useSpriteMover } from 'hooks/sprites/useSpriteMover';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
-const SpriteSelectModeButtonWrapper = ({ children }: { children?: React.ReactNode }) => {
+export const SpriteMoveTool = ({ children }: { children?: React.ReactNode }) => {
     const { onWheel } = useRenderViewWheelGesture();
     const { onPinch } = useRenderViewTouchGesture();
     const { onMove } = useRenderViewMouseGesture();
 
-    const moveSprite = useSpriteMover();
-    const setActiveSpriteIds = useSetRecoilState(activeSpriteIdsAtom);
-    const detectHitSprite = useSpriteHitDetection();
     const setRenderViewListeners = useSetRecoilState(renderViewListenersAtom);
-    const saveSpriteTree = useSpriteTreeSaver();
     const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
+    const moveSprite = useSpriteMover();
+    const saveSpriteTree = useSpriteTreeSaver();
 
     const onClick = () => {
         setRenderViewListeners({
             onPinch,
             onWheel,
-            onDrag: ({ delta, first, xy, touches, last }) => {
+            onDrag: ({ delta, event, touches, last }) => {
+                event.preventDefault();
+
                 if (touches > 1) {
-                    return;
-                }
-                if (first) {
-                    const hitSprite = detectHitSprite(new Vec2(xy));
-                    setActiveSpriteIds(hitSprite?.prefs.id ? [hitSprite?.prefs.id] : []);
                     return;
                 }
 
@@ -50,5 +44,3 @@ const SpriteSelectModeButtonWrapper = ({ children }: { children?: React.ReactNod
 
     return <Wrapper onClick={onClick}> {children} </Wrapper>;
 };
-
-export { SpriteSelectModeButtonWrapper };

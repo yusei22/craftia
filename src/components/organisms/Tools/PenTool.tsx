@@ -6,7 +6,7 @@ import { useRenderViewMouseGesture } from 'hooks/renderViews/useRenderViewMouseG
 import { useRenderViewTouchGesture } from 'hooks/renderViews/useRenderViewTouchGesture';
 import { useRenderViewWheelGesture } from 'hooks/renderViews/useRenderViewWheelGesture';
 
-const PenModeButtonWrapper = ({ children }: { children?: React.ReactNode }) => {
+export const PenTool = ({ children }: { children?: React.ReactNode }) => {
     const { onWheel } = useRenderViewWheelGesture();
     const { onPinch } = useRenderViewTouchGesture();
     const { onMove } = useRenderViewMouseGesture();
@@ -35,5 +35,3 @@ const PenModeButtonWrapper = ({ children }: { children?: React.ReactNode }) => {
 
     return <Wrapper onClick={onClick}> {children} </Wrapper>;
 };
-
-export { PenModeButtonWrapper };

@@ -6,27 +6,33 @@ import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useRenderViewMouseGesture } from 'hooks/renderViews/useRenderViewMouseGesture';
 import { useRenderViewTouchGesture } from 'hooks/renderViews/useRenderViewTouchGesture';
 import { useRenderViewWheelGesture } from 'hooks/renderViews/useRenderViewWheelGesture';
+import { useSpriteHitDetection } from 'hooks/sprites/useSpriteHitDetection';
 import { useSpriteMover } from 'hooks/sprites/useSpriteMover';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
-const SpriteMoveModeButtonWrapper = ({ children }: { children?: React.ReactNode }) => {
+export const SpriteSelectTool = ({ children }: { children?: React.ReactNode }) => {
     const { onWheel } = useRenderViewWheelGesture();
     const { onPinch } = useRenderViewTouchGesture();
     const { onMove } = useRenderViewMouseGesture();
 
-    const setRenderViewListeners = useSetRecoilState(renderViewListenersAtom);
-    const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
     const moveSprite = useSpriteMover();
+    const setActiveSpriteIds = useSetRecoilState(activeSpriteIdsAtom);
+    const detectHitSprite = useSpriteHitDetection();
+    const setRenderViewListeners = useSetRecoilState(renderViewListenersAtom);
     const saveSpriteTree = useSpriteTreeSaver();
+    const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
 
     const onClick = () => {
         setRenderViewListeners({
             onPinch,
             onWheel,
-            onDrag: ({ delta, event, touches, last }) => {
-                event.preventDefault();
-
+            onDrag: ({ delta, first, xy, touches, last }) => {
                 if (touches > 1) {
+                    return;
+                }
+                if (first) {
+                    const hitSprite = detectHitSprite(new Vec2(xy));
+                    setActiveSpriteIds(hitSprite?.prefs.id ? [hitSprite?.prefs.id] : []);
                     return;
                 }
 
@@ -44,4 +50,3 @@ const SpriteMoveModeButtonWrapper = ({ children }: { children?: React.ReactNode 
 
     return <Wrapper onClick={onClick}> {children} </Wrapper>;
 };
-export { SpriteMoveModeButtonWrapper };

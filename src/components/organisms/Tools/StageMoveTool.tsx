@@ -6,7 +6,7 @@ import { useRenderViewMouseGesture } from 'hooks/renderViews/useRenderViewMouseG
 import { useRenderViewTouchGesture } from 'hooks/renderViews/useRenderViewTouchGesture';
 import { useRenderViewWheelGesture } from 'hooks/renderViews/useRenderViewWheelGesture';
 
-export const StageMoveModeButtonWrapper = ({ children }: { children?: React.ReactNode }) => {
+export const StageMoveTool = ({ children }: { children?: React.ReactNode }) => {
     const { onWheel } = useRenderViewWheelGesture();
     const { onPinch } = useRenderViewTouchGesture();
     const { onMove } = useRenderViewMouseGesture();
