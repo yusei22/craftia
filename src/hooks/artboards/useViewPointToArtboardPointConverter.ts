@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Vec2 } from 'application/core/units';
-import { getArtBoardNormalizedPointFromViewPoint } from 'application/utils';
+import { BoardGeometry } from 'application/utils/BoardGeometry';
 import { ArtboardTransform, artboardResolutionAtom, artboardTransformAtom } from 'dataflow';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
@@ -12,13 +12,14 @@ export const useViewPointToArtboardPointConverter = () => {
         const artboardResolution = getArtobardResolutionSync(artboardResolutionAtom);
         const { anchor, location, scale, rotation } = getArtboardTransSync(artboardTransformAtom);
 
-        const artboardNormalizedPoint = getArtBoardNormalizedPointFromViewPoint(
-            anchor,
-            location,
-            scale,
-            rotation,
-            viewPoint
-        );
+        const artboardNormalizedPoint = new BoardGeometry()
+            .setBoardAnchor(anchor)
+            .setBoardGlobalLoc(location)
+            .setBoardScale(scale)
+            .setBoardRotation(rotation)
+            .setPinWithGlobal(viewPoint)
+            .getPinRelativeNormalized();
+
         return new Vec2(
             artboardNormalizedPoint.x * artboardResolution.x,
             artboardNormalizedPoint.y * artboardResolution.y
