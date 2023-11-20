@@ -4,6 +4,9 @@ export class OffscreenContext2D extends AbstractContext2D<OffscreenCanvasRenderi
     constructor(op: Context2DCreateOptions<OffscreenCanvasRenderingContext2D> = {}) {
         super(op.context ?? createCanvasAndContext2D(op).context);
     }
+    public getCanvas(): OffscreenCanvas {
+        return this.context.canvas;
+    }
 }
 
 function createCanvasAndContext2D(op?: CanvasRenderingContext2DSettings) {
