@@ -18,6 +18,6 @@ export class SmartImagePreviewer extends ImagePreviewer {
     }
     public async createStatic() {
         const image = await createImageBitmap(this.source);
-        return new SmartImage(image, this.prefs);
+        return new SmartImage(image, this.prefs, null);
     }
 }
