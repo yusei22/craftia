@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { searchSpritesFromIDs } from 'application/sprites';
-import Slider from 'components/molecules/Slider';
+import { NumberField } from 'components/molecules/NumberField';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
-import { useSpritesSetterIds } from 'hooks/sprites/useSritePrefsSetter';
+import { useSpritesSetterIds } from 'hooks/sprites/useSpritesSetterIds';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
-export const LayerOpacitySlider = () => {
+export type LayerOpacitySliderProps = {
+    className?: string;
+};
+
+export const LayerOpacitySlider = ({ className }: LayerOpacitySliderProps) => {
     const [opacity, setOpacity] = useState(0);
 
     const spriteTree = useRecoilValue(spriteTreeAtom);
@@ -49,14 +53,19 @@ export const LayerOpacitySlider = () => {
 
     return (
         <>
-            <Slider
-                uniqueId="LayerOpacitySlider"
+            <NumberField
+                className={className}
+                css={{
+                    flexFlow: 'column',
+                }}
+                id="LayerOpacitySlider"
                 setValue={onPenOpacityChange}
                 step={1}
                 value={opacity}
                 min={0}
                 max={100}
-            ></Slider>
+                label="不透明度："
+            ></NumberField>
         </>
     );
 };
