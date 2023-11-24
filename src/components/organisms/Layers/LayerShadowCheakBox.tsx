@@ -4,7 +4,7 @@ import { SpriteTree, searchSpritesFromIDs } from 'application/sprites';
 import Checkbox from 'components/molecules/Checkbox';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
-import { useSpritesSetterIds } from 'hooks/sprites/useSritePrefsSetter';
+import { useSpritesSetterIds } from 'hooks/sprites/useSpritesSetterIds';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 export const LayerShadowCheakBox = () => {
@@ -41,7 +41,7 @@ export const LayerShadowCheakBox = () => {
     return (
         <Checkbox
             size="sm"
-            uniqueId="LayerShadowCheakBox"
+            id="LayerShadowCheakBox"
             label="シャドウ"
             checked={getShadowCheaked(spriteTree, activeIds)}
             setChecked={onChange}
