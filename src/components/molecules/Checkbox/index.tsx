@@ -5,33 +5,34 @@ import Container from 'components/layout/Container';
 export type CheckboxSize = keyof Theme['fontSize'];
 
 export type CheckboxProps = {
-    uniqueId: string;
+    id: string;
     size?: CheckboxSize;
     label?: string;
     value?: string | number | readonly string[];
     checked?: boolean;
+    className?: string;
     setChecked?: (cheacked: boolean) => void;
 };
 
-const Checkbox = ({ size = 'md', ...props }: CheckboxProps) => {
+const Checkbox = ({ size = 'md', className, ...props }: CheckboxProps) => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => [
         props.setChecked?.(e.currentTarget.checked),
     ];
     return (
-        <Container>
+        <Container className={className}>
             <input
                 checked={props.checked}
                 type="checkbox"
                 value={props.value}
                 onChange={onChange}
-                id={props.uniqueId}
+                id={props.id}
                 css={(theme) => ({
                     width: theme.fontSize[size],
                     height: theme.fontSize[size],
-                    accentColor: theme.colors.primaryDark,
+                    accentColor: theme.colors.primary600,
                 })}
             />
-            <Label size={size} htmlFor={props.uniqueId}>
+            <Label size={size} htmlFor={props.id}>
                 {props.label}
             </Label>
         </Container>
