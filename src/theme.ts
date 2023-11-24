@@ -10,29 +10,45 @@ declare module '@emotion/react' {
     }
 }
 interface Colors {
-    primaryBrighter: string;
-    primaryBright: string;
-    primaryMedium: string;
-    primaryDark: string;
-    primaryDarker: string;
+    primary100: string;
+    primary200: string;
+    primary300: string;
+    primary400: string;
+    primary500: string;
+    primary600: string;
+    primary700: string;
+    primary800: string;
+    primary900: string;
 
-    neutralBrighter: string;
-    neutralBright: string;
-    neutralMedium: string;
-    neutralDark: string;
-    neutralDarker: string;
+    neutral100: string;
+    neutral200: string;
+    neutral300: string;
+    neutral400: string;
+    neutral500: string;
+    neutral600: string;
+    neutral700: string;
+    neutral800: string;
+    neutral900: string;
 
-    warnBrighter: string;
-    warnBright: string;
-    warnMedium: string;
-    warnDark: string;
-    warnDarker: string;
+    warn100: string;
+    warn200: string;
+    warn300: string;
+    warn400: string;
+    warn500: string;
+    warn600: string;
+    warn700: string;
+    warn800: string;
+    warn900: string;
 
-    dangerBrighter: string;
-    dangerBright: string;
-    dangerMedium: string;
-    dangerDark: string;
-    dangerDarker: string;
+    danger100: string;
+    danger200: string;
+    danger300: string;
+    danger400: string;
+    danger500: string;
+    danger600: string;
+    danger700: string;
+    danger800: string;
+    danger900: string;
 
     text: string;
 
@@ -75,31 +91,47 @@ interface Space {
     xl: string;
 }
 
-const defaultTheme: Theme = {
+export const defaultTheme: Theme = {
     colors: {
-        primaryBrighter: '#DEECEF',
-        primaryBright: '#BDDADF',
-        primaryMedium: '#5AA2AE',
-        primaryDark: '#417B85',
-        primaryDarker: '#247C89',
+        primary100: '#f9f9f9',
+        primary200: '#f3f3f3',
+        primary300: '#e5e5e5',
+        primary400: '#dddddd',
+        primary500: '#bbbaba',
+        primary600: '#a6a4a4',
+        primary700: '#696969',
+        primary800: '#4f4e4e',
+        primary900: '#404040',
 
-        neutralBrighter: '#f9f9f9',
-        neutralBright: '#e5e5e5',
-        neutralMedium: '#a6a4a4',
-        neutralDark: '#505050',
-        neutralDarker: '#404040',
+        neutral100: '#f9f9f9',
+        neutral200: '#f3f3f3',
+        neutral300: '#e5e5e5',
+        neutral400: '#dddddd',
+        neutral500: '#bbbaba',
+        neutral600: '#a6a4a4',
+        neutral700: '#696969',
+        neutral800: '#4f4e4e',
+        neutral900: '#404040',
 
-        warnBrighter: '#FCEAD4',
-        warnBright: '#FAD5A9',
-        warnMedium: '#F29727',
-        warnDark: '#D87E1D',
-        warnDarker: '#B56415',
+        warn100: '#f9f4ed',
+        warn200: '#F9E2C8',
+        warn300: '#FAD5A9',
+        warn400: '#F7B15B',
+        warn500: '#F29727',
+        warn600: '#E58B1C',
+        warn700: '#D87E1D',
+        warn800: '#BD6E18',
+        warn900: '#914e0e',
 
-        dangerBrighter: '#FAD9E4',
-        dangerBright: '#F4B3C8',
-        dangerMedium: '#E44276',
-        dangerDark: '#B12C54',
-        dangerDarker: '#8F2143',
+        danger100: '#FAD9E4',
+        danger200: '#F4B3C8',
+        danger300: '#F596B5',
+        danger400: '#EC6C95',
+        danger500: '#E44276',
+        danger600: '#CE436D',
+        danger700: '#B12C54',
+        danger800: '#911F43',
+        danger900: '#71122F',
 
         black: '#000000',
         white: '#ffffff',
@@ -142,4 +174,87 @@ const defaultTheme: Theme = {
     },
 };
 
-export default defaultTheme;
+export const darkTheme: Theme = {
+    colors: {
+        primary100: '#f9f9f9',
+        primary200: '#f3f3f3',
+        primary300: '#e5e5e5',
+        primary400: '#dddddd',
+        primary500: '#bbbaba',
+        primary600: '#a6a4a4',
+        primary700: '#696969',
+        primary800: '#4f4e4e',
+        primary900: '#404040',
+
+        neutral100: '#f9f9f9',
+        neutral200: '#f3f3f3',
+        neutral300: '#e5e5e5',
+        neutral400: '#dddddd',
+        neutral500: '#bbbaba',
+        neutral600: '#a6a4a4',
+        neutral700: '#696969',
+        neutral800: '#4f4e4e',
+        neutral900: '#404040',
+
+        warn100: '#f9f4ed',
+        warn200: '#F9E2C8',
+        warn300: '#FAD5A9',
+        warn400: '#F7B15B',
+        warn500: '#F29727',
+        warn600: '#E58B1C',
+        warn700: '#D87E1D',
+        warn800: '#BD6E18',
+        warn900: '#914e0e',
+
+        danger100: '#FAD9E4',
+        danger200: '#F4B3C8',
+        danger300: '#F596B5',
+        danger400: '#EC6C95',
+        danger500: '#E44276',
+        danger600: '#CE436D',
+        danger700: '#B12C54',
+        danger800: '#911F43',
+        danger900: '#71122F',
+
+        black: '#000000',
+        white: '#ffffff',
+        text: '#ededed',
+
+        translucentMedium: '#ffffff33',
+        translucentDeep: '#ffffffcc',
+        translucentPale: '#ffffff14',
+    },
+    fontSize: {
+        xs: '12px',
+        sm: '14px',
+        md: '16px',
+        md2: '20px',
+        lg: '24px',
+        xl: '32px',
+    },
+    letterSpacing: {
+        xs: '0.06px',
+        sm: '0.07px',
+        md: '0.08px',
+        md2: '0.09px',
+        lg: '0.1px',
+        xl: '0.1px',
+    },
+    lineHeights: {
+        xs: '17px',
+        sm: '19px',
+        md: '22px',
+        md2: '26px',
+        lg: '28px',
+        xl: '37px',
+    },
+    space: {
+        xs: '4px',
+        sm: '8px',
+        md: '16px',
+        lg: '32px',
+        xl: '64px',
+    },
+};
+
+export default darkTheme;
