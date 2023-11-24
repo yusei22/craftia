@@ -4,7 +4,7 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { RecoilRoot } from 'recoil';
 import createEmotionCache from 'createEmotionCache';
-import defaultTheme from 'theme';
+import { defaultTheme } from 'theme';
 
 const GlobalStyles = () => (
     <Global
