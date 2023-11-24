@@ -3,11 +3,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 import { RasterizedImagePrefs, Rasterizedmage } from 'application/sprites';
-import Button from 'components/atoms/Button';
-import Typography from 'components/atoms/Typography';
+import Wrapper from 'components/layout/Wrapper';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 
-export const LayerCreateButton = () => {
+export type LayerCreateButtonProps = {
+    children?: React.ReactNode;
+    className?: string;
+};
+
+export const LayerCreateButton = ({ children, className }: LayerCreateButtonProps) => {
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
     const saveSpriteTree = useSpriteTreeSaver();
 
@@ -35,9 +39,9 @@ export const LayerCreateButton = () => {
     };
     return (
         <>
-            <Button onClick={onClick} variant="translucent">
-                <Typography variant="small">新規レイヤーを追加</Typography>
-            </Button>
+            <Wrapper onClick={onClick} className={className}>
+                {children}
+            </Wrapper>
         </>
     );
 };
