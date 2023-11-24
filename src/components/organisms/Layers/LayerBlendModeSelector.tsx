@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { Sprite, SpritePrefs, searchSpritesFromIDs } from 'application/sprites/Sprite';
 import { BLEND_MODE_LABEL, LAYER_BLEND_MODE_VALUE } from 'consts';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
+import { useSpritesSetterIds } from 'hooks/sprites/useSpritesSetterIds';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
+import { defaultTheme } from 'theme';
 import { BlendMode } from 'types';
 
 type BlendModeOption = {
@@ -21,13 +23,17 @@ const options: BlendModeOption[] = LAYER_BLEND_MODE_VALUE.map((value) => ({
 const getSpritesBlendMode = (ids: string[], spriteTree: Sprite<SpritePrefs>[]) => {
     return searchSpritesFromIDs(spriteTree, ids).map((sprite) => sprite.prefs.blendMode);
 };
+export type LayerBlendModeSelectorProps = {
+    className?: string;
+};
 
-export const LayerBlendModeSelector = () => {
+export const LayerBlendModeSelector = ({ className }: LayerBlendModeSelectorProps) => {
+    const setSpriteIds = useSpritesSetterIds();
     const getSpriteTreeSync = useRecoilValueSyncReader<Sprite<SpritePrefs>[]>();
-    const setSpriteTree = useSetRecoilState(spriteTreeAtom);
-    const activeSpriteId = useRecoilValue(activeSpriteIdsAtom);
     const saveSpriteTree = useSpriteTreeSaver();
     const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
+
+    const activeSpriteId = useRecoilValue(activeSpriteIdsAtom);
 
     const [selected, setSelected] = useState<BlendModeOption>({
         value: 'source-over',
@@ -51,19 +57,23 @@ export const LayerBlendModeSelector = () => {
     return (
         <>
             <Select<BlendModeOption>
-                id="penBlendModeSelector"
+                className={className}
+                instanceId="layerBlendModeSelector"
+                id="layerBlendModeSelector"
                 css={(theme) => ({
                     width: '180px',
                     marginTop: '5px',
                     fontSize: theme.fontSize.sm,
+                    color: theme.colors.neutral900,
                 })}
                 theme={(theme) => ({
                     ...theme,
-                    borderRadius: 5,
+                    borderRadius: 0,
                     colors: {
                         ...theme.colors,
-                        primary25: '#F3F3F3',
-                        primary: '#5AA2AE',
+
+                        primary25: defaultTheme.colors.neutral200,
+                        primary: defaultTheme.colors.neutral600,
                     },
                 })}
                 isSearchable={false}
@@ -71,16 +81,13 @@ export const LayerBlendModeSelector = () => {
                 options={options}
                 value={selected}
                 onChange={(value) => {
-                    const activeId = getActiveSpriteIds(activeSpriteIdsAtom)[0];
-                    setSpriteTree((sprites) =>
-                        sprites.map((sprite) =>
-                            sprite.prefs.id === activeId
-                                ? sprite.setSpritePrefs((prefs) => ({
-                                      ...prefs,
-                                      blendMode: value?.value ?? prefs.blendMode,
-                                  }))
-                                : sprite
-                        )
+                    const activeIds = getActiveSpriteIds(activeSpriteIdsAtom);
+
+                    setSpriteIds(activeIds, (sprite) =>
+                        sprite.setSpritePrefs((curPrefs) => ({
+                            ...curPrefs,
+                            blendMode: value?.value || curPrefs.blendMode,
+                        }))
                     );
                     setSelected((curVal) => ({
                         value: value?.value ?? curVal.value,
