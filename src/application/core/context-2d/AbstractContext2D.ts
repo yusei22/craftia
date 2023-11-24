@@ -101,8 +101,9 @@ export abstract class AbstractContext2D<
      * @param size 大きさ
      */
     public viewport(size: Vec2): this {
-        this.context.canvas.width = Math.max(size.x, 1);
-        this.context.canvas.height = Math.max(size.y, 1);
+        const _size = size.round();
+        this.context.canvas.width = Math.max(_size.x, 1);
+        this.context.canvas.height = Math.max(_size.y, 1);
         return this;
     }
     /**
