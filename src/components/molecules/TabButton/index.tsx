@@ -5,7 +5,7 @@ import { MQ } from 'mediaQuery';
 
 const tabButtonCss: Interpolation<Theme> = (theme) => ({
     fontSize: theme.fontSize.sm,
-    color: theme.colors.primaryDarker,
+    color: theme.colors.primary900,
     padding: '4px 13px',
     borderRadius: 0,
     ':active': {
@@ -28,7 +28,7 @@ export const TabButton = ({ icon, text, isAcrive }: TabButtonProps) => {
                     (theme) => ({
                         display: 'none',
                         borderBottom: isAcrive
-                            ? `2px solid ${theme.colors.primaryMedium}`
+                            ? `2px solid ${theme.colors.primary400}`
                             : `2px solid #0000`,
                         height: '30px',
                         [MQ.md]: {
@@ -46,7 +46,7 @@ export const TabButton = ({ icon, text, isAcrive }: TabButtonProps) => {
                     (theme) => ({
                         display: 'block',
                         borderBottom: isAcrive
-                            ? `2px solid ${theme.colors.primaryMedium}`
+                            ? `2px solid ${theme.colors.primary400}`
                             : `2px solid #0000`,
                         height: '30px',
                         [MQ.md]: {
