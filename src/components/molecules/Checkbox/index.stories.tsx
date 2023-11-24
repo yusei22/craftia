@@ -12,20 +12,20 @@ type Story = StoryObj<typeof Checkbox>;
 
 export const Medium: Story = {
     args: {
-        uniqueId: 'MediumCheckBox',
+        id: 'MediumCheckBox',
         label: 'Medium',
     },
 };
 export const Small: Story = {
     args: {
-        uniqueId: 'SmallCheckBox',
+        id: 'SmallCheckBox',
         label: 'Small',
         size: 'sm',
     },
 };
 export const Large: Story = {
     args: {
-        uniqueId: 'MediumCheckBox',
+        id: 'MediumCheckBox',
         label: 'Large',
         size: 'lg',
     },
