@@ -3,6 +3,7 @@ import { PenProvider } from './PenProvider';
 import { RenderViewListenerProvider } from './RenderViewListenerProvider';
 import { RenderViewProvider } from './RenderViewProvider';
 import { SpriteTreeProvider } from './SpriteTreeProvider';
+import { FloatingWindowProvider } from './WindowProvider';
 
 const Provider = ({ children }: { children?: React.ReactNode }) => {
     return (
@@ -10,7 +11,9 @@ const Provider = ({ children }: { children?: React.ReactNode }) => {
             <RenderViewListenerProvider>
                 <FilterGLProvider>
                     <PenProvider>
-                        <SpriteTreeProvider>{children}</SpriteTreeProvider>
+                        <SpriteTreeProvider>
+                            <FloatingWindowProvider>{children}</FloatingWindowProvider>
+                        </SpriteTreeProvider>
                     </PenProvider>
                 </FilterGLProvider>
             </RenderViewListenerProvider>
