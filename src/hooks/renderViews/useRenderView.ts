@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { Vec4 } from 'application/core/units';
 import { RenderView } from 'application/render/RenderView';
 import { SpritesRenderer } from 'application/render/SpritesRenderer';
 import {
@@ -27,7 +28,7 @@ export const useRenderView = (context: CanvasRenderingContext2D | null) => {
             return;
         }
         renderView.viewport(renderViewScale);
-        renderView.clear();
+        renderView.clear(new Vec4(249, 249, 249, 1));
         renderView.clearRect(stageTransform);
         renderView.render(stageRenderer.getResult(), stageTransform);
     };
