@@ -8,16 +8,18 @@ import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
 
 export type FloatingWindowProps = {
+    children?: React.ReactNode;
     show?: boolean;
     title?: string;
     width?: number;
     height?: number;
-    children?: React.ReactNode;
+    className?: string;
+    initialLoc?: [number, number];
     onClose?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const FloatingWindow = ({ show = true, ...props }: FloatingWindowProps) => {
-    const [[x, y], setMovementCoord] = useState([0, 0]);
+const FloatingWindow = ({ show = true, initialLoc, ...props }: FloatingWindowProps) => {
+    const [[x, y], setMovementCoord] = useState(initialLoc || [0, 0]);
     const bind = useDrag(
         ({ delta: [deltaX, deltaY] }) => {
             setMovementCoord([x + deltaX, y + deltaY]);
@@ -35,8 +37,9 @@ const FloatingWindow = ({ show = true, ...props }: FloatingWindowProps) => {
                     width: props.width,
                     boxShadow: '0 0 35px 0 rgba(0, 0, 0, .2)',
                     position: 'absolute',
-                    zIndex: 500,
+                    zIndex: 10000,
                 }}
+                className={props.className}
             >
                 <Container
                     css={(theme) => ({
@@ -44,7 +47,7 @@ const FloatingWindow = ({ show = true, ...props }: FloatingWindowProps) => {
                         width: '100%',
                         height: '40px',
                         padding: '0px 8px',
-                        backgroundColor: theme.colors.primaryMedium,
+                        backgroundColor: theme.colors.primary700,
                         boxSizing: 'border-box',
                         touchAction: 'none',
                     })}
