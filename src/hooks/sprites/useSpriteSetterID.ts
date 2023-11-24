@@ -3,12 +3,14 @@ import { useSetRecoilState } from 'recoil';
 import { Sprite } from 'application/sprites';
 import { spriteTreeAtom } from 'dataflow';
 
-export const useSpritesSetterIds = () => {
+export const useSpriteSetterID = () => {
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
 
-    return useCallback((ids: string[], callbackfn: (val: Sprite) => Sprite) => {
+    const setSpriteID = useCallback((id: string, callbackfn: (val: Sprite) => Sprite) => {
         setSpriteTree((sprites) =>
-            sprites.map((sprite) => (ids.includes(sprite.prefs.id) ? callbackfn(sprite) : sprite))
+            sprites.map((sprite) => (sprite.prefs.id === id ? callbackfn(sprite) : sprite))
         );
     }, []);
+
+    return setSpriteID;
 };
