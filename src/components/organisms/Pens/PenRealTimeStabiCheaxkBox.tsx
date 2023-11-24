@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import Checkbox from 'components/molecules/Checkbox';
 import { penAtom } from 'dataflow/pens/penAtom';
 
-export const PenRealTimeStabiCheaxkBox = () => {
+export const PenRealTimeStabiCheaxkBox = ({ className }: { className?: string }) => {
     const [penVal, setPen] = useRecoilState(penAtom);
     const onRealTimeStabilizationChange = (val: boolean) => {
         setPen((pen) =>
@@ -14,8 +14,9 @@ export const PenRealTimeStabiCheaxkBox = () => {
     };
     return (
         <Checkbox
+            className={className}
             size="sm"
-            uniqueId="drawPanel_slider_realTimeStabilization"
+            id="drawPanel_slider_realTimeStabilization"
             label="リアルタイム手振れ補正"
             checked={penVal.prefs.realTimeStabilization}
             setChecked={onRealTimeStabilizationChange}
