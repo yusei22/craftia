@@ -13,8 +13,6 @@ export class ShaderManager {
         this._shader = null;
     }
     public bind(shader: Shader) {
-        if (this._shader === shader) return;
-
         shader.bind();
         this._shader = shader;
     }
