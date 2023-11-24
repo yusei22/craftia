@@ -21,11 +21,11 @@ export const Resizer: Story = {
         cornerCss: (theme) => ({
             ':hover': {
                 backgroundColor: theme.colors.white,
-                outline: ` ${theme.colors.primaryMedium}  solid 2px`,
+                outline: ` ${theme.colors.primary400}  solid 2px`,
             },
             ':active': {
-                backgroundColor: theme.colors.primaryBrighter,
-                outline: ` ${theme.colors.primaryMedium}  solid 2px`,
+                backgroundColor: theme.colors.primary100,
+                outline: ` ${theme.colors.primary400}  solid 2px`,
             },
             borderRadius: '10%',
         }),
