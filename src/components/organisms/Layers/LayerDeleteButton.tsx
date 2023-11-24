@@ -1,12 +1,16 @@
 import { useSetRecoilState } from 'recoil';
 import { Sprite, SpriteTree } from 'application/sprites';
-import Button from 'components/atoms/Button';
-import Typography from 'components/atoms/Typography';
+import Wrapper from 'components/layout/Wrapper';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
-export const LayerDeleteButton = () => {
+export type LayerDeleteButtonProps = {
+    children?: React.ReactNode;
+    className?: string;
+};
+
+export const LayerDeleteButton = ({ children, className }: LayerDeleteButtonProps) => {
     const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
     const getSpriteTree = useRecoilValueSyncReader<SpriteTree>();
 
@@ -29,8 +33,8 @@ export const LayerDeleteButton = () => {
         saveSpriteTree();
     };
     return (
-        <Button onClick={onClick} variant="translucent">
-            <Typography variant="small">レイヤーを削除</Typography>
-        </Button>
+        <Wrapper onClick={onClick} className={className}>
+            {children}
+        </Wrapper>
     );
 };
