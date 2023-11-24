@@ -2,16 +2,18 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Sprite, SpritePrefs } from 'application/sprites/Sprite';
 import Wrapper from 'components/layout/Wrapper';
-import { LayerPanel } from 'components/organisms/LayerPanels/LayerPanel';
+import { LayerPanelContents } from 'components/organisms/LayerColum/LayerPanelContents';
 
-export const LayerPanelWrapper = <T extends SpritePrefs>({
+export const LayerPanel = <T extends SpritePrefs>({
     id,
     sprite,
+    className,
 }: {
     id: string;
     sprite: Sprite<T>;
+    className?: string;
 }) => {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: id });
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
@@ -19,7 +21,7 @@ export const LayerPanelWrapper = <T extends SpritePrefs>({
 
     return (
         <Wrapper ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            <LayerPanel sprite={sprite} />
+            <LayerPanelContents sprite={sprite} className={className} />
         </Wrapper>
     );
 };
