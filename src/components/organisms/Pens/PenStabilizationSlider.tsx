@@ -1,9 +1,9 @@
 import { useRecoilState } from 'recoil';
-import Slider from 'components/molecules/Slider';
+import { NumberField } from 'components/molecules/NumberField';
 import { MIN_PEN_Stabilization, MAX_PEN_Stabilization } from 'consts';
 import { penAtom } from 'dataflow/pens/penAtom';
 
-export const PenStabilizationSlider = () => {
+export const PenStabilizationSlider = ({ className }: { className?: string }) => {
     const [penVal, setPen] = useRecoilState(penAtom);
     const onStabilizationChange = (stabilization: number) => {
         setPen((pen) =>
@@ -14,16 +14,18 @@ export const PenStabilizationSlider = () => {
         );
     };
     return (
-        <Slider
-            uniqueId="drawPanel_slider_stabilization"
+        <NumberField
+            className={className}
+            id="drawPanelSliderStabilization"
             min={MIN_PEN_Stabilization}
             max={MAX_PEN_Stabilization}
             setValue={onStabilizationChange}
             value={penVal.prefs.stabilization}
             step={1}
             label="手振れ補正"
-            foldable={true}
-            foldableBreakpoint="lg"
+            css={{
+                flexFlow: 'column',
+            }}
         />
     );
 };
