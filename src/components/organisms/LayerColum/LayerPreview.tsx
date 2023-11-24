@@ -6,20 +6,21 @@ import { Sprite, SpritePrefs } from 'application/sprites/Sprite';
 import { stageResolutionAtom } from 'dataflow';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
-type SpriteSmallPreviewProps<T extends SpritePrefs> = {
-    width: number;
-    height: number;
+type LayerPreviewProps<T extends SpritePrefs> = {
+    width?: number;
+    height?: number;
     sprite: Sprite<T>;
 };
-const getZoom = (width: number, height: number, artobardResolution: Vec2) => {
-    return Math.max(width / artobardResolution.x, height / artobardResolution.y);
+const getZoom = (width: number | undefined, height: number | undefined, stageResolution: Vec2) => {
+    return Math.max((width || 0) / stageResolution.x, (height || 0) / stageResolution.y);
 };
-export const SpriteSmallPreview = <T extends SpritePrefs>({
+export const LayerPreview = <T extends SpritePrefs>({
     width,
     height,
     sprite,
-}: SpriteSmallPreviewProps<T>) => {
+}: LayerPreviewProps<T>) => {
     const [context2D, setContext2D] = useState<Context2D | null>(null);
+    const [auxContext2D, setAuxContext2D] = useState<Context2D | null>(null);
 
     const getArtobardResolution = useRecoilValueSyncReader<Vec2>();
 
@@ -35,15 +36,14 @@ export const SpriteSmallPreview = <T extends SpritePrefs>({
         setContext2D(
             new Context2D({ context: canvas.getContext('2d') as CanvasRenderingContext2D })
         );
+        setAuxContext2D(new Context2D().viewport(new Vec2(0, 0)));
     }, []);
 
     useEffect(() => {
-        if (context2D === null) {
+        if (context2D === null || auxContext2D === null) {
             return;
         }
         const stageResolution = getArtobardResolution(stageResolutionAtom);
-
-        const zoom = Math.max(width / stageResolution.x, height / stageResolution.y);
 
         const _sprite = sprite.setSpritePrefs((curVal) => ({
             ...curVal,
@@ -53,15 +53,15 @@ export const SpriteSmallPreview = <T extends SpritePrefs>({
         }));
 
         context2D.clear();
-        _sprite.drawZoom(context2D, new Context2D(), zoom);
-    }, [context2D, sprite]);
+        _sprite.drawZoom(context2D, auxContext2D, getZoom(width, height, stageResolution));
+    }, [context2D, auxContext2D, sprite]);
 
     return (
         <>
             <canvas
                 ref={canvasRef}
-                width={stageResolution.x * getZoom(width, height, stageResolution)}
-                height={stageResolution.y * getZoom(width, height, stageResolution)}
+                width={Math.round(stageResolution.x * getZoom(width, height, stageResolution))}
+                height={Math.round(stageResolution.y * getZoom(width, height, stageResolution))}
             />
         </>
     );
