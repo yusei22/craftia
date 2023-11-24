@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useSpritesSetterIds } from './useSritePrefsSetter';
+import { useSpritesSetterIds } from './useSpritesSetterIds';
 import { Vec2 } from 'application/core/units';
 import { stageZoomSelector } from 'dataflow/stage/stageZoomSelector';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
