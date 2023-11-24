@@ -6,15 +6,12 @@ type GridProps = {
 } & HTMLAttributes<HTMLDivElement> &
     ClassAttributes<HTMLDivElement>;
 
-const Grid = ({ css, ...props }: GridProps) => {
+const Grid = ({ ...props }: GridProps) => {
     return (
         <div
-            css={[
-                {
-                    display: 'grid',
-                },
-                css,
-            ]}
+            css={{
+                display: 'grid',
+            }}
             {...props}
         />
     );
