@@ -22,7 +22,7 @@ export const TabSection = ({ css, ...props }: TabSectionProps) => {
                     border: 'none',
                     [MQ.md]: {
                         border: 'none',
-                        borderLeft: `1px solid ${theme.colors.neutralBright}`,
+                        borderLeft: `1px solid ${theme.colors.neutral300}`,
                     },
                 }),
                 css,
