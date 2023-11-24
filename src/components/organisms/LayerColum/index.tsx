@@ -16,9 +16,10 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useRecoilState } from 'recoil';
-import { LayerPanelWrapper } from './LayerPanelWrapper';
+import { LayerPanel } from './LayerPanel';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
 
+import Wrapper from 'components/layout/Wrapper';
 import {
     spriteTreeAtom,
     useSpriteHistPresentValSyncReader,
@@ -26,7 +27,13 @@ import {
     useSpriteTreeSaver,
 } from 'dataflow';
 
-export const LayerColumn = () => {
+export type LayerColumProps = {
+    width?: number | string;
+    height?: number | string;
+    className?: string;
+};
+
+const LayerColumn = ({ width, height, className }: LayerColumProps) => {
     const [, setSpriteTree] = useRecoilState(spriteTreeAtom);
     const getSpriteTreeHistPresentSync = useSpriteHistPresentValSyncReader();
     const spriteTreeHistPresent = useSpriteTreeHistPresentVal();
@@ -67,26 +74,34 @@ export const LayerColumn = () => {
         }
     }
     return (
-        <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-            modifiers={[restrictToVerticalAxis]}
-        >
-            <SortableContext
-                items={spriteTreeHistPresent.map((sprite) => sprite.prefs.id).reverse()}
-                strategy={verticalListSortingStrategy}
+        <Wrapper className={className}>
+            <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+                modifiers={[restrictToVerticalAxis]}
             >
-                {spriteTreeHistPresent
-                    .map((sprite) => (
-                        <LayerPanelWrapper
-                            id={sprite.prefs.id}
-                            sprite={sprite}
-                            key={sprite.prefs.id}
-                        />
-                    ))
-                    .reverse()}
-            </SortableContext>
-        </DndContext>
+                <SortableContext
+                    items={spriteTreeHistPresent.map((sprite) => sprite.prefs.id).reverse()}
+                    strategy={verticalListSortingStrategy}
+                >
+                    {spriteTreeHistPresent
+                        .map((sprite) => (
+                            <LayerPanel
+                                id={sprite.prefs.id}
+                                sprite={sprite}
+                                key={sprite.prefs.id}
+                                css={{
+                                    width,
+                                    height,
+                                }}
+                            />
+                        ))
+                        .reverse()}
+                </SortableContext>
+            </DndContext>
+        </Wrapper>
     );
 };
+
+export default LayerColumn;
