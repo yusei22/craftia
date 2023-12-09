@@ -4,7 +4,7 @@ import { searchSpritesFromIDs } from 'application/sprites';
 import { NumberField } from 'components/molecules/NumberField';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
-import { useSpritesSetterIds } from 'hooks/sprites/useSpritesSetterIds';
+import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 export type LayerOpacitySliderProps = {
@@ -20,7 +20,7 @@ export const LayerOpacitySlider = ({ className }: LayerOpacitySliderProps) => {
     const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
     const saveSpriteTree = useSpriteTreeSaver();
 
-    const setSpritesFromIds = useSpritesSetterIds();
+    const setSpritesFromIds = useCallbackOnSprites();
 
     useEffect(() => {
         let n = 1;
