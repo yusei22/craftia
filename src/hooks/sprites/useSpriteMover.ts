@@ -1,16 +1,16 @@
 import { useCallback } from 'react';
-import { useSpritesSetterIds } from './useSpritesSetterIds';
+import { useCallbackOnSprites } from './useCallbackOnSprites';
 import { Vec2 } from 'application/core/units';
 import { stageZoomSelector } from 'dataflow/stage/stageZoomSelector';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 export const useSpriteMover = () => {
     const getStageZoomSync = useRecoilValueSyncReader<number>();
-    const hitSpritesFromIds = useSpritesSetterIds();
+    const callbackOnSprites = useCallbackOnSprites();
 
     const moveSprite = useCallback((targetSpriteIds: string[], delta: Vec2) => {
         const _delta = delta.times(1 / getStageZoomSync(stageZoomSelector));
-        hitSpritesFromIds(targetSpriteIds, (sprite) =>
+        callbackOnSprites(targetSpriteIds, (sprite) =>
             sprite.setSpritePrefs((curPrefs) => ({
                 ...curPrefs,
                 globalLocation: curPrefs.globalLocation.add(_delta),
