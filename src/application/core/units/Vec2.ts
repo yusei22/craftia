@@ -62,4 +62,7 @@ export class Vec2 implements IVec {
     public round() {
         return new Vec2(Math.round(this.x), Math.round(this.y));
     }
+    public floor() {
+        return new Vec2(Math.floor(this.x), Math.floor(this.y));
+    }
 }
