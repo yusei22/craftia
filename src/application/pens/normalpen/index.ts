@@ -1,5 +1,5 @@
 import { DeferredStabilizer } from '../DeferredStabilizer';
-import { ContextPenWorker, ContextPenWorkerConfig, Pen, PenEvent, PenPrefs } from '../Pen';
+import { ContextPenExecutor, ContextPenWExecutorConfig, Pen, PenEvent, PenPrefs } from '../Pen';
 import { RealTimeStabilizer } from '../RealTimeStabilizer';
 import { Context2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
@@ -12,8 +12,8 @@ export class NormalPen extends Pen<NormalPenPrefs> {
     constructor(stageSize: Vec2, prefs: NormalPenPrefs) {
         super(stageSize, prefs);
     }
-    public getWorker(rasterizedImage: Rasterizedmage): NormalPenWorker {
-        return new NormalPenWorker(this.stageSize, rasterizedImage, this.prefs);
+    public getWorker(rasterizedImage: Rasterizedmage): NormalPenExecutor {
+        return new NormalPenExecutor(this.stageSize, rasterizedImage, this.prefs);
     }
     public setPrefs = (valOrUpdater: ValueUpdater<NormalPenPrefs>) => {
         return new NormalPen(
@@ -22,7 +22,7 @@ export class NormalPen extends Pen<NormalPenPrefs> {
         );
     };
 }
-const baseContextConfig = (prefs: NormalPenPrefs): ContextPenWorkerConfig => ({
+const baseContextConfig = (prefs: NormalPenPrefs): ContextPenWExecutorConfig => ({
     line: null,
     shadow: null,
     text: null,
@@ -31,7 +31,7 @@ const baseContextConfig = (prefs: NormalPenPrefs): ContextPenWorkerConfig => ({
     globalCompositeOperation: prefs.blendMode,
     strokeStyle: null,
 });
-const lineContextConfig = (prefs: NormalPenPrefs): ContextPenWorkerConfig => ({
+const lineContextConfig = (prefs: NormalPenPrefs): ContextPenWExecutorConfig => ({
     line: {
         lineCap: 'round',
         lineDashOffset: 0,
@@ -45,7 +45,7 @@ const lineContextConfig = (prefs: NormalPenPrefs): ContextPenWorkerConfig => ({
     globalCompositeOperation: 'source-over',
     strokeStyle: prefs.fillStyle,
 });
-export class NormalPenWorker extends ContextPenWorker {
+export class NormalPenExecutor extends ContextPenExecutor {
     private readonly prefs: NormalPenPrefs;
     private readonly stabilizer: DeferredStabilizer | RealTimeStabilizer;
     private readonly targetSpriteVisible: Rasterizedmage;
