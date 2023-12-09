@@ -47,6 +47,9 @@ export class FrameBuffer {
         glFbo.bind();
         return this;
     }
+    static unbind(gl: WebGL2RenderingContext) {
+        GLFrameBuffer.unbind(gl);
+    }
 
     protected generateGLframeBuffer(gl: WebGL2RenderingContext) {
         if (gl === this.gl && this.glFrameBuffer) {
