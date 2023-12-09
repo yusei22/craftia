@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { Vec4 } from 'application/core/units';
 import { RenderView } from 'application/render/RenderView';
 import { SpritesRenderer } from 'application/render/SpritesRenderer';
 import {
@@ -9,6 +8,9 @@ import {
     spriteTreeAtom,
     renderViewScaleAtom,
 } from 'dataflow';
+import { themeAtom } from 'dataflow/themes/themeAtom';
+import { hexToRgba } from '@uiw/color-convert';
+import { Vec4 } from 'application/core/units';
 
 export const useRenderView = (context: CanvasRenderingContext2D | null) => {
     const [renderView, setRenderView] = useState<RenderView | null>(null);
@@ -20,6 +22,8 @@ export const useRenderView = (context: CanvasRenderingContext2D | null) => {
     const renderViewScale = useRecoilValue(renderViewScaleAtom);
     const sprites = useRecoilValue(spriteTreeAtom);
 
+    const theme = useRecoilValue(themeAtom);
+
     const renderStageRendererResult = () => {
         if (stageRenderer === null) {
             return;
@@ -27,8 +31,14 @@ export const useRenderView = (context: CanvasRenderingContext2D | null) => {
         if (renderView === null) {
             return;
         }
+        const rgba = hexToRgba(theme.colors.neutral100)
         renderView.viewport(renderViewScale);
-        renderView.clear(new Vec4(249, 249, 249, 1));
+        renderView.clear(new Vec4(
+            rgba.r,
+            rgba.g,
+            rgba.b,
+            rgba.a
+        ));
         renderView.clearRect(stageTransform);
         renderView.render(stageRenderer.getResult(), stageTransform);
     };
@@ -50,5 +60,5 @@ export const useRenderView = (context: CanvasRenderingContext2D | null) => {
 
     useEffect(() => {
         renderStageRendererResult();
-    }, [renderViewScale, stageTransform, stageResolution, stageRenderer, renderView]);
+    }, [renderViewScale, stageTransform, stageResolution, stageRenderer, renderView, theme]);
 };
