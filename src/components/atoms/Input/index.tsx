@@ -10,7 +10,9 @@ const inputCss: Interpolation<Theme> = (theme) => ({
     outline: `1px solid ${theme.colors.neutral300}`,
     boxSizing: 'border-box',
     padding: '6px 8px',
-    accentColor: theme.colors.primary400,
+    backgroundColor: theme.colors.neutral100,
+    color: theme.colors.text,
+    accentColor: theme.colors.neutral400,
     ':focus': {
         border: 'none',
         outline: `2px solid ${theme.colors.primary400}`,
