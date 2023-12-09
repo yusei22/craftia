@@ -5,6 +5,7 @@ import { HSLInput } from './HSLInput';
 import { HEXInput } from './HexInput';
 import { RGBInput } from './RGBInput';
 import Box from 'components/layout/Box';
+import Container from 'components/layout/Container';
 
 type WheelColorPickerProps = {
     wheelRadius?: number;
@@ -27,7 +28,9 @@ type WheelColorPickerProps = {
 
 const WheelColorPicker = ({ wheelRadius, hsva, setHsva, className }: WheelColorPickerProps) => {
     return (
-        <Box className={className}>
+        <Container className={className} css={{
+            flexFlow: 'column',
+        }}>
             <Wheel
                 color={hsva}
                 onChange={(color) => setHsva({ ...hsva, ...color.hsva })}
@@ -41,6 +44,7 @@ const WheelColorPicker = ({ wheelRadius, hsva, setHsva, className }: WheelColorP
                 }}
                 css={{
                     marginTop: 20,
+                    width:'100%',
                 }}
             />
             <Box
@@ -91,7 +95,7 @@ const WheelColorPicker = ({ wheelRadius, hsva, setHsva, className }: WheelColorP
                     }}
                 />
             </Box>
-        </Box>
+        </Container>
     );
 };
 export default WheelColorPicker;
