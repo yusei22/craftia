@@ -2,6 +2,7 @@ import { Theme } from '@emotion/react';
 
 declare module '@emotion/react' {
     interface Theme {
+        name: 'DEFAULT' | 'DARK';
         colors: Colors;
         fontSize: FontSizes;
         letterSpacing: LetterSpacings;
@@ -92,6 +93,7 @@ interface Space {
 }
 
 export const defaultTheme: Theme = {
+    name: 'DEFAULT',
     colors: {
         primary100: '#f9f9f9',
         primary200: '#f3f3f3',
@@ -175,6 +177,7 @@ export const defaultTheme: Theme = {
 };
 
 export const darkTheme: Theme = {
+    name: 'DARK',
     colors: {
         primary100: '#f9f9f9',
         primary200: '#f3f3f3',
