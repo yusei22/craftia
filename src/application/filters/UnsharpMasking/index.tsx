@@ -1,4 +1,4 @@
-import { FilterTarget, FilterWorker, GLFilter } from '../Filter';
+import { FilterTarget, FilterExecutor, GLFilter } from '../Filter';
 import { TexRenderer } from '../TexRenderer';
 import { Vec2 } from 'application/core/units';
 import { UniformFloat, UniformGroup, UniformInt } from 'application/core/web-gl2';
@@ -12,12 +12,12 @@ export interface UnsharpMaskingConfig {
 }
 
 export class UnsharpMasking extends GLFilter<UnsharpMaskingConfig> {
-    public getWorker(gl: WebGL2RenderingContext, sprite: FilterTarget): UnsharpMaskingWorker {
-        return new UnsharpMaskingWorker(gl, sprite);
+    public getExecutor(gl: WebGL2RenderingContext, sprite: FilterTarget): UnsharpMaskingExecutor {
+        return new UnsharpMaskingExecutor(gl, sprite);
     }
 }
 
-export class UnsharpMaskingWorker extends FilterWorker<UnsharpMaskingConfig> {
+export class UnsharpMaskingExecutor extends FilterExecutor<UnsharpMaskingConfig> {
     private renderer: TexRenderer;
 
     constructor(gl: WebGL2RenderingContext, sprite: FilterTarget) {
