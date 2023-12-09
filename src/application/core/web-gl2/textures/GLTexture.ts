@@ -44,7 +44,7 @@ export class GLTexture {
     public updateID: number;
 
     /**WebGL2のコンテキスト */
-    private readonly gl: WebGL2RenderingContext;
+    public readonly gl: WebGL2RenderingContext;
     /**内包する`WebGLTexture` */
     private readonly webGLTexture: WebGLTexture;
 
