@@ -7,8 +7,6 @@ import Box from 'components/layout/Box';
 import { ConfirmButtons } from 'components/molecules/ConfirmButtons';
 import { NumberField } from 'components/molecules/NumberField';
 
-const sourceTone = new ImageURLDecoder().decode('/tone.png');
-
 export const AmitoneButton = ({ children }: { children?: React.ReactNode }) => {
     return (
         <GLFilterButton
@@ -37,7 +35,7 @@ const AmitoneWindowContents = ({
 }: GLFilterControlPanelsProps<AmitoneConfig>) => {
     useEffect(() => {
         (async () => {
-            const image = await sourceTone;
+            const image = await new ImageURLDecoder().decode('/tone.png');
 
             setConfigs((curVal) => ({
                 ...curVal,
