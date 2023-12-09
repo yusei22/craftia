@@ -24,6 +24,12 @@ export class VertexBuffer extends AbstractBuffer<GLBuffer, VertexBuferData> {
      * @returns GLBuffer
      */
     protected generateGLBuffer(gl: WebGL2RenderingContext) {
+        if (gl === this.gl && this.glBuffer) {
+            return this.glBuffer;
+        }
+
+        this.gl = gl;
+
         return (this.glBuffer = new GLBuffer(gl, gl.ARRAY_BUFFER));
     }
 }
