@@ -73,6 +73,7 @@ export class Geometry {
         const attribute = new Attribute(bufferIndex, id, size, 0, 0);
         this.attributes.push(attribute);
 
+        this.updateID++;
         return this;
     }
 
@@ -116,6 +117,8 @@ export class Geometry {
 
         this.indexBuffer = _buffer;
         this.buffers.push(_buffer);
+
+        this.updateID++;
         return this;
     }
 
@@ -170,6 +173,7 @@ export class Geometry {
             ? [new VertexBuffer(new Float32Array(array)), this.indexBuffer]
             : [new VertexBuffer(new Float32Array(array))];
 
+        this.updateID++;
         return this;
     }
 
@@ -194,16 +198,12 @@ export class Geometry {
      * @param gl WebGL2RenderingContext
      * @returns VAO
      */
-    protected generateVao(gl2: WebGL2RenderingContext) {
-        return (this.vao = new VertexArray(gl2));
-    }
-
-    protected linkGL(gl: WebGL2RenderingContext) {
+    protected generateVao(gl: WebGL2RenderingContext) {
         if (gl === this.gl && this.vao) {
             return this.vao;
         }
         this.gl = gl;
-        return this.generateVao(this.gl);
+        return (this.vao = new VertexArray(gl));
     }
 
     /**
@@ -213,7 +213,7 @@ export class Geometry {
      * @returns 
      */
     public update(renderer: Renderer, shader: Shader): this {
-        const vao = this.linkGL(renderer.gl2);
+        const vao = this.generateVao(renderer.gl2);
 
         if (vao.updateID === this.updateID && vao.shaderID === shader.program.uid) {
             this.buffers.forEach((b) => {
@@ -244,7 +244,7 @@ export class Geometry {
      * @returns 
      */
     public bind(gl: WebGL2RenderingContext): this {
-        const vao = this.linkGL(gl);
+        const vao = this.generateVao(gl);
         vao.bind();
         return this;
     }
