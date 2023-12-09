@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 import FloatingWindow from 'components/molecules/FloatingWindow';
 import { floatingWindowAtom } from 'dataflow/windows/floatingWindowAtom';
@@ -6,14 +6,9 @@ import { floatingWindowAtom } from 'dataflow/windows/floatingWindowAtom';
 export const FloatingWindowProvider = ({ children }: { children?: React.ReactNode }) => {
     const windowPrefs = useRecoilValue(floatingWindowAtom);
 
-    useEffect(() => {
-        windowPrefs.onClose();
-    }, [windowPrefs.contents]);
-
     return (
         <>
             <FloatingWindow
-                onClose={windowPrefs.onClose}
                 show={windowPrefs.show}
                 title={windowPrefs.title}
                 css={{
@@ -23,7 +18,7 @@ export const FloatingWindowProvider = ({ children }: { children?: React.ReactNod
             >
                 {windowPrefs.contents}
             </FloatingWindow>
-            {children};
+            {children}
         </>
     );
 };
