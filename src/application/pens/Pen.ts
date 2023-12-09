@@ -1,4 +1,4 @@
-import { ISpriteWorker } from 'application/ISpriteWorker';
+import { ISpriteExecutor } from 'application/ISpriteWorker';
 import {
     Context2D,
     ContextLineConfig,
@@ -42,17 +42,17 @@ export abstract class Pen<T extends PenPrefs = PenPrefs> {
         this.stageSize = stageSize;
         this.prefs = prefs;
     }
-    abstract getWorker(rasterizedImage: Rasterizedmage): PenWorker;
+    abstract getWorker(rasterizedImage: Rasterizedmage): PenExecutor;
     abstract setPrefs(valOrUpdater: ValueUpdater<T>): Pen<T>;
 }
 
-export abstract class PenWorker implements ISpriteWorker {
+export abstract class PenExecutor implements ISpriteExecutor {
     abstract pointerDown(props: PenEvent): void;
     abstract pointerDrag(props: PenEvent): void;
     abstract pointerUp(props: PenEvent): void;
     abstract getPreviewSprite(): RasterizedPreviewer;
 }
-export interface ContextPenWorkerConfig {
+export interface ContextPenWExecutorConfig {
     readonly line: ContextLineConfig | null;
     readonly shadow: ContextShadowConfig | null;
     readonly text: ContextTextConfig | null;
@@ -62,7 +62,7 @@ export interface ContextPenWorkerConfig {
     readonly strokeStyle: SpriteFillStyle;
 }
 
-export abstract class ContextPenWorker extends PenWorker {
+export abstract class ContextPenExecutor extends PenExecutor {
     protected readonly baseContext: Context2D;
     protected readonly lineContext: Context2D;
     protected readonly targetSprite: Rasterizedmage;
@@ -75,7 +75,7 @@ export abstract class ContextPenWorker extends PenWorker {
         this.targetSprite = targetSprite;
         this.stageSize = stageSize;
     }
-    private setConfig(context: Context2D, config: ContextPenWorkerConfig) {
+    private setConfig(context: Context2D, config: ContextPenWExecutorConfig) {
         context
             .setLineConfig(config.line)
             .setShadowConfig(config.shadow)
@@ -91,10 +91,10 @@ export abstract class ContextPenWorker extends PenWorker {
                     : config.strokeStyle.createCanvasFillStyle(context)
             );
     }
-    protected setBaseContextconfig(config: ContextPenWorkerConfig) {
+    protected setBaseContextconfig(config: ContextPenWExecutorConfig) {
         this.setConfig(this.baseContext, config);
     }
-    protected setLineContextconfig(config: ContextPenWorkerConfig) {
+    protected setLineContextconfig(config: ContextPenWExecutorConfig) {
         this.setConfig(this.lineContext, config);
     }
     public getPreviewSprite() {
