@@ -1,7 +1,7 @@
-import Wrapper from "components/layout/Wrapper";
-import { themeAtom } from "dataflow/themes/themeAtom";
-import { useSetRecoilState } from "recoil";
-import defaultTheme, { darkTheme } from "theme";
+import { useSetRecoilState } from 'recoil';
+import Wrapper from 'components/layout/Wrapper';
+import { themeAtom } from 'dataflow/themes/themeAtom';
+import { darkTheme, defaultTheme } from 'theme';
 
 export type ThemeButtonProps = {
     children?: React.ReactNode;
@@ -9,18 +9,17 @@ export type ThemeButtonProps = {
 };
 
 export const ThemeButton = ({ children, className }: ThemeButtonProps) => {
-    const setTheme = useSetRecoilState(themeAtom)
+    const setTheme = useSetRecoilState(themeAtom);
     return (
-
         <Wrapper
             onClick={() => {
                 setTheme((theme) => {
-                    return theme.name === 'DEFAULT' ? darkTheme : defaultTheme
-                })
+                    return theme.name === 'DEFAULT' ? darkTheme : defaultTheme;
+                });
             }}
             className={className}
         >
             {children}
         </Wrapper>
-    )
-}
+    );
+};

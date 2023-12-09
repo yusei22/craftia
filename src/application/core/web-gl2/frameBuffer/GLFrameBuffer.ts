@@ -36,6 +36,6 @@ export class GLFrameBuffer {
      * @param gl WebGL2Context
      */
     static unbind(gl: WebGL2RenderingContext) {
-        gl.bindFramebuffer(WebGL2RenderingContext.FRAMEBUFFER, null)
+        gl.bindFramebuffer(WebGL2RenderingContext.FRAMEBUFFER, null);
     }
 }

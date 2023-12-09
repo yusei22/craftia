@@ -66,7 +66,7 @@ export class Texture {
         }
         frameBuffer.bind();
         this.glTexture.attachToframebuffer(attachmentPoint);
-        FrameBuffer.unbind(this.glTexture.gl)
+        FrameBuffer.unbind(this.glTexture.gl);
         return this;
     }
 

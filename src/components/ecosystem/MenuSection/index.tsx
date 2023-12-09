@@ -2,6 +2,8 @@ import { Interpolation, Theme } from '@emotion/react';
 import { Menu, MenuButton } from '@szhsin/react-menu';
 import React from 'react';
 import { ImportMenus } from './ImportMenus';
+import Button from 'components/atoms/Button';
+import Typography from 'components/atoms/Typography';
 import { EditMenus } from 'components/ecosystem/MenuSection/EditMenus';
 import { FileMenus } from 'components/ecosystem/MenuSection/FileMenus';
 import { FilterMenus } from 'components/ecosystem/MenuSection/FilterMenus';
@@ -9,8 +11,6 @@ import { LayerMenus } from 'components/ecosystem/MenuSection/LayerMenus/LayerMen
 import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
 import { ThemeButton } from 'components/organisms/Displays/ThemeButton';
-import Button from 'components/atoms/Button';
-import Typography from 'components/atoms/Typography';
 
 type MenuSectionProps = {
     width?: string | number;
@@ -34,8 +34,7 @@ const menuButtonCss: Interpolation<Theme> = (theme) => ({
     },
     ':active': {
         backgroundColor: theme.colors.translucentPale,
-    }
-
+    },
 });
 export const MenuSection = ({ width, height, className }: MenuSectionProps) => {
     return (
@@ -49,11 +48,13 @@ export const MenuSection = ({ width, height, className }: MenuSectionProps) => {
             })}
             className={className}
         >
-            <Container css={{
-                justifyContent: 'start',
-                width: '100%',
-                height: '100%'
-            }}>
+            <Container
+                css={{
+                    justifyContent: 'start',
+                    width: '100%',
+                    height: '100%',
+                }}
+            >
                 <MenuBtnWrapper>
                     <Menu menuButton={<MenuButton css={menuButtonCss}>ファイル</MenuButton>}>
                         <FileMenus />
@@ -82,7 +83,7 @@ export const MenuSection = ({ width, height, className }: MenuSectionProps) => {
             </Container>
             <Container
                 css={{
-                    height: '100%'
+                    height: '100%',
                 }}
             >
                 <ThemeButton>

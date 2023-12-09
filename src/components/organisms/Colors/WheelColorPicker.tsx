@@ -28,9 +28,12 @@ type WheelColorPickerProps = {
 
 const WheelColorPicker = ({ wheelRadius, hsva, setHsva, className }: WheelColorPickerProps) => {
     return (
-        <Container className={className} css={{
-            flexFlow: 'column',
-        }}>
+        <Container
+            className={className}
+            css={{
+                flexFlow: 'column',
+            }}
+        >
             <Wheel
                 color={hsva}
                 onChange={(color) => setHsva({ ...hsva, ...color.hsva })}
@@ -44,7 +47,7 @@ const WheelColorPicker = ({ wheelRadius, hsva, setHsva, className }: WheelColorP
                 }}
                 css={{
                     marginTop: 20,
-                    width:'100%',
+                    width: '100%',
                 }}
             />
             <Box

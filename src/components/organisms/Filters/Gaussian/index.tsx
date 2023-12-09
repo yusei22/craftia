@@ -11,7 +11,7 @@ export const GaussianBlurButton = ({ children }: { children?: React.ReactNode })
             filter={new GaussianBlur()}
             filterLabel="ガウシアンフィルタ"
             filterInitalConfigs={{
-                radius: 1.5
+                radius: 1.5,
             }}
             ControlPanels={BilateralWindowContents}
         >
@@ -24,9 +24,8 @@ const BilateralWindowContents = ({
     onCancel,
     onConsent,
     configs,
-    setConfigs
+    setConfigs,
 }: GLFilterControlPanelsProps<GaussianBlurConfig>) => {
-
     return (
         <Box>
             <NumberField

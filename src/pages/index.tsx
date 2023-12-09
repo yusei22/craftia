@@ -6,7 +6,6 @@ import { MenuSection } from 'components/ecosystem/MenuSection';
 import { PenSection } from 'components/ecosystem/PenSection';
 import { RenderingSection } from 'components/ecosystem/RenderingSection';
 import { ToolSection } from 'components/ecosystem/ToolSection';
-import Box from 'components/layout/Box';
 import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
 import { Provider } from 'components/provider';
@@ -34,15 +33,19 @@ export default function Home() {
                             },
                         }}
                     >
-                        <MenuSection width={'100vw'} height={30} css={{
-                            '::-webkit-scrollbar': {
-                                display: 'none',
-                            },
-                            '-ms-overflow-style': {
-                                display: 'none',
-                            },
-                            scrollbarWidth: 'none',
-                        }} />
+                        <MenuSection
+                            width={'100vw'}
+                            height={30}
+                            css={{
+                                '::-webkit-scrollbar': {
+                                    display: 'none',
+                                },
+                                '-ms-overflow-style': {
+                                    display: 'none',
+                                },
+                                scrollbarWidth: 'none',
+                            }}
+                        />
                     </Wrapper>
                     <Container
                         css={(theme) => ({
@@ -54,10 +57,10 @@ export default function Home() {
                         })}
                     >
                         <ToolSection
-                            css={(theme) => ({
+                            css={{
                                 height: '100%',
                                 borderRadius: '5px',
-                            })}
+                            }}
                         />
                         <Container
                             css={{
@@ -85,7 +88,7 @@ export default function Home() {
                                     borderRadius: '5px',
                                     backgroundColor: theme.colors.neutral200,
                                     overflowY: 'auto',
-                                    maxHeight:'1000px'
+                                    maxHeight: '1000px',
                                 })}
                             />
                         </Container>
@@ -93,7 +96,7 @@ export default function Home() {
 
                     <RenderingSection />
                     <Container
-                        css={theme => ({
+                        css={(theme) => ({
                             position: 'absolute',
                             zIndex: 500,
                             top: 30,
@@ -112,7 +115,6 @@ export default function Home() {
                             }}
                         />
                     </Container>
-
 
                     <FooterSection
                         css={{

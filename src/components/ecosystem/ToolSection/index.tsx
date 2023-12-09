@@ -6,6 +6,7 @@ import RedoIcon from '@mui/icons-material/Redo';
 import UndoIcon from '@mui/icons-material/Undo';
 import { MouseEventHandler, useState } from 'react';
 import IconButton from 'components/atoms/IconButton';
+import Box from 'components/layout/Box';
 import Container from 'components/layout/Container';
 import { RenoButton } from 'components/organisms/Edits/RenoButton';
 import { UndoButton } from 'components/organisms/Edits/UndoButton';
@@ -13,7 +14,6 @@ import { PenTool } from 'components/organisms/Tools/PenTool';
 import { SpriteMoveTool } from 'components/organisms/Tools/SpriteMoveTool';
 import { SpriteSelectTool } from 'components/organisms/Tools/SpriteSelectTool';
 import { StageMoveTool } from 'components/organisms/Tools/StageMoveTool';
-import Box from 'components/layout/Box';
 
 type SideBarIconProps = {
     children?: React.ReactNode;
@@ -25,8 +25,8 @@ type SideBarIconProps = {
 const SideBarIcon = ({ children, label, isActive, onClick }: SideBarIconProps) => {
     return (
         <IconButton
-            variant='transparent'
-            css={theme => ({
+            variant="transparent"
+            css={(theme) => ({
                 width: '100%',
                 padding: '5px 6px',
                 margin: '3px 0px',
@@ -36,18 +36,22 @@ const SideBarIcon = ({ children, label, isActive, onClick }: SideBarIconProps) =
                 color: theme.colors.neutral700,
                 ':hover': {
                     color: theme.colors.neutral800,
-                }
+                },
             })}
             onClick={onClick}
         >
-            <Container css={theme => ({
-                width: '100%',
-                flexFlow: 'column',
-            })}>
+            <Container
+                css={{
+                    width: '100%',
+                    flexFlow: 'column',
+                }}
+            >
                 {children}
-                <Box css={theme => ({
-                    fontSize: theme.fontSize.xs
-                })}>
+                <Box
+                    css={(theme) => ({
+                        fontSize: theme.fontSize.xs,
+                    })}
+                >
                     {label}
                 </Box>
             </Container>
@@ -66,11 +70,11 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
     return (
         <Container
             className={className}
-            css={(theme) => ({
+            css={{
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 padding: '10px 5px',
-            })}
+            }}
         >
             <SpriteSelectTool>
                 <SideBarIcon
@@ -78,7 +82,7 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
                         setActive('select');
                     }}
                     isActive={active === 'select'}
-                    label='select'
+                    label="select"
                 >
                     <NearMeIcon />
                 </SideBarIcon>
@@ -89,7 +93,7 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
                         setActive('pen');
                     }}
                     isActive={active === 'pen'}
-                    label='draw'
+                    label="draw"
                 >
                     <ModeEditOutlineIcon />
                 </SideBarIcon>
@@ -100,7 +104,7 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
                         setActive('stagePan');
                     }}
                     isActive={active === 'stagePan'}
-                    label='pan'
+                    label="pan"
                 >
                     <PanToolIcon />
                 </SideBarIcon>
@@ -111,22 +115,18 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
                         setActive('spriteMove');
                     }}
                     isActive={active === 'spriteMove'}
-                    label='move'
+                    label="move"
                 >
                     <OpenWithIcon />
                 </SideBarIcon>
             </SpriteMoveTool>
             <UndoButton>
-                <SideBarIcon
-                    label='undo'
-                >
+                <SideBarIcon label="undo">
                     <UndoIcon />
                 </SideBarIcon>
             </UndoButton>
             <RenoButton>
-                <SideBarIcon
-                    label='reno'
-                >
+                <SideBarIcon label="reno">
                     <RedoIcon />
                 </SideBarIcon>
             </RenoButton>

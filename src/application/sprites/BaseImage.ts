@@ -1,8 +1,8 @@
 import { BaseSprite, BaseSpritePrefs } from './BaseSprite';
+import { CacheDrawConfig } from './Cache';
 import { AbstractContext2D } from 'application/core/context-2d';
 import { ValueUpdater } from 'application/core/types';
 import { Vec2 } from 'application/core/units';
-import { CacheDrawConfig } from './Cache';
 
 export interface BaseImageDrawConfig extends BaseSpritePrefs {
     readonly scale: Vec2;
@@ -55,7 +55,7 @@ export class BaseImage extends BaseSprite {
     }
 
     public drawFunc(context: AbstractContext2D): void {
-        this._drawFunc(context, this.configs)
+        this._drawFunc(context, this.configs);
     }
 
     public drawZoomFunc(context: AbstractContext2D, contextAux: AbstractContext2D, zoom: number) {

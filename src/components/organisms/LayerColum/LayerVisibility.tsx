@@ -1,3 +1,4 @@
+import { Interpolation, Theme } from '@emotion/react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { MouseEventHandler } from 'react';
@@ -5,11 +6,10 @@ import { useSetRecoilState } from 'recoil';
 import { Sprite, searchSpriteFromID } from 'application/sprites/Sprite';
 import IconButton from 'components/atoms/IconButton';
 import { spriteTreeAtom, useSpriteHistPresentValSyncReader, useSpriteTreeSaver } from 'dataflow';
-import { Interpolation, Theme } from '@emotion/react';
 
 const iconStyle: Interpolation<Theme> = (theme) => ({
-    fontSize: theme.fontSize.md2
-})
+    fontSize: theme.fontSize.md2,
+});
 
 export const LayerVisibility = ({ sprite }: { sprite: Sprite }) => {
     const getSpriteTreeHistPresentSync = useSpriteHistPresentValSyncReader();
@@ -39,14 +39,18 @@ export const LayerVisibility = ({ sprite }: { sprite: Sprite }) => {
         <IconButton
             onClick={onClick}
             variant="transparent"
-            css={theme => ({
+            css={(theme) => ({
                 padding: '3px',
                 borderRadius: '10%',
                 marginLeft: '10px',
-                fontSize: theme.fontSize.xs
+                fontSize: theme.fontSize.xs,
             })}
         >
-            {sprite.prefs.visible ? <VisibilityIcon css={iconStyle} /> : <VisibilityOffIcon css={iconStyle} />}
+            {sprite.prefs.visible ? (
+                <VisibilityIcon css={iconStyle} />
+            ) : (
+                <VisibilityOffIcon css={iconStyle} />
+            )}
         </IconButton>
     );
 };

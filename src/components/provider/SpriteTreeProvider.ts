@@ -5,7 +5,6 @@ import { Vec2, Vec4 } from 'application/core/units';
 import { ImageURLDecoder } from 'application/files/ImageURLDecoder';
 import { Arc } from 'application/sprites';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
-import { SmartImage } from 'application/sprites/SmartImage';
 import { FillSolid } from 'application/sprites/SpriteFill';
 import { Rect } from 'application/sprites/shapes/Rect';
 import {
@@ -31,8 +30,6 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
         });
         (async () => {
             const decoder = new ImageURLDecoder();
-
-            // const imageSource = await decoder.decode('/sm.png');
             const imageSource2 = await decoder.decode('/car.png');
             const rect = new Rect(
                 {
@@ -84,7 +81,7 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
                 },
                 null
             );
-            
+
             /**
             const image = new SmartImage(imageSource, {// eslint-disable-line
                     id: uuidv4(),
@@ -105,18 +102,18 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
              */
 
             const image2 = new Rasterizedmage(imageSource2, {// eslint-disable-line
-                id: uuidv4(),
-                name: '車の画像',
-                anchor: new Vec2(0, 0),
-                globalLocation: new Vec2(0, 0),
-                rotation: (0 / 180) * Math.PI,
-                visible: true,
-                blendMode: 'source-over',
-                opacity: 1.0,
-                shadowBlur: 0,
-                shadowColor: '#0000',
-                shadowOffset: new Vec2(0, 0),
-            },
+                    id: uuidv4(),
+                    name: '車の画像',
+                    anchor: new Vec2(0, 0),
+                    globalLocation: new Vec2(0, 0),
+                    rotation: (0 / 180) * Math.PI,
+                    visible: true,
+                    blendMode: 'source-over',
+                    opacity: 1.0,
+                    shadowBlur: 0,
+                    shadowColor: '#0000',
+                    shadowOffset: new Vec2(0, 0),
+                },
                 null
             );
 

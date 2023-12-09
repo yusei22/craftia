@@ -8,8 +8,8 @@ import { UnsharpMaskingButton } from '../../organisms/Filters/UnsharpMasking';
 
 import '@szhsin/react-menu/dist/index.css';
 import Typography from 'components/atoms/Typography';
-import { BinarizationButton } from 'components/organisms/Filters/Binarization';
 import { AmitoneButton } from 'components/organisms/Filters/Amitone';
+import { BinarizationButton } from 'components/organisms/Filters/Binarization';
 
 export const FilterMenus = () => {
     return (

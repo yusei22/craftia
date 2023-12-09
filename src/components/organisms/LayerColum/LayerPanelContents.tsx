@@ -44,10 +44,13 @@ export const LayerPanelContents = <T extends SpritePrefs>({
                     <CheckerBoard>
                         <LayerPreview sprite={sprite} width={45} height={30} />
                     </CheckerBoard>
-                    <Typography variant="extraSmall" css={(theme) => ({
-                        color: theme.colors.text,
-                        marginLeft: '5px'
-                    })}>
+                    <Typography
+                        variant="extraSmall"
+                        css={(theme) => ({
+                            color: theme.colors.text,
+                            marginLeft: '5px',
+                        })}
+                    >
                         {sprite.prefs.name}
                     </Typography>
                 </Container>

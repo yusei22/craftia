@@ -1,26 +1,26 @@
+import { useEffect } from 'react';
 import { GLFilterButton, GLFilterControlPanelsProps } from '../GLFilterButton';
+import { Vec2 } from 'application/core/units';
+import { ImageURLDecoder } from 'application/files/ImageURLDecoder';
+import { Amitone, AmitoneConfig } from 'application/filters/Amitone';
 import Box from 'components/layout/Box';
 import { ConfirmButtons } from 'components/molecules/ConfirmButtons';
 import { NumberField } from 'components/molecules/NumberField';
-import { Amitone, AmitoneConfig } from 'application/filters/Amitone';
-import { ImageURLDecoder } from 'application/files/ImageURLDecoder';
-import { Vec2 } from 'application/core/units';
-import { useEffect } from 'react';
 
-const sourceTone = new ImageURLDecoder().decode('/tone.png')
+const sourceTone = new ImageURLDecoder().decode('/tone.png');
 
 export const AmitoneButton = ({ children }: { children?: React.ReactNode }) => {
     return (
         <GLFilterButton
             filter={new Amitone()}
-            filterLabel={"網トーン"}
+            filterLabel={'網トーン'}
             filterInitalConfigs={{
                 tone: {
                     image: null,
-                    size: new Vec2(0, 0)
+                    size: new Vec2(0, 0),
                 },
                 threshold1: 0.8,
-                threshold2: 0.3
+                threshold2: 0.3,
             }}
             ControlPanels={AmitoneWindowContents}
         >
@@ -35,7 +35,6 @@ const AmitoneWindowContents = ({
     configs,
     setConfigs,
 }: GLFilterControlPanelsProps<AmitoneConfig>) => {
-
     useEffect(() => {
         (async () => {
             const image = await sourceTone;
@@ -44,12 +43,11 @@ const AmitoneWindowContents = ({
                 ...curVal,
                 tone: {
                     image,
-                    size: new Vec2(image.width, image.height)
-                }
+                    size: new Vec2(image.width, image.height),
+                },
             }));
-            
-        })()
-    }, [])
+        })();
+    }, []);
 
     return (
         <Box>
@@ -69,7 +67,7 @@ const AmitoneWindowContents = ({
                 width={400}
                 css={{
                     flexFlow: 'column',
-                    margin: '10px 0px'
+                    margin: '10px 0px',
                 }}
             />
             <NumberField

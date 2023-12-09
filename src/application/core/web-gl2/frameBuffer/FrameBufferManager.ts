@@ -18,7 +18,7 @@ export class FrameBufferManager {
         frameBuffer.bind(this.renderer.gl2);
     }
     public unbind() {
-        FrameBuffer.unbind(this.renderer.gl2)
+        FrameBuffer.unbind(this.renderer.gl2);
     }
     public setViewport(pos: Vec2, size: Vec2): void {
         this.gl2.viewport(

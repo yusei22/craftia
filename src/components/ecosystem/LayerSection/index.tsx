@@ -76,14 +76,14 @@ export const LayerSection = ({ className, panelWidth, panelHeight }: LayerSectio
                     width: panelWidth ? panelWidth + 20 : '100%',
                     '::-webkit-scrollbar': {
                         width: 10,
-                        backgroundColor: theme.colors.neutral100
+                        backgroundColor: theme.colors.neutral100,
                     },
-                    '::-webkit-scrollbar-track':{
-                        backgroundColor: theme.colors.neutral100
+                    '::-webkit-scrollbar-track': {
+                        backgroundColor: theme.colors.neutral100,
                     },
-                    '::-webkit-scrollbar-thumb':{
-                        backgroundColor: theme.colors.neutral300
-                    }
+                    '::-webkit-scrollbar-thumb': {
+                        backgroundColor: theme.colors.neutral300,
+                    },
                 })}
             >
                 <LayerColumn width={panelWidth} height={panelHeight} />

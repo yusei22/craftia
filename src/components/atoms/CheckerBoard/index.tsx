@@ -6,7 +6,7 @@ export const CheckerBoard = forwardRef<HTMLDivElement, CheckerBoardProps>(({ ...
     return (
         <div
             ref={ref}
-            css={theme => ({
+            css={(theme) => ({
                 position: 'relative',
                 width: 'fit-content',
                 height: 'fit-content',

@@ -30,7 +30,7 @@ const Checkbox = ({ size = 'md', className, ...props }: CheckboxProps) => {
                     width: theme.fontSize[size],
                     height: theme.fontSize[size],
                     accentColor: theme.colors.neutral600,
-                    backgroundColor: theme.colors.neutral100
+                    backgroundColor: theme.colors.neutral100,
                 })}
             />
             <Label size={size} htmlFor={props.id}>

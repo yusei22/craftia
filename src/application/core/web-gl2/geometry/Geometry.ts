@@ -43,7 +43,7 @@ export class Geometry {
 
     /**
      * 頂点バッファと頂点属性を追加し、 GPU へのアップロードのフラグを立てる
-     * 
+     *
      * @param id 頂点属性の名前
      * @param buffer 頂点バッファ
      * @param size 頂点のサイズ
@@ -131,15 +131,15 @@ export class Geometry {
     }
 
     /**
-     *   
-     * 現在の全ての属性が単一のバッファを使うようにバッファをインタリーブする。  
+     *
+     * 現在の全ての属性が単一のバッファを使うようにバッファをインタリーブする。
      * パフォーマンス改善のため。
-     * 
-     * - 現時点ではバッファのデータ頂点属性ごとに配置している。  
-     *  (ただし、データを頂点ごとにまとめて配置するほうがメモリアクセスの観点から有利になる)  
-     * 
-     * - 変更内容に対してはGPU へのアップロードのフラグを立てる   
-     * 
+     *
+     * - 現時点ではバッファのデータ頂点属性ごとに配置している。
+     *  (ただし、データを頂点ごとにまとめて配置するほうがメモリアクセスの観点から有利になる)
+     *
+     * - 変更内容に対してはGPU へのアップロードのフラグを立てる
+     *
      * @returns 自身
      */
     public interleave(): this {
@@ -192,9 +192,9 @@ export class Geometry {
     }
 
     /**
-     * VAOを返す  
+     * VAOを返す
      * 必要があればVAOを新規作成する
-     *   
+     *
      * @param gl WebGL2RenderingContext
      * @returns VAO
      */
@@ -208,9 +208,9 @@ export class Geometry {
 
     /**
      * GPUへのモデルのアップロードを完了する
-     * @param renderer 
-     * @param shader 
-     * @returns 
+     * @param renderer
+     * @param shader
+     * @returns
      */
     public update(renderer: Renderer, shader: Shader): this {
         const vao = this.generateVao(renderer.gl2);
@@ -239,9 +239,9 @@ export class Geometry {
     }
 
     /**
-     * 
-     * @param gl 
-     * @returns 
+     *
+     * @param gl
+     * @returns
      */
     public bind(gl: WebGL2RenderingContext): this {
         const vao = this.generateVao(gl);

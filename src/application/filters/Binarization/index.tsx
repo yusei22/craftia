@@ -1,6 +1,6 @@
-import { Context2D } from 'application/core/context-2d';
 import { FilterTarget, FilterExecutor, GLFilter } from '../Filter';
 import { TexRenderer } from '../TexRenderer';
+import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 import { UniformFloat, UniformGroup, UniformInt } from 'application/core/web-gl2';
 
@@ -8,7 +8,7 @@ const binarization = require('./binarization.frag');// eslint-disable-line
 const TEX_UNITNUMBER = 0;
 
 export interface BinarizationConfig {
-    threshold: number
+    threshold: number;
 }
 
 export class Binarization extends GLFilter<BinarizationConfig> {
@@ -32,7 +32,7 @@ export class BinarizationExecutor extends FilterExecutor<BinarizationConfig> {
         this.renderer.setTexVertex(new Vec2(0, 0), imageSize);
         this.renderer.setTexPixels(sprite.image);
     }
-    
+
     public getResult() {
         return this.renderer.renderer.getCanvas();
     }
@@ -40,32 +40,31 @@ export class BinarizationExecutor extends FilterExecutor<BinarizationConfig> {
     public execute(config: BinarizationConfig) {
         this.renderer.setTexUnitnumber(TEX_UNITNUMBER);
         this.renderer.activate();
-        this.renderer.renderer.uniforms.transfer(new UniformGroup([
-            new UniformFloat('u_threshold', config.threshold ?? 0.5)
-        ]))
+        this.renderer.renderer.uniforms.transfer(
+            new UniformGroup([new UniformFloat('u_threshold', config.threshold ?? 0.5)])
+        );
         this.renderer.draw({ flipY: true });
         this.renderer.deactivate();
     }
 
-    static async discriminantAnalysishreshold(image: ImageBitmap | HTMLCanvasElement | OffscreenCanvas | ImageData) {
-        const imageData = image instanceof ImageData ? image : getImageData(image)
+    static async discriminantAnalysishreshold(
+        image: ImageBitmap | HTMLCanvasElement | OffscreenCanvas | ImageData
+    ) {
+        const imageData = image instanceof ImageData ? image : getImageData(image);
         return new Promise<number>((resolve) => {
-            resolve(getThreshold(imageData))
-        })
+            resolve(getThreshold(imageData));
+        });
     }
 }
 
 const getImageData = (image: ImageBitmap | HTMLCanvasElement | OffscreenCanvas) => {
     const ctx = new Context2D();
-    const imageSize = new Vec2(
-        image.width,
-        image.height,
-    )
-    ctx.viewport(imageSize)
+    const imageSize = new Vec2(image.width, image.height);
+    ctx.viewport(imageSize);
     ctx.drawImage(image, new Vec2(0, 0));
 
     return ctx.getImageData(new Vec2(0, 0), imageSize);
-}
+};
 
 const getThreshold = (imageData: ImageData) => {
     const distributions = getColorDistributions(imageData);
@@ -92,7 +91,7 @@ const getThreshold = (imageData: ImageData) => {
         const aveBlack = destBlack / blackPixels;
         const aveWhite = destWhite / whitePixels;
 
-        const molecule = blackPixels * whitePixels * Math.pow((aveBlack - aveWhite), 2);
+        const molecule = blackPixels * whitePixels * Math.pow(aveBlack - aveWhite, 2);
 
         if (molecule > maxMolecule) {
             maxMolecule = molecule;
@@ -100,13 +99,13 @@ const getThreshold = (imageData: ImageData) => {
         }
     }
     return _threshold;
-}
+};
 
 const getColorDistributions = (imageData: ImageData) => {
     const d = imageData.data;
-    const ave = (r: number, g: number, b: number) => (r + g + b) / 3
+    const ave = (r: number, g: number, b: number) => (r + g + b) / 3;
 
-    let distributions: number[] = new Array(256).fill(0)
+    const distributions: number[] = new Array(256).fill(0);
 
     for (let i = 0; i < d.length; i += 4) {
         if (d[i + 3] <= 0) continue;
@@ -116,4 +115,4 @@ const getColorDistributions = (imageData: ImageData) => {
     }
 
     return distributions;
-}
+};

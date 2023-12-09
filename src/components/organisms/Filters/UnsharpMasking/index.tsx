@@ -10,13 +10,12 @@ import {
     MIN_UNSHARPMASKING_THRESHOLD,
 } from 'consts';
 
-
 export const UnsharpMaskingButton = ({ children }: { children?: React.ReactNode }) => {
     return (
         <GLFilterButton
             filter={new UnsharpMasking()}
-            filterLabel={"アンシャープマスキング"}
-            filterInitalConfigs={ {
+            filterLabel={'アンシャープマスキング'}
+            filterInitalConfigs={{
                 radius: 3,
                 threshold: 1.5,
             }}
@@ -31,9 +30,8 @@ const UnsharpMaskingControlPanels = ({
     onCancel,
     onConsent,
     configs,
-    setConfigs
+    setConfigs,
 }: GLFilterControlPanelsProps<UnsharpMaskingConfig>) => {
-
     return (
         <Box>
             <NumberField

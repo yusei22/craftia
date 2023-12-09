@@ -2,7 +2,7 @@ export type BufferParam = {
     usage?: BufferUsage;
 };
 
-export interface IArrayBuffer extends ArrayBuffer { }
+export interface IArrayBuffer extends ArrayBuffer {}
 
 export interface ITypedArray extends IArrayBuffer {
     readonly length: number;
@@ -33,7 +33,7 @@ export type BufferUsage = WebGL2RenderingContext[
 
 /**
  * WebGLBuffer のラッパー
- * 
+ *
  * バインド、データの転送など行う
  */
 export class GLBuffer {

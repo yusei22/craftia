@@ -17,7 +17,7 @@ export const FooterSection = ({ className }: FooterProps) => {
                 backgroundColor: theme.colors.primary600,
                 padding: '0px 50px',
                 justifyContent: 'space-between',
-                overflow:'hidden'
+                overflow: 'hidden',
             })}
         >
             <Typography

@@ -2,7 +2,6 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useDrag } from '@use-gesture/react';
 import React, { useState } from 'react';
 import IconButton from 'components/atoms/IconButton';
-import Typography from 'components/atoms/Typography';
 import Box from 'components/layout/Box';
 import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
@@ -33,7 +32,7 @@ const FloatingWindow = ({ show = true, initialLoc, ...props }: FloatingWindowPro
         <>
             <Wrapper
                 style={{ transform: `translate(${x}px, ${y}px)` }}
-                css={theme => ({
+                css={(theme) => ({
                     width: props.width,
                     boxShadow: '0 0 35px 0 rgba(0, 0, 0, .2)',
                     position: 'absolute',
@@ -52,7 +51,7 @@ const FloatingWindow = ({ show = true, initialLoc, ...props }: FloatingWindowPro
                         boxSizing: 'border-box',
                         touchAction: 'none',
                         fontSize: theme.fontSize.sm,
-                        color:theme.colors.text
+                        color: theme.colors.text,
                     })}
                     {...bind()}
                 >

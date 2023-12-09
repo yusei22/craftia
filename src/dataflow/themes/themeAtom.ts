@@ -1,6 +1,6 @@
+import { Theme } from '@emotion/react';
 import { atom } from 'recoil';
-import { Theme } from '@emotion/react'
-import defaultTheme from 'theme';
+import { defaultTheme } from 'theme';
 
 const themeAtom = atom<Theme>({
     key: 'themeAtom',

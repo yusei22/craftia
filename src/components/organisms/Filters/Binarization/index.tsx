@@ -1,17 +1,21 @@
 import { GLFilterButton, GLFilterControlPanelsProps } from '../GLFilterButton';
+import {
+    Binarization,
+    BinarizationConfig,
+    BinarizationExecutor,
+} from 'application/filters/Binarization';
+import Button from 'components/atoms/Button';
 import Box from 'components/layout/Box';
 import { ConfirmButtons } from 'components/molecules/ConfirmButtons';
-import { Binarization, BinarizationConfig, BinarizationExecutor } from 'application/filters/Binarization';
 import { NumberField } from 'components/molecules/NumberField';
-import Button from 'components/atoms/Button';
 
 export const BinarizationButton = ({ children }: { children?: React.ReactNode }) => {
     return (
         <GLFilterButton
             filter={new Binarization()}
-            filterLabel={"二値化"}
+            filterLabel={'二値化'}
             filterInitalConfigs={{
-                threshold: 0.5
+                threshold: 0.5,
             }}
             ControlPanels={BinarizationnWindowContents}
         >
@@ -25,9 +29,8 @@ const BinarizationnWindowContents = ({
     onConsent,
     configs,
     setConfigs,
-    targetSprite
+    targetSprite,
 }: GLFilterControlPanelsProps<BinarizationConfig>) => {
-
     return (
         <Box>
             <NumberField
@@ -51,11 +54,13 @@ const BinarizationnWindowContents = ({
             <Button
                 onClick={() => {
                     (async () => {
-                        const threshold = await BinarizationExecutor.discriminantAnalysishreshold(targetSprite.image);
+                        const threshold = await BinarizationExecutor.discriminantAnalysishreshold(
+                            targetSprite.image
+                        );
                         setConfigs({
-                            threshold: threshold / 255
-                        })
-                    })()
+                            threshold: threshold / 255,
+                        });
+                    })();
                 }}
             >
                 判別分析

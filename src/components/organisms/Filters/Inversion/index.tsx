@@ -7,7 +7,7 @@ export const InversionButton = ({ children }: { children?: React.ReactNode }) =>
     return (
         <GLFilterButton
             filter={new Inversion()}
-            filterLabel={"反転"}
+            filterLabel={'反転'}
             filterInitalConfigs={{}}
             ControlPanels={InversionWindowContents}
         >

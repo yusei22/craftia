@@ -7,7 +7,7 @@ export const IllustrationButton = ({ children }: { children?: React.ReactNode })
     return (
         <GLFilterButton
             filter={new Illustration()}
-            filterLabel={"イラスト化"}
+            filterLabel={'イラスト化'}
             filterInitalConfigs={{}}
             ControlPanels={IllustrationWindowContents}
         >
@@ -20,7 +20,6 @@ const IllustrationWindowContents = ({
     onCancel,
     onConsent,
 }: GLFilterControlPanelsProps<IllustrationConfig>) => {
-
     return (
         <Box>
             <ConfirmButtons

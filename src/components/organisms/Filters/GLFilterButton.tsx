@@ -1,15 +1,14 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { FilterConfigs, FilterExecutor, GLFilter } from 'application/filters/Filter';
 import { Rasterizedmage, SmartImage } from 'application/sprites';
+import Box from 'components/layout/Box';
 import Wrapper from 'components/layout/Wrapper';
+import { useSpriteTreeSaver } from 'dataflow';
 import { floatingWindowAtom } from 'dataflow/windows/floatingWindowAtom';
 import { useGLFilterExecutorGetter } from 'hooks/filters/useGLFilterExecutorGetter';
 import { useActiveSpritesReader } from 'hooks/sprites/useActiveSpritesReader';
-import Box from 'components/layout/Box';
-import { useSpriteTreeSaver } from 'dataflow';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
-
 
 export type GLFilterControlPanelsProps<T extends FilterConfigs> = {
     onConsent: () => unknown;
@@ -17,24 +16,23 @@ export type GLFilterControlPanelsProps<T extends FilterConfigs> = {
     configs: T;
     setConfigs: Dispatch<SetStateAction<T>>;
     targetSprite: Rasterizedmage | SmartImage;
-}
+};
 
 export const GLFilterWindow = <T extends FilterConfigs>({
     sprite,
     executor,
     executorInitalConfigs,
-    ControlPanels
+    ControlPanels,
 }: {
     sprite: Rasterizedmage | SmartImage;
     executor: FilterExecutor<T>;
     executorInitalConfigs: T;
-    ControlPanels: (props: GLFilterControlPanelsProps<T>) => JSX.Element
+    ControlPanels: (props: GLFilterControlPanelsProps<T>) => JSX.Element;
 }) => {
-
     const setWindow = useSetRecoilState(floatingWindowAtom);
     const setSpriteId = useCallbackOnSprites();
     const saveSpriteTree = useSpriteTreeSaver();
-    const [configs, setConfigs] = useState<T>(executorInitalConfigs)
+    const [configs, setConfigs] = useState<T>(executorInitalConfigs);
 
     const onConsent = () => {
         saveSpriteTree();
@@ -71,8 +69,8 @@ export const GLFilterWindow = <T extends FilterConfigs>({
             setConfigs={setConfigs}
             targetSprite={sprite}
         />
-    )
-}
+    );
+};
 
 export type GLFilterButtonProps<T extends FilterConfigs> = {
     children?: React.ReactNode;
@@ -89,7 +87,6 @@ export const GLFilterButton = <T extends FilterConfigs>({
     filterInitalConfigs,
     ControlPanels,
 }: GLFilterButtonProps<T>) => {
-
     const getGLFilterExecutor = useGLFilterExecutorGetter();
     const getActiveSprite = useActiveSpritesReader();
 
@@ -111,9 +108,11 @@ export const GLFilterButton = <T extends FilterConfigs>({
         setWindow({
             title: filterLabel,
             contents: (
-                <Box css={{
-                    padding: 10
-                }}>
+                <Box
+                    css={{
+                        padding: 10,
+                    }}
+                >
                     <GLFilterWindow
                         sprite={activeSprite}
                         executor={executor}

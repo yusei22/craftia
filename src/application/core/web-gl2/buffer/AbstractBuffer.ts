@@ -37,11 +37,11 @@ export abstract class AbstractBuffer<
      * @param gl WebGL2コンテクスト
      */
     protected abstract generateGLBuffer(gl: WebGL2RenderingContext): T;
-    
+
     /**
      * このバッファにデータをセットし、
      * GPU へのアップロードが必要であるというフラグを立てる。
-     * 
+     *
      * @param data セットしたいデータ
      * @returns 自身
      */

@@ -7,7 +7,7 @@ export const SobelButton = ({ children }: { children?: React.ReactNode }) => {
     return (
         <GLFilterButton
             filter={new Sobel()}
-            filterLabel={"ソーベル線画抽出"}
+            filterLabel={'ソーベル線画抽出'}
             filterInitalConfigs={{}}
             ControlPanels={SobelWindowContents}
         >
@@ -16,10 +16,7 @@ export const SobelButton = ({ children }: { children?: React.ReactNode }) => {
     );
 };
 
-const SobelWindowContents = ({
-    onCancel,
-    onConsent,
-}: GLFilterControlPanelsProps<SobelConfig>) => {
+const SobelWindowContents = ({ onCancel, onConsent }: GLFilterControlPanelsProps<SobelConfig>) => {
     return (
         <Box>
             <ConfirmButtons

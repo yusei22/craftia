@@ -1,7 +1,13 @@
 import { FilterTarget, FilterExecutor, GLFilter } from '../Filter';
 import { TexRenderer } from '../TexRenderer';
 import { Vec2 } from 'application/core/units';
-import { TexPixcels, Texture, UniformFloat, UniformGroup, UniformInt } from 'application/core/web-gl2';
+import {
+    TexPixcels,
+    Texture,
+    UniformFloat,
+    UniformGroup,
+    UniformInt,
+} from 'application/core/web-gl2';
 
 const amitone = require('./amitone.frag');// eslint-disable-line
 const TEX_UNITNUMBER = 0;
@@ -9,11 +15,11 @@ const TONE_UNITNUMBER = 1;
 
 export interface AmitoneConfig {
     tone: {
-        image: TexPixcels,
-        size: Vec2
-    }
-    threshold1: number,
-    threshold2: number,
+        image: TexPixcels;
+        size: Vec2;
+    };
+    threshold1: number;
+    threshold2: number;
 }
 
 export class Amitone extends GLFilter<AmitoneConfig> {
@@ -70,18 +76,17 @@ export class AmitoneExecutor extends FilterExecutor<AmitoneConfig> {
     }
 
     public execute(config: AmitoneConfig) {
-        this.updateTone(
-            config.tone.image,
-            config.tone.size
-        )
+        this.updateTone(config.tone.image, config.tone.size);
 
         this.renderer.setTexUnitnumber(TEX_UNITNUMBER);
         this.renderer.activate();
         this.renderer.renderer.texture.bind(this.tone, TONE_UNITNUMBER);
-        this.renderer.renderer.uniforms.transfer(new UniformGroup([
-            new UniformFloat('u_threshold_1', config.threshold1),
-            new UniformFloat('u_threshold_2', config.threshold2),
-        ]))
+        this.renderer.renderer.uniforms.transfer(
+            new UniformGroup([
+                new UniformFloat('u_threshold_1', config.threshold1),
+                new UniformFloat('u_threshold_2', config.threshold2),
+            ])
+        );
         this.renderer.draw({ flipY: true });
         this.renderer.deactivate();
     }

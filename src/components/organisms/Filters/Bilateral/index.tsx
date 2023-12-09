@@ -9,9 +9,9 @@ export const BilateralButton = ({ children }: { children?: React.ReactNode }) =>
     return (
         <GLFilterButton
             filter={new Bilateral()}
-            filterLabel={"バイラテラルフィルタ"}
+            filterLabel={'バイラテラルフィルタ'}
             filterInitalConfigs={{
-                radius: 3
+                radius: 3,
             }}
             ControlPanels={BilateralWindowContents}
         >
