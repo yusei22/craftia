@@ -1,11 +1,13 @@
-import { GLFrameBuffer } from '../frameBuffer';
-import { GLTexture, TexPixcels } from './GLTexture';
+import { FrameBuffer, GLFrameBuffer } from '../frameBuffer';
+import { GLTexture, TexPixcels, TexPixcelsOptions } from './GLTexture';
 import { Vec2 } from 'application/core/units';
 
 export class Texture {
     public updateID: number;
     public pixcels: TexPixcels;
     public size: Vec2;
+
+    private options: TexPixcelsOptions;
 
     public get unitnumber() {
         return this.glTexture?.unitNumber ?? null;
@@ -21,8 +23,11 @@ export class Texture {
         this.glTexture = null;
 
         this.gl = null;
+
+        this.options = {};
     }
-    public setPixcels(pixcels: TexPixcels, size: Vec2): this {
+    public setPixcels(pixcels: TexPixcels, size: Vec2, options?: TexPixcelsOptions): this {
+        this.options = options || {};
         if (pixcels === null && this.pixcels === null) {
             this.setSize(size);
             return this;
@@ -50,7 +55,7 @@ export class Texture {
         }
 
         glTexture.updateID = this.updateID;
-        glTexture.attachImage(this.pixcels, this.size);
+        glTexture.attachImage(this.pixcels, this.size, this.options);
         return this;
     }
 
