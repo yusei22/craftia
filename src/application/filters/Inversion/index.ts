@@ -1,4 +1,4 @@
-import { FilterTarget, FilterWorker, GLFilter } from '../Filter';
+import { FilterTarget, FilterExecutor, GLFilter } from '../Filter';
 import { TexRenderer } from '../TexRenderer';
 import { Vec2 } from 'application/core/units';
 import { UniformInt } from 'application/core/web-gl2';
@@ -9,12 +9,12 @@ const TEX_UNITNUMBER = 0;
 export interface InversionConfig {}
 
 export class Inversion extends GLFilter<InversionConfig> {
-    public getWorker(gl: WebGL2RenderingContext, sprite: FilterTarget): InversionWorker {
-        return new InversionWorker(gl, sprite);
+    public getExecutor(gl: WebGL2RenderingContext, sprite: FilterTarget): InversionExecutor {
+        return new InversionExecutor(gl, sprite);
     }
 }
 
-export class InversionWorker extends FilterWorker<InversionConfig> {
+export class InversionExecutor extends FilterExecutor<InversionConfig> {
     private renderer: TexRenderer;
 
     constructor(gl: WebGL2RenderingContext, sprite: FilterTarget) {
