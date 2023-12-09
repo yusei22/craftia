@@ -1,4 +1,4 @@
-import { FilterTarget, FilterWorker, GLFilter } from '../Filter';
+import { FilterTarget, FilterExecutor, GLFilter } from '../Filter';
 import { TexRenderer } from '../TexRenderer';
 import { Vec2 } from 'application/core/units';
 import { FrameBuffer, UniformFloat, UniformGroup, UniformInt } from 'application/core/web-gl2';
@@ -12,11 +12,11 @@ export interface GaussianBlurConfig {
 }
 
 export class GaussianBlur extends GLFilter<GaussianBlurConfig> {
-    public getWorker(
+    public getExecutor(
         gl: WebGL2RenderingContext,
         sprite: FilterTarget
-    ): FilterWorker<GaussianBlurConfig> {
-        return new GaussianBlurWorker(gl, sprite);
+    ): FilterExecutor<GaussianBlurConfig> {
+        return new GaussianBlurExecutor(gl, sprite);
     }
 }
 
@@ -24,7 +24,7 @@ const sigma = (ksize: number) => {
     return ksize / 1.5;
 };
 
-export class GaussianBlurWorker extends FilterWorker<GaussianBlurConfig> {
+export class GaussianBlurExecutor extends FilterExecutor<GaussianBlurConfig> {
     private renderer: TexRenderer;
     private frameBuffers: [FrameBuffer, FrameBuffer];
 
