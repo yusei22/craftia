@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { useGetActivePen } from './useActivePenReader';
 import { Vec2, Vec4 } from 'application/core/units';
-import { PenWorker } from 'application/pens/Pen';
+import { PenExecutor } from 'application/pens/Pen';
 import { FillSolid } from 'application/sprites';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
@@ -20,7 +20,7 @@ const usePen = () => {
     const saveSpriteTree = useSpriteTreeSaver();
     const getRGBColor = useRecoilValueSyncReader<RGB>();
 
-    let penWorker: PenWorker | null = null;
+    let penWorker: PenExecutor | null = null;
     let targetID: string = '';
 
     const setPenWorkerPreviewSprite = () => {
