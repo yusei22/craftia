@@ -9,8 +9,9 @@ const RenderViewProvider = ({ children }: { children?: React.ReactNode }) => {
     const windowSize = useWindowSize();
 
     useEffect(() => {
-        setRenderViewScale(new Vec2(windowSize));
+        setRenderViewScale(new Vec2(windowSize).floor());
     }, [windowSize]);
+
     return children;
 };
 
