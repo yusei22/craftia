@@ -1,5 +1,8 @@
 import { BufferUsage, GLBuffer, ITypedArray } from './GLBuffer';
 
+/**
+ * WebGLへの転送を実現する型付き配列のラッパー
+ */
 export abstract class AbstractBuffer<
     T extends GLBuffer = GLBuffer,
     U extends ITypedArray = ITypedArray,
@@ -12,6 +15,11 @@ export abstract class AbstractBuffer<
 
     private updateID: number;
 
+    /**
+     * バッファを作成する
+     * @param data セットしたいデータ
+     * @param usage データストへの用途
+     */
     constructor(data: U, usage: BufferUsage = WebGL2RenderingContext.STATIC_DRAW) {
         this.data = data;
         this.usage = usage;
