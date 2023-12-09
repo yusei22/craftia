@@ -28,7 +28,7 @@ export const LayerSection = ({ className, panelWidth, panelHeight }: LayerSectio
                 css={(theme) => ({
                     padding: 10,
                     width: '100%',
-                    backgroundColor: theme.colors.primary100,
+                    backgroundColor: theme.colors.primary200,
                     borderRadius: 5,
                 })}
             >
@@ -68,12 +68,22 @@ export const LayerSection = ({ className, panelWidth, panelHeight }: LayerSectio
             <Box
                 css={(theme) => ({
                     marginTop: 10,
-                    padding: 10,
+                    padding: '5px 0px 5px 5px',
                     height: '100%',
                     overflowY: 'auto',
                     backgroundColor: theme.colors.primary100,
                     borderRadius: 5,
-                    width: '100%',
+                    width: panelWidth ? panelWidth + 20 : '100%',
+                    '::-webkit-scrollbar': {
+                        width: 10,
+                        backgroundColor: theme.colors.neutral100
+                    },
+                    '::-webkit-scrollbar-track':{
+                        backgroundColor: theme.colors.neutral100
+                    },
+                    '::-webkit-scrollbar-thumb':{
+                        backgroundColor: theme.colors.neutral300
+                    }
                 })}
             >
                 <LayerColumn width={panelWidth} height={panelHeight} />
