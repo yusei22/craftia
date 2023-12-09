@@ -40,11 +40,15 @@ export const NumberField = ({ slider = true, ...props }: SliderInputProps) => {
                     width: '100%',
                 }}
             >
-                <Label size="sm">{props.label}</Label>
+                <Label size="sm" css={{
+                    whiteSpace: 'nowrap'
+                }}
+                >{props.label}</Label>
                 <Input
                     type="number"
                     css={(theme) => ({
                         marginLeft: theme.space.sm,
+                        maxWidth: '100%',
                     })}
                     value={props.value}
                     step={props.step}
