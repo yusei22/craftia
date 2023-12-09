@@ -4,7 +4,7 @@ import { SpriteTree, searchSpritesFromIDs } from 'application/sprites';
 import Checkbox from 'components/molecules/Checkbox';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
-import { useSpritesSetterIds } from 'hooks/sprites/useSpritesSetterIds';
+import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 export const LayerShadowCheakBox = () => {
@@ -12,7 +12,7 @@ export const LayerShadowCheakBox = () => {
     const spriteTree = useRecoilValue(spriteTreeAtom);
     const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
     const saveSpriteTree = useSpriteTreeSaver();
-    const setSpritesFromIds = useSpritesSetterIds();
+    const setSpritesFromIds = useCallbackOnSprites();
 
     const getShadowCheaked = (spriteTree: SpriteTree, activeIds: string[]) => {
         let cheaked: boolean = false;
