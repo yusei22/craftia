@@ -5,23 +5,26 @@ import { Vec2 } from 'application/core/units';
 export class FrameBuffer {
     public readonly clolorTexture: Texture;
 
-    public glFrameBuffer: GLFrameBuffer | null;
-    public size: Vec2;
+    private glFrameBuffer: GLFrameBuffer | null;
+    private _size: Vec2;
     private gl: WebGL2RenderingContext | null;
-    public updateID: number;
+    private updateID: number;
 
     constructor() {
         this.clolorTexture = new Texture();
         this.glFrameBuffer = null;
         this.updateID = 0;
-        this.size = new Vec2(0, 0);
+        this._size = new Vec2(0, 0);
         this.gl = null;
     }
+    public get size() {
+        return this._size;
+    }
     public setSize(size: Vec2): this {
-        if (size.equal(this.size)) {
+        if (size.equal(this._size)) {
             return this;
         }
-        this.size = size;
+        this._size = size;
         this.updateID++;
 
         return this;
@@ -34,8 +37,8 @@ export class FrameBuffer {
         }
         glFbo.updateID = this.updateID;
 
-        if (!this.clolorTexture.size.equal(this.size)) {
-            this.clolorTexture.setSize(this.size.round());
+        if (!this.clolorTexture.size.equal(this._size)) {
+            this.clolorTexture.setSize(this._size.round());
             this.clolorTexture.update(gl);
         }
 
