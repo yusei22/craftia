@@ -97,7 +97,7 @@ export const defaultTheme: Theme = {
     colors: {
         primary100: '#f9f9f9',
         primary200: '#f3f3f3',
-        primary300: '#e5e5e5',
+        primary300: '#dfdfdf',
         primary400: '#dddddd',
         primary500: '#bbbaba',
         primary600: '#a6a4a4',
@@ -107,7 +107,7 @@ export const defaultTheme: Theme = {
 
         neutral100: '#f9f9f9',
         neutral200: '#f3f3f3',
-        neutral300: '#e5e5e5',
+        neutral300: '#dfdfdf',
         neutral400: '#dddddd',
         neutral500: '#bbbaba',
         neutral600: '#a6a4a4',
@@ -179,25 +179,25 @@ export const defaultTheme: Theme = {
 export const darkTheme: Theme = {
     name: 'DARK',
     colors: {
-        primary100: '#f9f9f9',
-        primary200: '#f3f3f3',
-        primary300: '#e5e5e5',
-        primary400: '#dddddd',
+        primary100: '#404040',
+        primary200: '#4f4e4e',
+        primary300: '#696969',
+        primary400: '#a6a4a4',
         primary500: '#bbbaba',
-        primary600: '#a6a4a4',
-        primary700: '#696969',
-        primary800: '#4f4e4e',
-        primary900: '#404040',
+        primary600: '#dddddd',
+        primary700: '#e5e5e5',
+        primary800: '#f3f3f3',
+        primary900: '#f9f9f9',
 
-        neutral100: '#f9f9f9',
-        neutral200: '#f3f3f3',
-        neutral300: '#e5e5e5',
-        neutral400: '#dddddd',
+        neutral100: '#404040',
+        neutral200: '#4f4e4e',
+        neutral300: '#696969',
+        neutral400: '#a6a4a4',
         neutral500: '#bbbaba',
-        neutral600: '#a6a4a4',
-        neutral700: '#696969',
-        neutral800: '#4f4e4e',
-        neutral900: '#404040',
+        neutral600: '#dddddd',
+        neutral700: '#e5e5e5',
+        neutral800: '#f3f3f3',
+        neutral900: '#f9f9f9',
 
         warn100: '#f9f4ed',
         warn200: '#F9E2C8',
@@ -260,4 +260,4 @@ export const darkTheme: Theme = {
     },
 };
 
-export default darkTheme;
+export default defaultTheme;
