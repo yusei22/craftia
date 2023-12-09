@@ -1,10 +1,8 @@
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { useRecoilState } from 'recoil';
 import { LayerPreview } from './LayerPreview';
 import { LayerVisibility } from './LayerVisibility';
 import { Sprite, SpritePrefs } from 'application/sprites/Sprite';
 import { CheckerBoard } from 'components/atoms/CheckerBoard';
-import IconButton from 'components/atoms/IconButton';
 import Typography from 'components/atoms/Typography';
 import Container from 'components/layout/Container';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
@@ -43,20 +41,13 @@ export const LayerPanelContents = <T extends SpritePrefs>({
                         justifyContent: 'start',
                     }}
                 >
-                    <IconButton
-                        variant="translucent"
-                        css={(theme) => ({
-                            borderRadius: '10%',
-                            fontSize: theme.fontSize.sm,
-                            padding: 2,
-                        })}
-                    >
-                        <DragIndicatorIcon />
-                    </IconButton>
                     <CheckerBoard>
-                        <LayerPreview sprite={sprite} width={45} height={40} />
+                        <LayerPreview sprite={sprite} width={45} height={30} />
                     </CheckerBoard>
-                    <Typography variant="small" css={(theme) => ({ color: theme.colors.text })}>
+                    <Typography variant="extraSmall" css={(theme) => ({
+                        color: theme.colors.text,
+                        marginLeft: '5px'
+                    })}>
                         {sprite.prefs.name}
                     </Typography>
                 </Container>
