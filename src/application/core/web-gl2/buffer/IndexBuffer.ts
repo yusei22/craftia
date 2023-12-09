@@ -1,7 +1,7 @@
 import { AbstractBuffer } from './AbstractBuffer';
 import { GLBuffer } from './GLBuffer';
 
-/**gzIboに渡せる`ArrayBuffer` */
+/**インデックスバッファで使用可能な型付き配列 */
 type IndexBufferData = Int8Array | Int16Array | Int32Array;
 
 /**
@@ -16,7 +16,20 @@ type IndexBufferData = Int8Array | Int16Array | Int32Array;
  * 
  */
 export class IndexBuffer extends AbstractBuffer<GLBuffer, IndexBufferData> {
-    protected generateGLBuffer(gl2: WebGL2RenderingContext) {
-        return (this.glBuffer = new GLBuffer(gl2, gl2.ELEMENT_ARRAY_BUFFER));
+    /**
+     * GLBufferを返す
+     * 必要があればGLBuffeを新規作成する
+     * 
+     * @param gl WebGL2Context
+     * @returns GLBuffer
+     */
+    protected generateGLBuffer(gl: WebGL2RenderingContext) {
+        if (gl === this.gl && this.glBuffer) {
+            return this.glBuffer;
+        }
+
+        this.gl = gl;
+
+        return (this.glBuffer = new GLBuffer(gl, gl.ELEMENT_ARRAY_BUFFER));
     }
 }
