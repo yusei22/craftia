@@ -1,4 +1,4 @@
-import { FilterTarget, FilterWorker, GLFilter } from '../Filter';
+import { FilterTarget, FilterExecutor, GLFilter } from '../Filter';
 import { TexRenderer } from '../TexRenderer';
 import { Vec2, Vec3 } from 'application/core/units';
 import { UniformFloat, UniformInt } from 'application/core/web-gl2';
@@ -11,12 +11,12 @@ const TEX_UNITNUMBER = 0;
 export interface SobelConfig {}
 
 export class Sobel extends GLFilter<SobelConfig> {
-    public getWorker(gl: WebGL2RenderingContext, sprite: FilterTarget): SobelWorker {
-        return new SobelWorker(gl, sprite);
+    public getExecutor(gl: WebGL2RenderingContext, sprite: FilterTarget): SobelExecutor {
+        return new SobelExecutor(gl, sprite);
     }
 }
 
-export class SobelWorker extends FilterWorker<SobelConfig> {
+export class SobelExecutor extends FilterExecutor<SobelConfig> {
     private renderer: TexRenderer;
 
     constructor(gl: WebGL2RenderingContext, sprite: FilterTarget) {
