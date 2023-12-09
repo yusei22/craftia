@@ -11,6 +11,7 @@ const Label = ({ size = 'md', ...props }: LabelProps) => {
         <label
             css={(theme) => ({
                 fontSize: theme.fontSize[size],
+                color: theme.colors.text,
                 accentColor: theme.colors.primary600,
             })}
             {...props}
