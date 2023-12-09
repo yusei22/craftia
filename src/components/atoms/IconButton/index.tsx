@@ -5,7 +5,6 @@ const IconButton = ({ ...props }: ButtonProps) => {
         <Button
             css={(theme) => ({
                 padding: theme.space.sm,
-                fontSize: '0px',
                 borderRadius: '50%',
             })}
             {...props}
