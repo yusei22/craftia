@@ -1,4 +1,4 @@
-import { ISpriteWorker } from 'application/ISpriteWorker';
+import { ISpriteExecutor } from 'application/ISpriteWorker';
 import { Vec2 } from 'application/core/units';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { RasterizedPreviewer } from 'application/sprites/RasterizedPreviewer';
@@ -9,11 +9,11 @@ export interface FilterConfigs {}
 export type FilterTarget = Rasterizedmage | SmartImage;
 
 export abstract class GLFilter<T extends FilterConfigs = FilterConfigs> {
-    abstract getWorker(gl2: WebGL2RenderingContext, sprite: FilterTarget): FilterWorker<T>;
+    abstract getExecutor(gl2: WebGL2RenderingContext, sprite: FilterTarget): FilterExecutor<T>;
 }
 
-export abstract class FilterWorker<T extends FilterConfigs = FilterConfigs>
-    implements ISpriteWorker
+export abstract class FilterExecutor<T extends FilterConfigs = FilterConfigs>
+    implements ISpriteExecutor
 {
     protected readonly targetSprite: FilterTarget;
 
