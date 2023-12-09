@@ -5,7 +5,7 @@ import { Sprite, SpritePrefs, searchSpritesFromIDs } from 'application/sprites/S
 import { BLEND_MODE_LABEL, LAYER_BLEND_MODE_VALUE } from 'consts';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
-import { useSpritesSetterIds } from 'hooks/sprites/useSpritesSetterIds';
+import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 import { defaultTheme } from 'theme';
 import { BlendMode } from 'types';
@@ -28,7 +28,7 @@ export type LayerBlendModeSelectorProps = {
 };
 
 export const LayerBlendModeSelector = ({ className }: LayerBlendModeSelectorProps) => {
-    const setSpriteIds = useSpritesSetterIds();
+    const setSpriteIds = useCallbackOnSprites();
     const getSpriteTreeSync = useRecoilValueSyncReader<Sprite<SpritePrefs>[]>();
     const saveSpriteTree = useSpriteTreeSaver();
     const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
