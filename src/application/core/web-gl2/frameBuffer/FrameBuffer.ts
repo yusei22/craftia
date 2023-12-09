@@ -27,7 +27,7 @@ export class FrameBuffer {
         return this;
     }
     public update(gl: WebGL2RenderingContext): this {
-        const glFbo = this.linkGL(gl);
+        const glFbo = this.generateGLframeBuffer(gl);
 
         if (glFbo.updateID === this.updateID) {
             return this;
@@ -43,20 +43,17 @@ export class FrameBuffer {
         return this;
     }
     public bind(gl: WebGL2RenderingContext): this {
-        const glFbo = this.linkGL(gl);
+        const glFbo = this.generateGLframeBuffer(gl);
         glFbo.bind();
         return this;
     }
 
     protected generateGLframeBuffer(gl: WebGL2RenderingContext) {
-        return (this.glFrameBuffer = new GLFrameBuffer(gl));
-    }
-    protected linkGL(gl: WebGL2RenderingContext) {
         if (gl === this.gl && this.glFrameBuffer) {
             return this.glFrameBuffer;
         }
         this.gl = gl;
-        return this.generateGLframeBuffer(this.gl);
+        return (this.glFrameBuffer = new GLFrameBuffer(gl));
     }
     public destroy(): this {
         this.clolorTexture.destroy();
