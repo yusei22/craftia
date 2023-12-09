@@ -13,23 +13,44 @@ import { PenTool } from 'components/organisms/Tools/PenTool';
 import { SpriteMoveTool } from 'components/organisms/Tools/SpriteMoveTool';
 import { SpriteSelectTool } from 'components/organisms/Tools/SpriteSelectTool';
 import { StageMoveTool } from 'components/organisms/Tools/StageMoveTool';
+import Box from 'components/layout/Box';
 
 type SideBarIconProps = {
     children?: React.ReactNode;
+    label?: string;
     isActive?: boolean;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const SideBarIcon = ({ children, isActive, onClick }: SideBarIconProps) => {
+const SideBarIcon = ({ children, label, isActive, onClick }: SideBarIconProps) => {
     return (
         <IconButton
-            variant={isActive ? 'translucentDark' : 'translucent'}
-            css={{
-                borderRadius: '5px',
-            }}
+            variant='transparent'
+            css={theme => ({
+                width: '100%',
+                padding: '5px 6px',
+                margin: '3px 0px',
+                borderRadius: 5,
+
+                backgroundColor: isActive ? theme.colors.neutral200 : '#0000',
+                color: theme.colors.neutral700,
+                ':hover': {
+                    color: theme.colors.neutral800,
+                }
+            })}
             onClick={onClick}
         >
-            {children}
+            <Container css={theme => ({
+                width: '100%',
+                flexFlow: 'column',
+            })}>
+                {children}
+                <Box css={theme => ({
+                    fontSize: theme.fontSize.xs
+                })}>
+                    {label}
+                </Box>
+            </Container>
         </IconButton>
     );
 };
@@ -46,10 +67,9 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
         <Container
             className={className}
             css={(theme) => ({
-                backgroundColor: theme.colors.neutral100,
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
-                padding: '20px 0px',
+                padding: '10px 5px',
             })}
         >
             <SpriteSelectTool>
@@ -58,6 +78,7 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
                         setActive('select');
                     }}
                     isActive={active === 'select'}
+                    label='select'
                 >
                     <NearMeIcon />
                 </SideBarIcon>
@@ -68,6 +89,7 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
                         setActive('pen');
                     }}
                     isActive={active === 'pen'}
+                    label='draw'
                 >
                     <ModeEditOutlineIcon />
                 </SideBarIcon>
@@ -78,6 +100,7 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
                         setActive('stagePan');
                     }}
                     isActive={active === 'stagePan'}
+                    label='pan'
                 >
                     <PanToolIcon />
                 </SideBarIcon>
@@ -88,17 +111,22 @@ export const ToolSection = ({ className }: ToolSectionProps) => {
                         setActive('spriteMove');
                     }}
                     isActive={active === 'spriteMove'}
+                    label='move'
                 >
                     <OpenWithIcon />
                 </SideBarIcon>
             </SpriteMoveTool>
             <UndoButton>
-                <SideBarIcon>
+                <SideBarIcon
+                    label='undo'
+                >
                     <UndoIcon />
                 </SideBarIcon>
             </UndoButton>
             <RenoButton>
-                <SideBarIcon>
+                <SideBarIcon
+                    label='reno'
+                >
                     <RedoIcon />
                 </SideBarIcon>
             </RenoButton>
