@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { Sprite } from 'application/sprites';
 import { spriteTreeAtom } from 'dataflow';
 
-export const useSpritesSetterIds = () => {
+export const useCallbackOnSprites = () => {
     const setSpriteTree = useSetRecoilState(spriteTreeAtom);
 
     return useCallback((ids: string[], callbackfn: (val: Sprite) => Sprite) => {
