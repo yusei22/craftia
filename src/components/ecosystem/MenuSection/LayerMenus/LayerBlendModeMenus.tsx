@@ -3,7 +3,7 @@ import Typography from 'components/atoms/Typography';
 import '@szhsin/react-menu/dist/index.css';
 import { BLEND_MODE_LABEL, LAYER_BLEND_MODE_VALUE } from 'consts';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
-import { useSpritesSetterIds } from 'hooks/sprites/useSpritesSetterIds';
+import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 import { BlendMode } from 'types';
 
@@ -18,7 +18,7 @@ const options: BlendModeOption[] = LAYER_BLEND_MODE_VALUE.map((value) => ({
 }));
 
 export const LayerBlendModeMenus = () => {
-    const setSpriteIds = useSpritesSetterIds();
+    const setSpriteIds = useCallbackOnSprites();
     const getActiveSpriteIds = useRecoilValueSyncReader<string[]>();
 
     const setBlendMode = (blendMode: BlendMode) => {
