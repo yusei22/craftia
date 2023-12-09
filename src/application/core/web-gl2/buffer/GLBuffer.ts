@@ -2,7 +2,7 @@ export type BufferParam = {
     usage?: BufferUsage;
 };
 
-export interface IArrayBuffer extends ArrayBuffer {}
+export interface IArrayBuffer extends ArrayBuffer { }
 
 export interface ITypedArray extends IArrayBuffer {
     readonly length: number;
@@ -115,17 +115,19 @@ export class GLBuffer {
     }
 
     /**
-     * WebGLコンテキストに`null`をバインドする。
-     */
-    public unbind() {
-        this.gl.bindBuffer(this.type, null);
-    }
-
-    /**
      * バッファを破棄する
      */
     public destroy() {
         this.gl.deleteBuffer(this.webGLBuffer);
         this.byteLength = 0;
+    }
+
+    /**
+     * バッファのバインドを解除する
+     * @param gl バインドを解除するWebGL2Context
+     * @param bufferType 解除するバッファのタイプ
+     */
+    static unbind(gl: WebGL2RenderingContext, bufferType: BufferType) {
+        gl.bindBuffer(bufferType, null);
     }
 }
