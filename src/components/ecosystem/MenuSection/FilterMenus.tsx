@@ -1,13 +1,15 @@
 import { MenuItem, MenuDivider, MenuHeader } from '@szhsin/react-menu';
-import { BilateralButton } from '../../organisms/Filters/BilateralButton';
-import { GaussianBlurButton } from '../../organisms/Filters/GaussianBlurButton';
-import { IllustrationButton } from '../../organisms/Filters/IllustrationButton';
-import { InversionButton } from '../../organisms/Filters/InversionButton';
-import { SobelButton } from '../../organisms/Filters/SobelButton';
-import { UnsharpMaskingButton } from '../../organisms/Filters/UnsharpMaskingButton';
+import { BilateralButton } from '../../organisms/Filters/Bilateral';
+import { GaussianBlurButton } from '../../organisms/Filters/Gaussian';
+import { IllustrationButton } from '../../organisms/Filters/Illustration';
+import { InversionButton } from '../../organisms/Filters/Inversion';
+import { SobelButton } from '../../organisms/Filters/Sobel';
+import { UnsharpMaskingButton } from '../../organisms/Filters/UnsharpMasking';
 
 import '@szhsin/react-menu/dist/index.css';
 import Typography from 'components/atoms/Typography';
+import { BinarizationButton } from 'components/organisms/Filters/Binarization';
+import { AmitoneButton } from 'components/organisms/Filters/Amitone';
 
 export const FilterMenus = () => {
     return (
@@ -49,6 +51,16 @@ export const FilterMenus = () => {
                 <IllustrationButton>
                     <Typography variant="small">イラスト化</Typography>
                 </IllustrationButton>
+            </MenuItem>
+            <MenuItem>
+                <BinarizationButton>
+                    <Typography variant="small">二値化</Typography>
+                </BinarizationButton>
+            </MenuItem>
+            <MenuItem>
+                <AmitoneButton>
+                    <Typography variant="small">網トーン</Typography>
+                </AmitoneButton>
             </MenuItem>
         </>
     );
