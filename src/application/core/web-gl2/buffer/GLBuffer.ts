@@ -32,8 +32,9 @@ export type BufferUsage = WebGL2RenderingContext[
     | 'STREAM_COPY'];
 
 /**
- * WegGLのバッファを管理するクラス。
- * 情報を格納したWebGLBufferを作成、保持。
+ * WebGLBuffer のラッパー
+ * 
+ * バインド、データの転送など行う
  */
 export class GLBuffer {
     public updateID: number;
@@ -45,6 +46,7 @@ export class GLBuffer {
     readonly usage: BufferUsage;
     readonly type: BufferType;
     /**
+     * GLBufferを作成
      * @param gl WebGL2のコンストラクター
      * @param type 結合する場所 (ターゲット) を指定する GLenum
      * @param bufferData データストアへ格納する型付き配列
