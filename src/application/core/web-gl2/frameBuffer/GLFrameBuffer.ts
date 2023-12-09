@@ -1,14 +1,17 @@
-/**WebGLFramebufferを管理するクラス */
+/**
+ * WebGLFramebufferのラッパー
+ */
 export class GLFrameBuffer {
-    /** WebGL2のコンテキスト*/
+    /** WebGL2Context*/
     private gl: WebGL2RenderingContext;
-    /**内包するWebGLFramebuffer */
+    /**ラップするWebGLFramebuffer */
     private webGLFramebuffer: WebGLFramebuffer | null;
 
     public updateID: number;
 
     /**
-     * @param gl  WebGL2のコンテキスト
+     * GLFrameBufferを作成する
+     * @param gl  WebGL2Context
      */
     constructor(gl: WebGL2RenderingContext) {
         this.gl = gl;
@@ -21,11 +24,18 @@ export class GLFrameBuffer {
         this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.webGLFramebuffer);
     }
 
-    /**既定のフレームバッファを使う */
-    public unbind() {
-        this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
-    }
+    /**
+     * フレームバッファを破棄する
+     */
     public destroy() {
         this.gl.deleteFramebuffer(this.webGLFramebuffer);
+    }
+
+    /**
+     * フレームバッファをアンバインドする
+     * @param gl WebGL2Context
+     */
+    static unbind(gl: WebGL2RenderingContext) {
+        gl.bindFramebuffer(WebGL2RenderingContext.FRAMEBUFFER, null)
     }
 }
