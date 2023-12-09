@@ -33,18 +33,18 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
             const decoder = new ImageURLDecoder();
 
             // const imageSource = await decoder.decode('/sm.png');
-            const imageSource2 = await decoder.decode('/sample.png');
+            const imageSource2 = await decoder.decode('/car.png');
             const rect = new Rect(
                 {
                     id: uuidv4(),
                     name: '角丸矩形',
                     anchor: new Vec2(0, 0),
-                    globalLocation: new Vec2(200, 300),
-                    rotation: (30 / 180) * Math.PI,
+                    globalLocation: new Vec2(800, 300),
+                    rotation: (0 / 180) * Math.PI,
                     visible: true,
                     blendMode: 'source-over',
                     opacity: 1.0,
-                    shadowBlur: 20,
+                    shadowBlur: 0,
                     shadowColor: 'rgba(0,0,0,0.9)',
                     shadowOffset: new Vec2(0, 0),
                     fillStyle: new FillSolid({ color: new Vec4(255, 0, 0, 0.8) }),
@@ -68,7 +68,7 @@ const SpriteTreeProvider = ({ children }: { children?: React.ReactNode }) => {
                     visible: true,
                     blendMode: 'source-over',
                     opacity: 1.0,
-                    shadowBlur: 20,
+                    shadowBlur: 0,
                     shadowColor: 'rgba(0,0,0,0.9)',
                     shadowOffset: new Vec2(0, 0),
                     fillStyle: new FillSolid({ color: new Vec4(255, 0, 0, 0.8) }),
