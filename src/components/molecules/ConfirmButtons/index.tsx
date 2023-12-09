@@ -12,17 +12,19 @@ export const ConfirmButtons = ({ onConsent, onCancel, ...props }: ConfirmButtons
             <Container {...props}>
                 <Button
                     onClick={onConsent}
-                    css={{
+                    css={theme => ({
                         margin: '0px 5px',
-                    }}
+                        fontSize: theme.fontSize.sm
+                    })}
                 >
                     決定
                 </Button>
                 <Button
                     onClick={onCancel}
-                    css={{
+                    css={theme => ({
                         margin: '0px 5px',
-                    }}
+                        fontSize: theme.fontSize.sm
+                    })}
                 >
                     キャンセル
                 </Button>
