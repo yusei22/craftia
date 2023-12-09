@@ -32,19 +32,40 @@ export abstract class AbstractBuffer<
     }
 
     /**
-     * GLBufferの新規作成を行う
-     * @param gl2
+     * GLBufferを返す
+     * 必要があればGLBuffeを新規作成する
+     * @param gl WebGL2コンテクスト
      */
-    protected abstract generateGLBuffer(gl2: WebGL2RenderingContext): T;
-
+    protected abstract generateGLBuffer(gl: WebGL2RenderingContext): T;
+    
     /**
-     * バッファのデータをセットする
-     * @param data データ
+     * このバッファにデータをセットし、
+     * GPU へのアップロードが必要であるというフラグを立てる。
+     * 
+     * @param data セットしたいデータ
      * @returns 自身
      */
     public setData(data?: U): this {
         this.data = data ?? this.data;
         this.updateID++;
+        return this;
+    }
+
+    /**
+     * GPUへのデータのアップロードを完了する。
+     * ただし、アップロードのフラグが立っていないとき、処理はスキップされる。
+     * @param gl
+     * @returns
+     */
+    public update(gl: WebGL2RenderingContext): this {
+        const glbuffer = this.generateGLBuffer(gl);
+
+        if (glbuffer.updateID === this.updateID) {
+            return this;
+        }
+
+        glbuffer.updateID = this.updateID;
+        glbuffer.updateData(this.data);
         return this;
     }
 
@@ -64,41 +85,8 @@ export abstract class AbstractBuffer<
      * @returns
      */
     public bind(gl: WebGL2RenderingContext): this {
-        const glbuffer = this.linkGL(gl);
+        const glbuffer = this.generateGLBuffer(gl);
         glbuffer.bind();
         return this;
-    }
-
-    /**
-     * バッファの変更内容を更新する
-     * @param gl
-     * @returns
-     */
-    public update(gl: WebGL2RenderingContext): this {
-        const glbuffer = this.linkGL(gl);
-
-        if (glbuffer.updateID === this.updateID) {
-            return this;
-        }
-
-        glbuffer.updateID = this.updateID;
-        glbuffer.updateData(this.data);
-        return this;
-    }
-
-    /**
-     * WebGL2コンテクストと紐付ける
-     * 必要に応じてGLBufferの新規作成を行う
-     *
-     * @param gl WebGL2コンテクスト
-     * @returns GLBuffer
-     */
-    protected linkGL(gl: WebGL2RenderingContext) {
-        if (gl === this.gl && this.glBuffer) {
-            return this.glBuffer;
-        }
-
-        this.gl = gl;
-        return this.generateGLBuffer(this.gl);
     }
 }
