@@ -1,10 +1,9 @@
-import { CacheProvider, EmotionCache, ThemeProvider, css, Global } from '@emotion/react';
+import { CacheProvider, EmotionCache, css, Global } from '@emotion/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { RecoilRoot } from 'recoil';
 import createEmotionCache from 'createEmotionCache';
-import { defaultTheme } from 'theme';
 
 const GlobalStyles = () => (
     <Global
@@ -70,14 +69,12 @@ function MyApp(props: MyAppProps) {
                 <meta property="og:locale" content="ja_JP" />
                 <meta property="og:type" content="website" />
             </Head>
-            <ThemeProvider theme={defaultTheme}>
-                <CacheProvider value={emotionCache}>
-                    <GlobalStyles />
-                    <RecoilRoot>
-                        <Component {...pageProps} />
-                    </RecoilRoot>
-                </CacheProvider>
-            </ThemeProvider>
+            <CacheProvider value={emotionCache}>
+                <GlobalStyles />
+                <RecoilRoot>
+                    <Component {...pageProps} />
+                </RecoilRoot>
+            </CacheProvider>
         </>
     );
 }
