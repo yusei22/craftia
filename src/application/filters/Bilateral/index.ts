@@ -1,4 +1,4 @@
-import { FilterTarget, FilterWorker, GLFilter } from '../Filter';
+import { FilterTarget, FilterExecutor, GLFilter } from '../Filter';
 import { TexRenderer } from '../TexRenderer';
 import { Vec2 } from 'application/core/units';
 import { FrameBuffer, UniformFloat, UniformGroup, UniformInt } from 'application/core/web-gl2';
@@ -13,14 +13,14 @@ export interface BilateralConfig {
 }
 
 export class Bilateral extends GLFilter {
-    public getWorker(gl: WebGL2RenderingContext, sprite: FilterTarget) {
-        return new BilateralWorker(sprite, gl);
+    public getExecutor(gl: WebGL2RenderingContext, sprite: FilterTarget) {
+        return new BilateralExecutor(sprite, gl);
     }
 }
 const sigmaSpace = (r: number) => {
     return r / 1.5;
 };
-export class BilateralWorker extends FilterWorker<BilateralConfig> {
+export class BilateralExecutor extends FilterExecutor<BilateralConfig> {
     private renderer: TexRenderer;
     private frameBuffers: [FrameBuffer, FrameBuffer];
 
