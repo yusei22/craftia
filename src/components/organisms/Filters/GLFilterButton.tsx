@@ -1,35 +1,96 @@
 import { useSetRecoilState } from 'recoil';
-import { FilterConfigs, FilterWorker, GLFilter } from 'application/filters/Filter';
+import { FilterConfigs, FilterExecutor, GLFilter } from 'application/filters/Filter';
 import { Rasterizedmage, SmartImage } from 'application/sprites';
 import Wrapper from 'components/layout/Wrapper';
 import { floatingWindowAtom } from 'dataflow/windows/floatingWindowAtom';
-import { useGLFilterWorkerGetter } from 'hooks/filters/useGLFilterWorkerGetter';
+import { useGLFilterExecutorGetter } from 'hooks/filters/useGLFilterExecutorGetter';
 import { useActiveSpritesReader } from 'hooks/sprites/useActiveSpritesReader';
+import Box from 'components/layout/Box';
+import { useSpriteTreeSaver } from 'dataflow';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
+
+
+export type GLFilterControlPanelsProps<T extends FilterConfigs> = {
+    onConsent: () => unknown;
+    onCancel: () => unknown;
+    configs: T;
+    setConfigs: Dispatch<SetStateAction<T>>;
+    targetSprite: Rasterizedmage | SmartImage;
+}
+
+export const GLFilterWindow = <T extends FilterConfigs>({
+    sprite,
+    executor,
+    executorInitalConfigs,
+    ControlPanels
+}: {
+    sprite: Rasterizedmage | SmartImage;
+    executor: FilterExecutor<T>;
+    executorInitalConfigs: T;
+    ControlPanels: (props: GLFilterControlPanelsProps<T>) => JSX.Element
+}) => {
+
+    const setWindow = useSetRecoilState(floatingWindowAtom);
+    const setSpriteId = useCallbackOnSprites();
+    const saveSpriteTree = useSpriteTreeSaver();
+    const [configs, setConfigs] = useState<T>(executorInitalConfigs)
+
+    const onConsent = () => {
+        saveSpriteTree();
+        setWindow({
+            title: '',
+            contents: <></>,
+            show: false,
+        });
+    };
+
+    const onCancel = () => {
+        setSpriteId([sprite.prefs.id], (sprite) => executor.getOriginalSprite() || sprite);
+        setWindow({
+            title: '',
+            contents: <></>,
+            show: false,
+        });
+    };
+
+    useEffect(() => {
+        setWindow((culVal) => ({
+            ...culVal,
+            onClose: onCancel,
+        }));
+        executor.execute(configs);
+        setSpriteId([sprite.prefs.id], (sprite) => executor.getPreviewSprite() || sprite);
+    }, [configs]);
+
+    return (
+        <ControlPanels
+            onCancel={onCancel}
+            onConsent={onConsent}
+            configs={configs}
+            setConfigs={setConfigs}
+            targetSprite={sprite}
+        />
+    )
+}
 
 export type GLFilterButtonProps<T extends FilterConfigs> = {
     children?: React.ReactNode;
     filter: GLFilter<T>;
-    label: string;
-
-    WindowContents: ({
-        sprite,
-        worker,
-        onClose,
-    }: {
-        sprite: Rasterizedmage | SmartImage;
-        worker: FilterWorker<T>;
-
-        onClose: () => unknown;
-    }) => JSX.Element;
+    filterLabel: string;
+    filterInitalConfigs: T;
+    ControlPanels: (props: GLFilterControlPanelsProps<T>) => JSX.Element;
 };
 
 export const GLFilterButton = <T extends FilterConfigs>({
     children,
     filter,
-    label,
-    WindowContents,
+    filterLabel,
+    filterInitalConfigs,
+    ControlPanels,
 }: GLFilterButtonProps<T>) => {
-    const getGLFilterWorker = useGLFilterWorkerGetter();
+
+    const getGLFilterExecutor = useGLFilterExecutorGetter();
     const getActiveSprite = useActiveSpritesReader();
 
     const setWindow = useSetRecoilState(floatingWindowAtom);
@@ -41,27 +102,29 @@ export const GLFilterButton = <T extends FilterConfigs>({
             return;
         }
 
-        const worker = getGLFilterWorker(activeSprite, filter);
+        const executor = getGLFilterExecutor(activeSprite, filter);
 
-        if (!worker) {
+        if (!executor) {
             return;
         }
+
         setWindow({
-            title: label,
-            onClose: () => {},
-            contents: <WindowContents sprite={activeSprite} worker={worker} onClose={onClose} />,
+            title: filterLabel,
+            contents: (
+                <Box css={{
+                    padding: 10
+                }}>
+                    <GLFilterWindow
+                        sprite={activeSprite}
+                        executor={executor}
+                        executorInitalConfigs={filterInitalConfigs}
+                        ControlPanels={ControlPanels}
+                    />
+                </Box>
+            ),
             show: true,
         });
     };
-    const onClose = () => {
-        setWindow({
-            title: '',
-            onClose: () => {},
-            contents: <></>,
-            show: false,
-        });
-    };
-
     return (
         <Wrapper
             onClick={onClick}
