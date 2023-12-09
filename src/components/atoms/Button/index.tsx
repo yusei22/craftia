@@ -4,10 +4,10 @@ import { ClassAttributes } from 'react';
 export type ButtonVariant =
     | 'primary'
     | 'danger'
-    | 'translucent'
     | 'warn'
     | 'netural'
-    | 'translucentDark';
+    | 'transparent'
+    | 'translucent';
 
 export type ButtonProps = {
     variant?: ButtonVariant;
@@ -19,12 +19,15 @@ const variants: {
 } = {
     primary: (theme) => ({
         color: theme.colors.text,
-        backgroundColor: theme.colors.primary100,
+        backgroundColor: theme.colors.primary200,
         fontSize: theme.fontSize.md,
-        border: 'none',
-        padding: '6px 16px',
-
+        border: `1px solid #0000`,
+        padding: '4px 13px',
+        ':hover': {
+            backgroundColor: theme.colors.primary200,
+        },
         ':active': {
+            border: `1px solid ${theme.colors.primary300}`,
             backgroundColor: theme.colors.primary200,
         },
     }),
@@ -32,9 +35,8 @@ const variants: {
         color: theme.colors.danger700,
         backgroundColor: theme.colors.danger100,
         fontSize: theme.fontSize.md,
-        padding: '6px 16px',
+        padding: '5px 10px',
         border: 'none',
-
         ':active': {
             backgroundColor: theme.colors.danger300,
         },
@@ -43,44 +45,39 @@ const variants: {
         color: theme.colors.warn700,
         backgroundColor: theme.colors.warn100,
         fontSize: theme.fontSize.md,
-        padding: '6px 16px',
+        padding: '5px 10px',
         border: 'none',
 
         ':active': {
             backgroundColor: theme.colors.warn300,
         },
     }),
-    translucent: (theme) => ({
-        color: theme.colors.text,
-        backgroundColor: 'rgba(255,255,255,0)',
-        fontSize: theme.fontSize.md,
-        padding: '6px 16px',
-        border: 'none',
-        ':hover': {
-            backgroundColor: theme.colors.translucentPale,
-        },
-        ':active': {
-            backgroundColor: theme.colors.translucentMedium,
-        },
-    }),
     netural: (theme) => ({
         color: theme.colors.neutral700,
-        backgroundColor: 'rgba(255,255,255,0)',
+        backgroundColor: theme.colors.neutral100,
         fontSize: theme.fontSize.md,
-        padding: '6px 16px',
-        border: 'none',
+        padding: '5px 10px',
+        border: `1px solid #0000`,
         ':hover': {
-            backgroundColor: theme.colors.neutral100,
+            backgroundColor: theme.colors.neutral200,
         },
         ':active': {
-            backgroundColor: theme.colors.neutral300,
+            border: `1px solid ${theme.colors.neutral300}`,
+            backgroundColor: theme.colors.neutral200,
         },
     }),
-    translucentDark: (theme) => ({
+    transparent: (theme) => ({
+        color: theme.colors.text,
+        backgroundColor: '#0000',
+        fontSize: theme.fontSize.md,
+        padding: '5px 10px',
+        border: 'none',
+    }),
+    translucent: (theme) => ({
         color: theme.colors.text,
         backgroundColor: theme.colors.translucentMedium,
         fontSize: theme.fontSize.md,
-        padding: '6px 16px',
+        padding: '5px 10px',
         border: 'none',
         ':hover': {
             backgroundColor: theme.colors.translucentMedium,
