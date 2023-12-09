@@ -1,10 +1,10 @@
 import Select from 'react-select';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Label from 'components/atoms/Label';
 import Container from 'components/layout/Container';
 import { BLEND_MODE_LABEL, PEN_BLEND_MODE_VALUE } from 'consts';
 import { penAtom } from 'dataflow/pens/penAtom';
-import { defaultTheme } from 'theme';
+import { themeAtom } from 'dataflow/themes/themeAtom';
 
 const options = PEN_BLEND_MODE_VALUE.map((value) => ({
     value,
@@ -13,6 +13,8 @@ const options = PEN_BLEND_MODE_VALUE.map((value) => ({
 
 export const PenBlendModeSelector = ({ className }: { className?: string }) => {
     const [penVal, setPen] = useRecoilState(penAtom);
+    const emotionTheme = useRecoilValue(themeAtom);
+
     return (
         <>
             <Container
@@ -37,8 +39,8 @@ export const PenBlendModeSelector = ({ className }: { className?: string }) => {
                         colors: {
                             ...theme.colors,
 
-                            primary25: defaultTheme.colors.neutral200,
-                            primary: defaultTheme.colors.neutral600,
+                            primary25: emotionTheme.colors.neutral200,
+                            primary: emotionTheme.colors.neutral600,
                         },
                     })}
                     isSearchable={false}
