@@ -33,39 +33,36 @@ const FloatingWindow = ({ show = true, initialLoc, ...props }: FloatingWindowPro
         <>
             <Wrapper
                 style={{ transform: `translate(${x}px, ${y}px)` }}
-                css={{
+                css={theme => ({
                     width: props.width,
                     boxShadow: '0 0 35px 0 rgba(0, 0, 0, .2)',
                     position: 'absolute',
                     zIndex: 10000,
-                }}
+                    backgroundColor: theme.colors.neutral100,
+                })}
                 className={props.className}
             >
                 <Container
                     css={(theme) => ({
                         justifyContent: 'space-between',
                         width: '100%',
-                        height: '40px',
+                        height: 33,
                         padding: '0px 8px',
-                        backgroundColor: theme.colors.primary700,
+                        backgroundColor: theme.colors.primary300,
                         boxSizing: 'border-box',
                         touchAction: 'none',
+                        fontSize: theme.fontSize.sm,
+                        color:theme.colors.text
                     })}
                     {...bind()}
                 >
-                    <Typography
-                        variant="small"
-                        css={(theme) => ({
-                            color: theme.colors.white,
-                        })}
-                    >
-                        {props.title}
-                    </Typography>
+                    {props.title}
                     <IconButton
-                        variant="translucent"
+                        variant="transparent"
                         css={(theme) => ({
-                            color: theme.colors.white,
-                            padding: '5px',
+                            color: theme.colors.text,
+                            borderRadius: 0,
+                            padding: 5,
                         })}
                         onClick={props.onClose}
                     >
