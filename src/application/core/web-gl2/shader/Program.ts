@@ -39,7 +39,7 @@ export class Program {
         return uniforms.map((u) => u.getGLUniform(program));
     }
     public compile(gl: WebGL2RenderingContext): this {
-        this.linkGL(gl);
+        this.generateGLProgram(gl);
         return this;
     }
     public bind(): this {
@@ -50,11 +50,16 @@ export class Program {
         this.glProgram.use();
         return this;
     }
-    protected generateGLProgram(gl2: WebGL2RenderingContext) {
+    protected generateGLProgram(gl: WebGL2RenderingContext) {
+        if (gl === this.gl && this.glProgram) {
+            return this.glProgram;
+        }
+
+        this.gl = gl;
         return (this.glProgram = new GLProgram(
-            gl2,
-            new GLVertexShader(gl2, this.vertexSrc),
-            new GLFragmentShader(gl2, this.fragmentSrc)
+            gl,
+            new GLVertexShader(gl, this.vertexSrc),
+            new GLFragmentShader(gl, this.fragmentSrc)
         ));
     }
     public destroy(): this {
@@ -62,13 +67,5 @@ export class Program {
         this.glProgram = null;
 
         return this;
-    }
-    protected linkGL(gl: WebGL2RenderingContext) {
-        if (gl === this.gl && this.glProgram) {
-            return this.glProgram;
-        }
-
-        this.gl = gl;
-        return this.generateGLProgram(this.gl);
     }
 }
