@@ -13,6 +13,7 @@ const Label = ({ size = 'md', ...props }: LabelProps) => {
                 fontSize: theme.fontSize[size],
                 color: theme.colors.text,
                 accentColor: theme.colors.primary600,
+                whiteSpace: 'nowrap',
             })}
             {...props}
         />
