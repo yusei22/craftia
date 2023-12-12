@@ -1,6 +1,5 @@
 import { MenuItem } from '@szhsin/react-menu';
 import Typography from 'components/atoms/Typography';
-import '@szhsin/react-menu/dist/index.css';
 import { BLEND_MODE_LABEL, LAYER_BLEND_MODE_VALUE } from 'consts';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
