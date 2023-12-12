@@ -1,8 +1,8 @@
-import { PenBlendModeSelector } from '../../organisms/Pens/PenBlendModeSelector';
-import { PenOpacitySlider } from '../../organisms/Pens/PenOpacitySlider';
-import { PenRealTimeStabiCheaxkBox } from '../../organisms/Pens/PenRealTimeStabiCheaxkBox';
-import { PenStabilizationSlider } from '../../organisms/Pens/PenStabilizationSlider';
-import { PenWidthSlider } from '../../organisms/Pens/PenWidthSlider';
+import { PenBlendModeField } from '../../organisms/PenMenues/BlendMode';
+import { PenOpacityField } from '../../organisms/PenMenues/Opacity';
+import { PenRealTimeStabilizationField } from '../../organisms/PenMenues/RealTimeStabilization';
+import { PenSizeField } from '../../organisms/PenMenues/Size';
+import { PenStabilizationField } from '../../organisms/PenMenues/Stabilization';
 import Container from 'components/layout/Container';
 
 type PenSectionProps = {
@@ -20,33 +20,33 @@ export const PenSection = ({ className }: PenSectionProps) => {
                     backgroundColor: theme.colors.neutral100,
                 })}
             >
-                <PenWidthSlider
+                <PenSizeField
                     css={{
                         marginTop: 20,
                         width: '100%',
                     }}
                 />
-                <PenOpacitySlider
-                    css={{
-                        marginTop: 20,
-                        width: '100%',
-                    }}
-                />
-
-                <PenRealTimeStabiCheaxkBox
-                    css={{
-                        marginTop: 20,
-                        width: '100%',
-                    }}
-                />
-                <PenStabilizationSlider
+                <PenOpacityField
                     css={{
                         marginTop: 20,
                         width: '100%',
                     }}
                 />
 
-                <PenBlendModeSelector
+                <PenRealTimeStabilizationField
+                    css={{
+                        marginTop: 20,
+                        width: '100%',
+                    }}
+                />
+                <PenStabilizationField
+                    css={{
+                        marginTop: 20,
+                        width: '100%',
+                    }}
+                />
+
+                <PenBlendModeField
                     css={{
                         marginTop: 20,
                         flexFlow: 'column',
