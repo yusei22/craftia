@@ -40,14 +40,7 @@ export const NumberField = ({ slider = true, ...props }: NumberFieldProps) => {
                     width: '100%',
                 }}
             >
-                <Label
-                    size="sm"
-                    css={{
-                        whiteSpace: 'nowrap',
-                    }}
-                >
-                    {props.label}
-                </Label>
+                <Label size="sm">{props.label}</Label>
                 <Input
                     type="number"
                     css={(theme) => ({
