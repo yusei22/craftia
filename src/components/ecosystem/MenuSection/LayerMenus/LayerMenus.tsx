@@ -3,7 +3,6 @@ import { LayerCreateButton } from '../../../organisms/Layers/LayerCreateButton';
 import { LayerDeleteButton } from '../../../organisms/Layers/LayerDeleteButton';
 import { LayerBlendModeMenus } from './LayerBlendModeMenus';
 import Typography from 'components/atoms/Typography';
-import '@szhsin/react-menu/dist/index.css';
 
 export const LayerMenus = () => {
     return (

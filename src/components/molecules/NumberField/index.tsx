@@ -3,7 +3,7 @@ import Input from 'components/atoms/Input';
 import Label from 'components/atoms/Label';
 import Container from 'components/layout/Container';
 
-type SliderInputProps = {
+type NumberFieldProps = {
     label?: string;
     value?: number;
     min?: number;
@@ -18,7 +18,7 @@ type SliderInputProps = {
     setValue?: (n: number) => unknown;
 };
 
-export const NumberField = ({ slider = true, ...props }: SliderInputProps) => {
+export const NumberField = ({ slider = true, ...props }: NumberFieldProps) => {
     const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         const v = parseFloat(e.currentTarget.value) || 0;
 
@@ -40,14 +40,7 @@ export const NumberField = ({ slider = true, ...props }: SliderInputProps) => {
                     width: '100%',
                 }}
             >
-                <Label
-                    size="sm"
-                    css={{
-                        whiteSpace: 'nowrap',
-                    }}
-                >
-                    {props.label}
-                </Label>
+                <Label size="sm">{props.label}</Label>
                 <Input
                     type="number"
                     css={(theme) => ({

@@ -5,8 +5,6 @@ import { IllustrationButton } from '../../organisms/Filters/Illustration';
 import { InversionButton } from '../../organisms/Filters/Inversion';
 import { SobelButton } from '../../organisms/Filters/Sobel';
 import { UnsharpMaskingButton } from '../../organisms/Filters/UnsharpMasking';
-
-import '@szhsin/react-menu/dist/index.css';
 import Typography from 'components/atoms/Typography';
 import { AmitoneButton } from 'components/organisms/Filters/Amitone';
 import { BinarizationButton } from 'components/organisms/Filters/Binarization';

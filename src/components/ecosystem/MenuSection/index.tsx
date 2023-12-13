@@ -12,6 +12,9 @@ import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
 import { ThemeButton } from 'components/organisms/Displays/ThemeButton';
 
+import '@szhsin/react-menu/dist/transitions/slide.css';
+import '@szhsin/react-menu/dist/index.css';
+
 type MenuSectionProps = {
     width?: string | number;
     height?: string | number;

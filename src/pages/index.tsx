@@ -3,13 +3,12 @@ import { ColorSection } from 'components/ecosystem/ColorSection';
 import { FooterSection } from 'components/ecosystem/FooterSection';
 import { LayerSection } from 'components/ecosystem/LayerSection';
 import { MenuSection } from 'components/ecosystem/MenuSection';
-import { PenSection } from 'components/ecosystem/PenSection';
 import { RenderingSection } from 'components/ecosystem/RenderingSection';
+import { ToolMenues } from 'components/ecosystem/ToolMenues';
 import { ToolSection } from 'components/ecosystem/ToolSection';
 import Container from 'components/layout/Container';
 import Wrapper from 'components/layout/Wrapper';
 import { Provider } from 'components/provider';
-import { MQ } from 'mediaQuery';
 
 export default function Home() {
     return (
@@ -23,18 +22,16 @@ export default function Home() {
             <>
                 <Provider>
                     <Wrapper
-                        css={{
+                        css={(theme) => ({
                             position: 'absolute',
                             zIndex: 1000,
-                            bottom: '15px',
-                            [MQ.md]: {
-                                top: '0',
-                                left: '0',
-                            },
-                        }}
+                            top: 0,
+                            width: '100vw',
+                            backgroundColor: theme.colors.neutral100,
+                        })}
                     >
                         <MenuSection
-                            width={'100vw'}
+                            width={'100%'}
                             height={30}
                             css={{
                                 '::-webkit-scrollbar': {
@@ -46,13 +43,32 @@ export default function Home() {
                                 scrollbarWidth: 'none',
                             }}
                         />
+                        <ToolMenues
+                            css={{
+                                justifyContent: 'start',
+                                width: '100%',
+                                height: 50,
+                                zIndex: 1000,
+                                padding: '5px 60px',
+
+                                overflowY: 'auto',
+                                '::-webkit-scrollbar': {
+                                    display: 'none',
+                                },
+                                '-ms-overflow-style': {
+                                    display: 'none',
+                                },
+                                scrollbarWidth: 'none',
+                            }}
+                        />
                     </Wrapper>
+
                     <Container
                         css={(theme) => ({
                             position: 'absolute',
                             zIndex: 500,
-                            top: 30,
-                            height: 'calc(100% - 45px)',
+                            top: 80,
+                            height: 'calc(100% - 80px)',
                             backgroundColor: theme.colors.neutral100,
                         })}
                     >
@@ -67,6 +83,7 @@ export default function Home() {
                                 flexFlow: 'column',
                                 padding: '0px 5px',
                                 height: '100%',
+                                width: 200,
                             }}
                         >
                             <ColorSection
@@ -74,21 +91,7 @@ export default function Home() {
                                 css={(theme) => ({
                                     padding: '5px',
                                     borderRadius: '5px',
-                                    width: '200px',
                                     backgroundColor: theme.colors.neutral200,
-                                })}
-                            />
-                            <PenSection
-                                css={(theme) => ({
-                                    justifyContent: 'start',
-                                    marginTop: 10,
-                                    padding: '5px',
-                                    height: '100%',
-                                    width: '200px',
-                                    borderRadius: '5px',
-                                    backgroundColor: theme.colors.neutral200,
-                                    overflowY: 'auto',
-                                    maxHeight: '1000px',
                                 })}
                             />
                         </Container>
@@ -99,11 +102,11 @@ export default function Home() {
                         css={(theme) => ({
                             position: 'absolute',
                             zIndex: 500,
-                            top: 30,
+                            top: 60,
                             right: 0,
                             padding: '5px',
                             paddingTop: '0px',
-                            height: 'calc(100% - 45px)',
+                            height: 'calc(100% - 60px)',
                             backgroundColor: theme.colors.neutral100,
                         })}
                     >

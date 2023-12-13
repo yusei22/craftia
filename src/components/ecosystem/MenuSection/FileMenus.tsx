@@ -1,7 +1,6 @@
 import { MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
 import { ExportButton, ExportButtonProps } from '../../organisms/Files/ExportButton';
 import Typography from 'components/atoms/Typography';
-import '@szhsin/react-menu/dist/index.css';
 import Container from 'components/layout/Container';
 import { OpenButton } from 'components/organisms/Files/OpenButton';
 

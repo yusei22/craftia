@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import Checkbox from 'components/molecules/Checkbox';
 import { penAtom } from 'dataflow/pens/penAtom';
 
-export const PenRealTimeStabiCheaxkBox = ({ className }: { className?: string }) => {
+export const PenRealTimeStabilizationField = ({ className }: { className?: string }) => {
     const [penVal, setPen] = useRecoilState(penAtom);
     const onRealTimeStabilizationChange = (val: boolean) => {
         setPen((pen) =>
