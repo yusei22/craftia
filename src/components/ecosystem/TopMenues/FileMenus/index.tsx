@@ -1,5 +1,5 @@
 import { MenuDivider, MenuHeader, MenuItem } from '@szhsin/react-menu';
-import { ExportButton, ExportButtonProps } from '../../organisms/Files/ExportButton';
+import { ExportButton, ExportButtonProps } from '../../../organisms/Files/ExportButton';
 import Typography from 'components/atoms/Typography';
 import Container from 'components/layout/Container';
 import { OpenButton } from 'components/organisms/Files/OpenButton';
@@ -22,11 +22,18 @@ const StyledExportButton = ({ title, subtitle, ...props }: StyledExportButtonPro
                     justifyContent: 'space-between',
                 }}
             >
-                <Typography variant="small">{title}</Typography>
+                <Typography
+                    variant="small"
+                    css={(theme) => ({
+                        color: theme.colors.text,
+                    })}
+                >
+                    {title}
+                </Typography>
                 <Typography
                     variant="extraSmall"
                     css={(theme) => ({
-                        color: theme.colors.neutral600,
+                        color: theme.colors.text,
                     })}
                 >
                     {subtitle}
