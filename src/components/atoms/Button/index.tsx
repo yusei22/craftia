@@ -75,15 +75,15 @@ const variants: {
     }),
     translucent: (theme) => ({
         color: theme.colors.text,
-        backgroundColor: theme.colors.translucentMedium,
+        backgroundColor: ' #0000',
         fontSize: theme.fontSize.md,
         padding: '5px 10px',
         border: 'none',
         ':hover': {
-            backgroundColor: theme.colors.translucentMedium,
+            backgroundColor: theme.colors.translucentPale,
         },
         ':active': {
-            backgroundColor: theme.colors.translucentDeep,
+            backgroundColor: theme.colors.translucentMedium,
         },
     }),
 };
