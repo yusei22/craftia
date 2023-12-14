@@ -27,7 +27,7 @@ export const FooterSection = ({ className }: FooterProps) => {
             />
             <Typography
                 css={(theme) => ({
-                    color: theme.colors.neutral100,
+                    color: theme.colors.white,
                     fontSize: theme.fontSize.xs,
                 })}
             >
@@ -35,7 +35,7 @@ export const FooterSection = ({ className }: FooterProps) => {
             </Typography>
             <Typography
                 css={(theme) => ({
-                    color: theme.colors.neutral100,
+                    color: theme.colors.white,
                     fontSize: theme.fontSize.xs,
                     width: 100,
                 })}
