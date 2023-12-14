@@ -1,10 +1,10 @@
 import { MenuItem, MenuDivider, MenuHeader } from '@szhsin/react-menu';
-import { BilateralButton } from '../../organisms/Filters/Bilateral';
-import { GaussianBlurButton } from '../../organisms/Filters/Gaussian';
-import { IllustrationButton } from '../../organisms/Filters/Illustration';
-import { InversionButton } from '../../organisms/Filters/Inversion';
-import { SobelButton } from '../../organisms/Filters/Sobel';
-import { UnsharpMaskingButton } from '../../organisms/Filters/UnsharpMasking';
+import { BilateralButton } from '../../../organisms/Filters/Bilateral';
+import { GaussianBlurButton } from '../../../organisms/Filters/Gaussian';
+import { IllustrationButton } from '../../../organisms/Filters/Illustration';
+import { InversionButton } from '../../../organisms/Filters/Inversion';
+import { SobelButton } from '../../../organisms/Filters/Sobel';
+import { UnsharpMaskingButton } from '../../../organisms/Filters/UnsharpMasking';
 import Typography from 'components/atoms/Typography';
 import { AmitoneButton } from 'components/organisms/Filters/Amitone';
 import { BinarizationButton } from 'components/organisms/Filters/Binarization';
@@ -39,26 +39,29 @@ export const FilterMenus = () => {
                 </UnsharpMaskingButton>
             </MenuItem>
             <MenuDivider />
-            <MenuHeader>その他</MenuHeader>
-            <MenuItem>
-                <InversionButton>
-                    <Typography variant="small">ネガポジ反転</Typography>
-                </InversionButton>
-            </MenuItem>
+            <MenuHeader>イラスト風</MenuHeader>
             <MenuItem>
                 <IllustrationButton>
                     <Typography variant="small">イラスト化</Typography>
                 </IllustrationButton>
             </MenuItem>
             <MenuItem>
-                <BinarizationButton>
-                    <Typography variant="small">二値化</Typography>
-                </BinarizationButton>
-            </MenuItem>
-            <MenuItem>
                 <AmitoneButton>
                     <Typography variant="small">網トーン</Typography>
                 </AmitoneButton>
+            </MenuItem>
+            <MenuDivider />
+            <MenuHeader>その他</MenuHeader>
+            <MenuItem>
+                <InversionButton>
+                    <Typography variant="small">ネガポジ反転</Typography>
+                </InversionButton>
+            </MenuItem>
+
+            <MenuItem>
+                <BinarizationButton>
+                    <Typography variant="small">二値化</Typography>
+                </BinarizationButton>
             </MenuItem>
         </>
     );
