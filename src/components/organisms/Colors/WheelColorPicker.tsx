@@ -31,6 +31,7 @@ const WheelColorPicker = ({ wheelRadius, className }: WheelColorPickerProps) => 
             className={className}
             css={{
                 flexFlow: 'column',
+                gap: 10,
             }}
         >
             <Wheel
@@ -48,23 +49,24 @@ const WheelColorPicker = ({ wheelRadius, className }: WheelColorPickerProps) => 
                     }))
                 }
                 css={{
-                    marginTop: 20,
                     width: '100%',
                 }}
             />
             <Box
                 css={{
-                    marginTop: 20,
                     width: '100%',
                     height: 20,
                 }}
                 style={{
-                    backgroundColor: hsvaToHex(hsva),
+                    backgroundColor: hex,
                 }}
             />
-            <Box
+            <Container
                 css={{
-                    marginTop: 20,
+                    flexFlow: 'column',
+                    justifyContent: 'start',
+                    alignItems: 'start',
+                    gap: 5,
                 }}
             >
                 <HsvField hsv={hsv} setHSV={setHSV} />
