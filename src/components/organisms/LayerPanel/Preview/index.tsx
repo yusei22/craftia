@@ -3,20 +3,23 @@ import { useRecoilValue } from 'recoil';
 import { Context2D } from 'application/core/context-2d';
 import { Vec2 } from 'application/core/units';
 import { Sprite, SpritePrefs } from 'application/sprites/Sprite';
+import { CheckerBoard } from 'components/atoms/CheckerBoard';
 import { stageResolutionAtom } from 'dataflow';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
 
 type LayerPreviewProps<T extends SpritePrefs> = {
-    width?: number;
-    height?: number;
+    maxWidth?: number;
+    maxHeight?: number;
     sprite: Sprite<T>;
 };
+
 const getZoom = (width: number | undefined, height: number | undefined, stageResolution: Vec2) => {
     return Math.max((width || 0) / stageResolution.x, (height || 0) / stageResolution.y);
 };
+
 export const LayerPreview = <T extends SpritePrefs>({
-    width,
-    height,
+    maxWidth: width,
+    maxHeight: height,
     sprite,
 }: LayerPreviewProps<T>) => {
     const [context2D, setContext2D] = useState<Context2D | null>(null);
@@ -58,11 +61,13 @@ export const LayerPreview = <T extends SpritePrefs>({
 
     return (
         <>
-            <canvas
-                ref={canvasRef}
-                width={Math.round(stageResolution.x * getZoom(width, height, stageResolution))}
-                height={Math.round(stageResolution.y * getZoom(width, height, stageResolution))}
-            />
+            <CheckerBoard>
+                <canvas
+                    ref={canvasRef}
+                    width={Math.round(stageResolution.x * getZoom(width, height, stageResolution))}
+                    height={Math.round(stageResolution.y * getZoom(width, height, stageResolution))}
+                />
+            </CheckerBoard>
         </>
     );
 };
