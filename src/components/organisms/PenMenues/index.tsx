@@ -20,8 +20,8 @@ export const PenMenues = () => {
             <PenBlendModeField css={css} />
             <PenSizeField css={css} />
             <PenOpacityField css={css} />
-            <PenRealTimeStabilizationField css={css} />
             <PenStabilizationField css={css} />
+            <PenRealTimeStabilizationField css={css} />
         </Container>
     );
 };
