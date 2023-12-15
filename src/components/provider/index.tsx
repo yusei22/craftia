@@ -1,25 +1,28 @@
-import { FilterGLProvider } from './FilterGLProvider';
-import { PenProvider } from './PenProvider';
-import { RenderViewListenerProvider } from './RenderViewListenerProvider';
-import { RenderViewProvider } from './RenderViewProvider';
-import { SpriteTreeProvider } from './SpriteTreeProvider';
-import { ThemeProvider } from './ThemeProvider';
-import { FloatingWindowProvider } from './WindowProvider';
+import { FilterGLProvider } from './FilterGL';
+import { LayerTreeProvider } from './LayerTree/LayerTreeProvider';
+import { PenProvider } from './Pen';
+import { PortalProvider } from './Portal';
+import { RenderViewListenerProvider } from './RenderView/RenderViewListenerProvider';
+import { RenderViewSizeProvider } from './RenderView/RenderViewSizeProvider';
+import { ThemeProvider } from './Theme';
+import { FloatingWindowProvider } from './Window';
 
 const Provider = ({ children }: { children?: React.ReactNode }) => {
     return (
         <ThemeProvider>
-            <RenderViewProvider>
+            <RenderViewSizeProvider>
                 <RenderViewListenerProvider>
                     <FilterGLProvider>
                         <PenProvider>
-                            <SpriteTreeProvider>
-                                <FloatingWindowProvider>{children}</FloatingWindowProvider>
-                            </SpriteTreeProvider>
+                            <LayerTreeProvider>
+                                <PortalProvider>
+                                    <FloatingWindowProvider>{children}</FloatingWindowProvider>
+                                </PortalProvider>
+                            </LayerTreeProvider>
                         </PenProvider>
                     </FilterGLProvider>
                 </RenderViewListenerProvider>
-            </RenderViewProvider>
+            </RenderViewSizeProvider>
         </ThemeProvider>
     );
 };

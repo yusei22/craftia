@@ -57,13 +57,13 @@ export const FoldingSlider = (props: FoldingSliderProps) => {
                 anchorRef={ref}
                 onClose={() => toggleMenu(false)}
                 css={(theme) => ({
-                    ul: {
+                    '.szh-menu': {
                         padding: 0,
                         backgroundColor: theme.colors.neutral100,
                         boxShadow: `0px 1px 30px rgb(0,0,0,0.1)`,
                         border: `2px solid${theme.colors.neutral200}`,
                     },
-                    li: {
+                    '.szh-menu__item': {
                         padding: '7px',
                         backgroundColor: theme.colors.neutral100,
                     },

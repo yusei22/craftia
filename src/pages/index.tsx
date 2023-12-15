@@ -1,14 +1,16 @@
+import { Box } from '@mui/material';
 import Head from 'next/head';
-import { ColorSection } from 'components/ecosystem/ColorSection';
-import { FooterSection } from 'components/ecosystem/FooterSection';
-import { LayerSection } from 'components/ecosystem/LayerSection';
-import { MenuSection } from 'components/ecosystem/MenuSection';
-import { RenderingSection } from 'components/ecosystem/RenderingSection';
-import { ToolMenues } from 'components/ecosystem/ToolMenues';
-import { ToolSection } from 'components/ecosystem/ToolSection';
+import { FooterSection } from 'components/ecosystem/Footer';
+import { RightBar } from 'components/ecosystem/RightBar';
+import { RenderingSection } from 'components/ecosystem/RwnderView';
+import { ThemeSection } from 'components/ecosystem/ThemeSection';
+import { ToolBar } from 'components/ecosystem/ToolBar';
+import { ToolMenues } from 'components/ecosystem/ToolConfMenues';
+import { MenuSection } from 'components/ecosystem/TopMenus';
 import Container from 'components/layout/Container';
-import Wrapper from 'components/layout/Wrapper';
 import { Provider } from 'components/provider';
+import { PortalProvider } from 'components/provider/Portal';
+import { MQ } from 'mediaQuery';
 
 export default function Home() {
     return (
@@ -21,107 +23,66 @@ export default function Home() {
             </Head>
             <>
                 <Provider>
-                    <Wrapper
+                    <Box
                         css={(theme) => ({
                             position: 'absolute',
-                            zIndex: 1000,
                             top: 0,
+                            zIndex: 1000,
                             width: '100vw',
-                            backgroundColor: theme.colors.neutral100,
+                            backgroundColor: theme.colors.neutral200,
                         })}
                     >
-                        <MenuSection
-                            width={'100%'}
-                            height={30}
-                            css={{
-                                '::-webkit-scrollbar': {
-                                    display: 'none',
-                                },
-                                '-ms-overflow-style': {
-                                    display: 'none',
-                                },
-                                scrollbarWidth: 'none',
-                            }}
-                        />
-                        <ToolMenues
-                            css={{
-                                justifyContent: 'start',
-                                width: '100%',
-                                height: 50,
-                                zIndex: 1000,
-                                padding: '5px 60px',
-
-                                overflowY: 'auto',
-                                '::-webkit-scrollbar': {
-                                    display: 'none',
-                                },
-                                '-ms-overflow-style': {
-                                    display: 'none',
-                                },
-                                scrollbarWidth: 'none',
-                            }}
-                        />
-                    </Wrapper>
-
-                    <Container
-                        css={(theme) => ({
-                            position: 'absolute',
-                            zIndex: 500,
-                            top: 80,
-                            height: 'calc(100% - 80px)',
-                            backgroundColor: theme.colors.neutral100,
-                        })}
-                    >
-                        <ToolSection
-                            css={{
-                                height: '100%',
-                                borderRadius: '5px',
-                            }}
-                        />
                         <Container
                             css={{
-                                flexFlow: 'column',
-                                padding: '0px 5px',
-                                height: '100%',
-                                width: 200,
+                                justifyContent: 'space-between',
+                                alignItems: 'end',
+                                width: '100%',
+                                height: 46,
+                                padding: '0px 10px',
+                                [MQ.md]: {
+                                    padding: '0px 40px',
+                                },
                             }}
                         >
-                            <ColorSection
-                                wheelRadius={150}
-                                css={(theme) => ({
-                                    padding: '5px',
-                                    borderRadius: '5px',
-                                    backgroundColor: theme.colors.neutral200,
-                                })}
-                            />
+                            <MenuSection css={{ alignItems: 'end' }} />
+                            <ThemeSection />
                         </Container>
-                    </Container>
-
-                    <RenderingSection />
-                    <Container
-                        css={(theme) => ({
-                            position: 'absolute',
-                            zIndex: 500,
-                            top: 60,
-                            right: 0,
-                            padding: '5px',
-                            paddingTop: '0px',
-                            height: 'calc(100% - 60px)',
-                            backgroundColor: theme.colors.neutral100,
-                        })}
-                    >
-                        <LayerSection
-                            panelWidth={230}
+                        <ToolMenues
                             css={{
-                                height: '100%',
-                                borderRadius: '5px',
+                                height: 50,
+                                zIndex: 1000,
+                                padding: '0px 10px',
+                                [MQ.md]: {
+                                    padding: '0px 40px',
+                                },
                             }}
                         />
+                    </Box>
+                    <ToolBar
+                        css={{
+                            position: 'absolute',
+                            zIndex: 500,
+                            top: 96,
+                            width: 'auto',
+                            height: 'calc(100% - 111px)',
+                        }}
+                    />
+                    <PortalProvider />
+                    <RenderingSection />
+                    <Container
+                        css={{
+                            position: 'absolute',
+                            zIndex: 500,
+                            top: 96,
+                            right: 0,
+                            height: 'calc(100% - 111px)',
+                        }}
+                    >
+                        <RightBar />
                     </Container>
 
                     <FooterSection
                         css={{
-                            width: '100vw',
                             height: '15px',
                             position: 'absolute',
                             bottom: 0,
