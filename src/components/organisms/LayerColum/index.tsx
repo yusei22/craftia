@@ -16,10 +16,10 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useRecoilState } from 'recoil';
-import { LayerPanel } from './LayerPanel';
+import { LayerPanel } from '../LayerPanel';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
 
-import Wrapper from 'components/layout/Wrapper';
+import Container from 'components/layout/Container';
 import {
     spriteTreeAtom,
     useSpriteHistPresentValSyncReader,
@@ -28,12 +28,10 @@ import {
 } from 'dataflow';
 
 export type LayerColumProps = {
-    width?: number | string;
-    height?: number | string;
     className?: string;
 };
 
-const LayerColumn = ({ width, height, className }: LayerColumProps) => {
+const LayerColumn = ({ className }: LayerColumProps) => {
     const [, setSpriteTree] = useRecoilState(spriteTreeAtom);
     const getSpriteTreeHistPresentSync = useSpriteHistPresentValSyncReader();
     const spriteTreeHistPresent = useSpriteTreeHistPresentVal();
@@ -74,7 +72,15 @@ const LayerColumn = ({ width, height, className }: LayerColumProps) => {
         }
     }
     return (
-        <Wrapper className={className}>
+        <Container
+            className={className}
+            css={{
+                width: '100%',
+                flexFlow: 'column',
+                justifyContent: 'start',
+                alignItems: 'start',
+            }}
+        >
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
@@ -92,15 +98,14 @@ const LayerColumn = ({ width, height, className }: LayerColumProps) => {
                                 sprite={sprite}
                                 key={sprite.prefs.id}
                                 css={{
-                                    width,
-                                    height,
+                                    minWidth: '200px',
                                 }}
                             />
                         ))
                         .reverse()}
                 </SortableContext>
             </DndContext>
-        </Wrapper>
+        </Container>
     );
 };
 

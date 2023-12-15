@@ -1,103 +1,78 @@
-import { Wheel, hexToHsva, hsvaToHex, hsvaToHexa, rgbaToHsva, hsvaToRgba } from '@uiw/react-color';
+import { Wheel, rgbaToHsva } from '@uiw/react-color';
 import ShadeSlider from '@uiw/react-color-shade-slider';
-import { Dispatch, SetStateAction } from 'react';
-import { HSLInput } from './HSLInput';
-import { HEXInput } from './HexInput';
-import { RGBInput } from './RGBInput';
+import { useRecoilState } from 'recoil';
+import { HsvField } from './HSLField';
+import { HEXField } from './HexField';
+import { RGBField } from './RGBField';
 import Box from 'components/layout/Box';
 import Container from 'components/layout/Container';
+import { HSVColorSelector } from 'dataflow/colors/HSVColorSelector';
+import { HexColorSelector } from 'dataflow/colors/HexColorSelector';
+import { RGBColorAtom } from 'dataflow/colors/RGBColorAtom';
+
+export type RGBColor = {
+    r: number;
+    g: number;
+    b: number;
+};
 
 type WheelColorPickerProps = {
     wheelRadius?: number;
-    hsva: {
-        h: number;
-        s: number;
-        v: number;
-        a: number;
-    };
-    setHsva: Dispatch<
-        SetStateAction<{
-            h: number;
-            s: number;
-            v: number;
-            a: number;
-        }>
-    >;
     className?: string;
 };
 
-const WheelColorPicker = ({ wheelRadius, hsva, setHsva, className }: WheelColorPickerProps) => {
+const WheelColorPicker = ({ wheelRadius, className }: WheelColorPickerProps) => {
+    const [hsv, setHSV] = useRecoilState(HSVColorSelector);
+    const [hex, setHex] = useRecoilState(HexColorSelector);
+    const [rgb, setRGB] = useRecoilState(RGBColorAtom);
+
     return (
         <Container
             className={className}
             css={{
                 flexFlow: 'column',
+                gap: 10,
             }}
         >
             <Wheel
-                color={hsva}
-                onChange={(color) => setHsva({ ...hsva, ...color.hsva })}
+                color={rgbaToHsva({ ...rgb, a: 1.0 })}
+                onChange={(color) => setHSV(color.hsv)}
                 width={wheelRadius}
                 height={wheelRadius}
             />
             <ShadeSlider
-                hsva={hsva}
-                onChange={(newShade) => {
-                    setHsva({ ...hsva, ...newShade });
-                }}
+                hsva={{ ...hsv, a: 1.0 }}
+                onChange={(newShade) =>
+                    setHSV((curVal) => ({
+                        ...curVal,
+                        ...newShade,
+                    }))
+                }
                 css={{
-                    marginTop: 20,
                     width: '100%',
                 }}
             />
             <Box
                 css={{
-                    marginTop: 20,
                     width: '100%',
                     height: 20,
                 }}
                 style={{
-                    backgroundColor: hsvaToHex(hsva),
+                    backgroundColor: hex,
                 }}
             />
-            <Box
+            <Container
                 css={{
-                    marginTop: 20,
+                    flexFlow: 'column',
+                    justifyContent: 'start',
+                    alignItems: 'start',
+                    gap: 5,
                 }}
             >
-                <HSLInput
-                    hsva={hsva}
-                    setHsva={setHsva}
-                    css={{
-                        width: '80%',
-                    }}
-                />
-                <RGBInput
-                    rgba={hsvaToRgba(hsva)}
-                    setRGBA={(rgba) => {
-                        setHsva((hsva) => {
-                            const _rgba =
-                                typeof rgba === 'function' ? rgba(hsvaToRgba(hsva)) : rgba;
-                            return rgbaToHsva(_rgba);
-                        });
-                    }}
-                    css={{
-                        width: '80%',
-                    }}
-                />
-                <HEXInput
-                    hexa={hsvaToHex(hsva)}
-                    setHexa={(hexa) => {
-                        setHsva((hsva) => {
-                            const _hex = typeof hexa === 'function' ? hexa(hsvaToHexa(hsva)) : hexa;
-                            return hexToHsva(_hex);
-                        });
-                    }}
-                    css={{
-                        width: '80%',
-                    }}
-                />
-            </Box>
+                <HsvField hsv={hsv} setHSV={setHSV} />
+                <RGBField rgb={rgb} setRGB={setRGB} />
+                <HEXField hex={hex} setHex={setHex} />
+            </Container>
         </Container>
     );
 };
