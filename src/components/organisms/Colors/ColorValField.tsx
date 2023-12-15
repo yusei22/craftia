@@ -14,16 +14,15 @@ export type ColorValInputProps = {
     width?: number | string;
     height?: number | string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
+    onBlur?: ChangeEventHandler<HTMLInputElement>;
 };
 
-export const ColorValInput = (props: ColorValInputProps) => {
+export const ColorValField = (props: ColorValInputProps) => {
     return (
         <Container
             css={{
                 justifyContent: 'space-between',
                 width: '100%',
-                marginTop: 5,
-                marginLeft: 10,
             }}
         >
             <Label htmlFor={props.name} size="sm">
@@ -37,6 +36,7 @@ export const ColorValInput = (props: ColorValInputProps) => {
                 min={props.min}
                 max={props.max}
                 onChange={props.onChange}
+                onBlur={props.onBlur}
                 css={{
                     boxSizing: 'border-box',
                     width: props.width,
