@@ -4,7 +4,7 @@ import { Vec2 } from 'application/core/units';
 import { renderViewScaleAtom } from 'dataflow';
 import { useWindowSize } from 'hooks';
 
-const RenderViewProvider = ({ children }: { children?: React.ReactNode }) => {
+export const RenderViewSizeProvider = ({ children }: { children?: React.ReactNode }) => {
     const setRenderViewScale = useSetRecoilState(renderViewScaleAtom);
     const windowSize = useWindowSize();
 
@@ -14,5 +14,3 @@ const RenderViewProvider = ({ children }: { children?: React.ReactNode }) => {
 
     return children;
 };
-
-export { RenderViewProvider };
