@@ -19,7 +19,7 @@ import { useRecoilState } from 'recoil';
 import { LayerPanel } from '../LayerPanel';
 import { searchSpriteFromID } from 'application/sprites/Sprite';
 
-import Wrapper from 'components/layout/Wrapper';
+import Container from 'components/layout/Container';
 import {
     spriteTreeAtom,
     useSpriteHistPresentValSyncReader,
@@ -72,7 +72,15 @@ const LayerColumn = ({ className }: LayerColumProps) => {
         }
     }
     return (
-        <Wrapper className={className}>
+        <Container
+            className={className}
+            css={{
+                width: '100%',
+                flexFlow: 'column',
+                justifyContent: 'start',
+                alignItems: 'start',
+            }}
+        >
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
@@ -90,15 +98,14 @@ const LayerColumn = ({ className }: LayerColumProps) => {
                                 sprite={sprite}
                                 key={sprite.prefs.id}
                                 css={{
-                                    width,
-                                    height,
+                                    minWidth: '200px',
                                 }}
                             />
                         ))
                         .reverse()}
                 </SortableContext>
             </DndContext>
-        </Wrapper>
+        </Container>
     );
 };
 
