@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { searchSpritesFromIDs } from 'application/sprites';
-import { NumberField } from 'components/molecules/NumberField';
+import { SmallNumberField } from 'components/molecules/SmallNumberField';
 import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
@@ -11,7 +11,7 @@ export type LayerOpacitySliderProps = {
     className?: string;
 };
 
-export const LayerOpacitySlider = ({ className }: LayerOpacitySliderProps) => {
+export const LayerOpacityField = ({ className }: LayerOpacitySliderProps) => {
     const [opacity, setOpacity] = useState(0);
 
     const spriteTree = useRecoilValue(spriteTreeAtom);
@@ -53,7 +53,7 @@ export const LayerOpacitySlider = ({ className }: LayerOpacitySliderProps) => {
 
     return (
         <>
-            <NumberField
+            <SmallNumberField
                 className={className}
                 css={{
                     flexFlow: 'column',
@@ -65,7 +65,7 @@ export const LayerOpacitySlider = ({ className }: LayerOpacitySliderProps) => {
                 min={0}
                 max={100}
                 label="不透明度："
-            ></NumberField>
+            ></SmallNumberField>
         </>
     );
 };
