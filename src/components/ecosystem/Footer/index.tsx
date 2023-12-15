@@ -2,6 +2,7 @@ import { useRecoilValue } from 'recoil';
 import Typography from 'components/atoms/Typography';
 import Container from 'components/layout/Container';
 import { stageZoomSelector } from 'dataflow';
+import { MQ } from 'mediaQuery';
 
 export type FooterProps = {
     className?: string;
@@ -15,9 +16,12 @@ export const FooterSection = ({ className }: FooterProps) => {
             css={(theme) => ({
                 width: '100%',
                 backgroundColor: theme.colors.primary600,
-                padding: '0px 50px',
+                padding: '0px 10px',
                 justifyContent: 'space-between',
                 overflow: 'hidden',
+                [MQ.md]: {
+                    padding: '0px 20px',
+                },
             })}
         >
             <Typography
@@ -29,6 +33,7 @@ export const FooterSection = ({ className }: FooterProps) => {
                 css={(theme) => ({
                     color: theme.colors.white,
                     fontSize: theme.fontSize.xs,
+                    whiteSpace: 'nowrap',
                 })}
             >
                 © 2023 yusei22
@@ -38,6 +43,7 @@ export const FooterSection = ({ className }: FooterProps) => {
                     color: theme.colors.white,
                     fontSize: theme.fontSize.xs,
                     width: 100,
+                    whiteSpace: 'nowrap',
                 })}
             >
                 Zoom：{Math.round(stageZoom * 100)}%
