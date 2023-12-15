@@ -1,6 +1,6 @@
 import { MenuItem, SubMenu, MenuDivider, MenuHeader } from '@szhsin/react-menu';
-import { LayerCreateButton } from '../../../organisms/Layers/LayerCreateButton';
-import { LayerDeleteButton } from '../../../organisms/Layers/LayerDeleteButton';
+import { LayerCreateButton } from '../../../organisms/LayerMenues/Creater';
+import { LayerDeleteButton } from '../../../organisms/LayerMenues/Deleter';
 import { LayerBlendModeMenus } from './LayerBlendModeMenus';
 import Typography from 'components/atoms/Typography';
 
@@ -28,7 +28,10 @@ export const LayerMenus = () => {
             </MenuItem>
             <MenuDivider />
             <MenuHeader>効果</MenuHeader>
-            <SubMenu label={<Typography variant="small">ブレンドモード</Typography>}>
+            <SubMenu
+                label={<Typography variant="small">ブレンドモード</Typography>}
+                overflow={'auto'}
+            >
                 <LayerBlendModeMenus />
             </SubMenu>
         </>
