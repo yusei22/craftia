@@ -10,7 +10,7 @@ import { Vec2 } from 'application/core/units';
 import { Rasterizedmage } from 'application/sprites/RasterizedImage';
 import { RasterizedPreviewer } from 'application/sprites/RasterizedPreviewer';
 import { SpriteFillStyle } from 'application/sprites/Sprite';
-import { BlendMode } from 'types';
+import { BlendMode } from 'types/blendMode';
 
 //TODO : クラスの設計見直す
 
