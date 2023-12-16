@@ -1,4 +1,4 @@
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CloseIcon from '@mui/icons-material/Close';
 import { useDrag } from '@use-gesture/react';
 import React, { useState } from 'react';
 import IconButton from 'components/atoms/IconButton';
@@ -38,6 +38,7 @@ const FloatingWindow = ({ show = true, initialLoc, ...props }: FloatingWindowPro
                     position: 'absolute',
                     zIndex: 10000,
                     backgroundColor: theme.colors.neutral100,
+                    borderRadius: 5,
                 })}
                 className={props.className}
             >
@@ -45,13 +46,14 @@ const FloatingWindow = ({ show = true, initialLoc, ...props }: FloatingWindowPro
                     css={(theme) => ({
                         justifyContent: 'space-between',
                         width: '100%',
-                        height: 33,
-                        padding: '0px 8px',
-                        backgroundColor: theme.colors.primary300,
+                        padding: '2px 8px',
+                        backgroundColor: '#0000',
                         boxSizing: 'border-box',
                         touchAction: 'none',
                         fontSize: theme.fontSize.sm,
                         color: theme.colors.text,
+                        borderBottom: `1px solid ${theme.colors.neutral300}`,
+                        whiteSpace: 'nowrap',
                     })}
                     {...bind()}
                 >
@@ -65,7 +67,7 @@ const FloatingWindow = ({ show = true, initialLoc, ...props }: FloatingWindowPro
                         })}
                         onClick={props.onClose}
                     >
-                        <HighlightOffIcon />
+                        <CloseIcon />
                     </IconButton>
                 </Container>
                 <Box width={'100%'} height={props.height}>

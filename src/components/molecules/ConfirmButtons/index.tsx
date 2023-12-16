@@ -9,22 +9,27 @@ export type ConfirmButtonsProps = ContainerProps & {
 export const ConfirmButtons = ({ onConsent, onCancel, ...props }: ConfirmButtonsProps) => {
     return (
         <>
-            <Container {...props}>
+            <Container
+                {...props}
+                css={{
+                    gap: 10,
+                }}
+            >
                 <Button
+                    variant="primary"
                     onClick={onConsent}
-                    css={(theme) => ({
-                        margin: '0px 5px',
-                        fontSize: theme.fontSize.sm,
-                    })}
+                    css={{
+                        width: 100,
+                    }}
                 >
                     決定
                 </Button>
                 <Button
+                    variant="secondary"
                     onClick={onCancel}
-                    css={(theme) => ({
-                        margin: '0px 5px',
-                        fontSize: theme.fontSize.sm,
-                    })}
+                    css={{
+                        width: 100,
+                    }}
                 >
                     キャンセル
                 </Button>

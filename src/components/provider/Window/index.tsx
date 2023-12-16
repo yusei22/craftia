@@ -15,6 +15,7 @@ export const FloatingWindowProvider = ({ children }: { children?: React.ReactNod
                     zIndex: 1000,
                 }}
                 initialLoc={[100, 100]}
+                onClose={windowPrefs.onClose}
             >
                 {windowPrefs.contents}
             </FloatingWindow>

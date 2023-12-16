@@ -96,12 +96,12 @@ export const defaultTheme: Theme = {
     name: 'DEFAULT',
     colors: {
         primary100: '#FDFDFD',
-        primary200: '#B3C8CC',
+        primary200: '#e7f3f5',
         primary300: '#809BA0',
         primary400: '#4D6E73',
         primary500: '#1A3F43',
         primary600: '#5AA2AE',
-        primary700: '#2D7B87',
+        primary700: '#2a8897',
         primary800: '#005359',
         primary900: '#002B2F',
 

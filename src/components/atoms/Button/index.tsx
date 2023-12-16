@@ -7,7 +7,8 @@ export type ButtonVariant =
     | 'warn'
     | 'netural'
     | 'transparent'
-    | 'translucent';
+    | 'translucent'
+    | 'secondary';
 
 export type ButtonProps = {
     variant?: ButtonVariant;
@@ -18,16 +19,33 @@ const variants: {
     [key in ButtonVariant]: FunctionInterpolation<Theme>;
 } = {
     primary: (theme) => ({
-        color: theme.colors.text,
-        backgroundColor: theme.colors.primary200,
-        fontSize: theme.fontSize.md,
-        border: `1px solid #0000`,
-        padding: '4px 13px',
+        fontSize: theme.fontSize.sm,
+        border: 'none',
+        padding: '5px 10px',
+        transition: '0.1s',
+        backgroundColor: theme.colors.primary600,
+        color: theme.colors.white,
+        borderRadius: 5,
         ':hover': {
-            backgroundColor: theme.colors.primary200,
+            backgroundColor: theme.colors.primary700,
         },
         ':active': {
-            border: `1px solid ${theme.colors.primary300}`,
+            backgroundColor: theme.colors.primary600,
+        },
+    }),
+    secondary: (theme) => ({
+        fontSize: theme.fontSize.sm,
+        padding: '5px 10px',
+        transition: '0.1s',
+
+        backgroundColor: '#0000',
+        borderRadius: 5,
+        border: `1px solid ${theme.colors.neutral300}`,
+        color: theme.colors.primary700,
+        ':hover': {
+            backgroundColor: theme.colors.translucentPale,
+        },
+        ':active': {
             backgroundColor: theme.colors.primary200,
         },
     }),
