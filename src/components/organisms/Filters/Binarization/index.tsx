@@ -52,6 +52,7 @@ const BinarizationnWindowContents = ({
                 }}
             />
             <Button
+                variant="secondary"
                 onClick={() => {
                     (async () => {
                         const threshold = await BinarizationExecutor.discriminantAnalysishreshold(
