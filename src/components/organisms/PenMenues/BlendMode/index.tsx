@@ -4,7 +4,7 @@ import Container from 'components/layout/Container';
 import { Selector, SelectorOptions } from 'components/molecules/Selector';
 import { BLEND_MODE_LABEL, PEN_BLEND_MODE_VALUE } from 'consts';
 import { penAtom } from 'dataflow/pens/penAtom';
-import { BlendMode } from 'types';
+import { BlendMode } from 'types/blendMode';
 
 const createOptions = (blendModes: readonly BlendMode[]) => {
     return blendModes.map((value) => ({
