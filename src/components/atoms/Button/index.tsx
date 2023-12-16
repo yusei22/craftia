@@ -32,7 +32,6 @@ const variants: {
         ':active': {
             backgroundColor: theme.colors.primary600,
         },
-        width: 100,
     }),
     secondary: (theme) => ({
         fontSize: theme.fontSize.sm,
@@ -49,7 +48,6 @@ const variants: {
         ':active': {
             backgroundColor: theme.colors.primary200,
         },
-        width: 100,
     }),
     danger: (theme) => ({
         color: theme.colors.danger700,
