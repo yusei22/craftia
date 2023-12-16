@@ -8,7 +8,7 @@ import { spriteTreeAtom, useSpriteTreeSaver } from 'dataflow';
 import { activeSpriteIdsAtom } from 'dataflow/sprites/activeSpriteIdAtom';
 import { useCallbackOnSprites } from 'hooks/sprites/useCallbackOnSprites';
 import { useRecoilValueSyncReader } from 'hooks/useRecoilValueSyncReader';
-import { BlendMode } from 'types';
+import { BlendMode } from 'types/blendMode';
 
 const createOptions = (blendModes: readonly BlendMode[]) => {
     return blendModes.map((value) => ({
