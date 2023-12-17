@@ -35,7 +35,7 @@ const AmitoneWindowContents = ({
 }: GLFilterControlPanelsProps<AmitoneConfig>) => {
     useEffect(() => {
         (async () => {
-            const image = await new ImageURLDecoder().decode('/tone.png');
+            const image = await new ImageURLDecoder().decode('/image/tone.png');
 
             setConfigs((curVal) => ({
                 ...curVal,
