@@ -1,6 +1,6 @@
 import { Box, SvgIcon } from '@mui/material';
 import Head from 'next/head';
-import Icon from '../../public/craftia-favicon.svg';
+import Icon from '../../public/favicon.svg';
 import { FooterSection } from 'components/ecosystem/Footer';
 import { RightBar } from 'components/ecosystem/RightBar';
 import { RenderingSection } from 'components/ecosystem/RwnderView';
