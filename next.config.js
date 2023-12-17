@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
+const withPWA = require('next-pwa')({
+    dest: 'public',
+    register: true,
+    skipWaiting: true,
+    disable: process.env.NODE_ENV === "development",
+    disableDevLogs: true,
+  })
 
-const nextConfig = {
+const nextConfig = withPWA({
   reactStrictMode: true,
   webpack: (config, options) => {
 
@@ -33,7 +40,7 @@ const nextConfig = {
   },
   images: {
     disableStaticImages: true, // importした画像の型定義設定を無効にする
-  },
-}
+  }
+})
 
 module.exports = nextConfig
