@@ -11,7 +11,10 @@ export default class MyDocument extends Document {
             <Html lang="ja">
                 <Head>
                     {/* PWA primary color */}
-                    <meta name="theme-color" content={theme.colors.primary400} />
+                    <meta name="theme-color" content={theme.colors.primary600} />
+                    <link rel="manifest" href="/manifest.json" />
+                    <link rel="icon" href="/favicon.svg" />
+                    <link rel="apple-touch-icon" href="/icon.png"></link>
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -62,8 +65,8 @@ MyDocument.getInitialProps = async (ctx): Promise<DocumentInitialProps> => {
         originalRenderPage({
             enhanceApp:
                 (App: any) =>// eslint-disable-line
-                // eslint-disable-next-line react/display-name
-                (props): JSX.Element => <App emotionCache={cache} {...props} />,
+                    // eslint-disable-line
+                    (props): JSX.Element => <App emotionCache={cache} {...props} />,// eslint-disable-line
         });
 
     const initialProps = await Document.getInitialProps(ctx);
