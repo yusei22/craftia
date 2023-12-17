@@ -14,7 +14,7 @@ export default class MyDocument extends Document {
                     <meta name="theme-color" content={theme.colors.primary600} />
                     <link rel="manifest" href="/manifest.json" />
                     <link rel="icon" href="/favicon.svg" />
-                    <link rel="apple-touch-icon" href="/icon.png"></link>
+                    <link rel="apple-touch-icon" href="/icon-ios.png" sizes="512x512"></link>
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
