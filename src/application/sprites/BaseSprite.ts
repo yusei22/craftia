@@ -6,7 +6,7 @@ import {
     ContextTextConfig,
 } from 'application/core/context-2d';
 import { Vec, Vec2 } from 'application/core/units';
-import { BlendMode } from 'types';
+import { BlendMode } from 'types/blendMode';
 
 /**
  * スプライトの塗りつぶし設定

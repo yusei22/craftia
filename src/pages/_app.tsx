@@ -68,6 +68,7 @@ function MyApp(props: MyAppProps) {
                 />
                 <meta property="og:locale" content="ja_JP" />
                 <meta property="og:type" content="website" />
+                <link rel="icon" href="/craftia-favicon.svg" />
             </Head>
             <CacheProvider value={emotionCache}>
                 <GlobalStyles />

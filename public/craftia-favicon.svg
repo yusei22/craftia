@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath7">
+      <path
+         style="fill:#000000"
+         id="path7"
+         width="512"
+         height="512"
+         x="0"
+         y="0"
+         rx="100.09187"
+         ry="100.09187"
+         d="M 100.09187,0 H 411.90813 C 467.35902,0 512,44.640975 512,100.09187 V 411.90813 C 512,467.35902 467.35902,512 411.90813,512 H 100.09187 C 44.640975,512 0,467.35902 0,411.90813 V 100.09187 C 0,44.640975 44.640975,0 100.09187,0 Z" />
+    </clipPath>
+  </defs>
+  <g
+     id="layer1">
+    <g
+       id="g4"
+       clip-path="url(#clipPath7)">
+      <rect
+         style="opacity:1;fill:#5aa2ae;fill-opacity:1;stroke-width:0.929485"
+         id="rect1"
+         width="512"
+         height="512"
+         x="0"
+         y="0" />
+      <path
+         id="path2"
+         style="display:inline;opacity:1;fill:#70adb7;stroke-width:3.03175"
+         d="M 0,512 512,0 v 512 z" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:367.981px;font-family:Arial;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#eeeeee;fill-opacity:1;stroke-width:30.6652"
+         x="102.80215"
+         y="410.63358"
+         id="text2"
+         transform="scale(1.0895681,0.91779485)"><tspan
+           id="tspan2"
+           x="102.80215"
+           y="410.63358"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:367.981px;font-family:Arial;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#eeeeee;fill-opacity:1;stroke-width:30.6652">C</tspan></text>
+    </g>
+  </g>
+</svg>
