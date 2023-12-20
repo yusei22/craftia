@@ -35,7 +35,7 @@ export default function Home() {
                         <Container
                             css={{
                                 justifyContent: 'space-between',
-                                alignItems: 'end',
+                                alignItems: 'flex-end',
                                 width: '100%',
                                 height: 46,
                                 padding: '0px 20px',
@@ -45,7 +45,7 @@ export default function Home() {
                             <SvgIcon>
                                 <Icon />
                             </SvgIcon>
-                            <MenuSection css={{ alignItems: 'end' }} />
+                            <MenuSection css={{ alignItems: 'flex-end' }} />
                             <ThemeSection />
                         </Container>
                         <ToolMenues
